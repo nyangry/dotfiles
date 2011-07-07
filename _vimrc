@@ -76,3 +76,15 @@ set shiftwidth=4 "シフト移動幅
 set showmatch "閉じ括弧が入力されたとき、対応する括弧を表示する
 set tabstop=4 "ファイル内の <Tab> が対応する空白の数
 set nowrapscan "検索をファイルの先頭へループしない
+"-------------------------------------------------------------------------------
+"Vundle
+"-------------------------------------------------------------------------------
+set nocompatible
+filetype off
+
+set rtp+=~/dotfiles/vimfiles/vundle.git/        #vundleのディレクトリ
+call vundle#rc()
+Bundle 'vim-quickrun'
+Bundle 'vim-fugitive'
+filetype plugin indent on     " required!
+
