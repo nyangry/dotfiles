@@ -43,13 +43,13 @@ set hlsearch "検索結果をハイライト
 "自動補完
 "-------------------------------------------------------------------------------
 inoremap , ,<Space>
-inoremap { {}<LEFT>
-inoremap [ []<LEFT>
-inoremap ( ()<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
-inoremap < <><LEFT>
-inoremap ` ``<LEFT>
+"inoremap { {}<LEFT>
+"inoremap [ []<LEFT>
+"inoremap ( ()<LEFT>
+"inoremap " ""<LEFT>
+"inoremap ' ''<LEFT>
+"inoremap < <><LEFT>
+"inoremap ` ``<LEFT>
 "検索パターンの入力を改善する
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
@@ -82,7 +82,7 @@ set nowrapscan "検索をファイルの先頭へループしない
 set nocompatible
 filetype off
 
-set rtp+=~/dotfiles/vimfiles/vundle.git/        #vundleのディレクトリ
+set rtp+=~/dotfiles/vimfiles/vundle.git/	"vundleのディレクトリ
 call vundle#rc()
 Bundle 'vim-quickrun'
 Bundle 'vim-fugitive'
