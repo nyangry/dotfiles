@@ -42,6 +42,19 @@ set hlsearch "検索結果をハイライト
 "全角スペースを　で表示
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 au BufRead,BufNew * match JpSpace /　/
+" CTRL-hjklでウインドウ移動
+nnoremap <C-j> ;<C-w>j
+nnoremap <C-k> ;<C-w>j
+nnoremap <C-l> ;<C-w>j
+nnoremap <C-h> ;<C-w>j
+" タブ移動をCTRL+TABに
+nnoremap <C-n> gt
+nnoremap <C-b> gT
+" CTRL+wでタブ終了
+nnoremap <C-w> ZZ
+" CTRL+tでファイルを開く
+nnoremap <C-t> :tabnew
+"-------------------------------------------------------------------------------
 "-------------------------------------------------------------------------------
 "自動補完
 "-------------------------------------------------------------------------------
@@ -93,4 +106,41 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/neocomplcache'
 filetype plugin indent on     " required!
+"-------------------------------------------------------------------------------
+"Neocomplcache
+"-------------------------------------------------------------------------------
+"neocomplcacheを起動時に有効化する設定です
+let g:neocomplcache_enable_at_startup = 1
+"neocomplcacheのsmart case機能を有効化します
+"smart caseは'smartcase'と同様に、大文字が入力されるまで大文字小文字の区別を無視するという機能です。
+let g:neocomplcache_enable_smart_case = 1
+"こちらは_区切りの補完を有効化します
+let g:neocomplcache_enable_underbar_completion = 1
+"シンタックスをキャッシュするときの最小文字長を3にしています。デフォルトでは4です
+let g:neocomplcache_min_syntax_length = 3
+"ファイルタイプ毎にneocomplcacheのディクショナリを設定することができます。
+"neocomplcacheは'dictionary'も見ますが、こちらを優先します。
+"g:neocomplcache_dictionary_filetype_listsはcontext
+"filetypeでも参照できるので、できればこちらを設定するべきです
+let g:neocomplcache_dictionary_filetype_lists = {
+	\ 'default' : '',
+	\ 'php' : $HOME . '/.vim/dict',
+		\ }
+"キーワードパターンの設定です。 neocomplcacheが対応していない独自の言語を使いたい場合は、これを変更しないといけません。 let g:neocomplcache_keyword_patterns['default']を変更しているのは、 デフォルトが\k\+となっていて、日本語も収集してしまう仕様が個人的に好きではないからです。
+if !exists('g:neocomplcache_keyword_patterns')
+	let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+"<C-k>でスニペットの展開をできるようにします。<C-k>が取られてしまうのが気に入らない場合は、 後述するneocomplcache#sources#snippets_complete#expandable()を使ったほうが良いでしょう。 smapも同時に設定しないと、デフォルト値が選択されているときに展開やジャンプがされません。
+imap <C-k> <Plug>(neocomplcache_snippets_expand)
+"補完候補のなかから、共通する部分を補完します。ちょうど、シェルの補完のような動作です。
+inoremap <expr><C-l> neocomplcache#complete_common_string()
+"<C-h>や<BS>を押したときに確実にポップアップを削除します。
+inoremap <expr><C-h> neocomplcache#smart_close_popup().”\<C-h>”
+"現在選択している候補を確定します。
+inoremap <expr><C-y> neocomplcache#close_popup()
+"現在選択している候補をキャンセルし、ポップアップを閉じます
+inoremap <expr><C-e> neocomplcache#cancel_popup()
+
+
 
