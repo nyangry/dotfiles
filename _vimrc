@@ -136,7 +136,7 @@ imap <C-k> <Plug>(neocomplcache_snippets_expand)
 "補完候補のなかから、共通する部分を補完します。ちょうど、シェルの補完のような動作です。
 inoremap <expr><C-l> neocomplcache#complete_common_string()
 "<C-h>や<BS>を押したときに確実にポップアップを削除します。
-inoremap <expr><C-h> neocomplcache#smart_close_popup().”\<C-h>”
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 "現在選択している候補を確定します。
 inoremap <expr><C-y> neocomplcache#close_popup()
 "現在選択している候補をキャンセルし、ポップアップを閉じます
