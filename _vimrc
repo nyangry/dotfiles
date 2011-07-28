@@ -90,5 +90,7 @@ call vundle#rc()
 Bundle 'thinca/vim-quickrun'
 Bundle 'thinca/vim-guicolorscheme'
 Bundle 'tpope/vim-fugitive'
+Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/neocomplcache.vim'
 filetype plugin indent on     " required!
 
