@@ -39,6 +39,9 @@ set cursorline "カーソル行をハイライト
 set hlsearch "検索結果をハイライト
 set cursorline "カーソル行をハイライト
 set hlsearch "検索結果をハイライト
+"全角スペースを　で表示
+highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
+au BufRead,BufNew * match JpSpace /　/
 "-------------------------------------------------------------------------------
 "自動補完
 "-------------------------------------------------------------------------------
@@ -53,8 +56,6 @@ inoremap , ,<Space>
 "検索パターンの入力を改善する
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
-set formatoptions-=r " 挿入モードで改行した時に # を自動挿入しない
-set formatoptions-=o " ノーマルモードで o や O をした時に # を自動挿入しない
 "-------------------------------------------------------------------------------
 "View
 "-------------------------------------------------------------------------------
@@ -86,7 +87,8 @@ filetype off
 
 set rtp+=~/dotfiles/vimfiles/vundle.git/	"vundleのディレクトリ
 call vundle#rc()
-Bundle 'vim-quickrun'
-Bundle 'vim-fugitive'
+Bundle 'thinca/vim-quickrun'
+Bundle 'thinca/vim-guicolorscheme'
+Bundle 'tpope/vim-fugitive'
 filetype plugin indent on     " required!
 
