@@ -91,6 +91,6 @@ Bundle 'thinca/vim-quickrun'
 Bundle 'thinca/vim-guicolorscheme'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/neocomplcache.vim'
+Bundle 'Shougo/neocomplcache'
 filetype plugin indent on     " required!
 
