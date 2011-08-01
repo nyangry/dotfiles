@@ -1,10 +1,3 @@
-
-<!-- saved from url=(0067)http://vimcolorschemetest.googlecode.com/svn/colors/revolutions.vim -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2"></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">" MATRIX-REVOLUTIONS colorscheme
-" Author:      Christian MICHON
-" Version:     1.0
-" Last Change: 23 Jun 2004
-
 set background=dark
 hi clear
 if exists("syntax_on")
@@ -75,4 +68,3 @@ hi Visual         guifg=#e6fff3 guibg=#61a181 gui=none
 hi VisualNOS      guifg=#9bcfb5 guibg=#000000 gui=underline
 hi WarningMsg     guifg=#1d3026 guibg=#61a181 gui=bold
 hi WildMenu       guifg=#43705a guibg=#e6fff3 gui=none
-</pre></body></html>

@@ -1,13 +1,3 @@
-
-<!-- saved from url=(0062)http://vimcolorschemetest.googlecode.com/svn/colors/ekvoli.vim -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">" Vim color file
-" Maintainer:   Preben Randhol &lt;randhol+ekvoli@pvv.org&gt;
-" Last Change:  2008 Feb 24
-" License:      GNU Public License (GPL) v2
-"
-" Version 1.6: Added colours for TVO and changed folding colour
-
-
 highlight clear Normal
 set background&amp;
 
@@ -101,8 +91,3 @@ hi otlTab9    gui=bold,underline guifg=#99ddee
 hi otlTodo    gui=bold,underline guifg=white guibg=#00a0d0
 hi otlTagRef  guifg=white guibg=#8070a0   
 hi otlTagDef  guifg=white guibg=#005090
-
-
-
-
-</pre></body></html>

@@ -1,11 +1,3 @@
-
-<!-- saved from url=(0063)http://vimcolorschemetest.googlecode.com/svn/colors/ibmedit.vim -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">" Vim color file
-" Maintainer:   Maarten Slaets
-" Last Change:  2002 Aug 16
-
-" Color settings similar to that used in IBM Edit
-
 set background=dark
 hi clear
 if exists("syntax_on")
@@ -59,5 +51,3 @@ hi Error        gui=NONE guifg=White guibg=Red
 
 hi Cursor       ctermfg=Black ctermbg=Yellow
 hi Cursor       guifg=Black guibg=Yellow
-
-</pre></body></html>

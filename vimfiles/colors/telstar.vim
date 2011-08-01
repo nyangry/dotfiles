@@ -1,14 +1,3 @@
-
-<!-- saved from url=(0063)http://vimcolorschemetest.googlecode.com/svn/colors/telstar.vim -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">" Vim color file (telstar.vim)                                            
-" Maintainer:    john white &lt;dhcmrlchtdj@gmail.com&gt;
-" Last Change:   20060111
-
-" a gvim space theme with some extra java highlighting.
-" the java highlighting depends on claudio fleiner's
-" java.vim syntax highlighting at
-" http://www.fleiner.com/vim/download.html
-
 set background=dark
 hi clear
 if exists("syntax_on")
@@ -68,4 +57,3 @@ hi javaParen2    guifg=#a0c0ff
 hi javaFuncDef   guifg=#7080f0
 hi javaLangObject guifg=#6080c0
 hi javaBraces    guifg=#406090
-</pre></body></html>
