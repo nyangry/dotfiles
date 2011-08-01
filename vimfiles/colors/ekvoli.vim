@@ -30,7 +30,7 @@ hi CursorColumn     guibg=#05456f gui=none
 
 
 hi Normal           guifg=white guibg=#001535
-hi Error            guibg=#6000a0 gui=bold,italic,undercurl guisp=white
+hi Error            guibg=#6000a0 gui=bold,undercurl guisp=white
 hi ErrorMsg         guifg=white guibg=#287eff gui=bold,italic
 hi Visual           guibg=#2080c0 guifg=white gui=bold
 hi VisualNOS        guibg=#6080a0 guifg=white gui=bold
@@ -57,7 +57,7 @@ hi MatchParen       guifg=white guibg=#3070c0 gui=bold
 hi StatusLine       guifg=white guibg=#104075 gui=bold
 hi StatusLineNC     guifg=#65a0f0 guibg=#104075 gui=none
 hi VertSplit        guifg=#305885 guibg=#305885 gui=none
-hi Folded           guifg=#65b0f6 guibg=#122555 gui=italic
+hi Folded           guifg=#65b0f6 guibg=#122555
 hi FoldColumn       guifg=white guibg=#103366 gui=none
 hi LineNr           guifg=#5080b0 gui=bold
 
@@ -66,15 +66,15 @@ hi DiffChange       guibg=#2080a0 guifg=white gui=bold
 hi DiffDelete       guibg=#306080 guifg=white gui=none 
 hi DiffText         guibg=#8070a0 guifg=white gui=bold 
 
-hi SpellBad         gui=undercurl,italic guisp=#76daff 
+hi SpellBad         gui=undercurl guisp=#76daff 
 hi SpellCap         gui=undercurl guisp=#7ba2ba 
 hi SpellRare        gui=undercurl guisp=#8080f0
 hi SpellLocal       gui=undercurl guisp=#c0c0e0
 
-hi Comment          guifg=#9590d5 gui=italic
+hi Comment         	guifg=#9590d5
 
 
-hi Constant         guifg=#87c6f0 gui=italic
+hi Constant         guifg=#87c6f0
 hi Special          guifg=#50a0e0 gui=bold
 hi Identifier       guifg=#7fe9ff 
 hi Statement        guifg=white gui=bold
