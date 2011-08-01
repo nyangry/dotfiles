@@ -1,3 +1,8 @@
+" MATRIX-REVOLUTIONS colorscheme
+" Author:      Christian MICHON
+" Version:     1.0
+" Last Change: 23 Jun 2004
+
 set background=dark
 hi clear
 if exists("syntax_on")

@@ -1,5 +1,13 @@
+" Vim color file
+" Maintainer:   Preben Randhol <randhol+ekvoli@pvv.org>
+" Last Change:  2008 Feb 24
+" License:      GNU Public License (GPL) v2
+"
+" Version 1.6: Added colours for TVO and changed folding colour
+
+
 highlight clear Normal
-set background&amp;
+set background&
 
 " Remove all existing highlighting and set the defaults.
 highlight clear
@@ -91,3 +99,7 @@ hi otlTab9    gui=bold,underline guifg=#99ddee
 hi otlTodo    gui=bold,underline guifg=white guibg=#00a0d0
 hi otlTagRef  guifg=white guibg=#8070a0   
 hi otlTagDef  guifg=white guibg=#005090
+
+
+
+

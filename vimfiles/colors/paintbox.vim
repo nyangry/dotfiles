@@ -1,3 +1,13 @@
+" Description:	A colourful, happy scheme with high contrast
+"  Maintainer:	kamil.stachowski@gmail.com
+"     License:	gpl 3+
+"     Version:	0.1 (2008.12.05)
+
+"   Changelog:
+"         0.1:	2008.12.05
+"       		initial version
+
+
 set background=dark
 
 hi clear
@@ -83,3 +93,4 @@ hi! link Title			ModeMsg
 hi! link Typedef		Type
 hi! link VertSplit		StatusLineNC
 hi! link WarningMsg		Error
+

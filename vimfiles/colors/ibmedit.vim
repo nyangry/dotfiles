@@ -1,3 +1,9 @@
+" Vim color file
+" Maintainer:   Maarten Slaets
+" Last Change:  2002 Aug 16
+
+" Color settings similar to that used in IBM Edit
+
 set background=dark
 hi clear
 if exists("syntax_on")
@@ -51,3 +57,4 @@ hi Error        gui=NONE guifg=White guibg=Red
 
 hi Cursor       ctermfg=Black ctermbg=Yellow
 hi Cursor       guifg=Black guibg=Yellow
+

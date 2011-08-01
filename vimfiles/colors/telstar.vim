@@ -1,3 +1,12 @@
+" Vim color file (telstar.vim)                                            
+" Maintainer:    john white <dhcmrlchtdj@gmail.com>
+" Last Change:   20060111
+
+" a gvim space theme with some extra java highlighting.
+" the java highlighting depends on claudio fleiner's
+" java.vim syntax highlighting at
+" http://www.fleiner.com/vim/download.html
+
 set background=dark
 hi clear
 if exists("syntax_on")
