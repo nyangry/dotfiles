@@ -73,13 +73,13 @@ cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 "View
 "-------------------------------------------------------------------------------
 set t_Co=256
-"wombat, ir_black, candy, h2u_black, zen, zenburn, jellybeans, wombat256mod, rdark, ap_dark8, molokai
-colorscheme jellybeans
-"autocmd VimEnter * :GuiColorScheme xoria256
-let g:guicolorscheme_color_table = {'bg' : 'Black', 'fg' : 'Grey'}
-:hi clear CursorLine
-:hi CursorLine gui=underline
-highlight CursorLine ctermbg=black guibg=black
+"jellybeans, rdark, ekvoli, revolutions, telstar
+"colorscheme ekvoli
+autocmd VimEnter * :GuiColorScheme ekvoli
+"let g:guicolorscheme_color_table = {'bg' : 'Black'}
+":hi clear CursorLine
+":hi CursorLine gui=underline
+"highlight CursorLine ctermbg=black guibg=black
 "-------------------------------------------------------------------------------
 "Complete
 "-------------------------------------------------------------------------------
