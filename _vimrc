@@ -39,9 +39,6 @@ set cursorline "カーソル行をハイライト
 set hlsearch "検索結果をハイライト
 set cursorline "カーソル行をハイライト
 set hlsearch "検索結果をハイライト
-"全角スペースを　で表示
-highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
-au BufRead,BufNew * match JpSpace /　/
 " CTRL-hjklでウインドウ移動
 nnoremap <C-j> ;<C-w>j
 nnoremap <C-k> ;<C-w>j
@@ -54,7 +51,100 @@ nnoremap <C-b> gT
 nnoremap <C-w> ZZ
 " CTRL+tでファイルを開く
 nnoremap <C-t> :tabnew<CR>
-"-------------------------------------------------------------------------------
+"----------------------------------------
+" Vimスクリプト
+"----------------------------------------
+""""""""""""""""""""""""""""""
+"ファイルを開いたら前回のカーソル位置へ移動
+""""""""""""""""""""""""""""""
+augroup vimrcEx
+  autocmd!
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line('$') |
+    \   exe "normal! g`\"" |
+    \ endif
+augroup END
+
+""""""""""""""""""""""""""""""
+"挿入モード時、ステータスラインの色を変更
+""""""""""""""""""""""""""""""
+let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
+
+if has('syntax')
+  augroup InsertHook
+    autocmd!
+    autocmd InsertEnter * call s:StatusLine('Enter')
+    autocmd InsertLeave * call s:StatusLine('Leave')
+  augroup END
+endif
+" if has('unix') && !has('gui_running')
+"   " ESCでキー入力待ちになる対策
+"   inoremap <silent> <ESC> <ESC>
+" endif
+
+let s:slhlcmd = ''
+function! s:StatusLine(mode)
+  if a:mode == 'Enter'
+    silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
+    silent exec g:hi_insert
+  else
+    highlight clear StatusLine
+    silent exec s:slhlcmd
+    redraw
+  endif
+endfunction
+
+function! s:GetHighlight(hi)
+  redir => hl
+  exec 'highlight '.a:hi
+  redir END
+  let hl = substitute(hl, '[\r\n]', '', 'g')
+  let hl = substitute(hl, 'xxx', '', '')
+  return hl
+endfunction
+""""""""""""""""""""""""""""""
+"全角スペースを表示
+""""""""""""""""""""""""""""""
+"コメント以外で全角スペースを指定しているので、scriptencodingと、
+"このファイルのエンコードが一致するよう注意！
+"強調表示されない場合、ここでscriptencodingを指定するとうまくいく事があります。
+"scriptencoding cp932
+function! ZenkakuSpace()
+  highlight ZenkakuSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
+  "全角スペースを明示的に表示する
+  silent! match ZenkakuSpace /　/
+endfunction
+
+if has('syntax')
+  augroup ZenkakuSpace
+    autocmd!
+    autocmd VimEnter,BufEnter * call ZenkakuSpace()
+  augroup END
+endif
+""""""""""""""""""""""""""""""
+"ステータスラインに文字コードやBOM、16進表示等表示
+"iconvが使用可能の場合、カーソル上の文字コードをエンコードに応じた表示にするFencB()を使用
+""""""""""""""""""""""""""""""
+if has('iconv')
+  set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).(&bomb?':BOM':'').']['.&ff.']'}%=[0x%{FencB()}]\ (%v,%l)/%L%8P\ 
+else
+  set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).(&bomb?':BOM':'').']['.&ff.']'}%=\ (%v,%l)/%L%8P\ 
+endif
+
+function! FencB()
+  let c = matchstr(getline('.'), '.', col('.') - 1)
+  let c = iconv(c, &enc, &fenc)
+  return s:Byte2hex(s:Str2byte(c))
+endfunction
+
+function! s:Str2byte(str)
+  return map(range(len(a:str)), 'char2nr(a:str[v:val])')
+endfunction
+
+function! s:Byte2hex(bytes)
+  return join(map(copy(a:bytes), 'printf("%02X", v:val)'), '')
+endfunction
+
 "-------------------------------------------------------------------------------
 "自動補完
 "-------------------------------------------------------------------------------
