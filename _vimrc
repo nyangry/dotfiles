@@ -68,7 +68,7 @@ augroup END
 """"""""""""""""""""""""""""""
 "挿入モード時、ステータスラインの色を変更
 """"""""""""""""""""""""""""""
-let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
+let g:hi_insert = 'highlight StatusLine guibg=19'
 
 if has('syntax')
   augroup InsertHook
@@ -108,7 +108,7 @@ endfunction
 "コメント以外で全角スペースを指定しているので、scriptencodingと、
 "このファイルのエンコードが一致するよう注意！
 "強調表示されない場合、ここでscriptencodingを指定するとうまくいく事があります。
-"scriptencoding cp932
+scriptencoding utf-8
 function! ZenkakuSpace()
   highlight ZenkakuSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
   "全角スペースを明示的に表示する
@@ -126,9 +126,9 @@ endif
 "iconvが使用可能の場合、カーソル上の文字コードをエンコードに応じた表示にするFencB()を使用
 """"""""""""""""""""""""""""""
 if has('iconv')
-  set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).(&bomb?':BOM':'').']['.&ff.']'}%=[0x%{FencB()}]\ (%v,%l)/%L%8P\ 
+  set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).(&bomb?':BOM':'').']['.&ff.']'}%=[0x%{FencB()}]\ (%v,%l)/%L%8P\
 else
-  set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).(&bomb?':BOM':'').']['.&ff.']'}%=\ (%v,%l)/%L%8P\ 
+  set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).(&bomb?':BOM':'').']['.&ff.']'}%=\ (%v,%l)/%L%8P\
 endif
 
 function! FencB()
