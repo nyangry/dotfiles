@@ -68,7 +68,8 @@ augroup END
 """"""""""""""""""""""""""""""
 "挿入モード時、ステータスラインの色を変更
 """"""""""""""""""""""""""""""
-let g:hi_insert = 'highlight StatusLine guibg=19'
+let g:hi_insert = 'highlight StatusLine ctermbg=54'
+
 
 if has('syntax')
   augroup InsertHook
