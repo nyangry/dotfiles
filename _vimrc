@@ -2,7 +2,7 @@
 "Init
 "-------------------------------------------------------------------------------
 set encoding=utf-8
-set fileencoding=utf-8
+set fileencodings=utf-8
 set nocompatible                 " vi互換なし
 let mapleader = ","              " キーマップリーダー
 set scrolloff=5                  " スクロール時の余白確保

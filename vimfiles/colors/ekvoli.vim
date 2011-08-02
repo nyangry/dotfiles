@@ -26,7 +26,7 @@ hi vCursor          guifg=white gui=reverse,bold
 hi lCursor          guifg=white gui=reverse,bold
 hi nCursor          guifg=white gui=reverse,bold
 "hi CursorLine       guibg=#05456f gui=none
-hi CursorLine       guibg=18 gui=none
+hi CursorLine       guibg=19 gui=none
 hi CursorColumn     guibg=#05456f gui=none
 
 
