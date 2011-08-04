@@ -166,7 +166,7 @@ cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 set t_Co=256
 "jellybeans, rdark, ekvoli, revolutions, telstar
 "colorscheme ekvoli
-autocmd VimEnter * :GuiColorScheme ekvoli
+autocmd VimEnter * :GuiColorScheme xoria256
 "let g:guicolorscheme_color_table = {'bg' : 'Black'}
 ":hi clear CursorLine
 ":hi CursorLine gui=underline
