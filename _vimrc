@@ -24,7 +24,8 @@ set autoindent   " 自動でインデント
 "set paste        " ペースト時にautoindentを無効に(onにするとautocomplpop.vimが動かない)
 set smartindent  " 新しい行を開始したときに、新しい行のインデントを現在行と同じ量にする。
 set cindent      " Cプログラムファイルの自動インデントを始める
-autocmd FileType * setlocal formatoptions-=ro "改行時にコメントを受け継がない
+autocmd FileType * setlocal formatoptions-=r "改行時にコメントを受け継がない
+autocmd FileType * setlocal formatoptions-=o "改行時にコメントを受け継がない
 set clipboard+=unnamed "OSのクリップボードを使用する
 set mouse=a "ターミナルでマウスを使用できるようにする
 set guioptions+=a
