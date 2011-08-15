@@ -4,14 +4,12 @@
 set encoding=utf-8
 set fileencodings=utf-8
 set nocompatible                 " vi互換なし
-let mapleader = ","              " キーマップリーダー
+"let mapleader = ","              " キーマップリーダー
 set scrolloff=5                  " スクロール時の余白確保
 set textwidth=0                  " 一行に長い文章を書いていても自動折り返しを
-"set backupdir=$HOME/.vim/backup  "バックアップファイルを作るディレクトリ
 set nobackup                     " バックアップ取らない
 set autoread                     " 他で書き換えられたら自動で読み直す
 set noswapfile                   " スワップファイル作らない
-"set directory=$HOME/.vim/buffer  "スワップファイル用のディレクトリ
 set hidden                       " 編集中でも他のファイルを開けるようにする
 set backspace=indent,eol,start   " バックスペースでなんでも消せるように
 set formatoptions=lmoq           " テキスト整形オプション，マルチバイト系を追加
@@ -21,23 +19,20 @@ set showmode                     " 現在のモードを表示
 set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
 set modelines=0                  " モードラインは無効
 set autoindent   " 自動でインデント
-"set paste        " ペースト時にautoindentを無効に(onにするとautocomplpop.vimが動かない)
+set paste        " ペースト時にautoindentを無効に(onにするとautocomplpop.vimが動かない)
 set smartindent  " 新しい行を開始したときに、新しい行のインデントを現在行と同じ量にする。
 set cindent      " Cプログラムファイルの自動インデントを始める
 autocmd FileType * setlocal formatoptions-=r "改行時にコメントを受け継がない
 autocmd FileType * setlocal formatoptions-=o "改行時にコメントを受け継がない
-set clipboard+=unnamed "OSのクリップボードを使用する
+set clipboard=unnamed,autoselect "OSのクリップボードを使用する
 set mouse=a "ターミナルでマウスを使用できるようにする
 set guioptions+=a
 set ttymouse=xterm2
-set clipboard=unnamed "ヤンクした文字は、システムのクリップボードに入れる
 set laststatus=2 "常にステータスラインを表示
 set ruler "カーソルが何行目の何列目に置かれているかを表示する
 set number "行番号を表示する
 syntax enable
 set autoindent
-set cursorline "カーソル行をハイライト
-set hlsearch "検索結果をハイライト
 set cursorline "カーソル行をハイライト
 set hlsearch "検索結果をハイライト
 " CTRL-hjklでウインドウ移動
