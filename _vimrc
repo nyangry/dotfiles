@@ -34,32 +34,20 @@ set number "行番号を表示する
 syntax enable
 set autoindent
 set cursorline "カーソル行をハイライト
-set hlsearch "検索結果をハイライト
-" CTRL-hjklでウインドウ移動
-nnoremap <C-j> ;<C-w>j
-nnoremap <C-k> ;<C-w>j
-nnoremap <C-l> ;<C-w>j
-nnoremap <C-h> ;<C-w>j
-" タブ移動をCTRL+TABに
-nnoremap <C-n> gt
-nnoremap <C-b> gT
-" CTRL+wでタブ終了
-nnoremap <C-w> ZZ
-" CTRL+tでファイルを開く
-nnoremap <C-t> :tabnew<CR>
+
 "----------------------------------------
 " Vimスクリプト
 "----------------------------------------
 """"""""""""""""""""""""""""""
 "ファイルを開いたら前回のカーソル位置へ移動
 """"""""""""""""""""""""""""""
-augroup vimrcEx
-  autocmd!
-  autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line('$') |
-    \   exe "normal! g`\"" |
-    \ endif
-augroup END
+"augroup vimrcEx
+"  autocmd!
+"  autocmd BufReadPost *
+"    \ if line("'\"") > 1 && line("'\"") <= line('$') |
+"    \   exe "normal! g`\"" |
+"    \ endif
+"augroup END
 
 """"""""""""""""""""""""""""""
 "挿入モード時、ステータスラインの色を変更
@@ -120,37 +108,17 @@ if has('syntax')
 endif
 """"""""""""""""""""""""""""""
 "ステータスラインに文字コードやBOM、16進表示等表示
-"iconvが使用可能の場合、カーソル上の文字コードをエンコードに応じた表示にするFencB()を使用
 """"""""""""""""""""""""""""""
-"if has('iconv')
-""  set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).(&bomb?':BOM':'').']['.&ff.']'}%=[0x%{FencB()}]\ (%v,%l)/%L%8P\
-"else
-""  set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).(&bomb?':BOM':'').']['.&ff.']'}%=\ (%v,%l)/%L%8P\
-"endif
-
-"function! FencB()
-""  let c = matchstr(getline('.'), '.', col('.') - 1)
-""  let c = iconv(c, &enc, &fenc)
-""  return s:Byte2hex(s:Str2byte(c))
-"endfunction
-
-"function! s:Str2byte(str)
-""  return map(range(len(a:str)), 'char2nr(a:str[v:val])')
-"endfunction
-
-"function! s:Byte2hex(bytes)
-""  return join(map(copy(a:bytes), 'printf("%02X", v:val)'), '')
-"endfunction
 
 " ステータスラインの表示
   set statusline=%<     " 行が長すぎるときに切り詰める位置
-  set statusline+=[%n]  " バッファ番号
-  set statusline+=%m    " %m 修正フラグ
   set statusline+=%r    " %r 読み込み専用フラグ
   set statusline+=%h    " %h ヘルプバッファフラグ
   set statusline+=%w    " %w プレビューウィンドウフラグ
   set statusline+=%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}  " fencとffを表示
   set statusline+=%y    " バッファ内のファイルのタイプ
+  set statusline+=[%n]  " バッファ番号
+  set statusline+=%m    " %m 修正フラグ
   set statusline+=\     " 空白スペース
 if winwidth(0) >= 130
   set statusline+=%F    " バッファ内のファイルのフルパス
@@ -190,7 +158,9 @@ set t_Co=256
 "jellybeans, rdark, ekvoli, revolutions, telstar
 "colorscheme ekvoli
 "autocmd VimEnter * :GuiColorScheme xoria256
-autocmd VimEnter * :GuiColorScheme github
+"autocmd VimEnter * :colorscheme xoria256
+set background=dark
+colorscheme ir_black_256
 "let g:guicolorscheme_color_table = {'bg' : 'Black'}
 ":hi clear CursorLine
 ":hi CursorLine gui=underline
@@ -198,15 +168,40 @@ autocmd VimEnter * :GuiColorScheme github
 "-------------------------------------------------------------------------------
 "Complete
 "-------------------------------------------------------------------------------
-"キーワードハイライトのキャンセル（ESC2）
-nmap <ESC><ESC> ;nohlsearch<CR><ESC>
+set hlsearch
 autocmd BufWritePre * :%s/\s\+$//ge "保存時に行末の空白を除去する
 set incsearch "インクリメンタルサーチを行う
 set listchars=eol:$,tab:>\ ,extends:< "listで表示される文字のフォーマットを指定する
-set shiftwidth=4 "シフト移動幅
+set shiftwidth=2 "シフト移動幅
 set showmatch "閉じ括弧が入力されたとき、対応する括弧を表示する
-set tabstop=4 "ファイル内の <Tab> が対応する空白の数
+set tabstop=2 "ファイル内の <Tab> が対応する空白の数
 set nowrapscan "検索をファイルの先頭へループしない
+"set wildignore+=Library*,Document*,Movie*,Dropbox*,Music*,Pictures*,Downloads*
+"set wildignore+=*.o,*.obj,*.ps,*.eps,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
+"set wildignore+=*.strings,*.plist,*.wflow,*.olk14Folder,*.olk14DBHeader,*.olk14Contact
+set wildignore+=*.DS_Store,*.pdf,*.swf,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
+set wildignore+=*.ps,*.eps,*.aux,*.dvi
+set wildignore+=*.xls,*.xlsx,*.key
+
+"-------------------------------------------------------------------------------
+"Syntax Check
+"-------------------------------------------------------------------------------
+"Ruby
+augroup rbsyntaxcheck
+	autocmd!
+	autocmd BufWrite *.rb w !ruby -c
+augroup END
+
+"PHP
+augroup phpsyntaxcheck
+	autocmd!
+	autocmd BufWrite *.php w !php -l
+augroup END
+"-------------------------------------------------------------------------------
+"Vimdiff
+"-------------------------------------------------------------------------------
+"Vimdiffで半角スペースを無視する
+set diffopt+=iwhite
 "-------------------------------------------------------------------------------
 "Vundle
 "-------------------------------------------------------------------------------
@@ -221,9 +216,36 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/vimshell'
+Bundle 'git://git.wincent.com/command-t.git'
 filetype plugin indent on     " required!
+"----------------------------------------
+" ショートカット
+"----------------------------------------
+" CTRL-hjklでウインドウ移動
+nnoremap <C-j> ;<C-w>j
+nnoremap <C-k> ;<C-w>j
+nnoremap <C-l> ;<C-w>j
+nnoremap <C-h> ;<C-w>j
+" タブ移動をCTRL+TABに
+nnoremap <C-n> gt
+nnoremap <C-b> gT
+" CTRL＋Lで最終編集箇所へジャンプ
+nnoremap <C-l> gl
+" CTRL+wでタブ終了
+"nnoremap <C-w> ZZ
+" CTRL+tでファイルを開く
+"nnoremap <C-t> :tabnew<CR>
+"Escの2回押しでハイライト消去
+nmap <ESC><ESC> ;nohlsearch<CR><ESC>
+" CTRL + Dで :cd 入力待ちにする
+nnoremap <C-d> :<C-u>cd<space>
 "-------------------------------------------------------------------------------
-"Unite
+"Plugin/command-t
+"-------------------------------------------------------------------------------
+let g:CommandTMaxHeight=15
+nnoremap <silent> <C-f> :<C-u>CommandT <Return>
+"-------------------------------------------------------------------------------
+"Plugin/Unite
 "-------------------------------------------------------------------------------
 "バッファ一覧
 nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
@@ -250,7 +272,7 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabop
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 "-------------------------------------------------------------------------------
-"Neocomplcache
+"Plugin/Neocomplcache
 "-------------------------------------------------------------------------------
 "neocomplcacheを起動時に有効化する設定です
 let g:neocomplcache_enable_at_startup = 1
