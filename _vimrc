@@ -1,10 +1,11 @@
 "-------------------------------------------------------------------------------
 "Init
 "-------------------------------------------------------------------------------
+set nocompatible                 " vi互換なし
 set encoding=utf-8
 set fileencodings=utf-8
-set nocompatible                 " vi互換なし
 "let mapleader = ","              " キーマップリーダー
+map ¥ <leader>
 set scrolloff=5                  " スクロール時の余白確保
 set textwidth=0                  " 一行に長い文章を書いていても自動折り返しを
 set nobackup                     " バックアップ取らない
@@ -18,10 +19,7 @@ set showcmd                      " コマンドをステータス行に表示
 set showmode                     " 現在のモードを表示
 set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
 set modelines=0                  " モードラインは無効
-set autoindent   " 自動でインデント
-set paste        " ペースト時にautoindentを無効に(onにするとautocomplpop.vimが動かない)
-set smartindent  " 新しい行を開始したときに、新しい行のインデントを現在行と同じ量にする。
-set cindent      " Cプログラムファイルの自動インデントを始める
+"set paste        " ペースト時にautoindentを無効に(onにするとautocomplpop.vimが動かない)
 autocmd FileType * setlocal formatoptions-=r "改行時にコメントを受け継がない
 autocmd FileType * setlocal formatoptions-=o "改行時にコメントを受け継がない
 set clipboard=unnamed,autoselect "OSのクリップボードを使用する
@@ -32,28 +30,29 @@ set laststatus=2 "常にステータスラインを表示
 set ruler "カーソルが何行目の何列目に置かれているかを表示する
 set number "行番号を表示する
 syntax enable
-set autoindent
+
+" タブ文字、行末など不可視文字を表示する
+" set list
+" listで表示される文字のフォーマットを指定する
+" set listchars=eol:~,tab:>\ ,extends:<
+" Tab、行末の半角スペースを明示的に表示する
+" set listchars=tab:^\ ,trail:~
+set listchars=tab:>\ ,trail:~
+
+set autoindent   " 自動でインデント
+set smartindent  " 新しい行を開始したときに、新しい行のインデントを現在行と同じ量にする。
+set cindent
+"set indentexpr
+
 set cursorline "カーソル行をハイライト
+" これをしないと候補選択時に Scratch ウィンドウが開いてしまう
+set completeopt=menuone
 
 "----------------------------------------
 " Vimスクリプト
 "----------------------------------------
-""""""""""""""""""""""""""""""
-"ファイルを開いたら前回のカーソル位置へ移動
-""""""""""""""""""""""""""""""
-"augroup vimrcEx
-"  autocmd!
-"  autocmd BufReadPost *
-"    \ if line("'\"") > 1 && line("'\"") <= line('$') |
-"    \   exe "normal! g`\"" |
-"    \ endif
-"augroup END
-
-""""""""""""""""""""""""""""""
 "挿入モード時、ステータスラインの色を変更
-""""""""""""""""""""""""""""""
 let g:hi_insert = 'highlight StatusLine ctermbg=54'
-
 
 if has('syntax')
   augroup InsertHook
@@ -148,6 +147,8 @@ inoremap , ,<Space>
 "inoremap ' ''<LEFT>
 "inoremap < <><LEFT>
 "inoremap ` ``<LEFT>
+"行末にセミコロン;をつけて改行
+inoremap ;; <C-O>$;<CR>
 "検索パターンの入力を改善する
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
@@ -160,7 +161,7 @@ set t_Co=256
 "autocmd VimEnter * :GuiColorScheme xoria256
 "autocmd VimEnter * :colorscheme xoria256
 set background=dark
-colorscheme ir_black_256
+"colorscheme FadetoGrey
 "let g:guicolorscheme_color_table = {'bg' : 'Black'}
 ":hi clear CursorLine
 ":hi CursorLine gui=underline
@@ -174,7 +175,10 @@ set incsearch "インクリメンタルサーチを行う
 set listchars=eol:$,tab:>\ ,extends:< "listで表示される文字のフォーマットを指定する
 set shiftwidth=2 "シフト移動幅
 set showmatch "閉じ括弧が入力されたとき、対応する括弧を表示する
+set expandtab
 set tabstop=2 "ファイル内の <Tab> が対応する空白の数
+"タブ幅をリセット
+au BufNewFile,BufRead * set tabstop=2 shiftwidth=2
 set nowrapscan "検索をファイルの先頭へループしない
 "set wildignore+=Library*,Document*,Movie*,Dropbox*,Music*,Pictures*,Downloads*
 "set wildignore+=*.o,*.obj,*.ps,*.eps,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
@@ -182,6 +186,19 @@ set nowrapscan "検索をファイルの先頭へループしない
 set wildignore+=*.DS_Store,*.pdf,*.swf,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
 set wildignore+=*.ps,*.eps,*.aux,*.dvi
 set wildignore+=*.xls,*.xlsx,*.key
+"-------------------------------------------------------------------------------
+"Syntax
+"-------------------------------------------------------------------------------
+"jQuery
+"au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+au BufRead,BufNewFile *.js set ft=javascript syntax=jquery
+"JSON
+au! BufRead,BufNewFile *.json set filetype=json
+"HTML5
+au BufRead,BufNewFile *.html set ft=html syntax=html5
+"CSS3
+au BufRead,BufNewFile *.css set ft=css syntax=css3
+
 
 "-------------------------------------------------------------------------------
 "Syntax Check
@@ -202,30 +219,17 @@ augroup END
 "-------------------------------------------------------------------------------
 "Vimdiffで半角スペースを無視する
 set diffopt+=iwhite
-"-------------------------------------------------------------------------------
-"Vundle
-"-------------------------------------------------------------------------------
-set nocompatible
-filetype off
-
-set rtp+=~/dotfiles/vimfiles/vundle.git/	"vundleのディレクトリ
-call vundle#rc()
-Bundle 'thinca/vim-quickrun'
-Bundle 'thinca/vim-guicolorscheme'
-Bundle 'tpope/vim-fugitive'
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/vimshell'
-Bundle 'git://git.wincent.com/command-t.git'
-filetype plugin indent on     " required!
 "----------------------------------------
 " ショートカット
 "----------------------------------------
-" CTRL-hjklでウインドウ移動
+"表示行単位で行移動する
+nnoremap <silent> j gj
+nnoremap <silent> k gk
+" CTRL-hjklでウィンドウ移動
 nnoremap <C-j> ;<C-w>j
-nnoremap <C-k> ;<C-w>j
-nnoremap <C-l> ;<C-w>j
-nnoremap <C-h> ;<C-w>j
+nnoremap <C-k> ;<C-k>j
+nnoremap <C-l> ;<C-l>j
+nnoremap <C-h> ;<C-h>j
 " タブ移動をCTRL+TABに
 nnoremap <C-n> gt
 nnoremap <C-b> gT
@@ -236,14 +240,56 @@ nnoremap <C-l> gl
 " CTRL+tでファイルを開く
 "nnoremap <C-t> :tabnew<CR>
 "Escの2回押しでハイライト消去
-nmap <ESC><ESC> ;nohlsearch<CR><ESC>
-" CTRL + Dで :cd 入力待ちにする
-nnoremap <C-d> :<C-u>cd<space>
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
+"-------------------------------------------------------------------------------
+"Vundle
+"-------------------------------------------------------------------------------
+filetype off
+
+set rtp+=~/dotfiles/vimfiles/vundle.git/	"vundleのディレクトリ
+call vundle#rc()
+Bundle 'thinca/vim-quickrun'
+Bundle 'thinca/vim-guicolorscheme'
+Bundle 'tpope/vim-fugitive'
+Bundle 'Shougo/unite.vim'
+"Bundle 'Shougo/vimproc'
+Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/neocomplcache-snippets-complete'
+Bundle 'tpope/vim-surround'
+" vim-surroundを.で繰り返しできようにする
+Bundle 'tpope/vim-repeat'
+Bundle 'Shougo/vimshell'
+Bundle 'git://git.wincent.com/command-t.git'
+"Gist
+Bundle 'mattn/gist-vim'
+Bundle 'mattn/webapi-vim'
+"eregex.vim : vimの正規表現をrubyやperlの正規表現な入力でできる :%S/perlregex/
+Bundle 'eregex.vim'
+"整形ツール
+Bundle 'Align'
+" フィルタリングと整形
+Bundle 'godlygeek/tabular'
+"Syntax Less
+Bundle 'groenewege/vim-less'
+"Syntax Coffee Script
+Bundle 'kchmck/vim-coffee-script'
+" Syntax
+Bundle 'scrooloose/syntastic'
+filetype plugin indent on     " required!
 "-------------------------------------------------------------------------------
 "Plugin/command-t
 "-------------------------------------------------------------------------------
 let g:CommandTMaxHeight=15
-nnoremap <silent> <C-f> :<C-u>CommandT <Return>
+"デフォルトはworksディレクトリを検索する
+nnoremap <silent> <C-f> :<C-u>CommandT ~/works<Return>
+
+"-------------------------------------------------------------------------------
+"Plugin/eregex
+"-------------------------------------------------------------------------------
+"nnoremap / :M/
+"nnoremap ? :M?
+"nnoremap ,/ /
+"nnoremap ,? ?
 "-------------------------------------------------------------------------------
 "Plugin/Unite
 "-------------------------------------------------------------------------------
@@ -269,43 +315,126 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
 au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
 " ESCキーを2回押すと終了する
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
+au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 "-------------------------------------------------------------------------------
 "Plugin/Neocomplcache
 "-------------------------------------------------------------------------------
-"neocomplcacheを起動時に有効化する設定です
+" Use neocomplcache.
 let g:neocomplcache_enable_at_startup = 1
-"neocomplcacheのsmart case機能を有効化します
-"smart caseは'smartcase'と同様に、大文字が入力されるまで大文字小文字の区別を無視するという機能です。
+" Use smartcase.
 let g:neocomplcache_enable_smart_case = 1
-"こちらは_区切りの補完を有効化します
+" Use camel case completion.
+let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
 let g:neocomplcache_enable_underbar_completion = 1
-"シンタックスをキャッシュするときの最小文字長を3にしています。デフォルトでは4です
-let g:neocomplcache_min_syntax_length = 3
-"ファイルタイプ毎にneocomplcacheのディクショナリを設定することができます。
-"neocomplcacheは'dictionary'も見ますが、こちらを優先します。
-"g:neocomplcache_dictionary_filetype_listsはcontext
-"filetypeでも参照できるので、できればこちらを設定するべきです
+" Set minimum keyword length.
+let g:neocomplcache_min_keyword_length = 0
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 0
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+" -入力による候補番号の表示
+let g:neocomplcache_enable_quick_match = 1
+" 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
+let g:neocomplcache_enable_auto_select = 1
+
+"シンタックス補完を無効に
+"let g:neocomplcache_plugin_disable = {
+"  \ 'syntax_complete' : 1,
+"  \ }
+
+" Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
 	\ 'default' : '',
-	\ 'php' : $HOME . '/.vim/dict',
+	\ 'php' : $HOME . '/.vim/dict/php.dict',
+	\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
 		\ }
-"キーワードパターンの設定です。 neocomplcacheが対応していない独自の言語を使いたい場合は、これを変更しないといけません。 let g:neocomplcache_keyword_patterns['default']を変更しているのは、 デフォルトが\k\+となっていて、日本語も収集してしまう仕様が個人的に好きではないからです。
+
+" Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
-	let g:neocomplcache_keyword_patterns = {}
+  let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-"<C-k>でスニペットの展開をできるようにします。<C-k>が取られてしまうのが気に入らない場合は、 後述するneocomplcache#sources#snippets_complete#expandable()を使ったほうが良いでしょう。 smapも同時に設定しないと、デフォルト値が選択されているときに展開やジャンプがされません。
-imap <C-k> <Plug>(neocomplcache_snippets_expand)
-"補完候補のなかから、共通する部分を補完します。ちょうど、シェルの補完のような動作です。
-inoremap <expr><C-l> neocomplcache#complete_common_string()
-"<C-h>や<BS>を押したときに確実にポップアップを削除します。
+
+"カーソルより後のキーワードパターンを認識。
+"h|geとなっている状態(|はカーソル)で、hogeを補完したときに後ろのキーワードを認識してho|geと補完する機能。
+"修正するときにかなり便利。
+if !exists('g:neocomplcache_next_keyword_patterns')
+  let g:neocomplcache_next_keyword_patterns = {}
+endif
+
+"スニペットを展開する。スニペットが関係しないところでは行末まで削除
+imap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
+smap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+"vim標準のキーワード補完を置き換える
+inoremap <expr><C-n> neocomplcache#manual_keyword_complete()
+
+" SuperTab like snippets behavior.
+"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" Recommended key-mappings.
+" <TAB>: completion.
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" 単語入力中だけ補完候補を出す
+inoremap <expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
+" 現在のファイルのキーワード
+"inoremap <expr><C-h> pumvisible() ? "\<C-x>\<C-n>" : "\<C-h>"
+" 'dictionary'のキーワード
+"inoremap <expr><C-h> pumvisible() ? "\<C-x>\<C-k>" : "\<C-h>"
+" 編集中と外部参照しているファイルのキーワード
+"inoremap <expr><C-h> pumvisible() ? "\<C-x>\<C-i>" : "\<C-h>"
+" オムニ補完
+"inoremap <expr><C-h> pumvisible() ? "\<C-x>\<C-o>" : "\<C-h>"
+" <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-"現在選択している候補を確定します。
-inoremap <expr><C-y> neocomplcache#close_popup()
-"現在選択している候補をキャンセルし、ポップアップを閉じます
-inoremap <expr><C-e> neocomplcache#cancel_popup()
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType ruby set omnifunc=rubycomplete#Complete
 
+" Enable heavy omni completion.
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"-------------------------------------------------------------------------------
+"Plugin/tabular [ :Tab /| etc..]
+"-------------------------------------------------------------------------------
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+    Tabularize/|/l1
+    normal! 0
+    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+endfunction
+
+"------------------------------------
+" Align
+"------------------------------------
+" Alignを日本語環境で使用するための設定
+let g:Align_xstrlen = 3
+"------------------------------------
+" syntastic
+"------------------------------------
+let g:syntastic_mode_map = { 'mode': 'active',
+  \ 'active_filetypes': ['php'],
+  \ 'passive_filetypes': ['html'] }
+let g:syntastic_auto_loc_list = 1
+"let g:syntastic_javascript_checker = 'jshint'
