@@ -246,8 +246,9 @@ nmap <Esc><Esc> :nohlsearch<CR><Esc>
 "-------------------------------------------------------------------------------
 filetype off
 
-set rtp+=~/dotfiles/vimfiles/vundle.git/	"vundleのディレクトリ
+set rtp+=~/.vim/bundle/vundle/	"vundleのディレクトリ
 call vundle#rc()
+Bundle 'gmarik/vundle'
 Bundle 'thinca/vim-quickrun'
 Bundle 'thinca/vim-guicolorscheme'
 Bundle 'tpope/vim-fugitive'
