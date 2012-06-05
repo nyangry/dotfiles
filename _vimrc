@@ -31,7 +31,6 @@ set ruler "カーソルが何行目の何列目に置かれているかを表示
 set number "行番号を表示する
 syntax enable
 
-
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
 " 保存時にtabをスペースに変換する
@@ -149,17 +148,11 @@ endif
 "-------------------------------------------------------------------------------
 "自動補完
 "-------------------------------------------------------------------------------
-inoremap , ,<Space>
-inoremap { {}
-inoremap [
-inoremap ( ()
-inoremap " ""
-inoremap ' ''
-vnoremap { "zdi^V{z}
-vnoremap [ "zdi^V[z]
-vnoremap ( "zdi^V(z)
-vnoremap " "zdi^V"z^V"
-vnoremap ' "zdi'z'
+inoremap { {}<LEFT>
+inoremap [ []<LEFT>
+inoremap ( ()<LEFT>
+inoremap " ""<LEFT>
+inoremap ' ''<LEFT>
 "行末にセミコロン;をつけて改行
 inoremap ;; <C-O>$;<CR>
 "検索パターンの入力を改善する
@@ -239,11 +232,6 @@ set diffopt+=iwhite
 "表示行単位で行移動する
 nnoremap <silent> j gj
 nnoremap <silent> k gk
-" CTRL-hjklでウィンドウ移動
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <C-h> <C-w>h
 " タブ移動をCTRL+TABに
 nnoremap <C-n> gt
 nnoremap <C-b> gT
