@@ -31,6 +31,17 @@ set ruler "カーソルが何行目の何列目に置かれているかを表示
 set number "行番号を表示する
 syntax enable
 
+
+" 保存時に行末の空白を除去する
+autocmd BufWritePre * :%s/\s\+$//ge
+" 保存時にtabをスペースに変換する
+autocmd BufWritePre * :%s/\t/ /ge
+
+" y9で行末までヤンク
+nmap y9 y$
+" y0で行頭までヤンク
+nmap y0 y^
+
 " タブ文字、行末など不可視文字を表示する
 " set list
 " listで表示される文字のフォーマットを指定する
@@ -108,7 +119,6 @@ endif
 """"""""""""""""""""""""""""""
 "ステータスラインに文字コードやBOM、16進表示等表示
 """"""""""""""""""""""""""""""
-
 " ステータスラインの表示
   set statusline=%<     " 行が長すぎるときに切り詰める位置
   set statusline+=%r    " %r 読み込み専用フラグ
@@ -140,18 +150,22 @@ endif
 "自動補完
 "-------------------------------------------------------------------------------
 inoremap , ,<Space>
-"inoremap { {}<LEFT>
-"inoremap [ []<LEFT>
-"inoremap ( ()<LEFT>
-"inoremap " ""<LEFT>
-"inoremap ' ''<LEFT>
-"inoremap < <><LEFT>
-"inoremap ` ``<LEFT>
+inoremap { {}
+inoremap [
+inoremap ( ()
+inoremap " ""
+inoremap ' ''
+vnoremap { "zdi^V{z}
+vnoremap [ "zdi^V[z]
+vnoremap ( "zdi^V(z)
+vnoremap " "zdi^V"z^V"
+vnoremap ' "zdi'z'
 "行末にセミコロン;をつけて改行
 inoremap ;; <C-O>$;<CR>
 "検索パターンの入力を改善する
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
+
 "-------------------------------------------------------------------------------
 "View
 "-------------------------------------------------------------------------------
@@ -205,14 +219,14 @@ au BufRead,BufNewFile *.css set ft=css syntax=css3
 "-------------------------------------------------------------------------------
 "Ruby
 augroup rbsyntaxcheck
-	autocmd!
-	autocmd BufWrite *.rb w !ruby -c
+ autocmd!
+ autocmd BufWrite *.rb w !ruby -c
 augroup END
 
 "PHP
 augroup phpsyntaxcheck
-	autocmd!
-	autocmd BufWrite *.php w !php -l
+ autocmd!
+ autocmd BufWrite *.php w !php -l
 augroup END
 "-------------------------------------------------------------------------------
 "Vimdiff
@@ -226,10 +240,10 @@ set diffopt+=iwhite
 nnoremap <silent> j gj
 nnoremap <silent> k gk
 " CTRL-hjklでウィンドウ移動
-nnoremap <C-j> ;<C-w>j
-nnoremap <C-k> ;<C-k>j
-nnoremap <C-l> ;<C-l>j
-nnoremap <C-h> ;<C-h>j
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
 " タブ移動をCTRL+TABに
 nnoremap <C-n> gt
 nnoremap <C-b> gT
@@ -246,7 +260,7 @@ nmap <Esc><Esc> :nohlsearch<CR><Esc>
 "-------------------------------------------------------------------------------
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/	"vundleのディレクトリ
+set rtp+=~/.vim/bundle/vundle/ "vundleのディレクトリ
 call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'thinca/vim-quickrun'
@@ -274,8 +288,6 @@ Bundle 'godlygeek/tabular'
 Bundle 'groenewege/vim-less'
 "Syntax Coffee Script
 Bundle 'kchmck/vim-coffee-script'
-" Syntax
-Bundle 'scrooloose/syntastic'
 filetype plugin indent on     " required!
 "-------------------------------------------------------------------------------
 "Plugin/command-t
@@ -346,10 +358,10 @@ let g:neocomplcache_enable_auto_select = 1
 
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
-	\ 'default' : '',
-	\ 'php' : $HOME . '/.vim/dict/php.dict',
-	\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
-		\ }
+ \ 'default' : '',
+ \ 'php' : $HOME . '/.vim/dict/php.dict',
+ \ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
+  \ }
 
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
@@ -431,11 +443,3 @@ endfunction
 "------------------------------------
 " Alignを日本語環境で使用するための設定
 let g:Align_xstrlen = 3
-"------------------------------------
-" syntastic
-"------------------------------------
-let g:syntastic_mode_map = { 'mode': 'active',
-  \ 'active_filetypes': ['php'],
-  \ 'passive_filetypes': ['html'] }
-let g:syntastic_auto_loc_list = 1
-"let g:syntastic_javascript_checker = 'jshint'
