@@ -148,11 +148,12 @@ endif
 "-------------------------------------------------------------------------------
 "自動補完
 "-------------------------------------------------------------------------------
-inoremap { {}<LEFT>
-inoremap [ []<LEFT>
-inoremap ( ()<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
+inoremap , ,
+"inoremap { {}<LEFT>
+"inoremap [ []<LEFT>
+"inoremap ( ()<LEFT>
+"inoremap " ""<LEFT>
+"inoremap ' ''<LEFT>
 "行末にセミコロン;をつけて改行
 inoremap ;; <C-O>$;<CR>
 "検索パターンの入力を改善する
@@ -198,7 +199,7 @@ set wildignore+=*.xls,*.xlsx,*.key
 "-------------------------------------------------------------------------------
 "jQuery
 "au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
-au BufRead,BufNewFile *.js set ft=javascript syntax=jquery
+"au BufRead,BufNewFile *.js set ft=javascript syntax=jquery
 "JSON
 au! BufRead,BufNewFile *.json set filetype=json
 "HTML5
@@ -244,6 +245,12 @@ nnoremap <C-l> gl
 "Escの2回押しでハイライト消去
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 "-------------------------------------------------------------------------------
+"Compiler
+"-------------------------------------------------------------------------------
+autocmd FileType javascript :compiler gjslint
+autocmd QuickfixCmdPost make copen
+
+"-------------------------------------------------------------------------------
 "Vundle
 "-------------------------------------------------------------------------------
 filetype off
@@ -255,6 +262,8 @@ Bundle 'thinca/vim-quickrun'
 Bundle 'thinca/vim-guicolorscheme'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/vimfiler'
+Bundle 'Lokaltog/vim-powerline'
 "Bundle 'Shougo/vimproc'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neocomplcache-snippets-complete'
@@ -272,6 +281,10 @@ Bundle 'eregex.vim'
 Bundle 'Align'
 " フィルタリングと整形
 Bundle 'godlygeek/tabular'
+"Syntax javascript
+Bundle 'jelera/vim-javascript-syntax'
+"Indent javascript
+Bundle 'pangloss/vim-javascript'
 "Syntax Less
 Bundle 'groenewege/vim-less'
 "Syntax Coffee Script
@@ -280,9 +293,27 @@ filetype plugin indent on     " required!
 "-------------------------------------------------------------------------------
 "Plugin/command-t
 "-------------------------------------------------------------------------------
-let g:CommandTMaxHeight=15
+"let g:CommandTMaxHeight=15
 "デフォルトはworksディレクトリを検索する
-nnoremap <silent> <C-f> :<C-u>CommandT ~/works<Return>
+"nnoremap <silent> <C-f> :<C-u>CommandT ~/works<Return>
+
+"-------------------------------------------------------------------------------
+"Plugin/Vimfiler
+"-------------------------------------------------------------------------------
+nnoremap <silent> <C-f> :<C-u>VimFiler -split -simple -winwidth=50 -no-quit<Return>
+function! s:git_root_dir()
+    if(system('git rev-parse --is-inside-work-tree') == "true\n")
+        return ':VimFiler ' . system('git rev-parse --show-cdup') . '\<CR>'
+    else
+        echoerr '!!!current directory is outside git working tree!!!'
+    endif
+endfunction
+nnoremap <expr><Leader>fg <SID>git_root_dir()
+
+"-------------------------------------------------------------------------------
+"Plugin/Powerline
+"-------------------------------------------------------------------------------
+let g:Powerline_symbols = 'fancy'
 
 "-------------------------------------------------------------------------------
 "Plugin/eregex
