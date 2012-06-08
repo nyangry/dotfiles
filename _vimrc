@@ -281,6 +281,8 @@ Bundle 'eregex.vim'
 Bundle 'Align'
 " フィルタリングと整形
 Bundle 'godlygeek/tabular'
+"Syntax Check
+Bundle 'scrooloose/syntastic'
 "Syntax javascript
 Bundle 'jelera/vim-javascript-syntax'
 "Indent javascript
@@ -462,3 +464,13 @@ endfunction
 "------------------------------------
 " Alignを日本語環境で使用するための設定
 let g:Align_xstrlen = 3
+
+"------------------------------------
+" Syntastic
+"------------------------------------
+let g:syntastic_mode_map = { 'mode': 'passive',
+                           \ 'active_filetypes': ['php', 'ruby', 'javascript'],
+                           \ 'passive_filetypes': [] }
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_javascript_checker = 'jshint'
+
