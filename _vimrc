@@ -164,16 +164,9 @@ cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 "View
 "-------------------------------------------------------------------------------
 set t_Co=256
-"jellybeans, rdark, ekvoli, revolutions, telstar
-"colorscheme ekvoli
-"autocmd VimEnter * :GuiColorScheme xoria256
-"autocmd VimEnter * :colorscheme xoria256
-set background=dark
-"colorscheme FadetoGrey
-"let g:guicolorscheme_color_table = {'bg' : 'Black'}
-":hi clear CursorLine
-":hi CursorLine gui=underline
-"highlight CursorLine ctermbg=black guibg=black
+"set background=dark
+colorscheme ir_black
+
 "-------------------------------------------------------------------------------
 "Complete
 "-------------------------------------------------------------------------------
@@ -258,19 +251,19 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/ "vundleのディレクトリ
 call vundle#rc()
 Bundle 'gmarik/vundle'
-Bundle 'thinca/vim-quickrun'
-Bundle 'thinca/vim-guicolorscheme'
-Bundle 'tpope/vim-fugitive'
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/vimfiler'
+"Bundle 'godlygeek/csapprox'
+"Bundle 'Shougo/vimfiler'
 Bundle 'Lokaltog/vim-powerline'
-"Bundle 'Shougo/vimproc'
+Bundle 'Shougo/vimproc'
+Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neocomplcache-snippets-complete'
+Bundle 'Shougo/vimshell'
+Bundle 'thinca/vim-quickrun'
+Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 " vim-surroundを.で繰り返しできようにする
 Bundle 'tpope/vim-repeat'
-Bundle 'Shougo/vimshell'
 Bundle 'git://git.wincent.com/command-t.git'
 "Gist
 Bundle 'mattn/gist-vim'
@@ -302,15 +295,16 @@ filetype plugin indent on     " required!
 "-------------------------------------------------------------------------------
 "Plugin/Vimfiler
 "-------------------------------------------------------------------------------
-nnoremap <silent> <C-f> :<C-u>VimFiler -split -simple -winwidth=50 -no-quit<Return>
-function! s:git_root_dir()
-    if(system('git rev-parse --is-inside-work-tree') == "true\n")
-        return ':VimFiler ' . system('git rev-parse --show-cdup') . '\<CR>'
-    else
-        echoerr '!!!current directory is outside git working tree!!!'
-    endif
-endfunction
-nnoremap <expr><Leader>fg <SID>git_root_dir()
+"nnoremap <silent> <C-f> :<C-u>VimFiler -split -simple -winwidth=40 -no-quit<Return>
+"nnoremap <silent> <C-f> :<C-u>VimFiler -quit<Return>
+"function! s:git_root_dir()
+"    if(system('git rev-parse --is-inside-work-tree') == "true\n")
+"        return ':VimFiler ' . system('git rev-parse --show-cdup') . '\<CR>'
+"    else
+"        echoerr '!!!current directory is outside git working tree!!!'
+"    endif
+"endfunction
+"nnoremap <expr><Leader>fg <SID>git_root_dir()
 
 "-------------------------------------------------------------------------------
 "Plugin/Powerline
@@ -351,6 +345,10 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabop
 " ESCキーを2回押すと終了する
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+
+" ショートカット
+let g:unite_enable_start_insert=1
+nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
 "-------------------------------------------------------------------------------
 "Plugin/Neocomplcache
 "-------------------------------------------------------------------------------
@@ -469,7 +467,7 @@ let g:Align_xstrlen = 3
 " Syntastic
 "------------------------------------
 let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': ['php', 'ruby', 'javascript'],
+                           \ 'active_filetypes': [],
                            \ 'passive_filetypes': [] }
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_javascript_checker = 'jshint'
