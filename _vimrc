@@ -32,14 +32,16 @@ set number "行番号を表示する
 syntax enable
 
 " 保存時に行末の空白を除去する
-autocmd BufWritePre * :%s/\s\+$//ge
+"autocmd BufWritePre * :%s/\s\+$//ge
 " 保存時にtabをスペースに変換する
-autocmd BufWritePre * :%s/\t/ /ge
+"autocmd BufWritePre * :%s/\t/ /ge
 
 " y9で行末までヤンク
 nmap y9 y$
 " y0で行頭までヤンク
 nmap y0 y^
+" ビジュアルモードで選択したテキストで検索する
+vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
 
 " タブ文字、行末など不可視文字を表示する
 " set list
@@ -174,10 +176,11 @@ set hlsearch
 autocmd BufWritePre * :%s/\s\+$//ge "保存時に行末の空白を除去する
 set incsearch "インクリメンタルサーチを行う
 set listchars=eol:$,tab:>\ ,extends:< "listで表示される文字のフォーマットを指定する
-set shiftwidth=2 "シフト移動幅
 set showmatch "閉じ括弧が入力されたとき、対応する括弧を表示する
 set expandtab
-set tabstop=2 "ファイル内の <Tab> が対応する空白の数
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 "タブ幅をリセット
 au BufNewFile,BufRead * set tabstop=2 shiftwidth=2
 set nowrapscan "検索をファイルの先頭へループしない
@@ -387,6 +390,12 @@ if !exists('g:neocomplcache_keyword_patterns')
   let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+"関数を補完するための区切り文字パターン
+if !exists('g:neocomplcache_delimiter_patterns')
+  let g:neocomplcache_delimiter_patterns = {}
+endif
+let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
 
 "カーソルより後のキーワードパターンを認識。
 "h|geとなっている状態(|はカーソル)で、hogeを補完したときに後ろのキーワードを認識してho|geと補完する機能。
