@@ -262,12 +262,12 @@ Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neocomplcache-snippets-complete'
 Bundle 'Shougo/vimshell'
-Bundle 'thinca/vim-quickrun'
+"Bundle 'thinca/vim-quickrun'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 " vim-surroundを.で繰り返しできようにする
-Bundle 'tpope/vim-repeat'
-Bundle 'git://git.wincent.com/command-t.git'
+"Bundle 'tpope/vim-repeat'
+"Bundle 'git://git.wincent.com/command-t.git'
 "Gist
 Bundle 'mattn/gist-vim'
 Bundle 'mattn/webapi-vim'
@@ -281,12 +281,12 @@ Bundle 'godlygeek/tabular'
 Bundle 'scrooloose/syntastic'
 "Syntax javascript
 Bundle 'jelera/vim-javascript-syntax'
-"Indent javascript
-Bundle 'pangloss/vim-javascript'
+"javascript
+Bundle 'teramako/jscomplete-vim'
 "Syntax Less
-Bundle 'groenewege/vim-less'
+"Bundle 'groenewege/vim-less'
 "Syntax Coffee Script
-Bundle 'kchmck/vim-coffee-script'
+"Bundle 'kchmck/vim-coffee-script'
 filetype plugin indent on     " required!
 "-------------------------------------------------------------------------------
 "Plugin/command-t
@@ -337,14 +337,14 @@ nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
 "全部乗せ
 nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 " ウィンドウを分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+"au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+"au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
 " ウィンドウを縦に分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
+"au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
+"au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
 " 新しいウィンドウで開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+"au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+"au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
 " ESCキーを2回押すと終了する
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
@@ -440,6 +440,8 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType javascript
+  \ :setl omnifunc=jscomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby set omnifunc=rubycomplete#Complete
@@ -450,6 +452,12 @@ if !exists('g:neocomplcache_omni_patterns')
 endif
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+
+" バッファ共有設定
+let g:neocomplcache_same_filetype_lists = {
+\ 'html' : 'html,javascript,php',
+\ 'php' : 'html,javascript'
+\ }
 "-------------------------------------------------------------------------------
 "Plugin/tabular [ :Tab /| etc..]
 "-------------------------------------------------------------------------------
@@ -480,4 +488,3 @@ let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'passive_filetypes': [] }
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_javascript_checker = 'jshint'
-

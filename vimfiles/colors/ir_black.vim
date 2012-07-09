@@ -202,6 +202,7 @@ hi link htmlEndTag      Identifier
 
 " Special for Javascript
 hi link javaScriptNumber      Number
+hi link javaScriptIdentifier  Keyword
 
 " Special for Php
 hi link phpNumber      Number
