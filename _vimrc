@@ -352,6 +352,7 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 " ショートカット
 let g:unite_enable_start_insert=1
 nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
+nnoremap <C-g> :<C-u>Unite grep<CR>
 "-------------------------------------------------------------------------------
 "Plugin/Neocomplcache
 "-------------------------------------------------------------------------------
