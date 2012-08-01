@@ -1,6 +1,45 @@
-snippet     err
-  error_log(print_r(${1}, 1), 1, 'masuyama@coobal.co.jp');
+snippet			err
+	error_log(print_r(${1}, 1), 1, 'masuyama@coobal.co.jp');
 
-snippet     errp
-  echo '<pre>'.print_r(${1}, 1).'</pre>';
+snippet			errl
+  echo '<pre style="font-size:11px; line-height:11px; letter-spacing:0px; color:#79B7DA; background:#000; z-index:9999;">'
+        .print_r(${1}, 1).'</pre>';
+
+snippet			errp
+	call_user_func(function ($v) {
+		echo '
+			<div id="debugPanel" style="max-width:800px; position:absolute; top:0; left:0; z-index:999; height:auto; overflow:hidden; cursor:pointer;">
+				<div style="float:left; max-width:780px; padding-bottom: 32767px;margin-bottom:-32767px;">
+					<pre id="debugTextHolder" style="font-size:11px; line-height:11px; letter-spacing:0px; color:#79B7DA; background:#000;">
+					'.print_r($v, 1).'
+					</pre>
+				</div>
+				<div id="debugPanelSwitch" style="float:left; padding-bottom:32767px; margin-bottom:-32767px; width:20px; background:#12314D;"></div>
+			</div>
+			<script type="text/javascript">
+				var debugPanel, debugTextHolder, debugPanelSwitch;
+				debugPanel = document.getElementById("debugPanel");
+				debugTextHolder = document.getElementById("debugTextHolder");
+				debugPanelSwitch = document.getElementById("debugPanelSwitch");
+				document.body.appendChild(debugPanel);
+
+				debugText = debugTextHolder.innerHTML;
+				debugText = debugText.replace(/  /g, " ");
+				debugText = debugText.replace(/^\n/gm, "");
+				debugTextHolder.innerHTML = debugText;
+
+				debugPanel.addEventListener("click", function () {
+					var display, height;
+					display = "";
+					height = "";
+					if (debugTextHolder.style.display != "none") {
+						display = "none";
+						height = debugTextHolder.clientHeight;
+					}
+					debugTextHolder.style.display = display;
+					debugPanelSwitch.style.height = height + "px";
+				});
+			</script>
+		';
+	}, ${1});
 

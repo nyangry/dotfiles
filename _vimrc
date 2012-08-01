@@ -1,6 +1,7 @@
 "-------------------------------------------------------------------------------
 "Init
 "-------------------------------------------------------------------------------
+set backupskip=/tmp/*,/private/tmp/* " tmpの中ではバックアップスクリプトを作成しない（crontab等用）
 set nocompatible                 " vi互換なし
 set encoding=utf-8
 set fileencodings=utf-8
@@ -51,10 +52,16 @@ vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><C
 " set listchars=tab:^\ ,trail:~
 set listchars=tab:>\ ,trail:~
 
-set autoindent   " 自動でインデント
-set smartindent  " 新しい行を開始したときに、新しい行のインデントを現在行と同じ量にする。
-set cindent
-"set indentexpr
+"----------------------------------------
+" インデント調整
+"----------------------------------------
+setlocal autoindent
+"setlocal indentexpr=GetHaskellIndent()
+setlocal indentkeys=!^F,o,O
+setlocal expandtab
+setlocal tabstop<
+setlocal softtabstop=2
+setlocal shiftwidth=2
 
 set cursorline "カーソル行をハイライト
 " これをしないと候補選択時に Scratch ウィンドウが開いてしまう
@@ -98,6 +105,10 @@ function! s:GetHighlight(hi)
   let hl = substitute(hl, 'xxx', '', '')
   return hl
 endfunction
+
+" Rename
+command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
+
 """"""""""""""""""""""""""""""
 "全角スペースを表示
 """"""""""""""""""""""""""""""
@@ -117,6 +128,16 @@ if has('syntax')
     autocmd VimEnter,BufEnter * call ZenkakuSpace()
   augroup END
 endif
+""""""""""""""""""""""""""""""
+"横幅が長いコードをハイライトする
+""""""""""""""""""""""""""""""
+"set textwidth=0
+"if exists('&colorcolumn')
+"  set colorcolumn=+1
+"  " sh,cpp,perl,vim,...の部分は自分が使う
+"  " プログラミング言語のfiletypeに合わせてください
+"  autocmd FileType sh,vim,ruby,python,php,javascript setlocal textwidth=80
+"endif
 """"""""""""""""""""""""""""""
 "ステータスラインに文字コードやBOM、16進表示等表示
 """"""""""""""""""""""""""""""
@@ -173,12 +194,12 @@ colorscheme ir_black
 "Complete
 "-------------------------------------------------------------------------------
 set hlsearch
-autocmd BufWritePre * :%s/\s\+$//ge "保存時に行末の空白を除去する
+"autocmd BufWritePre * :%s/\s\+$//ge "保存時に行末の空白を除去する
 set incsearch "インクリメンタルサーチを行う
 set listchars=eol:$,tab:>\ ,extends:< "listで表示される文字のフォーマットを指定する
 set showmatch "閉じ括弧が入力されたとき、対応する括弧を表示する
 set expandtab
-set tabstop=2
+set tabstop<
 set softtabstop=2
 set shiftwidth=2
 "タブ幅をリセット
@@ -233,11 +254,14 @@ nnoremap <silent> k gk
 nnoremap <C-n> gt
 nnoremap <C-b> gT
 " CTRL＋Lで最終編集箇所へジャンプ
-nnoremap <C-l> gl
+nnoremap <C-l> g;
+nnoremap <C-p> g,
 " CTRL+wでタブ終了
 "nnoremap <C-w> ZZ
 " CTRL+tでファイルを開く
 "nnoremap <C-t> :tabnew<CR>
+" CTRL+sでrsyncを叩く
+nmap <C-w> :! /Users/admin/works/sync_rep3.sh<CR>
 "Escの2回押しでハイライト消去
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 "-------------------------------------------------------------------------------
@@ -265,6 +289,8 @@ Bundle 'Shougo/vimshell'
 "Bundle 'thinca/vim-quickrun'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
+" % による対応括弧へのカーソル移動機能を拡張
+Bundle 'jwhitley/vim-matchit'
 " vim-surroundを.で繰り返しできようにする
 "Bundle 'tpope/vim-repeat'
 "Bundle 'git://git.wincent.com/command-t.git'
@@ -456,8 +482,9 @@ let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 " バッファ共有設定
 let g:neocomplcache_same_filetype_lists = {
-\ 'html' : 'html,javascript,php',
-\ 'php' : 'html,javascript'
+\  'html' : 'html,javascript,php,ruby'
+\, 'php'  : 'html,javascript,php'
+\, 'js'   : 'html,php,ruby'
 \ }
 "-------------------------------------------------------------------------------
 "Plugin/tabular [ :Tab /| etc..]
