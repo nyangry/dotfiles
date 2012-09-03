@@ -30,8 +30,16 @@ set ttymouse=xterm2
 set laststatus=2 "常にステータスラインを表示
 set ruler "カーソルが何行目の何列目に置かれているかを表示する
 set number "行番号を表示する
+set noequalalways " ウインドウ幅の自動調整を行わない
 syntax enable
-
+" 横幅が長いコードをハイライトする
+set textwidth=0
+if exists('&colorcolumn')
+    set colorcolumn=+1
+    " sh,cpp,perl,vim,...の部分は自分が使う
+    " プログラミング言語のfiletypeに合わせてください
+    autocmd FileType sh,vim,ruby,js,php setlocal textwidth=80
+endif
 " 保存時に行末の空白を除去する
 "autocmd BufWritePre * :%s/\s\+$//ge
 " 保存時にtabをスペースに変換する
@@ -55,13 +63,13 @@ set listchars=tab:>\ ,trail:~
 "----------------------------------------
 " インデント調整
 "----------------------------------------
-setlocal autoindent
 "setlocal indentexpr=GetHaskellIndent()
 setlocal indentkeys=!^F,o,O
 setlocal expandtab
 setlocal tabstop<
 setlocal softtabstop=2
 setlocal shiftwidth=2
+setlocal autoindent
 
 set cursorline "カーソル行をハイライト
 " これをしないと候補選択時に Scratch ウィンドウが開いてしまう
@@ -261,7 +269,7 @@ nnoremap <C-p> g,
 " CTRL+tでファイルを開く
 "nnoremap <C-t> :tabnew<CR>
 " CTRL+sでrsyncを叩く
-nmap <C-w> :! /Users/admin/works/sync_rep3.sh<CR>
+nmap <C-r> :! /Users/admin/works/sync_rep3.sh<CR>
 "Escの2回押しでハイライト消去
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 "-------------------------------------------------------------------------------
@@ -283,6 +291,7 @@ Bundle 'gmarik/vundle'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Shougo/vimproc'
 Bundle 'Shougo/unite.vim'
+Bundle 'h1mesuke/unite-outline'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neocomplcache-snippets-complete'
 Bundle 'Shougo/vimshell'
@@ -294,6 +303,8 @@ Bundle 'jwhitley/vim-matchit'
 " vim-surroundを.で繰り返しできようにする
 "Bundle 'tpope/vim-repeat'
 "Bundle 'git://git.wincent.com/command-t.git'
+" fakeclip
+Bundle 'kana/vim-fakeclip'
 "Gist
 Bundle 'mattn/gist-vim'
 Bundle 'mattn/webapi-vim'
@@ -379,6 +390,22 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 let g:unite_enable_start_insert=1
 nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
 nnoremap <C-g> :<C-u>Unite grep<CR>
+
+"-------------------------------------------------------------------------------
+"Plugin/Unite-outline
+"-------------------------------------------------------------------------------
+let g:unite_source_outline_filetype_options = {
+  \ '*': {
+  \   'auto_update': 1,
+  \   'auto_update_event': 'hold',
+  \   'ignore_types': ['comment'],
+  \ },
+  \ 'javascript': {
+  \ },
+  \ 'php': {
+  \ },
+  \}
+
 "-------------------------------------------------------------------------------
 "Plugin/Neocomplcache
 "-------------------------------------------------------------------------------
@@ -516,3 +543,4 @@ let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'passive_filetypes': [] }
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_javascript_checker = 'jshint'
+
