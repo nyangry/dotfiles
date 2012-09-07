@@ -1,6 +1,6 @@
-"-------------------------------------------------------------------------------
+"======================================
 "Init
-"-------------------------------------------------------------------------------
+"======================================
 set backupskip=/tmp/*,/private/tmp/* " tmpの中ではバックアップスクリプトを作成しない（crontab等用）
 set nocompatible                 " vi互換なし
 set encoding=utf-8
@@ -176,9 +176,9 @@ endif
   set statusline+=\ \   " 空白スペース2個
   set statusline+=%P    " ファイル内の何％の位置にあるか
 
-"-------------------------------------------------------------------------------
+"======================================
 "自動補完
-"-------------------------------------------------------------------------------
+"======================================
 inoremap , ,
 "inoremap { {}<LEFT>
 "inoremap [ []<LEFT>
@@ -191,16 +191,16 @@ inoremap ;; <C-O>$;<CR>
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 
-"-------------------------------------------------------------------------------
+"======================================
 "View
-"-------------------------------------------------------------------------------
+"======================================
 set t_Co=256
 "set background=dark
 colorscheme ir_black
 
-"-------------------------------------------------------------------------------
+"======================================
 "Complete
-"-------------------------------------------------------------------------------
+"======================================
 set hlsearch
 "autocmd BufWritePre * :%s/\s\+$//ge "保存時に行末の空白を除去する
 set incsearch "インクリメンタルサーチを行う
@@ -219,9 +219,9 @@ set nowrapscan "検索をファイルの先頭へループしない
 set wildignore+=*.DS_Store,*.pdf,*.swf,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
 set wildignore+=*.ps,*.eps,*.aux,*.dvi
 set wildignore+=*.xls,*.xlsx,*.key
-"-------------------------------------------------------------------------------
+"======================================
 "Syntax
-"-------------------------------------------------------------------------------
+"======================================
 "jQuery
 "au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 "au BufRead,BufNewFile *.js set ft=javascript syntax=jquery
@@ -233,9 +233,9 @@ au BufRead,BufNewFile *.html set ft=html syntax=html5
 au BufRead,BufNewFile *.css set ft=css syntax=css3
 
 
-"-------------------------------------------------------------------------------
+"======================================
 "Syntax Check
-"-------------------------------------------------------------------------------
+"======================================
 "Ruby
 augroup rbsyntaxcheck
  autocmd!
@@ -247,9 +247,9 @@ augroup phpsyntaxcheck
  autocmd!
  autocmd BufWrite *.php w !php -l
 augroup END
-"-------------------------------------------------------------------------------
+"======================================
 "Vimdiff
-"-------------------------------------------------------------------------------
+"======================================
 "Vimdiffで半角スペースを無視する
 set diffopt+=iwhite
 "----------------------------------------
@@ -269,18 +269,18 @@ nnoremap <C-p> g,
 " CTRL+tでファイルを開く
 "nnoremap <C-t> :tabnew<CR>
 " CTRL+sでrsyncを叩く
-nmap <C-r> :! /Users/admin/works/sync_rep3.sh<CR>
+nmap <C-h> :! /Users/admin/works/sync_rep3.sh<CR>
 "Escの2回押しでハイライト消去
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
-"-------------------------------------------------------------------------------
+"======================================
 "Compiler
-"-------------------------------------------------------------------------------
+"======================================
 autocmd FileType javascript :compiler gjslint
 autocmd QuickfixCmdPost make copen
 
-"-------------------------------------------------------------------------------
+"======================================
 "Vundle
-"-------------------------------------------------------------------------------
+"======================================
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/ "vundleのディレクトリ
@@ -298,6 +298,8 @@ Bundle 'Shougo/vimshell'
 "Bundle 'thinca/vim-quickrun'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
+" taglist
+Bundle 'vim-scripts/taglist.vim'
 " % による対応括弧へのカーソル移動機能を拡張
 Bundle 'jwhitley/vim-matchit'
 " vim-surroundを.で繰り返しできようにする
@@ -325,16 +327,16 @@ Bundle 'teramako/jscomplete-vim'
 "Syntax Coffee Script
 "Bundle 'kchmck/vim-coffee-script'
 filetype plugin indent on     " required!
-"-------------------------------------------------------------------------------
+"======================================
 "Plugin/command-t
-"-------------------------------------------------------------------------------
+"======================================
 "let g:CommandTMaxHeight=15
 "デフォルトはworksディレクトリを検索する
 "nnoremap <silent> <C-f> :<C-u>CommandT ~/works<Return>
 
-"-------------------------------------------------------------------------------
+"======================================
 "Plugin/Vimfiler
-"-------------------------------------------------------------------------------
+"======================================
 "nnoremap <silent> <C-f> :<C-u>VimFiler -split -simple -winwidth=40 -no-quit<Return>
 "nnoremap <silent> <C-f> :<C-u>VimFiler -quit<Return>
 "function! s:git_root_dir()
@@ -346,21 +348,22 @@ filetype plugin indent on     " required!
 "endfunction
 "nnoremap <expr><Leader>fg <SID>git_root_dir()
 
-"-------------------------------------------------------------------------------
+"======================================
 "Plugin/Powerline
-"-------------------------------------------------------------------------------
+"======================================
 let g:Powerline_symbols = 'fancy'
 
-"-------------------------------------------------------------------------------
+"======================================
 "Plugin/eregex
-"-------------------------------------------------------------------------------
+"======================================
 "nnoremap / :M/
 "nnoremap ? :M?
 "nnoremap ,/ /
 "nnoremap ,? ?
-"-------------------------------------------------------------------------------
+"======================================
 "Plugin/Unite
-"-------------------------------------------------------------------------------
+"======================================
+
 "バッファ一覧
 nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
 "ファイル一覧
@@ -385,15 +388,17 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
 " ESCキーを2回押すと終了する
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+"au FileType unite nmap <buffer> <ESC> <Plug>(unite_exit)
 
 " ショートカット
 let g:unite_enable_start_insert=1
 nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
 nnoremap <C-g> :<C-u>Unite grep<CR>
 
-"-------------------------------------------------------------------------------
+
+"======================================
 "Plugin/Unite-outline
-"-------------------------------------------------------------------------------
+"======================================
 let g:unite_source_outline_filetype_options = {
   \ '*': {
   \   'auto_update': 1,
@@ -406,9 +411,10 @@ let g:unite_source_outline_filetype_options = {
   \ },
   \}
 
-"-------------------------------------------------------------------------------
+
+"======================================
 "Plugin/Neocomplcache
-"-------------------------------------------------------------------------------
+"======================================
 " Use neocomplcache.
 let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
@@ -513,9 +519,11 @@ let g:neocomplcache_same_filetype_lists = {
 \, 'php'  : 'html,javascript,php'
 \, 'js'   : 'html,php,ruby'
 \ }
-"-------------------------------------------------------------------------------
+
+
+"======================================
 "Plugin/tabular [ :Tab /| etc..]
-"-------------------------------------------------------------------------------
+"======================================
 inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
 function! s:align()
@@ -529,11 +537,13 @@ function! s:align()
   endif
 endfunction
 
+
 "------------------------------------
 " Align
 "------------------------------------
 " Alignを日本語環境で使用するための設定
 let g:Align_xstrlen = 3
+
 
 "------------------------------------
 " Syntastic
@@ -544,3 +554,11 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_javascript_checker = 'jshint'
 
+
+"------------------------------------
+" taglist
+"------------------------------------
+let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
+let Tlist_Show_One_File = 1
+let Tlist_Use_Right_Window = 1
+let Tlist_Exit_OnlyWindow = 1
