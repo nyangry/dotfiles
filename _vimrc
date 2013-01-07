@@ -23,27 +23,16 @@ set modelines=0                  " モードラインは無効
 "set paste        " ペースト時にautoindentを無効に(onにするとautocomplpop.vimが動かない)
 autocmd FileType * setlocal formatoptions-=r "改行時にコメントを受け継がない
 autocmd FileType * setlocal formatoptions-=o "改行時にコメントを受け継がない
-set clipboard=unnamed,autoselect "OSのクリップボードを使用する
-"set mouse=a "ターミナルでマウスを使用できるようにする
-set guioptions+=a
+"set clipboard=unnamed,autoselect "OSのクリップボードを使用する
+set mouse=a "ターミナルでマウスを使用できるようにする
 set ttymouse=xterm2
+set clipboard+=unnamed
+set clipboard+=autoselect
 set laststatus=2 "常にステータスラインを表示
 set ruler "カーソルが何行目の何列目に置かれているかを表示する
 set number "行番号を表示する
 set noequalalways " ウインドウ幅の自動調整を行わない
 syntax enable
-" 横幅が長いコードをハイライトする
-set textwidth=0
-if exists('&colorcolumn')
-    set colorcolumn=+1
-    " sh,cpp,perl,vim,...の部分は自分が使う
-    " プログラミング言語のfiletypeに合わせてください
-    autocmd FileType sh,vim,ruby,js,php setlocal textwidth=80
-endif
-" 保存時に行末の空白を除去する
-"autocmd BufWritePre * :%s/\s\+$//ge
-" 保存時にtabをスペースに変換する
-"autocmd BufWritePre * :%s/\t/ /ge
 
 " y9で行末までヤンク
 nmap y9 y$
@@ -52,18 +41,10 @@ nmap y0 y^
 " ビジュアルモードで選択したテキストで検索する
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
 
-" タブ文字、行末など不可視文字を表示する
-" set list
-" listで表示される文字のフォーマットを指定する
-" set listchars=eol:~,tab:>\ ,extends:<
-" Tab、行末の半角スペースを明示的に表示する
-" set listchars=tab:^\ ,trail:~
-set listchars=tab:>\ ,trail:~
 
-"----------------------------------------
+"======================================
 " インデント調整
-"----------------------------------------
-"setlocal indentexpr=GetHaskellIndent()
+"======================================
 setlocal indentkeys=!^F,o,O
 setlocal expandtab
 setlocal tabstop<
@@ -75,9 +56,10 @@ set cursorline "カーソル行をハイライト
 " これをしないと候補選択時に Scratch ウィンドウが開いてしまう
 set completeopt=menuone
 
-"----------------------------------------
+
+"======================================
 " Vimスクリプト
-"----------------------------------------
+"======================================
 "挿入モード時、ステータスラインの色を変更
 let g:hi_insert = 'highlight StatusLine ctermbg=54'
 
@@ -117,9 +99,10 @@ endfunction
 " Rename
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
-""""""""""""""""""""""""""""""
+
+"======================================
 "全角スペースを表示
-""""""""""""""""""""""""""""""
+"======================================
 "コメント以外で全角スペースを指定しているので、scriptencodingと、
 "このファイルのエンコードが一致するよう注意！
 "強調表示されない場合、ここでscriptencodingを指定するとうまくいく事があります。
@@ -136,19 +119,11 @@ if has('syntax')
     autocmd VimEnter,BufEnter * call ZenkakuSpace()
   augroup END
 endif
-""""""""""""""""""""""""""""""
-"横幅が長いコードをハイライトする
-""""""""""""""""""""""""""""""
-"set textwidth=0
-"if exists('&colorcolumn')
-"  set colorcolumn=+1
-"  " sh,cpp,perl,vim,...の部分は自分が使う
-"  " プログラミング言語のfiletypeに合わせてください
-"  autocmd FileType sh,vim,ruby,python,php,javascript setlocal textwidth=80
-"endif
-""""""""""""""""""""""""""""""
+
+
+"======================================
 "ステータスラインに文字コードやBOM、16進表示等表示
-""""""""""""""""""""""""""""""
+"======================================
 " ステータスラインの表示
   set statusline=%<     " 行が長すぎるときに切り詰める位置
   set statusline+=%r    " %r 読み込み専用フラグ
@@ -176,10 +151,11 @@ endif
   set statusline+=\ \   " 空白スペース2個
   set statusline+=%P    " ファイル内の何％の位置にあるか
 
+
 "======================================
 "自動補完
 "======================================
-inoremap , ,
+inoremap , , 
 "inoremap { {}<LEFT>
 "inoremap [ []<LEFT>
 "inoremap ( ()<LEFT>
@@ -197,6 +173,12 @@ cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 set t_Co=256
 "set background=dark
 colorscheme ir_black
+
+" Move around splits with <c-hjkl>
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
 
 "======================================
 "Complete
@@ -219,6 +201,8 @@ set nowrapscan "検索をファイルの先頭へループしない
 set wildignore+=*.DS_Store,*.pdf,*.swf,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
 set wildignore+=*.ps,*.eps,*.aux,*.dvi
 set wildignore+=*.xls,*.xlsx,*.key
+
+
 "======================================
 "Syntax
 "======================================
@@ -247,119 +231,196 @@ augroup phpsyntaxcheck
  autocmd!
  autocmd BufWrite *.php w !php -l
 augroup END
+
+
 "======================================
-"Vimdiff
-"======================================
-"Vimdiffで半角スペースを無視する
-set diffopt+=iwhite
-"----------------------------------------
 " ショートカット
-"----------------------------------------
+"======================================
 "表示行単位で行移動する
 nnoremap <silent> j gj
 nnoremap <silent> k gk
-" タブ移動をCTRL+TABに
-nnoremap <C-n> gt
-nnoremap <C-b> gT
-" CTRL＋Lで最終編集箇所へジャンプ
-nnoremap <C-l> g;
-nnoremap <C-p> g,
-" CTRL+wでタブ終了
-"nnoremap <C-w> ZZ
-" CTRL+tでファイルを開く
-"nnoremap <C-t> :tabnew<CR>
 " CTRL+sでrsyncを叩く
-nmap <C-h> :! /Users/admin/works/sync_rep3.sh<CR>
+nmap <Leader>r<CR> :! /Users/admin/works/sync_rep3.sh<CR>
 "Escの2回押しでハイライト消去
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
+
+" q:、q/、q? は無効化
+nnoremap q: <NOP>
+nnoremap q/ <NOP>
+nnoremap q? <NOP>
+
+"======================================
+"Hack #202: 自動的にディレクトリを作成する 
+"======================================
+augroup vimrc-auto-mkdir  
+  autocmd!
+  autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
+  function! s:auto_mkdir(dir, force)  
+    if !isdirectory(a:dir) && (a:force ||
+    \    input(printf('"%s" does not exist. Create? [y/N]', a:dir)) =~? '^y\%[es]$')
+      call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
+    endif
+  endfunction
+augroup END
+
+"======================================
+"Hack #181: ジャンクファイルを生成する 
+"======================================
+command! -nargs=0 JunkFile call s:open_junk_file()
+function! s:open_junk_file()
+  let l:junk_dir = $HOME . '/.vim_junk'. strftime('/%Y/%m')
+  if !isdirectory(l:junk_dir)
+    call mkdir(l:junk_dir, 'p')
+  endif
+
+  let l:filename = input('Junk Code: ', l:junk_dir.strftime('/%Y-%m-%d-%H%M%S.'))
+  if l:filename != ''
+    execute 'edit ' . l:filename
+  endif
+endfunction
+nmap <C-n> :JunkFile<CR>
+
+"======================================
+"Hack #69: 簡単にカレントディレクトリを変更する
+"======================================
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
+function! s:ChangeCurrentDir(directory, bang)
+    if a:directory == ''
+        lcd %:p:h
+    else
+        execute 'lcd' . a:directory
+    endif
+
+    if a:bang == ''
+        pwd
+    endif
+endfunction
+
+" Change current directory.
+nnoremap <silent> <Space>cd :<C-u>CD<CR>
+
+"======================================
+"Hack #205: 複数行をコメントアウトする
+"======================================
+" Comment or uncomment lines from mark a to mark b.
+function! CommentMark(docomment, a, b)
+  if !exists('b:comment')
+    let b:comment = CommentStr() . ' '
+  endif
+  if a:docomment
+    exe "normal! '" . a:a . "_\<C-V>'" . a:b . 'I' . b:comment
+  else
+    exe "'".a:a.",'".a:b . 's/^\(\s*\)' . escape(b:comment,'/') . '/\1/e'
+  endif
+endfunction
+
+" Comment lines in marks set by g@ operator.
+function! DoCommentOp(type)
+  call CommentMark(1, '[', ']')
+endfunction
+
+" Uncomment lines in marks set by g@ operator.
+function! UnCommentOp(type)
+  call CommentMark(0, '[', ']')
+endfunction
+
+" Return string used to comment line for current filetype.
+function! CommentStr()
+  if &ft == 'cpp' || &ft == 'java' || &ft == 'php' || &ft == 'javascript'
+    return '//'
+  elseif &ft == 'vim'
+    return '"'
+  elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby'
+    return '#'
+  elseif &ft == 'lisp'
+    return ';'
+  endif
+  return ''
+endfunction
+
+nnoremap <Leader>c <Esc>:set opfunc=DoCommentOp<CR>g@
+nnoremap <Leader>C <Esc>:set opfunc=UnCommentOp<CR>g@
+vnoremap <Leader>c <Esc>:call CommentMark(1,'<','>')<CR>
+vnoremap <Leader>C <Esc>:call CommentMark(0,'<','>')<CR>
+
+"======================================
+" vimの連続コピペ http://goo.gl/1Lp9Q
+"======================================
+vnoremap <silent> <C-p> "0p<CR>
+
+
+
 "======================================
 "Compiler
 "======================================
 autocmd FileType javascript :compiler gjslint
 autocmd QuickfixCmdPost make copen
 
+
 "======================================
 "Vundle
 "======================================
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/ "vundleのディレクトリ
-call vundle#rc()
-Bundle 'gmarik/vundle'
-"Bundle 'godlygeek/csapprox'
-"Bundle 'Shougo/vimfiler'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'Shougo/vimproc'
-Bundle 'Shougo/unite.vim'
-Bundle 'h1mesuke/unite-outline'
-Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/neocomplcache-snippets-complete'
-Bundle 'Shougo/vimshell'
-"Bundle 'thinca/vim-quickrun'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
-" taglist
-Bundle 'vim-scripts/taglist.vim'
-" % による対応括弧へのカーソル移動機能を拡張
-Bundle 'jwhitley/vim-matchit'
-" vim-surroundを.で繰り返しできようにする
-"Bundle 'tpope/vim-repeat'
-"Bundle 'git://git.wincent.com/command-t.git'
-" fakeclip
-Bundle 'kana/vim-fakeclip'
-"Gist
-Bundle 'mattn/gist-vim'
-Bundle 'mattn/webapi-vim'
-"eregex.vim : vimの正規表現をrubyやperlの正規表現な入力でできる :%S/perlregex/
-Bundle 'eregex.vim'
-"整形ツール
-Bundle 'Align'
-" フィルタリングと整形
-Bundle 'godlygeek/tabular'
-"Syntax Check
-Bundle 'scrooloose/syntastic'
-"Syntax javascript
-Bundle 'jelera/vim-javascript-syntax'
-"javascript
-Bundle 'teramako/jscomplete-vim'
-"Syntax Less
-"Bundle 'groenewege/vim-less'
-"Syntax Coffee Script
-"Bundle 'kchmck/vim-coffee-script'
-filetype plugin indent on     " required!
-"======================================
-"Plugin/command-t
-"======================================
-"let g:CommandTMaxHeight=15
-"デフォルトはworksディレクトリを検索する
-"nnoremap <silent> <C-f> :<C-u>CommandT ~/works<Return>
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+  call neobundle#rc(expand('~/.vim/bundle/'))
+endif
 
-"======================================
-"Plugin/Vimfiler
-"======================================
-"nnoremap <silent> <C-f> :<C-u>VimFiler -split -simple -winwidth=40 -no-quit<Return>
-"nnoremap <silent> <C-f> :<C-u>VimFiler -quit<Return>
-"function! s:git_root_dir()
-"    if(system('git rev-parse --is-inside-work-tree') == "true\n")
-"        return ':VimFiler ' . system('git rev-parse --show-cdup') . '\<CR>'
-"    else
-"        echoerr '!!!current directory is outside git working tree!!!'
-"    endif
-"endfunction
-"nnoremap <expr><Leader>fg <SID>git_root_dir()
+NeoBundle 'Lokaltog/vim-powerline'
+NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/vimshell'
+"NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-surround'
+" taglist
+NeoBundle 'vim-scripts/taglist.vim'
+" % による対応括弧へのカーソル移動機能を拡張
+NeoBundle 'jwhitley/vim-matchit'
+" vim-surroundを.で繰り返しできようにする
+"NeoBundle 'tpope/vim-repeat'
+" fakeclip
+NeoBundle 'kana/vim-fakeclip'
+"Gist
+NeoBundle 'mattn/gist-vim'
+NeoBundle 'mattn/webapi-vim'
+"整形ツール
+NeoBundle 'Align'
+" フィルタリングと整形
+NeoBundle 'godlygeek/tabular'
+" Octopress
+NeoBundle 'glidenote/octoeditor.vim'
+" Window size
+NeoBundle 'jimsei/winresizer'
+" vim-rooter
+NeoBundle 'airblade/vim-rooter'
+"---------------------------------
+"Syntax Check
+"---------------------------------
+NeoBundle 'scrooloose/syntastic'
+"---------------------------------
+"Syntax
+"---------------------------------
+NeoBundle 'taichouchou2/vim-javascript'
+"NeoBundle 'teramako/jscomplete-vim'
+
+"---------------------------------
+"php-cs-fixer
+"---------------------------------
+NeoBundle 'stephpy/vim-php-cs-fixer'
+
+
+filetype plugin indent on     " required!
 
 "======================================
 "Plugin/Powerline
 "======================================
 let g:Powerline_symbols = 'fancy'
 
-"======================================
-"Plugin/eregex
-"======================================
-"nnoremap / :M/
-"nnoremap ? :M?
-"nnoremap ,/ /
-"nnoremap ,? ?
+
 "======================================
 "Plugin/Unite
 "======================================
@@ -380,8 +441,8 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
 "au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
 "au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
 " ウィンドウを縦に分割して開く
-"au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-"au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
+au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
+au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
 " 新しいウィンドウで開く
 "au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
 "au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
@@ -395,26 +456,15 @@ let g:unite_enable_start_insert=1
 nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
 nnoremap <C-g> :<C-u>Unite grep<CR>
 
-
-"======================================
-"Plugin/Unite-outline
-"======================================
-let g:unite_source_outline_filetype_options = {
-  \ '*': {
-  \   'auto_update': 1,
-  \   'auto_update_event': 'hold',
-  \   'ignore_types': ['comment'],
-  \ },
-  \ 'javascript': {
-  \ },
-  \ 'php': {
-  \ },
-  \}
-
-
 "======================================
 "Plugin/Neocomplcache
 "======================================
+"ポップアップメニューで表示される候補の数。初期値は100
+let g:neocomplcache_max_list = 50
+"自動補完を行う入力数を設定。初期値は2
+let g:neocomplcache_auto_completion_start_length = 3
+"手動補完時に補完を行う入力数を制御。値を小さくすると文字の削除時に重くなる
+let g:neocomplcache_manual_completion_start_length = 3
 " Use neocomplcache.
 let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
@@ -424,19 +474,19 @@ let g:neocomplcache_enable_camel_case_completion = 1
 " Use underbar completion.
 let g:neocomplcache_enable_underbar_completion = 1
 " Set minimum keyword length.
-let g:neocomplcache_min_keyword_length = 0
+let g:neocomplcache_min_keyword_length = 3
 " Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 0
+let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 " -入力による候補番号の表示
-let g:neocomplcache_enable_quick_match = 1
+let g:neocomplcache_enable_quick_match = 0
 " 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
 let g:neocomplcache_enable_auto_select = 1
 
 "シンタックス補完を無効に
-"let g:neocomplcache_plugin_disable = {
-"  \ 'syntax_complete' : 1,
-"  \ }
+let g:neocomplcache_plugin_disable = {
+  \ 'syntax_complete' : 1,
+  \ }
 
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
@@ -500,8 +550,6 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType javascript
-  \ :setl omnifunc=jscomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby set omnifunc=rubycomplete#Complete
@@ -520,7 +568,6 @@ let g:neocomplcache_same_filetype_lists = {
 \, 'js'   : 'html,php,ruby'
 \ }
 
-
 "======================================
 "Plugin/tabular [ :Tab /| etc..]
 "======================================
@@ -538,16 +585,16 @@ function! s:align()
 endfunction
 
 
-"------------------------------------
+"======================================
 " Align
-"------------------------------------
+"======================================
 " Alignを日本語環境で使用するための設定
 let g:Align_xstrlen = 3
 
 
-"------------------------------------
+"======================================
 " Syntastic
-"------------------------------------
+"======================================
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': [],
                            \ 'passive_filetypes': [] }
@@ -555,10 +602,28 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_javascript_checker = 'jshint'
 
 
-"------------------------------------
+"======================================
 " taglist
-"------------------------------------
+"======================================
 let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
 let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
 let Tlist_Exit_OnlyWindow = 1
+let g:tlist_php_settings = 'php;c:class;d:constant;f:function'
+nmap <Leader>tl :Tlist<CR>
+
+"======================================
+" php-cs-fixer
+"======================================
+let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"
+nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
+nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
+"======================================
+" Octopress
+"======================================
+let g:octopress_path = '~/works/lunchub.github.com'
+map <Leader>on  :OctopressNew<CR>
+map <Leader>ol  :OctopressList<CR>
+map <Leader>og  :OctopressGrep<CR>
+nmap ,og  :OctopressGenerate<CR>
+nmap ,od  :OctopressDeploy<CR>
