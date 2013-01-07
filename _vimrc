@@ -24,10 +24,11 @@ set modelines=0                  " モードラインは無効
 autocmd FileType * setlocal formatoptions-=r "改行時にコメントを受け継がない
 autocmd FileType * setlocal formatoptions-=o "改行時にコメントを受け継がない
 "set clipboard=unnamed,autoselect "OSのクリップボードを使用する
-set mouse=a "ターミナルでマウスを使用できるようにする
+"set mouse=a "ターミナルでマウスを使用できるようにする
+set guioptions+=a
 set ttymouse=xterm2
-set clipboard+=unnamed
-set clipboard+=autoselect
+" set clipboard+=unnamed
+" set clipboard+=autoselect
 set laststatus=2 "常にステータスラインを表示
 set ruler "カーソルが何行目の何列目に置かれているかを表示する
 set number "行番号を表示する
