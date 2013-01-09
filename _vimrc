@@ -20,12 +20,12 @@ set showcmd                      " コマンドをステータス行に表示
 set showmode                     " 現在のモードを表示
 set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
 set modelines=0                  " モードラインは無効
-"set paste        " ペースト時にautoindentを無効に(onにするとautocomplpop.vimが動かない)
+" set paste        " ペースト時にautoindentを無効に(onにするとautocomplpop.vimが動かない)
 autocmd FileType * setlocal formatoptions-=r "改行時にコメントを受け継がない
 autocmd FileType * setlocal formatoptions-=o "改行時にコメントを受け継がない
-"set clipboard=unnamed,autoselect "OSのクリップボードを使用する
-"set mouse=a "ターミナルでマウスを使用できるようにする
-set guioptions+=a
+" set clipboard=unnamed,autoselect "OSのクリップボードを使用する
+" set mouse=a "ターミナルでマウスを使用できるようにする
+" set guioptions+=a
 set ttymouse=xterm2
 " set clipboard+=unnamed
 " set clipboard+=autoselect
@@ -202,6 +202,8 @@ set nowrapscan "検索をファイルの先頭へループしない
 set wildignore+=*.DS_Store,*.pdf,*.swf,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
 set wildignore+=*.ps,*.eps,*.aux,*.dvi
 set wildignore+=*.xls,*.xlsx,*.key
+" コマンドライン補完するときに補完候補を表示する(tabで補完)
+set wildmenu
 
 
 "======================================
