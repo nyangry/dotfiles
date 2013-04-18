@@ -1,11 +1,2 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/Users/admin/works/rep3.0/hakushu/modules/application'
-let g:netrw_dirhist_2='/Users/admin/works/rep3.0/hakushu/modules/application/helpers'
-let g:netrw_dirhist_3='/Users/admin/works/rep3.0'
-let g:netrw_dirhist_4='/Users/admin/.vim_junk/2012/11'
-let g:netrw_dirhist_5='/Users/admin/.vim-vundle'
-let g:netrw_dirhist_6='/Users/admin/.vim_junk'
-let g:netrw_dirhist_7='/Users/admin/.vim_junk/2012'
-let g:netrw_dirhist_8='/Users/admin/.vim_junk/2012/11'
-let g:netrw_dirhist_9='/Users/admin/works/lunchub.github.com/source/_posts'
+let g:netrw_dirhist_cnt =0

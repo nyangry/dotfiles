@@ -1,16 +1,15 @@
 "======================================
-"Init
+" 基本設定 
 "======================================
 set backupskip=/tmp/*,/private/tmp/* " tmpの中ではバックアップスクリプトを作成しない（crontab等用）
 set nocompatible                 " vi互換なし
 set encoding=utf-8
 set fileencodings=utf-8
-"let mapleader = ","              " キーマップリーダー
+" let mapleader = ","              " キーマップリーダー
 map ¥ <leader>
 set scrolloff=5                  " スクロール時の余白確保
 set textwidth=0                  " 一行に長い文章を書いていても自動折り返しを
 set nobackup                     " バックアップ取らない
-set autoread                     " 他で書き換えられたら自動で読み直す
 set noswapfile                   " スワップファイル作らない
 set hidden                       " 編集中でも他のファイルを開けるようにする
 set backspace=indent,eol,start   " バックスペースでなんでも消せるように
@@ -21,27 +20,28 @@ set showmode                     " 現在のモードを表示
 set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
 set modelines=0                  " モードラインは無効
 " set paste        " ペースト時にautoindentを無効に(onにするとautocomplpop.vimが動かない)
-autocmd FileType * setlocal formatoptions-=r "改行時にコメントを受け継がない
-autocmd FileType * setlocal formatoptions-=o "改行時にコメントを受け継がない
-" set clipboard=unnamed,autoselect "OSのクリップボードを使用する
-" set mouse=a "ターミナルでマウスを使用できるようにする
+autocmd FileType * setlocal formatoptions-=r " 改行時にコメントを受け継がない
+autocmd FileType * setlocal formatoptions-=o " 改行時にコメントを受け継がない
+set clipboard=unnamed,autoselect " OSのクリップボードを使用する
+" set mouse=a " ターミナルでマウスを使用できるようにする
 " set guioptions+=a
 set ttymouse=xterm2
 " set clipboard+=unnamed
 " set clipboard+=autoselect
-set laststatus=2 "常にステータスラインを表示
-set ruler "カーソルが何行目の何列目に置かれているかを表示する
-set number "行番号を表示する
+set laststatus=2 " 常にステータスラインを表示
+set ruler " カーソルが何行目の何列目に置かれているかを表示する
+set number " 行番号を表示する
 set noequalalways " ウインドウ幅の自動調整を行わない
 syntax enable
 
-" y9で行末までヤンク
-nmap y9 y$
-" y0で行頭までヤンク
-nmap y0 y^
 " ビジュアルモードで選択したテキストで検索する
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
 
+"======================================
+" 英字キーボードでVimを使っている時に、:wqを高速で入力してエラーが出てウオアア
+" ア!!とならないための設定 http://goo.gl/a55YK
+"======================================
+command! -nargs=0 Wq wq
 
 "======================================
 " インデント調整
@@ -53,15 +53,17 @@ setlocal softtabstop=2
 setlocal shiftwidth=2
 setlocal autoindent
 
-set cursorline "カーソル行をハイライト
+set cursorline " カーソル行をハイライト
 " これをしないと候補選択時に Scratch ウィンドウが開いてしまう
 set completeopt=menuone
 
+" html インデントの解除
+au FileType html :setlocal indentexpr=""
 
 "======================================
 " Vimスクリプト
 "======================================
-"挿入モード時、ステータスラインの色を変更
+" 挿入モード時、ステータスラインの色を変更
 let g:hi_insert = 'highlight StatusLine ctermbg=54'
 
 if has('syntax')
@@ -102,15 +104,15 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
 
 "======================================
-"全角スペースを表示
+" 全角スペースを表示
 "======================================
-"コメント以外で全角スペースを指定しているので、scriptencodingと、
-"このファイルのエンコードが一致するよう注意！
-"強調表示されない場合、ここでscriptencodingを指定するとうまくいく事があります。
+" コメント以外で全角スペースを指定しているので、scriptencodingと、
+" このファイルのエンコードが一致するよう注意！
+" 強調表示されない場合、ここでscriptencodingを指定するとうまくいく事があります。
 scriptencoding utf-8
 function! ZenkakuSpace()
   highlight ZenkakuSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
-  "全角スペースを明示的に表示する
+  " 全角スペースを明示的に表示する
   silent! match ZenkakuSpace /　/
 endfunction
 
@@ -123,7 +125,7 @@ endif
 
 
 "======================================
-"ステータスラインに文字コードやBOM、16進表示等表示
+" ステータスラインに文字コードやBOM、16進表示等表示
 "======================================
 " ステータスラインの表示
   set statusline=%<     " 行が長すぎるときに切り詰める位置
@@ -154,97 +156,105 @@ endif
 
 
 "======================================
-"自動補完
+" 自動補完
 "======================================
 inoremap , , 
-"inoremap { {}<LEFT>
-"inoremap [ []<LEFT>
-"inoremap ( ()<LEFT>
-"inoremap " ""<LEFT>
-"inoremap ' ''<LEFT>
-"行末にセミコロン;をつけて改行
+" inoremap { {}<LEFT>
+" inoremap [ []<LEFT>
+" inoremap ( ()<LEFT>
+" inoremap " ""<LEFT>
+" inoremap ' ''<LEFT>
+" 行末にセミコロン;をつけて改行
 inoremap ;; <C-O>$;<CR>
-"検索パターンの入力を改善する
+" 検索パターンの入力を改善する
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 
 "======================================
-"View
+" View
 "======================================
 set t_Co=256
-"set background=dark
+" set background=dark
 colorscheme ir_black
 
+" nmap <Right> :bnext <CR>
+" nmap <Left> :bprev <CR>
 " Move around splits with <c-hjkl>
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
+nnoremap # g#
+nnoremap g# #
+nnoremap * g*
+nnoremap g* *
 "======================================
-"Complete
+" Complete
 "======================================
+set smartcase
 set hlsearch
-"autocmd BufWritePre * :%s/\s\+$//ge "保存時に行末の空白を除去する
-set incsearch "インクリメンタルサーチを行う
-set listchars=eol:$,tab:>\ ,extends:< "listで表示される文字のフォーマットを指定する
-set showmatch "閉じ括弧が入力されたとき、対応する括弧を表示する
+" autocmd BufWritePre * :%s/\s\+$//ge "保存時に行末の空白を除去する
+set incsearch " インクリメンタルサーチを行う
+set listchars=eol:$,tab:>\ ,extends:< " listで表示される文字のフォーマットを指定する
+set showmatch " 閉じ括弧が入力されたとき、対応する括弧を表示する
 set expandtab
 set tabstop<
 set softtabstop=2
 set shiftwidth=2
-"タブ幅をリセット
+" タブ幅をリセット
 au BufNewFile,BufRead * set tabstop=2 shiftwidth=2
-set nowrapscan "検索をファイルの先頭へループしない
-"set wildignore+=Library*,Document*,Movie*,Dropbox*,Music*,Pictures*,Downloads*
-"set wildignore+=*.o,*.obj,*.ps,*.eps,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
-"set wildignore+=*.strings,*.plist,*.wflow,*.olk14Folder,*.olk14DBHeader,*.olk14Contact
-set wildignore+=*.DS_Store,*.pdf,*.swf,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
-set wildignore+=*.ps,*.eps,*.aux,*.dvi
-set wildignore+=*.xls,*.xlsx,*.key
+set nowrapscan " 検索をファイルの先頭へループしない
+" set wildignore+=Library*,Document*,Movie*,Dropbox*,Music*,Pictures*,Downloads*
+" set wildignore+=*.o,*.obj,*.ps,*.eps,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
+" set wildignore+=*.strings,*.plist,*.wflow,*.olk14Folder,*.olk14DBHeader,*.olk14Contact
+" set wildignore+=*.DS_Store,*.pdf,*.swf,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
+" set wildignore+=*.ps,*.eps,*.aux,*.dvi
+" set wildignore+=*.xls,*.xlsx,*.key
 " コマンドライン補完するときに補完候補を表示する(tabで補完)
 set wildmenu
 
 
 "======================================
-"Syntax
+" Syntax
 "======================================
-"jQuery
-"au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
-"au BufRead,BufNewFile *.js set ft=javascript syntax=jquery
-"JSON
+" JSON
 au! BufRead,BufNewFile *.json set filetype=json
-"HTML5
+" HTML5
 au BufRead,BufNewFile *.html set ft=html syntax=html5
-"CSS3
+" CSS3
 au BufRead,BufNewFile *.css set ft=css syntax=css3
+" Gemfile
+au BufRead,BufNewFile Gemfile set ft=ruby
+" rb
+au BufRead,BufNewFile *.rb set ft=ruby
 
 
 "======================================
-"Syntax Check
+" Syntax Check
 "======================================
-"Ruby
-augroup rbsyntaxcheck
- autocmd!
- autocmd BufWrite *.rb w !ruby -c
-augroup END
-
-"PHP
-augroup phpsyntaxcheck
- autocmd!
- autocmd BufWrite *.php w !php -l
-augroup END
+" " Ruby
+" augroup rbsyntaxcheck
+"  autocmd!
+"  autocmd BufWrite *.rb w !ruby -c
+" augroup END
+" 
+" " PHP
+" augroup phpsyntaxcheck
+"  autocmd!
+"  autocmd BufWrite *.php w !php -l
+" augroup END
 
 
 "======================================
 " ショートカット
 "======================================
-"表示行単位で行移動する
+" 表示行単位で行移動する
 nnoremap <silent> j gj
 nnoremap <silent> k gk
-" CTRL+sでrsyncを叩く
-nmap <Leader>r<CR> :! /Users/admin/works/sync_rep3.sh<CR>
-"Escの2回押しでハイライト消去
+" " CTRL+sでrsyncを叩く
+" nmap <Leader>r<CR> :! /Users/admin/code/sync_rep3.sh<CR>
+" Escの2回押しでハイライト消去
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
 " q:、q/、q? は無効化
@@ -253,7 +263,7 @@ nnoremap q/ <NOP>
 nnoremap q? <NOP>
 
 "======================================
-"Hack #202: 自動的にディレクトリを作成する 
+" Hack #202: 自動的にディレクトリを作成する 
 "======================================
 augroup vimrc-auto-mkdir  
   autocmd!
@@ -267,7 +277,7 @@ augroup vimrc-auto-mkdir
 augroup END
 
 "======================================
-"Hack #181: ジャンクファイルを生成する 
+" Hack #181: ジャンクファイルを生成する 
 "======================================
 command! -nargs=0 JunkFile call s:open_junk_file()
 function! s:open_junk_file()
@@ -284,7 +294,7 @@ endfunction
 nmap <C-n> :JunkFile<CR>
 
 "======================================
-"Hack #69: 簡単にカレントディレクトリを変更する
+" Hack #69: 簡単にカレントディレクトリを変更する
 "======================================
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
 function! s:ChangeCurrentDir(directory, bang)
@@ -303,7 +313,7 @@ endfunction
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 "======================================
-"Hack #205: 複数行をコメントアウトする
+" Hack #205: 複数行をコメントアウトする
 "======================================
 " Comment or uncomment lines from mark a to mark b.
 function! CommentMark(docomment, a, b)
@@ -347,21 +357,48 @@ vnoremap <Leader>c <Esc>:call CommentMark(1,'<','>')<CR>
 vnoremap <Leader>C <Esc>:call CommentMark(0,'<','>')<CR>
 
 "======================================
+" Hack #206: 外部で変更のあったファイルを自動的に読み直す
+"======================================
+set autoread                     
+augroup vimrc-checktime
+  autocmd!
+  autocmd WinEnter * checktime
+augroup END
+
+
+"======================================
 " vimの連続コピペ http://goo.gl/1Lp9Q
 "======================================
 vnoremap <silent> <C-p> "0p<CR>
 
 
+"======================================
+" vimから言語を指定してDash.appを呼び出す http://goo.gl/Hu4DI
+"======================================
+function! s:dash(...)
+  let ft = &filetype
+  if &filetype == 'python'
+    let ft = ft.'2'
+  endif
+  let ft = ft.':'
+  let word = len(a:000) == 0 ? input('Dash search: ', ft.expand('<cword>')) : ft.join(a:000, ' ')
+  call system(printf("open dash://'%s'", word))
+endfunction
+command! -nargs=* Dash call <SID>dash(<f-args>)
+
 
 "======================================
-"Compiler
+" Compiler
 "======================================
 autocmd FileType javascript :compiler gjslint
 autocmd QuickfixCmdPost make copen
 
 
+
+
+
 "======================================
-"Vundle
+" Vundle
 "======================================
 filetype off
 
@@ -376,21 +413,23 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/vimshell'
-"NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
+" Tree View
+NeoBundle 'scrooloose/nerdtree'
 " taglist
 NeoBundle 'vim-scripts/taglist.vim'
 " % による対応括弧へのカーソル移動機能を拡張
 NeoBundle 'jwhitley/vim-matchit'
 " vim-surroundを.で繰り返しできようにする
-"NeoBundle 'tpope/vim-repeat'
+" NeoBundle 'tpope/vim-repeat'
 " fakeclip
 NeoBundle 'kana/vim-fakeclip'
-"Gist
+" Gist
 NeoBundle 'mattn/gist-vim'
 NeoBundle 'mattn/webapi-vim'
-"整形ツール
+" 整形ツール
 NeoBundle 'Align'
 " フィルタリングと整形
 NeoBundle 'godlygeek/tabular'
@@ -400,18 +439,40 @@ NeoBundle 'glidenote/octoeditor.vim'
 NeoBundle 'jimsei/winresizer'
 " vim-rooter
 NeoBundle 'airblade/vim-rooter'
-"---------------------------------
-"Syntax Check
-"---------------------------------
-NeoBundle 'scrooloose/syntastic'
-"---------------------------------
-"Syntax
-"---------------------------------
-NeoBundle 'taichouchou2/vim-javascript'
-"NeoBundle 'teramako/jscomplete-vim'
 
 "---------------------------------
-"php-cs-fixer
+" Rails
+"---------------------------------
+NeoBundle 'tpope/vim-rails'
+
+"---------------------------------
+" Syntax Check
+"---------------------------------
+NeoBundle 'scrooloose/syntastic'
+
+"---------------------------------
+" indent
+"---------------------------------
+NeoBundle 'jiangmiao/simple-javascript-indenter'
+
+"---------------------------------
+" Syntax
+"---------------------------------
+NeoBundle 'hail2u/vim-css3-syntax'
+NeoBundle 'taichouchou2/html5.vim'
+" NeoBundle 'jelera/vim-javascript-syntax'
+" NeoBundle 'taichouchou2/vim-javascript'
+" NeoBundle 'rickeyvisinski-kanban/vim-jquery'
+NeoBundle 'paulyg/Vim-PHP-Stuff'
+NeoBundle 'vim-scripts/mathml.vim'
+
+"---------------------------------
+" Complete
+"---------------------------------
+NeoBundle 'teramako/jscomplete-vim'
+
+"---------------------------------
+" php-cs-fixer
 "---------------------------------
 NeoBundle 'stephpy/vim-php-cs-fixer'
 
@@ -419,55 +480,67 @@ NeoBundle 'stephpy/vim-php-cs-fixer'
 filetype plugin indent on     " required!
 
 "======================================
-"Plugin/Powerline
+" Plugin/Powerline
 "======================================
 let g:Powerline_symbols = 'fancy'
 
 
 "======================================
-"Plugin/Unite
+" Plugin/Unite
 "======================================
 
-"バッファ一覧
-nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-"ファイル一覧
-nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-"レジスタ一覧
-nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-"最近使用したファイル一覧
-nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-"常用セット
-nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
-"全部乗せ
-nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 " ウィンドウを分割して開く
-"au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-"au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+" au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+" au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
 " ウィンドウを縦に分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
 au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
 " 新しいウィンドウで開く
-"au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-"au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+" au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+" au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
 " ESCキーを2回押すと終了する
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
-"au FileType unite nmap <buffer> <ESC> <Plug>(unite_exit)
+" au FileType unite nmap <buffer> <ESC> <Plug>(unite_exit)
 
 " ショートカット
 let g:unite_enable_start_insert=1
+"let g:unite_enable_short_source_names = 1
+"let g:unite_source_file_mru_filename_format = ''
+let g:unite_winheight=30
+
+" バッファ一覧
+nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+" ファイル一覧
+" nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
+" レジスタ一覧
+nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
+" 最近使用したファイル一覧
+nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+" ごちゃまぜ
+" nnoremap <C-f> :<C-u>Unite buffer file file_rec file_mru file/new<CR>
 nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
 nnoremap <C-g> :<C-u>Unite grep<CR>
 
+call unite#custom_source(
+      \'file_rec', 
+      \'ignore_pattern',  
+      \'\('.
+      \ '\.\(jpg\|gif\|png\|swf\|bmp\|zip\|gz\)$'.
+      \ '\|\(ci\|converter\|coore_converter\|[Cc]ache[s]\{}\|error[s]\{}\|system\|third_party\|mpdf\|vendor\)/'.
+      \'\)')
+let g:unite_source_file_rec_max_cache_files=4000
+
 "======================================
-"Plugin/Neocomplcache
+" Plugin/Neocomplcache
 "======================================
-"ポップアップメニューで表示される候補の数。初期値は100
-let g:neocomplcache_max_list = 50
-"自動補完を行う入力数を設定。初期値は2
+" ポップアップメニューで表示される候補の数。初期値は100
+let g:neocomplcache_max_list = 30
+" 自動補完を行う入力数を設定。初期値は2
 let g:neocomplcache_auto_completion_start_length = 3
-"手動補完時に補完を行う入力数を制御。値を小さくすると文字の削除時に重くなる
-let g:neocomplcache_manual_completion_start_length = 3
+" 手動補完時に補完を行う入力数を制御。値を小さくすると文字の削除時に重くなる
+" let g:neocomplcache_manual_completion_start_length = 4
 " Use neocomplcache.
 let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
@@ -479,14 +552,14 @@ let g:neocomplcache_enable_underbar_completion = 1
 " Set minimum keyword length.
 let g:neocomplcache_min_keyword_length = 3
 " Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
+" let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 " -入力による候補番号の表示
 let g:neocomplcache_enable_quick_match = 0
 " 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
 let g:neocomplcache_enable_auto_select = 1
 
-"シンタックス補完を無効に
+" シンタックス補完を無効に
 let g:neocomplcache_plugin_disable = {
   \ 'syntax_complete' : 1,
   \ }
@@ -504,45 +577,33 @@ if !exists('g:neocomplcache_keyword_patterns')
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
-"関数を補完するための区切り文字パターン
+" 関数を補完するための区切り文字パターン
 if !exists('g:neocomplcache_delimiter_patterns')
   let g:neocomplcache_delimiter_patterns = {}
 endif
 let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
 
-"カーソルより後のキーワードパターンを認識。
-"h|geとなっている状態(|はカーソル)で、hogeを補完したときに後ろのキーワードを認識してho|geと補完する機能。
-"修正するときにかなり便利。
+" カーソルより後のキーワードパターンを認識。
+" h|geとなっている状態(|はカーソル)で、hogeを補完したときに後ろのキーワードを認識してho|geと補完する機能。
+" 修正するときにかなり便利。
 if !exists('g:neocomplcache_next_keyword_patterns')
   let g:neocomplcache_next_keyword_patterns = {}
 endif
 
-"スニペットを展開する。スニペットが関係しないところでは行末まで削除
+" スニペットを展開する。スニペットが関係しないところでは行末まで削除
 imap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
 smap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
 inoremap <expr><C-g>     neocomplcache#undo_completion()
 inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
-"vim標準のキーワード補完を置き換える
+" vim標準のキーワード補完を置き換える
 inoremap <expr><C-n> neocomplcache#manual_keyword_complete()
 
 " SuperTab like snippets behavior.
-"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+" imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
-" Recommended key-mappings.
-" <TAB>: completion.
-"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " 単語入力中だけ補完候補を出す
 inoremap <expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
-" 現在のファイルのキーワード
-"inoremap <expr><C-h> pumvisible() ? "\<C-x>\<C-n>" : "\<C-h>"
-" 'dictionary'のキーワード
-"inoremap <expr><C-h> pumvisible() ? "\<C-x>\<C-k>" : "\<C-h>"
-" 編集中と外部参照しているファイルのキーワード
-"inoremap <expr><C-h> pumvisible() ? "\<C-x>\<C-i>" : "\<C-h>"
-" オムニ補完
-"inoremap <expr><C-h> pumvisible() ? "\<C-x>\<C-o>" : "\<C-h>"
-" <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 "inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
@@ -572,7 +633,7 @@ let g:neocomplcache_same_filetype_lists = {
 \ }
 
 "======================================
-"Plugin/tabular [ :Tab /| etc..]
+" Plugin/tabular [ :Tab /| etc..]
 "======================================
 inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
@@ -598,11 +659,11 @@ let g:Align_xstrlen = 3
 "======================================
 " Syntastic
 "======================================
-let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': [],
-                           \ 'passive_filetypes': [] }
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_javascript_checker = 'jshint'
+let g:syntastic_mode_map = { 'mode': 'active',
+                           \ 'active_filetypes': [],
+                           \ 'passive_filetypes': ['javascript'] }
 
 
 "======================================
@@ -612,8 +673,10 @@ let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
 let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
 let Tlist_Exit_OnlyWindow = 1
+let Tlist_Auto_Update = 1
 let g:tlist_php_settings = 'php;c:class;d:constant;f:function'
 nmap <Leader>tl :Tlist<CR>
+au BufWrite *.php :TlistUpdate
 
 "======================================
 " php-cs-fixer
@@ -621,12 +684,59 @@ nmap <Leader>tl :Tlist<CR>
 let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"
 nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
 nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
+
 "======================================
 " Octopress
 "======================================
-let g:octopress_path = '~/works/lunchub.github.com'
+let g:octopress_path = '~/code/lunchub.github.com'
 map <Leader>on  :OctopressNew<CR>
 map <Leader>ol  :OctopressList<CR>
 map <Leader>og  :OctopressGrep<CR>
 nmap ,og  :OctopressGenerate<CR>
 nmap ,od  :OctopressDeploy<CR>
+
+"======================================
+" simple-javascript-indenter
+"======================================
+let g:SimpleJsIndenter_BriefMode = 1
+
+"======================================
+" WinResizer 
+"======================================
+" nnoremap <C-w> :WinResizerStartResize<CR>
+
+"======================================
+" NERDTree
+"======================================
+" " 引数なしで実行したとき、NERDTreeを実行する
+" "   (http://kokukuma.blogspot.jp/2012/03/vim-nerdtree.html)
+" let file_name = expand("%:p")
+" if has('vim_starting') &&  file_name == ""
+"     autocmd VimEnter * call ExecuteNERDTree()
+" endif
+"  
+" " カーソルが外れているときは自動的にnerdtreeを隠す
+" function! ExecuteNERDTree()
+"     "b:nerdstatus = 1 : NERDTree 表示中
+"     "b:nerdstatus = 2 : NERDTree 非表示中
+"  
+"     if !exists('g:nerdstatus')
+"         execute 'NERDTree ./'
+"         let g:windowWidth = winwidth(winnr())
+"         let g:nerdtreebuf = bufnr('')
+"         let g:nerdstatus = 1 
+"  
+"     elseif g:nerdstatus == 1 
+"         execute 'wincmd t'
+"         execute 'vertical resize' 0 
+"         execute 'wincmd p'
+"         let g:nerdstatus = 2 
+"     elseif g:nerdstatus == 2 
+"         execute 'wincmd t'
+"         execute 'vertical resize' g:windowWidth
+"         let g:nerdstatus = 1 
+"  
+"     endif
+" endfunction
+" nnoremap <C-w> :call ExecuteNERDTree()<CR>
+

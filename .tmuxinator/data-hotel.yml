@@ -1,0 +1,14 @@
+# ~/.tmuxinator/data-hotel.yml
+# you can make as many tabs as you wish...
+
+project_name: Tmuxinator
+project_root: ~/
+#socket_name: foo # Not needed.  Remove to use default socket
+#rvm: 1.9.2@rails_project
+#pre: sudo /etc/rc.d/mysqld start
+tabs:
+  - editor:
+      panes:
+        -  
+          -
+        -
