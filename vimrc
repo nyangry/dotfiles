@@ -263,6 +263,12 @@ nnoremap q/ <NOP>
 nnoremap q? <NOP>
 
 "====================================================================================
+" Hack #55: 正規表現のメタ文字の扱いを制御する
+"====================================================================================
+nnoremap / /\v
+nnoremap ? ?\v
+
+"====================================================================================
 " Hack #202: 自動的にディレクトリを作成する 
 "====================================================================================
 augroup vimrc-auto-mkdir  
@@ -343,10 +349,12 @@ function! CommentStr()
     return '//'
   elseif &ft == 'vim'
     return '"'
-  elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby'
+  elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby' || &ft == 'yml'
     return '#'
   elseif &ft == 'lisp'
     return ';'
+  elseif &ft == 'haml'
+    return '-#'
   endif
   return ''
 endfunction
@@ -417,6 +425,7 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-endwise'
+NeoBundle 'tpope/vim-haml'
 " taglist
 NeoBundle 'vim-scripts/taglist.vim'
 " % による対応括弧へのカーソル移動機能を拡張
@@ -427,15 +436,15 @@ NeoBundle 'kana/vim-fakeclip'
 NeoBundle 'mattn/gist-vim'
 NeoBundle 'mattn/webapi-vim'
 " 整形ツール
-NeoBundle 'Align'
-" フィルタリングと整形
-NeoBundle 'godlygeek/tabular'
+NeoBundle 'h1mesuke/vim-alignta'
 " Octopress
 NeoBundle 'glidenote/octoeditor.vim'
 " Window size
 NeoBundle 'jimsei/winresizer'
 " vim-rooter
 NeoBundle 'airblade/vim-rooter'
+" インデント対応表示
+" NeoBundle 'nathanaelkane/vim-indent-guides'
 
 
 "====================================================================================
@@ -463,18 +472,22 @@ NeoBundle 'jiangmiao/simple-javascript-indenter'
 " Syntax
 "====================================================================================
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'taichouchou2/html5.vim'
 " NeoBundle 'jelera/vim-javascript-syntax'
 " NeoBundle 'taichouchou2/vim-javascript'
 " NeoBundle 'rickeyvisinski-kanban/vim-jquery'
-NeoBundle 'paulyg/Vim-PHP-Stuff'
-NeoBundle 'vim-scripts/mathml.vim'
+" NeoBundle 'paulyg/Vim-PHP-Stuff'
+" NeoBundle 'vim-scripts/mathml.vim'
+NeoBundle 'hail2u/vim-css3-syntax'
+NeoBundle 'cakebaker/scss-syntax.vim'
 
 "====================================================================================
 " Complete
 "====================================================================================
 NeoBundle 'teramako/jscomplete-vim'
+
+NeoBundle 'vimtaku/vim-mlh'
+NeoBundle 'tyru/skk.vim'
 
 
 filetype plugin indent on     " required!
@@ -633,28 +646,18 @@ let g:neocomplcache_same_filetype_lists = {
 \, 'js'   : 'html,php,ruby'
 \ }
 
-"====================================================================================
-" Plugin/tabular [ :Tab /| etc..]
-"====================================================================================
-inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
-
-function! s:align()
-  let p = '^\s*|\s.*\s|\s*$'
-  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-    Tabularize/|/l1
-    normal! 0
-    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-  endif
-endfunction
-
 
 "====================================================================================
-" Align
+" Quickrun
 "====================================================================================
-" Alignを日本語環境で使用するための設定
-let g:Align_xstrlen = 3
+let g:quickrun_config = {}
+let g:quickrun_config.markdown = {
+      \ 'outputter' : 'null',
+      \ 'command'   : 'open',
+      \ 'cmdopt'    : '-a',
+      \ 'args'      : 'Marked',
+      \ 'exec'      : '%c %o %a %s',
+      \ }
 
 
 "====================================================================================
@@ -682,9 +685,9 @@ au BufWrite *.php :TlistUpdate
 "====================================================================================
 " php-cs-fixer
 "====================================================================================
-let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"
-nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
-nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
+" let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"
+" nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
+" nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
 
 "====================================================================================
 " Octopress
@@ -705,3 +708,18 @@ let g:SimpleJsIndenter_BriefMode = 1
 " WinResizer 
 "====================================================================================
 " nnoremap <C-w> :WinResizerStartResize<CR>
+
+
+"====================================================================================
+" alignta
+"====================================================================================
+vnoremap <silent> => :Align @1 =><CR>
+vnoremap <silent> = :Align @1 =<CR>
+vnoremap <silent> == =
+
+
+"====================================================================================
+" vim-mlh / SKK
+"====================================================================================
+let g:skk_control_j_key = ""
+let g:skk_large_jisyo = "$HOME/.vim/dict/SKK-JISYO.L"

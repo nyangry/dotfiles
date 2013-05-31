@@ -227,3 +227,18 @@ if [ -d ${HOME}/.rbenv  ] ; then
 fi
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
+
+#=============================
+# custom PATH for Rails
+#=============================
+add-zsh-hook precmd is_rails_dir
+
+function is_rails_dir () {
+  if [ -e './config/environment.rb' ]; then
+    add_rails_bin_path_for_binstubs
+  fi
+}
+
+function add_rails_bin_path_for_binstubs () {
+  PATH=./bin:$PATH
+}

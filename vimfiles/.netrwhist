@@ -1,3 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_cnt =5
 let g:netrw_dirhist_1='/Users/admin/code/coore_enja_dict/app/views/entries'
+let g:netrw_dirhist_2='/Users/admin/code/rep3/.git'
+let g:netrw_dirhist_3='/Users/admin/code/coore_on_rails/app/controllers'
+let g:netrw_dirhist_4='/Users/admin/code/coore_on_rails/config'
+let g:netrw_dirhist_5='/Users/admin/code/coore_on_rails/app/views/topics'
