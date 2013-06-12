@@ -125,37 +125,6 @@ endif
 
 
 "====================================================================================
-" ステータスラインに文字コードやBOM、16進表示等表示
-"====================================================================================
-" ステータスラインの表示
-  set statusline=%<     " 行が長すぎるときに切り詰める位置
-  set statusline+=%r    " %r 読み込み専用フラグ
-  set statusline+=%h    " %h ヘルプバッファフラグ
-  set statusline+=%w    " %w プレビューウィンドウフラグ
-  set statusline+=%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}  " fencとffを表示
-  set statusline+=%y    " バッファ内のファイルのタイプ
-  set statusline+=[%n]  " バッファ番号
-  set statusline+=%m    " %m 修正フラグ
-  set statusline+=\     " 空白スペース
-if winwidth(0) >= 130
-  set statusline+=%F    " バッファ内のファイルのフルパス
-else
-  set statusline+=%t    " ファイル名のみ
-endif
-  set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
-  set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
-  set statusline+=\ \   " 空白スペース2個
-  set statusline+=%1l   " 何行目にカーソルがあるか
-  set statusline+=/
-  set statusline+=%L    " バッファ内の総行数
-  set statusline+=,
-  set statusline+=%c    " 何列目にカーソルがあるか
-  set statusline+=%V    " 画面上の何列目にカーソルがあるか
-  set statusline+=\ \   " 空白スペース2個
-  set statusline+=%P    " ファイル内の何％の位置にあるか
-
-
-"====================================================================================
 " 自動補完
 "====================================================================================
 inoremap , , 
@@ -231,18 +200,11 @@ au BufRead,BufNewFile *.rb set ft=ruby
 
 
 "====================================================================================
-" Syntax Check
+" Haml Compile 
 "====================================================================================
-" " Ruby
-" augroup rbsyntaxcheck
+" augroup hamlcompile
 "  autocmd!
-"  autocmd BufWrite *.rb w !ruby -c
-" augroup END
-" 
-" " PHP
-" augroup phpsyntaxcheck
-"  autocmd!
-"  autocmd BufWrite *.php w !php -l
+"  autocmd BufWrite *.haml w !haml % %.html 
 " augroup END
 
 
@@ -349,7 +311,7 @@ function! CommentStr()
     return '//'
   elseif &ft == 'vim'
     return '"'
-  elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby' || &ft == 'yml'
+  elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby' || &ft == 'yml' || &ft == 'coffee'
     return '#'
   elseif &ft == 'lisp'
     return ';'
@@ -415,6 +377,9 @@ if has('vim_starting')
   call neobundle#rc(expand('~/.vim/bundle/'))
 endif
 
+"----------------------------------------------------------
+" basic
+"----------------------------------------------------------
 NeoBundle 'Lokaltog/vim-powerline'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
@@ -425,7 +390,6 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-endwise'
-NeoBundle 'tpope/vim-haml'
 " taglist
 NeoBundle 'vim-scripts/taglist.vim'
 " % による対応括弧へのカーソル移動機能を拡張
@@ -444,33 +408,40 @@ NeoBundle 'jimsei/winresizer'
 " vim-rooter
 NeoBundle 'airblade/vim-rooter'
 " インデント対応表示
-" NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'nathanaelkane/vim-indent-guides'
 
 
-"====================================================================================
+"----------------------------------------------------------
+" ctags
+"----------------------------------------------------------
+NeoBundle 'szw/vim-tags'
+NeoBundle 'tsukkee/unite-tag'
+
+"----------------------------------------------------------
 " Ruby
-"====================================================================================
+"----------------------------------------------------------
 NeoBundle 'kana/vim-textobj-user' "vim-textobj-rubyが依存
 NeoBundle 'rhysd/vim-textobj-ruby'
 NeoBundle 'rhysd/unite-ruby-require.vim'
 NeoBundle 'Shougo/neocomplcache-rsense'
 NeoBundle 'vim-scripts/ruby-matchit'
 
-"====================================================================================
+"----------------------------------------------------------
 " Rails
-"====================================================================================
+"----------------------------------------------------------
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'taichouchou2/unite-reek'
 NeoBundle 'taichouchou2/unite-rails_best_practices'
 
-"====================================================================================
+"----------------------------------------------------------
 " indent
-"====================================================================================
+"----------------------------------------------------------
 NeoBundle 'jiangmiao/simple-javascript-indenter'
 
-"====================================================================================
+"----------------------------------------------------------
 " Syntax
-"====================================================================================
+"----------------------------------------------------------
+NeoBundle 'tpope/vim-haml'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'taichouchou2/html5.vim'
 " NeoBundle 'jelera/vim-javascript-syntax'
@@ -480,10 +451,11 @@ NeoBundle 'taichouchou2/html5.vim'
 " NeoBundle 'vim-scripts/mathml.vim'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'cakebaker/scss-syntax.vim'
+NeoBundle 'kchmck/vim-coffee-script'
 
-"====================================================================================
+"----------------------------------------------------------
 " Complete
-"====================================================================================
+"----------------------------------------------------------
 NeoBundle 'teramako/jscomplete-vim'
 
 NeoBundle 'vimtaku/vim-mlh'
@@ -492,15 +464,30 @@ NeoBundle 'tyru/skk.vim'
 
 filetype plugin indent on     " required!
 
+
+
 "====================================================================================
-" Plugin/Powerline
+" Plugin Settings
 "====================================================================================
+"----------------------------------------------------------
+" Powerline
+"----------------------------------------------------------
 let g:Powerline_symbols = 'fancy'
 
 
-"====================================================================================
-" Plugin/Unite
-"====================================================================================
+"----------------------------------------------------------
+" tags
+"----------------------------------------------------------
+let g:vim_tags_project_tags_command = "ctags -f .tags -R {OPTIONS} {DIRECTORY} 2>/dev/null &"                                                                                                    
+let g:vim_tags_gems_tags_command = "ctags -R -f .Gemfile.lock.tags `bundle show --paths` 2>/dev/null &"
+
+set tags+=.tags
+set tags+=.Gemfile.lock.tags
+
+
+"----------------------------------------------------------
+" Unite
+"----------------------------------------------------------
 
 " ウィンドウを分割して開く
 " au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
@@ -532,8 +519,9 @@ nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
 nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 " ごちゃまぜ
-" nnoremap <C-f> :<C-u>Unite buffer file file_rec file_mru file/new<CR>
-nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
+nnoremap <C-f> :<C-u>Unite buffer file file_rec file/new<CR>
+" 旧主力
+" nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
 nnoremap <C-g> :<C-u>Unite grep<CR>
 
 call unite#custom_source(
@@ -545,9 +533,10 @@ call unite#custom_source(
       \'\)')
 let g:unite_source_file_rec_max_cache_files=4000
 
-"====================================================================================
-" Plugin/Neocomplcache
-"====================================================================================
+
+"----------------------------------------------------------
+" Neocomplcache
+"----------------------------------------------------------
 " ポップアップメニューで表示される候補の数。初期値は100
 let g:neocomplcache_max_list = 30
 " 自動補完を行う入力数を設定。初期値は2
@@ -572,6 +561,9 @@ let g:neocomplcache_enable_quick_match = 0
 " 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
 let g:neocomplcache_enable_auto_select = 1
 
+" Rsense
+let g:neocomplcache#sources#rsense#home_directory = '/usr/local/Cellar/rsense/0.3/libexec'
+
 " シンタックス補完を無効に
 let g:neocomplcache_plugin_disable = {
   \ 'syntax_complete' : 1,
@@ -579,9 +571,10 @@ let g:neocomplcache_plugin_disable = {
 
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
- \ 'default' : '',
- \ 'php' : $HOME . '/.vim/dict/php.dict',
+ \ 'default'    : '',
+ \ 'php'        : $HOME . '/.vim/dict/php.dict',
  \ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
+ \ 'coffee'     : $HOME . '/.vim/dict/javascript.dict',
   \ }
 
 " Define keyword.
@@ -604,16 +597,12 @@ if !exists('g:neocomplcache_next_keyword_patterns')
 endif
 
 " スニペットを展開する。スニペットが関係しないところでは行末まで削除
-imap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
-smap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " vim標準のキーワード補完を置き換える
 inoremap <expr><C-n> neocomplcache#manual_keyword_complete()
-
-" SuperTab like snippets behavior.
-" imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " 単語入力中だけ補完候補を出す
 inoremap <expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
@@ -647,9 +636,9 @@ let g:neocomplcache_same_filetype_lists = {
 \ }
 
 
-"====================================================================================
+"----------------------------------------------------------
 " Quickrun
-"====================================================================================
+"----------------------------------------------------------
 let g:quickrun_config = {}
 let g:quickrun_config.markdown = {
       \ 'outputter' : 'null',
@@ -660,19 +649,19 @@ let g:quickrun_config.markdown = {
       \ }
 
 
-"====================================================================================
+"----------------------------------------------------------
 " Syntastic
-"====================================================================================
+"----------------------------------------------------------
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_javascript_checker = 'jshint'
 let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'active_filetypes': [],
-                           \ 'passive_filetypes': ['javascript'] }
+                           \ 'passive_filetypes': ['html'] }
 
 
-"====================================================================================
+"----------------------------------------------------------
 " taglist
-"====================================================================================
+"----------------------------------------------------------
 let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
 let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
@@ -682,44 +671,80 @@ let g:tlist_php_settings = 'php;c:class;d:constant;f:function'
 nmap <Leader>tl :Tlist<CR>
 au BufWrite *.php :TlistUpdate
 
-"====================================================================================
-" php-cs-fixer
-"====================================================================================
-" let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"
-" nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
-" nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
+"----------------------------------------------------------
+" Unite-reek / Unite-rails-best-practice
+" (http://qiita.com/items/acd2e2a642e67ef1dd72)
+"----------------------------------------------------------
+nnoremap <silent> <C-H><C-R> :<C-u>Unite -no-quit reek<CR>
+nnoremap <silent> <C-H><C-R><C-R> :<C-u>Unite -no-quit rails_best_practices<CR>
 
-"====================================================================================
+
+"----------------------------------------------------------
 " Octopress
-"====================================================================================
-let g:octopress_path = '~/code/lunchub.github.com'
+"----------------------------------------------------------
+let g:octopress_path = '~/code/lunchub.github.io'
 map <Leader>on  :OctopressNew<CR>
 map <Leader>ol  :OctopressList<CR>
 map <Leader>og  :OctopressGrep<CR>
 nmap ,og  :OctopressGenerate<CR>
 nmap ,od  :OctopressDeploy<CR>
 
-"====================================================================================
+
+"----------------------------------------------------------
 " simple-javascript-indenter
-"====================================================================================
+"----------------------------------------------------------
 let g:SimpleJsIndenter_BriefMode = 1
 
-"====================================================================================
+
+"----------------------------------------------------------
 " WinResizer 
-"====================================================================================
+"----------------------------------------------------------
 " nnoremap <C-w> :WinResizerStartResize<CR>
 
 
-"====================================================================================
+"----------------------------------------------------------
 " alignta
-"====================================================================================
+"----------------------------------------------------------
 vnoremap <silent> => :Align @1 =><CR>
 vnoremap <silent> = :Align @1 =<CR>
 vnoremap <silent> == =
 
 
-"====================================================================================
+"----------------------------------------------------------
+" Gist
+"----------------------------------------------------------
+let g:gist_clip_command = 'pbcopy'
+" let g:gist_put_url_to_clipboard_after_post = 1
+
+" ref http://goo.gl/7bJbm
+func! s:paste_gist_tag()
+  let mx = 'http[s]\?://gist.github.com/\([0-9]\+\)'
+  " +または"レジスタの中身を検索する
+  let regs = [@+,@"]
+  for r in regs
+    let mlist = matchlist(r, mx)
+    if ( len(mlist) > 2 )
+      "カーソル行に挿入
+      exe "normal! O{% gist " . mlist[1] . " %}"
+      return
+    endif
+  endif
+endfunc
+ 
+"コマンド
+command! -nargs=0 PasteGist     call <SID>paste_gist_tag()
+
+
+"----------------------------------------------------------
 " vim-mlh / SKK
-"====================================================================================
+"----------------------------------------------------------
 let g:skk_control_j_key = ""
 let g:skk_large_jisyo = "$HOME/.vim/dict/SKK-JISYO.L"
+
+
+"----------------------------------------------------------
+" nathanaelkane/vim-indent-guides
+"----------------------------------------------------------
+let g:indent_guides_guide_size = 1
+
+

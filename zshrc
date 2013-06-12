@@ -1,7 +1,8 @@
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
-PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
+PATH=/usr/local/bin:/usr/local/share/npm/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export PATH
+export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
 # .zshrc
 setopt prompt_subst
@@ -142,6 +143,7 @@ alias diff="colordiff --side-by-side --suppress-common-lines"
 alias sc='screen'
 alias gts='git status'
 alias gtl="git log --color --pretty=format:'%h (%cr) %s [%cn]'"
+alias ctags='/Applications/MacVim.app/Contents/MacOS/ctags "$@"'
 
 function scx () {
     screen -x $1
