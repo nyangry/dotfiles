@@ -135,6 +135,7 @@ alias ll='ls -l'
 alias lla='ls -al'
 #alias vim='/usr/local/bin/vim'
 alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+#alias vim='/usr/local/bin/vim'
 alias macvim="mvim --remote-tab-silent"
 alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -g "$@"'
 alias less="less -R"
