@@ -368,7 +368,7 @@ autocmd QuickfixCmdPost make copen
 
 
 "====================================================================================
-" Vundle
+" Neobundle
 "====================================================================================
 filetype off
 
@@ -381,12 +381,14 @@ endif
 " basic
 "----------------------------------------------------------
 NeoBundle 'Lokaltog/vim-powerline'
+
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplcache'
 " NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/vimshell'
+
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
@@ -406,13 +408,13 @@ NeoBundle 'mattn/webapi-vim'
 NeoBundle 'h1mesuke/vim-alignta'
 " Octopress
 NeoBundle 'glidenote/octoeditor.vim'
-" Window size
-NeoBundle 'jimsei/winresizer'
 " vim-rooter
 NeoBundle 'airblade/vim-rooter'
 " インデント対応表示
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
+" Window size
+NeoBundle 'jimsei/winresizer'
 
 "----------------------------------------------------------
 " ctags
@@ -434,6 +436,8 @@ NeoBundle 'vim-ruby/vim-ruby'
 " Rails
 "----------------------------------------------------------
 NeoBundle 'tpope/vim-rails'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'vim-scripts/dbext.vim'
 NeoBundle 'taichouchou2/unite-reek'
 NeoBundle 'taichouchou2/unite-rails_best_practices'
 
@@ -531,7 +535,7 @@ nnoremap <C-f> :<C-u>Unite buffer file file_rec file_mru<CR>
 " nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
 nnoremap <C-g> :<C-u>Unite grep<CR>
 
-let g:unite_source_rec_max_cache_files=2100
+let g:unite_source_rec_max_cache_files=500
 call unite#custom_source(
       \'file_rec', 
       \'ignore_pattern',  
@@ -643,6 +647,7 @@ let g:neocomplcache#sources#rsense#home_directory = '/usr/local/Cellar/rsense/0.
 
 "----------------------------------------------------------
 " Quickrun
+" Color ref: http://goo.gl/sQDiY
 "----------------------------------------------------------
 " let g:quickrun_config = {}
 " let g:quickrun_config._ = {'runner' : 'vimproc'}
@@ -658,12 +663,14 @@ let g:quickrun_config._ = {'runner' : 'vimproc'}
 let g:quickrun_config['rspec/bundle'] = {
   \ 'type': 'rspec/bundle',
   \ 'command': 'rspec',
-  \ 'exec': 'bundle exec %c %s'
+  \ 'exec': 'bundle exec %c %s', 
+  \ 'outputter/buffer/filetype': 'rspec-result', 
   \}
 let g:quickrun_config['rspec/normal'] = {
   \ 'type': 'rspec/normal',
   \ 'command': 'rspec',
-  \ 'exec': '%c %s'
+  \ 'exec': '%c %s', 
+  \ 'outputter/buffer/filetype': 'rspec-result', 
   \}
 function! RSpecQuickrun()
   let b:quickrun_config = {'type' : 'rspec/bundle'}
@@ -720,7 +727,7 @@ let g:SimpleJsIndenter_BriefMode = 1
 "----------------------------------------------------------
 " WinResizer 
 "----------------------------------------------------------
-" nnoremap <C-w> :WinResizerStartResize<CR>
+"nnoremap <C-w> :WinResizerStartResize<CR>
 
 
 "----------------------------------------------------------
@@ -769,3 +776,7 @@ command! -nargs=0 PasteGist     call <SID>paste_gist_tag()
 let g:indent_guides_guide_size = 1
 
 
+"----------------------------------------------------------
+" NERDTree
+"----------------------------------------------------------
+nnoremap <C-E> :NERDTreeToggle<CR>
