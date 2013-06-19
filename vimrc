@@ -535,13 +535,13 @@ nnoremap <C-f> :<C-u>Unite buffer file file_rec<CR>
 " nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
 nnoremap <C-g> :<C-u>Unite grep<CR>
 
-let g:unite_source_rec_max_cache_files=500
+" let g:unite_source_rec_max_cache_files=2000
 call unite#custom_source(
       \'file_rec', 
       \'ignore_pattern',  
       \'\('.
       \ '\.\(jpg\|gif\|png\|swf\|bmp\|zip\|gz\)$'.
-      \ '\|\(ci\|converter\|coore_converter\|[Cc]ache[s]\{}\|error[s]\{}\|system\|third_party\|mpdf\)/'.
+      \ '\|\(ci\|converter\|coore_converter\|[Cc]ache[s]\{}\|error[s]\{}\|system\|third_party\|mpdf\|vendor\)/'.
       \'\)')
 
 
