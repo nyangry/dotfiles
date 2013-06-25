@@ -521,7 +521,8 @@ let g:unite_enable_start_insert=1
 let g:unite_winheight=30
 
 " バッファ一覧
-nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+" nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
 " ファイル一覧
 " nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
@@ -530,10 +531,10 @@ nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
 nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 " ごちゃまぜ
-nnoremap <C-f> :<C-u>Unite buffer file file_rec<CR>
+nnoremap <C-f> :<C-u>Unite file file_rec/async<CR>
 " 旧主力
 " nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
-nnoremap <C-g> :<C-u>Unite grep<CR>
+" nnoremap <C-g> :<C-u>Unite grep<CR>
 
 " let g:unite_source_rec_max_cache_files=2000
 call unite#custom_source(
