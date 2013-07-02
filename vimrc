@@ -522,7 +522,6 @@ let g:unite_enable_start_insert=1
 "let g:unite_enable_short_source_names = 1
 "let g:unite_source_file_mru_filename_format = ''
 let g:unite_winheight=30
-let g:unite_source_file_rec_async_command='ag'
 
 " バッファ一覧
 " nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
