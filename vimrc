@@ -102,6 +102,8 @@ endfunction
 " Rename
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
+" Rename
+nnoremap <Leader>fd :call delete(expand('%'))<CR>
 
 "====================================================================================
 " 全角スペースを表示
@@ -388,11 +390,13 @@ NeoBundle 'Shougo/neocomplcache'
 " NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/vimshell'
+NeoBundle 'Shougo/vimfiler.vim'
 
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-endwise'
+" NeoBundle 'scrooloose/nerdtree'
 " taglist
 NeoBundle 'vim-scripts/taglist.vim'
 " % による対応括弧へのカーソル移動機能を拡張
@@ -436,7 +440,6 @@ NeoBundle 'vim-ruby/vim-ruby'
 " Rails
 "----------------------------------------------------------
 NeoBundle 'tpope/vim-rails'
-NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'vim-scripts/dbext.vim'
 NeoBundle 'taichouchou2/unite-reek'
 NeoBundle 'taichouchou2/unite-rails_best_practices'
@@ -501,8 +504,8 @@ au BufWritePost Gemfile call vimproc#system('rbenv ctags')
 "----------------------------------------------------------
 
 " ウィンドウを分割して開く
-" au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-" au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
 " ウィンドウを縦に分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
 au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
@@ -647,6 +650,18 @@ let g:neocomplcache#sources#rsense#home_directory = '/usr/local/Cellar/rsense/0.
 
 
 "----------------------------------------------------------
+" VimFiler
+"----------------------------------------------------------
+nnoremap <C-E> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<CR>
+autocmd! FileType vimfiler call g:my_vimfiler_settings()
+function! g:my_vimfiler_settings()
+  nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)",  "\<Plug>(vimfiler_edit_file)")
+  nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
+  nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
+endfunction
+
+
+"----------------------------------------------------------
 " Quickrun
 " Color ref: http://goo.gl/sQDiY
 "----------------------------------------------------------
@@ -780,4 +795,4 @@ let g:indent_guides_guide_size = 1
 "----------------------------------------------------------
 " NERDTree
 "----------------------------------------------------------
-nnoremap <C-E> :NERDTreeToggle<CR>
+" nnoremap <C-E> :NERDTreeToggle<CR>

@@ -130,6 +130,7 @@ linux*)
   ;;
 esac
 
+alias tailf='tail -f'
 alias la='ls -a'
 alias ll='ls -l'
 alias lla='ls -al'
