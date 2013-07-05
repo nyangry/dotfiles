@@ -1,0 +1,24 @@
+[github]
+	user = lunchub
+	token = 0a66eda68d335209d83ac2b5c93ac152
+[user]
+	name = Daisuke Masuyama
+	email = iacta.alea.esto@gmail.com
+[color]
+	ui = auto
+[core]
+	editor = /Applications/MacVim.app/Contents/MacOS/Vim
+	autocrlf = input
+  #safecrlf = true
+	eol = lf
+	excludesfile = /Users/admin/.gitignore
+
+[merge]
+  tool = extMerge
+[mergetool "extMerge"]
+  cmd = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+  trustExitCode = false
+[diff]
+  external = extDiff
+[mergetool]
+	keepBackup = false

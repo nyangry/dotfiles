@@ -517,8 +517,8 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vspli
 " au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
 " au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
 " ESCキーを2回押すと終了する
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
+au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
 " au FileType unite nmap <buffer> <ESC> <Plug>(unite_exit)
 
 " ショートカット

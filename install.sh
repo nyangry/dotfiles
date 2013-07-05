@@ -93,10 +93,11 @@ delete_old_files()
   rm -f $HOME/.gemrc
   rm -f $HOME/.powconfig
   rm -f $HOME/.bashrc
+  rm -f $HOME/.gitattributes
+  rm -f $HOME/.gitconfig
   rm -f $HOME/.gitignore
   rm -f $HOME/.pryrc
   rm -f $HOME/.tmux.conf
-  #rm ~/.gitconfig
 }
 
 symlink_files()
@@ -109,6 +110,8 @@ symlink_files()
   ln -s $HOME/dotfiles/gemrc     $HOME/.gemrc
   ln -s $HOME/dotfiles/powconfig $HOME/.powconfig
   ln -s $HOME/dotfiles/bashrc    $HOME/.bashrc
+  ln -s $HOME/dotfiles/gitattributes $HOME/.gitattributes
+  ln -s $HOME/dotfiles/gitconfig $HOME/.gitconfig
   ln -s $HOME/dotfiles/gitignore $HOME/.gitignore
   ln -s $HOME/dotfiles/pryrc $HOME/.pryrc
   ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
