@@ -420,6 +420,9 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 " Window size
 NeoBundle 'jimsei/winresizer'
 
+" colorscheme
+NeoBundle 'ujihisa/unite-colorscheme'
+
 "----------------------------------------------------------
 " ctags
 "----------------------------------------------------------
