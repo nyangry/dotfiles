@@ -420,6 +420,10 @@ NeoBundle 'jimsei/winresizer'
 " colorscheme
 " NeoBundle 'ujihisa/unite-colorscheme'
 
+" source ssh
+NeoBundle 'Shougo/unite-ssh'
+
+
 "----------------------------------------------------------
 " ctags
 "----------------------------------------------------------
