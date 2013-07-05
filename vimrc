@@ -366,9 +366,6 @@ autocmd FileType javascript :compiler gjslint
 autocmd QuickfixCmdPost make copen
 
 
-
-
-
 "====================================================================================
 " Neobundle
 "====================================================================================
@@ -421,7 +418,7 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'jimsei/winresizer'
 
 " colorscheme
-NeoBundle 'ujihisa/unite-colorscheme'
+" NeoBundle 'ujihisa/unite-colorscheme'
 
 "----------------------------------------------------------
 " ctags
@@ -443,7 +440,7 @@ NeoBundle 'vim-ruby/vim-ruby'
 " Rails
 "----------------------------------------------------------
 NeoBundle 'tpope/vim-rails'
-NeoBundle 'vim-scripts/dbext.vim'
+" NeoBundle 'vim-scripts/dbext.vim'
 NeoBundle 'taichouchou2/unite-reek'
 NeoBundle 'taichouchou2/unite-rails_best_practices'
 
