@@ -445,8 +445,10 @@ NeoBundle 'vim-ruby/vim-ruby'
 "----------------------------------------------------------
 NeoBundle 'tpope/vim-rails'
 " NeoBundle 'vim-scripts/dbext.vim'
+NeoBundle 'taichouchou2/alpaca_complete'
 NeoBundle 'taichouchou2/unite-reek'
 NeoBundle 'taichouchou2/unite-rails_best_practices'
+NeoBundle 'romanvbabenko/rails.vim' " unite-rails-best-practiceが依存
 
 "----------------------------------------------------------
 " indent
@@ -525,7 +527,7 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
 let g:unite_enable_start_insert=1
 "let g:unite_enable_short_source_names = 1
 "let g:unite_source_file_mru_filename_format = ''
-let g:unite_winheight=30
+let g:unite_winheight=25
 
 " バッファ一覧
 " nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
@@ -544,13 +546,13 @@ nnoremap <C-f> :<C-u>Unite file file_rec/async<CR>
 " nnoremap <C-g> :<C-u>Unite grep<CR>
 
 " let g:unite_source_rec_max_cache_files=2000
-call unite#custom_source(
-      \'file_rec', 
-      \'ignore_pattern',  
-      \'\('.
-      \ '\.\(jpg\|gif\|png\|swf\|bmp\|zip\|gz\)$'.
-      \ '\|\(ci\|converter\|coore_converter\|[Cc]ache[s]\{}\|error[s]\{}\|system\|third_party\|mpdf\|vendor\)/'.
-      \'\)')
+" call unite#custom_source(
+"       \'file_rec', 
+"       \'ignore_pattern',  
+"       \'\('.
+"       \ '\.\(jpg\|gif\|png\|swf\|bmp\|zip\|gz\)$'.
+"       \ '\|\(ci\|converter\|coore_converter\|[Cc]ache[s]\{}\|error[s]\{}\|system\|third_party\|mpdf\|vendor\)/'.
+"       \'\)')
 
 
 "----------------------------------------------------------
