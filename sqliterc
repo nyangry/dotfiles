@@ -1,3 +1,4 @@
+.mode line
 .headers on
-.explain on
-.width 5 50
+#.explain on
+.width 3
