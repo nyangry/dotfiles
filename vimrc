@@ -523,11 +523,14 @@ au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
 " au FileType unite nmap <buffer> <ESC> <Plug>(unite_exit)
 
+" 入力中の内容を削除する
+au FileType unite inoremap <silent> <buffer> <C-k> <ESC>0C
+
 " ショートカット
 let g:unite_enable_start_insert=1
 "let g:unite_enable_short_source_names = 1
 "let g:unite_source_file_mru_filename_format = ''
-let g:unite_winheight=25
+" let g:unite_winheight=20
 
 " バッファ一覧
 " nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
@@ -540,7 +543,7 @@ nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
 nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 " ごちゃまぜ
-nnoremap <C-f> :<C-u>Unite file file_rec/async<CR>
+nnoremap <C-f> :<C-u>Unite file file_rec/async -resume -no-quit<CR>
 " 旧主力
 " nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
 " nnoremap <C-g> :<C-u>Unite grep<CR>
@@ -703,7 +706,7 @@ autocmd BufReadPost *_spec.rb call RSpecQuickrun()
 " Syntastic
 "----------------------------------------------------------
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_javascript_checker = 'jshint'
+let g:syntastic_javascript_checkers=['jshint']
 let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'active_filetypes': [],
                            \ 'passive_filetypes': ['html'] }
