@@ -246,3 +246,6 @@ function is_rails_dir () {
 function add_rails_bin_path_for_binstubs () {
   PATH=./bin:$PATH
 }
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
