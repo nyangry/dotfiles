@@ -1,3 +1,51 @@
+set nocompatible                 " vi互換なし
+set encoding=utf-8
+set fileencodings=utf-8
+" let mapleader = ","              " キーマップリーダー
+map ¥ <leader>
+set nobackup                     " バックアップ取らない
+set noswapfile                   " スワップファイル作らない
+set hidden                       " 編集中でも他のファイルを開けるようにする
+set backspace=indent,eol,start   " バックスペースでなんでも消せるように
+set formatoptions=lmoq           " テキスト整形オプション，マルチバイト系を追加
+set whichwrap=b,s,h,l,<,>,[,]    " カーソルを行頭、行末で止まらないようにする
+set showcmd                      " コマンドをステータス行に表示
+set showmode                     " 現在のモードを表示
+set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
+set modelines=0                  " モードラインは無効
+" set paste        " ペースト時にautoindentを無効に(onにするとautocomplpop.vimが動かない)
+autocmd FileType * setlocal formatoptions-=r " 改行時にコメントを受け継がない
+autocmd FileType * setlocal formatoptions-=o " 改行時にコメントを受け継がない
+set clipboard=unnamed,autoselect " OSのクリップボードを使用する
+" set mouse=a " ターミナルでマウスを使用できるようにする
+" set guioptions+=a
+set ttymouse=xterm2
+" set clipboard+=unnamed
+" set clipboard+=autoselect
+set laststatus=2 " 常にステータスラインを表示
+set ruler " カーソルが何行目の何列目に置かれているかを表示する
+set number " 行番号を表示する
+set noequalalways " ウインドウ幅の自動調整を行わない
+syntax enable
+
+
+"====================================================================================
+" インデント調整
+"====================================================================================
+setlocal indentkeys=!^F,o,O
+setlocal expandtab
+setlocal tabstop<
+setlocal softtabstop=2
+setlocal shiftwidth=2
+setlocal autoindent
+
+"====================================================================================
+" Rsense
+"====================================================================================
+let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
+let g:rsenseUseOmniFunc = 1
+
+
 "====================================================================================
 " Neobundle
 "====================================================================================
@@ -11,12 +59,10 @@ endif
 "----------------------------------------------------------
 " basic
 "----------------------------------------------------------
-" NeoBundle 'Lokaltog/vim-powerline'
+
 NeoBundle 'Shougo/vimproc'
-NeoBundle 'Shougo/unite.vim'
-" NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neocomplcache'
 " NeoBundle 'Shougo/neosnippet'
-" NeoBundle 'Shougo/vimshell'
 
 
 filetype plugin indent on     " required!
@@ -26,150 +72,102 @@ filetype plugin indent on     " required!
 "====================================================================================
 " Plugin Settings
 "====================================================================================
+
+
 "----------------------------------------------------------
-" Unite
+" Neocomplcache
 "----------------------------------------------------------
 
-" ウィンドウを分割して開く
-" au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-" au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-" ウィンドウを縦に分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-" 新しいウィンドウで開く
-" au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-" au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-" ESCキーを2回押すと終了する
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
-" au FileType unite nmap <buffer> <ESC> <Plug>(unite_exit)
+" Rsense
+let g:neocomplcache#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
 
-" ショートカット
-let g:unite_enable_start_insert=1
-"let g:unite_enable_short_source_names = 1
-"let g:unite_source_file_mru_filename_format = ''
-let g:unite_winheight=30
-
-" バッファ一覧
-nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-" ファイル一覧
-" nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
-" レジスタ一覧
-nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-" 最近使用したファイル一覧
-nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-" ごちゃまぜ
-nnoremap <C-f> :<C-u>Unite buffer file file_rec file_mru<CR>
-" 旧主力
-" nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
-nnoremap <C-g> :<C-u>Unite grep<CR>
-
-let g:unite_source_rec_max_cache_files=500
-call unite#custom_source(
-      \'file_rec', 
-      \'ignore_pattern',  
-      \'\('.
-      \ '\.\(jpg\|gif\|png\|swf\|bmp\|zip\|gz\)$'.
-      \ '\|\(ci\|converter\|coore_converter\|[Cc]ache[s]\{}\|error[s]\{}\|system\|third_party\|mpdf\)/'.
-      \'\)')
-" 
-" 
-" "----------------------------------------------------------
-" " Neocomplcache
-" "----------------------------------------------------------
-" " Disable AutoComplPop.
-" let g:acp_enableAtStartup = 0
-" " Use neocomplcache.
-" let g:neocomplcache_enable_at_startup = 1
-" " Use smartcase.
-" let g:neocomplcache_enable_smart_case = 1
-" " Set minimum syntax keyword length.
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
+let g:neocomplcache_enable_underbar_completion = 1
+" Set minimum syntax keyword length.
 " let g:neocomplcache_min_syntax_length = 3
-" let g:neocomplcache_enable_camel_case_completion = 1
-" " Use underbar completion.
-" let g:neocomplcache_enable_underbar_completion = 1
-" " Set minimum syntax keyword length.
-" " let g:neocomplcache_min_syntax_length = 3
-" let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-" " -入力による候補番号の表示
-" let g:neocomplcache_enable_quick_match = 0
-" " 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
-" let g:neocomplcache_enable_auto_select = 1
-" 
-" " シンタックス補完を無効に
-" " let g:neocomplcache_plugin_disable = {
-" "   \ 'syntax_complete' : 1,
-" "   \ }
-" 
-" " Define dictionary.
-" let g:neocomplcache_dictionary_filetype_lists = {
-"  \ 'default'    : '',
-"  \ 'php'        : $HOME . '/.vim/dict/php.dict',
-"  \ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
-"  \ 'coffee'     : $HOME . '/.vim/dict/javascript.dict',
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+" -入力による候補番号の表示
+let g:neocomplcache_enable_quick_match = 0
+" 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
+let g:neocomplcache_enable_auto_select = 1
+
+" シンタックス補完を無効に
+" let g:neocomplcache_plugin_disable = {
+"   \ 'syntax_complete' : 1,
 "   \ }
-" 
-" " Define keyword.
-" if !exists('g:neocomplcache_keyword_patterns')
-"   let g:neocomplcache_keyword_patterns = {}
-" endif
-" let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-" 
-" " Plugin key-mappings.
-" inoremap <expr><C-g>     neocomplcache#undo_completion()
-" inoremap <expr><C-l>     neocomplcache#complete_common_string()
-" 
-" " 関数を補完するための区切り文字パターン
-" if !exists('g:neocomplcache_delimiter_patterns')
-"   let g:neocomplcache_delimiter_patterns = {}
-" endif
-" let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
-" 
-" " カーソルより後のキーワードパターンを認識。
-" " h|geとなっている状態(|はカーソル)で、hogeを補完したときに後ろのキーワードを認識してho|geと補完する機能。
-" " 修正するときにかなり便利。
-" if !exists('g:neocomplcache_next_keyword_patterns')
-"   let g:neocomplcache_next_keyword_patterns = {}
-" endif
-" 
-" " スニペットを展開する。スニペットが関係しないところでは行末まで削除
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" xmap <C-k>     <Plug>(neosnippet_expand_target)
-" 
-" " vim標準のキーワード補完を置き換える
-" inoremap <expr><C-n> neocomplcache#manual_keyword_complete()
-" 
-" " 単語入力中だけ補完候補を出す
-" inoremap <expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
-" inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-" inoremap <expr><C-y>  neocomplcache#close_popup()
-" inoremap <expr><C-e>  neocomplcache#cancel_popup()
-" 
-" " Enable omni completion.
-" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" autocmd FileType ruby set omnifunc=rubycomplete#Complete
-" 
-" " Enable heavy omni completion.
-" if !exists('g:neocomplcache_omni_patterns')
-"   let g:neocomplcache_omni_patterns = {}
-" endif
-" let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-" 
-" " バッファ共有設定
-" let g:neocomplcache_same_filetype_lists = {
-" \  'html' : 'html,javascript,php,ruby'
-" \, 'haml' : 'haml,javascript,ruby'
-" \, 'php'  : 'html,javascript,php'
-" \, 'js'   : 'html,php,ruby'
-" \ }
-" 
-" " Rsense
-" let g:neocomplcache#sources#rsense#home_directory = '/usr/local/Cellar/rsense/0.3'
+
+" Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {
+ \ 'default'    : '',
+ \ 'php'        : $HOME . '/.vim/dict/php.dict',
+ \ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
+ \ 'coffee'     : $HOME . '/.vim/dict/javascript.dict',
+  \ }
+
+" Define keyword.
+if !exists('g:neocomplcache_keyword_patterns')
+  let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+" 関数を補完するための区切り文字パターン
+if !exists('g:neocomplcache_delimiter_patterns')
+  let g:neocomplcache_delimiter_patterns = {}
+endif
+let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
+
+" カーソルより後のキーワードパターンを認識。
+" h|geとなっている状態(|はカーソル)で、hogeを補完したときに後ろのキーワードを認識してho|geと補完する機能。
+" 修正するときにかなり便利。
+if !exists('g:neocomplcache_next_keyword_patterns')
+  let g:neocomplcache_next_keyword_patterns = {}
+endif
+
+" スニペットを展開する。スニペットが関係しないところでは行末まで削除
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" vim標準のキーワード補完を置き換える
+inoremap <expr><C-n> neocomplcache#manual_keyword_complete()
+
+" 単語入力中だけ補完候補を出す
+inoremap <expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+
+" Enable heavy omni completion.
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+
+" バッファ共有設定
+let g:neocomplcache_same_filetype_lists = {
+\  'html' : 'html,javascript,php,ruby'
+\, 'haml' : 'haml,javascript,ruby'
+\, 'php'  : 'html,javascript,php'
+\, 'js'   : 'html,php,ruby'
+\ }

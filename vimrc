@@ -1,11 +1,9 @@
 "====================================================================================
 " 基本設定 
 "====================================================================================
-set backupskip=/tmp/*,/private/tmp/* " tmpの中ではバックアップスクリプトを作成しない（crontab等用）
 set nocompatible                 " vi互換なし
 set encoding=utf-8
 set fileencodings=utf-8
-" let mapleader = ","              " キーマップリーダー
 map ¥ <leader>
 set scrolloff=5                  " スクロール時の余白確保
 set textwidth=0                  " 一行に長い文章を書いていても自動折り返しを
@@ -367,6 +365,13 @@ autocmd QuickfixCmdPost make copen
 
 
 "====================================================================================
+" Rsense
+"====================================================================================
+let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
+let g:rsenseUseOmniFunc = 1
+
+
+"====================================================================================
 " Neobundle
 "====================================================================================
 filetype off
@@ -469,6 +474,8 @@ NeoBundle 'taichouchou2/html5.vim'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'tpope/vim-markdown'
 
 "----------------------------------------------------------
 " Complete
@@ -561,8 +568,10 @@ nnoremap <C-f> :<C-u>Unite file file_rec/async<CR>
 "----------------------------------------------------------
 " Neocomplcache
 "----------------------------------------------------------
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
+
+" Rsense
+let g:neocomplcache#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
+
 " Use neocomplcache.
 let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
@@ -637,7 +646,7 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType ruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
@@ -653,9 +662,6 @@ let g:neocomplcache_same_filetype_lists = {
 \, 'php'  : 'html,javascript,php'
 \, 'js'   : 'html,php,ruby'
 \ }
-
-" Rsense
-let g:neocomplcache#sources#rsense#home_directory = '/usr/local/Cellar/rsense/0.3'
 
 
 "----------------------------------------------------------
