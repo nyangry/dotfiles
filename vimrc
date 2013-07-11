@@ -425,7 +425,7 @@ NeoBundle 'Shougo/unite-ssh'
 "----------------------------------------------------------
 " ctags
 "----------------------------------------------------------
-" NeoBundle 'szw/vim-tags'
+NeoBundle 'szw/vim-tags'
 NeoBundle 'tsukkee/unite-tag'
 
 "----------------------------------------------------------
@@ -490,20 +490,6 @@ filetype plugin indent on     " required!
 " Powerline
 "----------------------------------------------------------
 let g:Powerline_symbols = 'fancy'
-
-
-"----------------------------------------------------------
-" tags
-"----------------------------------------------------------
-" let g:vim_tags_project_tags_command = "ctags -f .tags -R {OPTIONS} {DIRECTORY} 2>/dev/null &"                                                                                                    
-" let g:vim_tags_gems_tags_command = "ctags -R -f .Gemfile.lock.tags `bundle show --paths` 2>/dev/null &"
-" 
-" set tags+=.tags
-" set tags+=.Gemfile.lock.tags
-
-" http://qiita.com/items/4398a19c05ad4861af85
-au BufNewFile, BufRead Gemfile setl filetype=Gemfile
-au BufWritePost Gemfile call vimproc#system('rbenv ctags')
 
 "----------------------------------------------------------
 " Unite
@@ -581,10 +567,6 @@ let g:neocomplcache_enable_quick_match = 0
 " 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
 let g:neocomplcache_enable_auto_select = 1
 
-"let g:neocomplcache_skip_auto_completion_time = '0.6'
-" Rsense
-let g:neocomplcache#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
-
 " シンタックス補完を無効に
 " let g:neocomplcache_plugin_disable = {
 "   \ 'syntax_complete' : 1,
@@ -655,6 +637,10 @@ let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 " Rsense
 let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
 let g:rsenseUseOmniFunc = 1
+" 
+let g:neocomplcache_skip_auto_completion_time = '5'
+" " Rsense
+let g:neocomplcache#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
 
 " バッファ共有設定
 let g:neocomplcache_same_filetype_lists = {
@@ -717,6 +703,12 @@ let g:syntastic_javascript_checkers=['jshint']
 let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'active_filetypes': [],
                            \ 'passive_filetypes': ['html'] }
+
+
+"----------------------------------------------------------
+" ctags
+"----------------------------------------------------------
+nnoremap <C-]> g<C-]> 
 
 
 "----------------------------------------------------------
