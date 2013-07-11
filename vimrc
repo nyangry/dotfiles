@@ -647,16 +647,13 @@ let g:neocomplcache_same_filetype_lists = {
 \, 'haml' : 'haml,javascript,ruby'
 \, 'php'  : 'html,javascript,php'
 \, 'js'   : 'html,php,ruby'
+\, 'ruby'   : 'rails'
 \ }
 
 
 "----------------------------------------------------------
 " Neosnippet
 "----------------------------------------------------------
-autocmd BufEnter * if exists("b:rails_root") | NeoComplCacheSetFileType ruby.rails | endif
-autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\.rb$") | NeoComplCacheSetFileType ruby.rspec | endif
-let g:neocomplcache_snippets_dir = $HOME . '/.vim/snippets'
-nnoremap <Space>se :<C-U>NeoComplCacheEditSnippets<CR>
 
 
 "----------------------------------------------------------
