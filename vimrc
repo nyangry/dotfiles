@@ -365,13 +365,6 @@ autocmd QuickfixCmdPost make copen
 
 
 "====================================================================================
-" Rsense
-"====================================================================================
-let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
-let g:rsenseUseOmniFunc = 1
-
-
-"====================================================================================
 " Neobundle
 "====================================================================================
 filetype off
@@ -568,12 +561,11 @@ nnoremap <C-f> :<C-u>Unite file file_rec/async<CR>
 "----------------------------------------------------------
 " Neocomplcache
 "----------------------------------------------------------
-
-" Rsense
-let g:neocomplcache#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
+set infercase
 
 " Use neocomplcache.
 let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_force_overwrite_completefunc = 1
 " Use smartcase.
 let g:neocomplcache_enable_smart_case = 1
 " Set minimum syntax keyword length.
@@ -588,6 +580,10 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 let g:neocomplcache_enable_quick_match = 0
 " 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
 let g:neocomplcache_enable_auto_select = 1
+
+let g:neocomplcache_skip_auto_completion_time = '0.6'
+" Rsense
+let g:neocomplcache#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
 
 " シンタックス補完を無効に
 " let g:neocomplcache_plugin_disable = {
@@ -654,6 +650,11 @@ if !exists('g:neocomplcache_omni_patterns')
 endif
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+
+
+" Rsense
+let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
+let g:rsenseUseOmniFunc = 1
 
 " バッファ共有設定
 let g:neocomplcache_same_filetype_lists = {
