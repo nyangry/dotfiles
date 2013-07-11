@@ -1,8 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_cnt =8
 let g:netrw_dirhist_1='/Users/admin/code/rep3'
 let g:netrw_dirhist_2='/Users/admin/code/rep3/rep3'
 let g:netrw_dirhist_3='/Users/admin/code/rep3/rep3/service'
 let g:netrw_dirhist_4='/Users/admin/code/rep3/rep3/service/php'
 let g:netrw_dirhist_5='/Users/admin/code/rep3/rep3/service/php/lib'
 let g:netrw_dirhist_6='/Users/admin/code/rep3/rep3/service/php/lib/model_class'
+let g:netrw_dirhist_7='/Users/admin/code/rep3/hybrid'
+let g:netrw_dirhist_8='/Users/admin/code/rep3/hybrid/public_html'
