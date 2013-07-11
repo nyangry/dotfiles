@@ -624,7 +624,7 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+" autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
@@ -633,14 +633,13 @@ endif
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
-
 " Rsense
-let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
-let g:rsenseUseOmniFunc = 1
-" 
-let g:neocomplcache_skip_auto_completion_time = '5'
-" " Rsense
-let g:neocomplcache#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
+" let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
+" let g:rsenseUseOmniFunc = 1
+" " 
+" " let g:neocomplcache_skip_auto_completion_time = '0.3'
+" " " Rsense
+" let g:neocomplcache#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
 
 " バッファ共有設定
 let g:neocomplcache_same_filetype_lists = {
