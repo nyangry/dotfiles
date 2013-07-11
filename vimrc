@@ -581,7 +581,7 @@ let g:neocomplcache_enable_quick_match = 0
 " 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
 let g:neocomplcache_enable_auto_select = 1
 
-let g:neocomplcache_skip_auto_completion_time = '0.6'
+"let g:neocomplcache_skip_auto_completion_time = '0.6'
 " Rsense
 let g:neocomplcache#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
 
