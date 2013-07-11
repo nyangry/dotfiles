@@ -651,6 +651,15 @@ let g:neocomplcache_same_filetype_lists = {
 
 
 "----------------------------------------------------------
+" Neosnippet
+"----------------------------------------------------------
+autocmd BufEnter * if exists("b:rails_root") | NeoComplCacheSetFileType ruby.rails | endif
+autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\.rb$") | NeoComplCacheSetFileType ruby.rspec | endif
+let g:neocomplcache_snippets_dir = $HOME . '/.vim/snippets'
+nnoremap <Space>se :<C-U>NeoComplCacheEditSnippets<CR>
+
+
+"----------------------------------------------------------
 " VimFiler
 "----------------------------------------------------------
 nnoremap <C-E> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<CR>
