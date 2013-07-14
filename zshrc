@@ -146,6 +146,7 @@ alias sc='screen'
 alias gts='git status'
 alias gtl="git log --color --pretty=format:'%h (%cr) %s [%cn]'"
 alias ctags='/Applications/MacVim.app/Contents/MacOS/ctags "$@"'
+alias octodeploy='git add .; git commit -am "update"; bundle exec rake gen_deploy'
 
 function scx () {
     screen -x $1
