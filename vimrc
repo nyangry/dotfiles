@@ -432,8 +432,9 @@ NeoBundle 'Shougo/unite-ssh'
 "----------------------------------------------------------
 " ctags
 "----------------------------------------------------------
-NeoBundle 'szw/vim-tags'
+" NeoBundle 'szw/vim-tags'
 NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'alpaca-tc/alpaca_tags'
 
 "----------------------------------------------------------
 " Ruby
