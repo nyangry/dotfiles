@@ -642,12 +642,10 @@ nnoremap <C-f> :<C-u>Unite file file_rec/async<CR>
 " let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 " 
 " " Rsense
-" " let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
-" " let g:rsenseUseOmniFunc = 1
-" " " 
-" " " let g:neocomplcache_skip_auto_completion_time = '0.3'
-" " " " Rsense
-" " let g:neocomplcache#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
+" let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
+" let g:rsenseUseOmniFunc = 1
+" let g:neocomplcache_skip_auto_completion_time = '0.3'
+" let g:neocomplcache#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
 " 
 " " バッファ共有設定
 " let g:neocomplcache_same_filetype_lists = {
