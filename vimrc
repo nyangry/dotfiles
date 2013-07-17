@@ -740,7 +740,6 @@ if !exists('g:neocomplete#sources#omni#input_patterns')
 endif
 let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-" let g:neocomplete#sources#omni#input_patterns.ruby = '[^. \t]->\h\w*\|\h\w*::'
 
 " NeoBundle 'supermomonga/neocomplete-rsense.vim'
 " NeoBundle 'https://raw.github.com/lunchub/rsense.vim/master/rsense.vim'
