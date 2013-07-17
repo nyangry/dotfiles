@@ -678,6 +678,10 @@ let g:neocomplete#sources#dictionary#dictionaries = {
   \ 'coffee'     : $HOME . '/.vim/dict/javascript.dict',
 \ }
 
+if !exists('g:neocomplete#sources#include#paths')
+  let g:neocomplete#sources#include#paths = {}
+endif
+
 " Define same filetypes
 if !exists('g:neocomplete#same_filetypes')
   let g:neocomplete#same_filetypes = {}
