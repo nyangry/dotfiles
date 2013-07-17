@@ -673,12 +673,12 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
  
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-  \ 'default' : '',
-  \ 'vimshell' : $HOME.'/.vimshell_hist',
-  \ 'scheme' : $HOME.'/.gosh_completions', 
-  \ 'php'        : $HOME . '/.vim/dict/php.dict', 
-  \ 'javascript' : $HOME . '/.vim/dict/javascript.dict', 
-  \ 'coffee'     : $HOME . '/.vim/dict/javascript.dict', 
+  \ 'default'    : '',
+  \ 'vimshell'   : $HOME . '/.vimshell_hist',
+  \ 'scheme'     : $HOME . '/.gosh_completions',
+  \ 'php'        : $HOME . '/.vim/dict/php.dict',
+  \ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
+  \ 'coffee'     : $HOME . '/.vim/dict/javascript.dict',
 \ }
 
 " Define same filetypes
@@ -745,10 +745,16 @@ let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 " Rsense
-let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
-let g:rsenseUseOmniFunc = 1
-let g:neocomplete#skip_auto_completion_time = '0.3'
-let g:neocomplete#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
+" let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
+" let g:rsenseUseOmniFunc = 1
+" let g:neocomplete#skip_auto_completion_time = '0.3'
+" let g:neocomplete#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
+
+
+" highlight Pmenu ctermbg=8 guibg=#606060
+" highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
+" highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
+
 
 "----------------------------------------------------------
 " Neosnippet
