@@ -434,7 +434,6 @@ NeoBundle 'Shougo/unite-ssh'
 "----------------------------------------------------------
 " NeoBundle 'szw/vim-tags'
 NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'alpaca-tc/alpaca_tags'
 
 "----------------------------------------------------------
 " Ruby
@@ -442,7 +441,7 @@ NeoBundle 'alpaca-tc/alpaca_tags'
 NeoBundle 'kana/vim-textobj-user' "vim-textobj-rubyが依存
 NeoBundle 'rhysd/vim-textobj-ruby'
 NeoBundle 'rhysd/unite-ruby-require.vim'
-NeoBundle 'Shougo/neocomplcache-rsense'
+" NeoBundle 'Shougo/neocomplcache-rsense'
 NeoBundle 'vim-scripts/ruby-matchit'
 NeoBundle 'vim-ruby/vim-ruby'
 
@@ -741,6 +740,18 @@ if !exists('g:neocomplete#sources#omni#input_patterns')
 endif
 let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+" let g:neocomplete#sources#omni#input_patterns.ruby = '[^. \t]->\h\w*\|\h\w*::'
+
+" NeoBundle 'supermomonga/neocomplete-rsense.vim'
+" NeoBundle 'https://raw.github.com/lunchub/rsense.vim/master/rsense.vim'
+
+" NeoBundleLazy 'https://raw.github.com/lunchub/rsense.vim/master/rsense.vim', {
+"   \ 'script_type' : 'plugin',
+"   \ 'depends'     : ['Shougo/neocomplete'],
+"   \ 'autoload'    : {
+"   \   'insert' : 1, 
+"   \ }
+" \ }
 
 " Rsense
 " let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
@@ -916,11 +927,12 @@ let g:indent_guides_guide_size = 1
 "----------------------------------------------------------
 " alpaca_tags
 "----------------------------------------------------------
-" NeoBundleLazy 'taichouchou2/alpaca_update_tags', {
-"       \ 'depends': 'Shougo/vimproc',
-"       \ 'autoload' : {
-"       \   'commands': ['AlpacaTagsUpdate', 'AlpacaTagsSet', 'AlpacaTagsUpdateBundle']
-"       \ }}
+NeoBundle 'alpaca-tc/alpaca_tags', {
+\ 'depends'  : 'Shougo/vimproc',
+\ 'autoload' : {
+    \ 'commands' : ['AlpacaTagsUpdate', 'AlpacaTagsSet', 'AlpacaTagsUpdateBundle']
+  \ }
+\ }
 
 " example...
 " ~/.ctagsにctagsの設定ファイルを設置します。現在無い人は、このディレクトリ内の.ctagsをコピーしてください。
