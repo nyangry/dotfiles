@@ -388,8 +388,8 @@ NeoBundle 'Lokaltog/vim-powerline'
 
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neocomplcache'
-" NeoBundle 'Shougo/neocomplete'
+" NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/vimfiler.vim'
@@ -660,6 +660,113 @@ let g:neocomplcache_same_filetype_lists = {
 
 
 "----------------------------------------------------------
+" Neocomplete
+"----------------------------------------------------------
+set infercase
+
+" Use neocomplete.
+let g:neocomplete_enable_at_startup = 1
+let g:neocomplete_force_overwrite_completefunc = 1
+" Use smartcase.
+let g:neocomplete_enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete_min_syntax_length = 3
+let g:neocomplete_enable_camel_case_completion = 1
+" Use underbar completion.
+let g:neocomplete_enable_underbar_completion = 1
+" Set minimum syntax keyword length.
+" let g:neocomplete_min_syntax_length = 3
+let g:neocomplete_lock_buffer_name_pattern = '\*ku\*'
+" -入力による候補番号の表示
+let g:neocomplete_enable_quick_match = 0
+" 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
+let g:neocomplete_enable_auto_select = 1
+
+" シンタックス補完を無効に
+" let g:neocomplete_plugin_disable = {
+"   \ 'syntax_complete' : 1,
+"   \ }
+
+" Define dictionary.
+let g:neocomplete_dictionary_filetype_lists = {
+ \ 'default'    : '',
+ \ 'php'        : $HOME . '/.vim/dict/php.dict',
+ \ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
+ \ 'coffee'     : $HOME . '/.vim/dict/javascript.dict',
+  \ }
+
+" Define keyword.
+if !exists('g:neocomplete_keyword_patterns')
+  let g:neocomplete_keyword_patterns = {}
+endif
+let g:neocomplete_keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" 関数を補完するための区切り文字パターン
+if !exists('g:neocomplete_delimiter_patterns')
+  let g:neocomplete_delimiter_patterns = {}
+endif
+let g:neocomplete_delimiter_patterns['php'] = ['->', '::', '\']
+
+" カーソルより後のキーワードパターンを認識。
+" h|geとなっている状態(|はカーソル)で、hogeを補完したときに後ろのキーワードを認識してho|geと補完する機能。
+" 修正するときにかなり便利。
+if !exists('g:neocomplete_next_keyword_patterns')
+  let g:neocomplete_next_keyword_patterns = {}
+endif
+
+" スニペットを展開する。スニペットが関係しないところでは行末まで削除
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" vim標準のキーワード補完を置き換える
+inoremap <expr><C-n> neocomplete#manual_keyword_complete()
+
+" 単語入力中だけ補完候補を出す
+inoremap <expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete_omni_patterns')
+  let g:neocomplete_omni_patterns = {}
+endif
+let g:neocomplete_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplete_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+
+" Rsense
+" let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
+" let g:rsenseUseOmniFunc = 1
+" " 
+" " let g:neocomplete_skip_auto_completion_time = '0.3'
+" " " Rsense
+" let g:neocomplete#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
+
+" バッファ共有設定
+let g:neocomplete_same_filetype_lists = {
+\  'html' : 'html,javascript,php,ruby'
+\, 'haml' : 'haml,javascript,ruby'
+\, 'php'  : 'html,javascript,php'
+\, 'js'   : 'html,php,ruby'
+\, 'ruby'   : 'rails'
+\ }
+
+
+"----------------------------------------------------------
 " Neosnippet
 "----------------------------------------------------------
 
@@ -816,3 +923,40 @@ let g:indent_guides_guide_size = 1
 " NERDTree
 "----------------------------------------------------------
 " nnoremap <C-E> :NERDTreeToggle<CR>
+
+
+"----------------------------------------------------------
+" alpaca_tags
+"----------------------------------------------------------
+" NeoBundleLazy 'taichouchou2/alpaca_update_tags', {
+"       \ 'depends': 'Shougo/vimproc',
+"       \ 'autoload' : {
+"       \   'commands': ['AlpacaTagsUpdate', 'AlpacaTagsSet', 'AlpacaTagsUpdateBundle']
+"       \ }}
+
+" example...
+" ~/.ctagsにctagsの設定ファイルを設置します。現在無い人は、このディレクトリ内の.ctagsをコピーしてください。
+" 適切なlanguageは`ctags --list-maps=all`で見つけてください。人によりますので。
+let g:alpaca_update_tags_config = {
+      \ '_' : '-R --sort=yes',
+      \ 'js' : '--languages=+js',
+      \ '-js' : '--languages=-js,JavaScript',
+      \ 'vim' : '--languages=+Vim,vim',
+      \ '-vim' : '--languages=-Vim,vim',
+      \ '-style': '--languages=-css,sass,scss,js,JavaScript,html',
+      \ 'scss' : '--languages=+scss --languages=-css,sass',
+      \ 'sass' : '--languages=+sass --languages=-css,scss',
+      \ 'css' : '--languages=+css',
+      \ 'ruby': '--languages=+Ruby',
+      \ 'coffee': '--languages=+coffee',
+      \ '-coffee': '--languages=-coffee',
+      \ 'bundle': '--languages=+Ruby --languages=-css,sass,scss,js,JavaScript,coffee',
+      \ }
+
+aug AlpacaUpdateTags
+  au!
+  au FileWritePost,BufWritePost * AlpacaTagsUpdate -style
+  " bundleのオプションは自動で追加して実行します。
+  au FileWritePost,BufWritePost Gemfile AlpacaTagsUpdateBundle
+  au FileReadPost,BufEnter * AlpacaTagsSet
+aug END
