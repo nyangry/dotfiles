@@ -935,7 +935,7 @@ let g:indent_guides_guide_size = 1
 NeoBundle 'alpaca-tc/alpaca_tags', {
 \ 'depends'  : 'Shougo/vimproc',
 \ 'autoload' : {
-    \ 'commands' : ['AlpacaTagsUpdate', 'AlpacaTagsSet', 'AlpacaTagsUpdateBundle']
+    \ 'commands' : ['AlpacaTagsUpdate', 'AlpacaTagsSet', 'AlpacaTagsBundle']
   \ }
 \ }
 
@@ -962,6 +962,6 @@ aug AlpacaUpdateTags
   au!
   au FileWritePost,BufWritePost * AlpacaTagsUpdate -style
   " bundleのオプションは自動で追加して実行します。
-  au FileWritePost,BufWritePost Gemfile AlpacaTagsUpdateBundle
+  au FileWritePost,BufWritePost Gemfile AlpacaTagsBundle
   au FileReadPost,BufEnter * AlpacaTagsSet
 aug END
