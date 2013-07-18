@@ -945,25 +945,29 @@ NeoBundle 'alpaca-tc/alpaca_tags', {
 " ~/.ctagsにctagsの設定ファイルを設置します。現在無い人は、このディレクトリ内の.ctagsをコピーしてください。
 " 適切なlanguageは`ctags --list-maps=all`で見つけてください。人によりますので。
 let g:alpaca_update_tags_config = {
-      \ '_' : '-R --sort=yes',
-      \ 'js' : '--languages=+js',
-      \ '-js' : '--languages=-js,JavaScript',
-      \ 'vim' : '--languages=+Vim,vim',
-      \ '-vim' : '--languages=-Vim,vim',
-      \ '-style': '--languages=-css,sass,scss,js,JavaScript,html',
-      \ 'scss' : '--languages=+scss --languages=-css,sass',
-      \ 'sass' : '--languages=+sass --languages=-css,scss',
-      \ 'css' : '--languages=+css',
-      \ 'ruby': '--languages=+Ruby',
-      \ 'coffee': '--languages=+coffee',
-      \ '-coffee': '--languages=-coffee',
-      \ 'bundle': '--languages=+Ruby --languages=-css,sass,scss,js,JavaScript,coffee',
+      \ '_'       : '-R --sort=yes',
+      \ 'js'      : '--languages=+js',
+      \ '-js'     : '--languages=-js,JavaScript',
+      \ 'vim'     : '--languages=+Vim,vim',
+      \ '-vim'    : '--languages=-Vim,vim',
+      \ '-style'  : '--languages=-css,sass,scss,js,JavaScript,html',
+      \ 'scss'    : '--languages=+scss --languages=-css,sass',
+      \ 'sass'    : '--languages=+sass --languages=-css,scss',
+      \ 'css'     : '--languages=+css',
+      \ 'ruby'    : '--languages=+Ruby',
+      \ 'coffee'  : '--languages=+coffee',
+      \ '-coffee' : '--languages=-coffee',
+      \ 'bundle'  : '--languages=+Ruby --languages=-css,sass,scss,js,JavaScript,coffee',
       \ }
 
 aug AlpacaUpdateTags
   au!
-  au FileWritePost,BufWritePost * AlpacaTagsUpdate -style
+  au FileWritePost,BufWritePost * AlpacaTagsUpdate call Get_content_filetype()
   " bundleのオプションは自動で追加して実行します。
   au FileWritePost,BufWritePost Gemfile AlpacaTagsBundle
   au FileReadPost,BufEnter * AlpacaTagsSet
 aug END
+
+function! Get_content_filetype()
+  return &filetype
+endfunction
