@@ -686,11 +686,13 @@ endif
 if !exists('g:neocomplete#same_filetypes')
   let g:neocomplete#same_filetypes = {}
 endif
-let g:neocomplete#same_filetypes.html = 'javascript, php, ruby'
-let g:neocomplete#same_filetypes.haml = 'javascript, ruby'
-let g:neocomplete#same_filetypes.php  = 'html, javascript'
-let g:neocomplete#same_filetypes.js   = 'html, haml, php, ruby'
-let g:neocomplete#same_filetypes.ruby = 'haml, rails'
+let g:neocomplete#same_filetypes.html   = 'javascript, php, ruby'
+let g:neocomplete#same_filetypes.haml   = 'javascript, ruby'
+let g:neocomplete#same_filetypes.php    = 'html, javascript'
+let g:neocomplete#same_filetypes.scss   = 'html, haml, css'
+let g:neocomplete#same_filetypes.js     = 'html, haml, php, ruby'
+let g:neocomplete#same_filetypes.coffee = 'html, haml, javascript, ruby'
+let g:neocomplete#same_filetypes.ruby   = 'haml, rails'
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
