@@ -962,12 +962,9 @@ let g:alpaca_update_tags_config = {
 
 aug AlpacaUpdateTags
   au!
-  au FileWritePost,BufWritePost * AlpacaTagsUpdate call Get_content_filetype()
+  au FileWritePost,BufWritePost * call alpaca_tags#update_tags(&ft)
+  " au FileWritePost, BufWritePost * execute AlpacaTagsUpdate('ruby') 
   " bundleのオプションは自動で追加して実行します。
   au FileWritePost,BufWritePost Gemfile AlpacaTagsBundle
   au FileReadPost,BufEnter * AlpacaTagsSet
 aug END
-
-function! Get_content_filetype()
-  return &filetype
-endfunction
