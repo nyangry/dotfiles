@@ -821,6 +821,8 @@ function! RSpecQuickrun()
 endfunction
 autocmd BufReadPost *_spec.rb call RSpecQuickrun()
 
+
+
 "----------------------------------------------------------
 " Syntastic
 "----------------------------------------------------------
@@ -847,6 +849,7 @@ let Tlist_Exit_OnlyWindow = 1
 let Tlist_Auto_Update = 1
 let g:tlist_php_settings = 'php;c:class;d:constant;f:function'
 nmap <Leader>tl :Tlist<CR>
+
 
 "----------------------------------------------------------
 " Unite-reek / Unite-rails-best-practice
