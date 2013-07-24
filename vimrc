@@ -536,7 +536,7 @@ nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
 nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 " ごちゃまぜ
-nnoremap <C-f> :<C-u>Unite file file_rec/async<CR>
+nnoremap <C-f> :<C-u>Unite file file_rec/async file/new<CR>
 " 旧主力
 " nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
 " nnoremap <C-g> :<C-u>Unite grep<CR>
