@@ -949,7 +949,7 @@ NeoBundle 'alpaca-tc/alpaca_tags', {
 " example...
 " ~/.ctagsにctagsの設定ファイルを設置します。現在無い人は、このディレクトリ内の.ctagsをコピーしてください。
 " 適切なlanguageは`ctags --list-maps=all`で見つけてください。人によりますので。
-let g:alpaca_update_tags_config = {
+let g:alpaca_tags_config = {
       \ '_'       : '-R --sort=yes',
       \ 'js'      : '--languages=+js',
       \ '-js'     : '--languages=-js,JavaScript',
