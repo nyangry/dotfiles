@@ -938,11 +938,13 @@ let g:indent_guides_guide_size = 1
 " alpaca_tags
 "----------------------------------------------------------
 NeoBundle 'alpaca-tc/alpaca_tags', {
-\ 'depends'  : 'Shougo/vimproc',
-\ 'autoload' : {
-    \ 'commands' : ['AlpacaTagsUpdate', 'AlpacaTagsSet', 'AlpacaTagsBundle']
-  \ }
+    \ 'depends'  : ['Shougo/vimproc',  'Shougo/unite.vim'],
+    \ 'autoload' : {
+    \   'commands'      : ['Tags',  'TagsUpdate',  'TagsSet',  'TagsBundle',  'TagsCleanCache'],
+    \   'unite_sources' : ['tags']
+    \ }
 \ }
+
 
 " example...
 " ~/.ctagsにctagsの設定ファイルを設置します。現在無い人は、このディレクトリ内の.ctagsをコピーしてください。
@@ -963,11 +965,12 @@ let g:alpaca_update_tags_config = {
       \ 'bundle'  : '--languages=+Ruby --languages=-css,sass,scss,js,JavaScript,coffee',
       \ }
 
-aug AlpacaUpdateTags
-  au!
-  au FileWritePost,BufWritePost * call alpaca_tags#update_tags(&ft)
-  " au FileWritePost, BufWritePost * execute AlpacaTagsUpdate('ruby') 
-  " bundleのオプションは自動で追加して実行します。
-  au FileWritePost,BufWritePost Gemfile AlpacaTagsBundle
-  au FileReadPost,BufEnter * AlpacaTagsSet
-aug END
+augroup AlpacaTags
+  autocmd!
+  if exists(':Tags')
+    " au FileWritePost,BufWritePost * call alpaca_tags#update_tags(&ft)
+    autocmd BufWritePost * TagsUpdate ruby
+    autocmd BufWritePost Gemfile TagsBundle
+    autocmd BufEnter * TagsSet
+  endif
+augroup END
