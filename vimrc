@@ -534,7 +534,8 @@ nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
 " レジスタ一覧
 nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
-nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+" nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+nnoremap <silent> <C-h> :<C-u>Unite file_mru<CR>
 " ごちゃまぜ
 nnoremap <C-f> :<C-u>Unite file file_rec/async file/new<CR>
 " 旧主力
@@ -724,7 +725,7 @@ endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
@@ -958,8 +959,18 @@ augroup AlpacaTags
   autocmd!
   if exists(':Tags')
     " au FileWritePost,BufWritePost * call alpaca_tags#update_tags(&ft)
-    autocmd BufWritePost * TagsUpdate ruby
-    autocmd BufWritePost Gemfile TagsBundle
+    " autocmd BufWritePost * TagsUpdate ruby
+    " autocmd BufWritePost Gemfile TagsBundle
+    " autocmd BufEnter * TagsSet
+    autocmd FileWritePost,BufWritePost * TagsUpdate ruby
+    autocmd FileWritePost,BufWritePost Gemfile TagsBundle
     autocmd BufEnter * TagsSet
   endif
 augroup END
+
+
+let g:alpaca_tags_print_to_console = {
+        \ 'debug' : 1, 
+        \ 'setted tags' : 0, 
+        \ 'created/updated tags' : 1, 
+        \ }
