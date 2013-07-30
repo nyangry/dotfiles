@@ -542,15 +542,17 @@ nnoremap <C-f> :<C-u>Unite file file_rec/async file/new<CR>
 " nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
 " nnoremap <C-g> :<C-u>Unite grep<CR>
 
-" let g:unite_source_rec_max_cache_files=2000
-" call unite#custom_source(
-"       \'file_rec', 
-"       \'ignore_pattern',  
-"       \'\('.
-"       \ '\.\(jpg\|gif\|png\|swf\|bmp\|zip\|gz\)$'.
-"       \ '\|\(ci\|converter\|coore_converter\|[Cc]ache[s]\{}\|error[s]\{}\|system\|third_party\|mpdf\|vendor\)/'.
-"       \'\)')
+let g:unite_source_rec_max_cache_files=4000
+call unite#custom_source(
+      \'file_rec, file_rec/async', 
+      \'ignore_pattern',  
+      \'\('.
+      \ '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\)$'.
+      \ '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\)/'.
+      \ '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\)/'.
+      \'\)')
 
+" \ '\|\(ci\|converter\|coore_converter\|[Cc]ache[s]\{}\|error[s]\{}\|system\|third_party\|mpdf\|vendor\)/'.
 
 "----------------------------------------------------------
 " Neocomplcache
@@ -945,7 +947,6 @@ NeoBundle 'alpaca-tc/alpaca_tags', {
     \   'unite_sources' : ['tags']
     \ }
 \ }
-
 
 " example...
 " ~/.ctagsにctagsの設定ファイルを設置します。現在無い人は、このディレクトリ内の.ctagsをコピーしてください。
