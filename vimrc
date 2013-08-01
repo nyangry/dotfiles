@@ -970,8 +970,8 @@ augroup AlpacaTags
 augroup END
 
 
-let g:alpaca_tags_print_to_console = {
-        \ 'debug' : 1, 
-        \ 'setted tags' : 0, 
-        \ 'created/updated tags' : 1, 
-        \ }
+" let g:alpaca_tags_print_to_console = {
+"         \ 'debug' : 1, 
+"         \ 'setted tags' : 0, 
+"         \ 'created/updated tags' : 1, 
+"         \ }
