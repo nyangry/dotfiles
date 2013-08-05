@@ -96,6 +96,11 @@ function time_since_commit() {
 }
 
 function vcs_info_with_color() {
+
+  if [[ `pwd` =~ ".*\/mnts\/.*" ]]; then
+    return ""
+  fi
+  
   VCS_PROMPT_PREFIX="("
 	VCS_PROMPT_SUFFIX=")"
 
@@ -115,7 +120,6 @@ function current_dir() {
 	echo `pwd | rev | cut -d '/' -f 1 | rev`
 }
 PROMPT='%{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
-PROMPT='%{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir) %{${fg[yellow]}%}$%{${reset_color}%} '
 
 
 #alias
