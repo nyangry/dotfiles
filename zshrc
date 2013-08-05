@@ -115,9 +115,7 @@ function current_dir() {
 	echo `pwd | rev | cut -d '/' -f 1 | rev`
 }
 PROMPT='%{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
-
-#save session for pc restart
-export SCREENDIR=/Users/admin/works/tmp/screen
+PROMPT='%{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir) %{${fg[yellow]}%}$%{${reset_color}%} '
 
 
 #alias
