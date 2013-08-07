@@ -22,3 +22,5 @@
   external = extDiff
 [mergetool]
 	keepBackup = false
+[color "diff"]
+	meta = blue black bold
