@@ -542,7 +542,7 @@ nnoremap <C-f> :<C-u>Unite file file_rec/async file/new<CR>
 " nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
 " nnoremap <C-g> :<C-u>Unite grep<CR>
 
-let g:unite_source_rec_max_cache_files=4000
+" let g:unite_source_rec_max_cache_files=4000
 call unite#custom_source(
       \'file_rec, file_rec/async', 
       \'ignore_pattern',  
