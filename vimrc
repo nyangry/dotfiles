@@ -547,7 +547,7 @@ call unite#custom_source(
       \'file_rec, file_rec/async', 
       \'ignore_pattern',  
       \'\('.
-      \ '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\)$'.
+      \ '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\|map\)$'.
       \ '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\)/'.
       \ '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\)/'.
       \'\)')
