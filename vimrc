@@ -534,8 +534,8 @@ nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
 " レジスタ一覧
 nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
-" nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-nnoremap <silent> <C-h> :<C-u>Unite file_mru<CR>
+nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+" nnoremap <silent> <C-h> :<C-u>Unite file_mru<CR>
 " ごちゃまぜ
 nnoremap <C-f> :<C-u>Unite file file_rec/async file/new<CR>
 " 旧主力
