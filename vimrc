@@ -547,9 +547,10 @@ call unite#custom_source(
       \'file_rec, file_rec/async', 
       \'ignore_pattern',  
       \'\('.
-      \ '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\|map\)$'.
-      \ '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\)/'.
+      \ '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\|map\|gitkeep\|DS_Store\)$'.
+      \ '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\|tags\)/'.
       \ '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\)/'.
+      \ '\|\(\.git\)/'.
       \'\)')
 
 " \ '\|\(ci\|converter\|coore_converter\|[Cc]ache[s]\{}\|error[s]\{}\|system\|third_party\|mpdf\|vendor\)/'.
