@@ -1,0 +1,40 @@
+{
+  "predef": [
+      "jasmine",
+      "spyOn",
+      "it",
+      "console",
+      "describe",
+      "expect",
+      "beforeEach",
+      "waits",
+      "waitsFor",
+      "runs"
+  ],
+
+  "browser" : true,
+  "jquery" : true,
+
+  "boss" : false,
+  "curly": false,
+  "debug": false,
+  "devel": false,
+  "eqeqeq": false,
+  "evil": false,
+  "forin": false,
+  "immed": false,
+  "laxbreak": false,
+  "newcap": true,
+  "noarg": true,
+  "noempty": false,
+  "nonew": false,
+  "nomen": false,
+  "onevar": false,
+  "plusplus": false,
+  "regexp": false,
+  "undef": true,
+  "unused": false,
+  "sub": false,
+  "strict": false,
+  "white": false
+}
