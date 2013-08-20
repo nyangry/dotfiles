@@ -15,6 +15,7 @@
 
 [merge]
   tool = extMerge
+	ff = false
 [mergetool "extMerge"]
   cmd = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
   trustExitCode = false
