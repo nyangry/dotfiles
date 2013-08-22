@@ -1,0 +1,14 @@
+*.swp
+*.bak
+*.old
+*.map
+*.min.css
+*.min.css.scss
+*.min.js
+tmp
+old
+.git
+.svn
+zsh-completions
+jquery-*.js
+node_modules
