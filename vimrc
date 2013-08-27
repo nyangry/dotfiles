@@ -962,14 +962,18 @@ let g:alpaca_tags_config = {
 
 augroup AlpacaTags
   autocmd!
+  au FileWritePost,BufWritePost * AlpacaTagsUpdate -style
+  " bundleのオプションは自動で追加して実行します。
+  au FileWritePost,BufWritePost Gemfile AlpacaTagsUpdateBundle
+  au FileReadPost,BufEnter * AlpacaTagsSet
   if exists(':Tags')
     " au FileWritePost,BufWritePost * call alpaca_tags#update_tags(&ft)
     " autocmd BufWritePost * TagsUpdate ruby
     " autocmd BufWritePost Gemfile TagsBundle
     " autocmd BufEnter * TagsSet
-    autocmd FileWritePost,BufWritePost * TagsUpdate ruby
-    autocmd FileWritePost,BufWritePost Gemfile TagsBundle
-    autocmd BufEnter * TagsSet
+    " autocmd FileWritePost,BufWritePost * TagsUpdate ruby
+    " autocmd FileWritePost,BufWritePost Gemfile TagsBundle
+    " autocmd BufEnter * TagsSet
   endif
 augroup END
 
