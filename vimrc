@@ -374,6 +374,18 @@ autocmd FileType javascript :compiler gjslint
 autocmd QuickfixCmdPost make copen
 
 
+
+
+
+
+
+"====================================================================================
+"
+" Plugin Settings
+"
+"
+"
+"====================================================================================
 "====================================================================================
 " Neobundle
 "====================================================================================
@@ -394,7 +406,7 @@ NeoBundle 'Shougo/unite.vim'
 " NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/vimshell'
+" NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/vimfiler.vim'
 
 NeoBundle 'thinca/vim-quickrun'
@@ -489,13 +501,9 @@ NeoBundle 'teramako/jscomplete-vim'
 " NeoBundle 'tyru/skk.vim'
 
 
-filetype plugin indent on     " required!
 
 
 
-"====================================================================================
-" Plugin Settings
-"====================================================================================
 "----------------------------------------------------------
 " Powerline
 "----------------------------------------------------------
@@ -983,3 +991,10 @@ augroup END
 "         \ 'setted tags' : 0, 
 "         \ 'created/updated tags' : 1, 
 "         \ }
+
+
+
+"====================================================================================
+" Neobundle 
+"====================================================================================
+filetype plugin indent on     " required!
