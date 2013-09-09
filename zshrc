@@ -256,3 +256,10 @@ function add_rails_bin_path_for_binstubs () {
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+#============================
+# performance config
+# https://gist.github.com/lunchub/6492592
+#============================
+export RUBY_GC_MALLOC_LIMIT=60000000
+export RUBY_FREE_MIN=200000
