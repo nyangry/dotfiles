@@ -23,6 +23,7 @@ autocmd FileType * setlocal formatoptions-=o " 改行時にコメントを受け
 set clipboard=unnamed,autoselect " OSのクリップボードを使用する
 " set mouse=a " ターミナルでマウスを使用できるようにする
 " set guioptions+=a
+set ttyfast
 set ttymouse=xterm2
 " set clipboard+=unnamed
 " set clipboard+=autoselect
