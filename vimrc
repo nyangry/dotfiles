@@ -11,7 +11,6 @@ set nobackup                     " バックアップ取らない
 set noswapfile                   " スワップファイル作らない
 set hidden                       " 編集中でも他のファイルを開けるようにする
 set backspace=indent,eol,start   " バックスペースでなんでも消せるように
-set formatoptions=lmoq           " テキスト整形オプション，マルチバイト系を追加
 set whichwrap=b,s,h,l,<,>,[,]    " カーソルを行頭、行末で止まらないようにする
 set showcmd                      " コマンドをステータス行に表示
 set showmode                     " 現在のモードを表示
