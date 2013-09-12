@@ -1,392 +1,4 @@
 "====================================================================================
-" 基本設定 
-"====================================================================================
-set nocompatible                 " vi互換なし
-set encoding=utf-8
-set fileencodings=utf-8
-map ¥ <leader>
-set scrolloff=5                  " スクロール時の余白確保
-set textwidth=0                  " 一行に長い文章を書いていても自動折り返しを
-set nobackup                     " バックアップ取らない
-set noswapfile                   " スワップファイル作らない
-set hidden                       " 編集中でも他のファイルを開けるようにする
-set backspace=indent,eol,start   " バックスペースでなんでも消せるように
-set whichwrap=b,s,h,l,<,>,[,]    " カーソルを行頭、行末で止まらないようにする
-set showcmd                      " コマンドをステータス行に表示
-set showmode                     " 現在のモードを表示
-set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
-set modelines=0                  " モードラインは無効
-" set paste        " ペースト時にautoindentを無効に(onにするとautocomplpop.vimが動かない)
-autocmd FileType * setlocal formatoptions-=r " 改行時にコメントを受け継がない
-autocmd FileType * setlocal formatoptions-=o " 改行時にコメントを受け継がない
-set clipboard=unnamed,autoselect " OSのクリップボードを使用する
-" set mouse=a " ターミナルでマウスを使用できるようにする
-" set guioptions+=a
-set ttyfast
-set ttymouse=xterm2
-" set clipboard+=unnamed
-" set clipboard+=autoselect
-set laststatus=2 " 常にステータスラインを表示
-set ruler " カーソルが何行目の何列目に置かれているかを表示する
-set number " 行番号を表示する
-set noequalalways " ウインドウ幅の自動調整を行わない
-syntax enable
-
-" ビジュアルモードで選択したテキストで検索する
-vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
-
-"====================================================================================
-" 英字キーボードでVimを使っている時に、:wqを高速で入力してエラーが出てウオアア
-" ア!!とならないための設定 http://goo.gl/a55YK
-"====================================================================================
-command! -nargs=0 Wq wq
-
-"====================================================================================
-" インデント調整
-"====================================================================================
-setlocal indentkeys=!^F,o,O
-setlocal expandtab
-setlocal tabstop<
-setlocal softtabstop=2
-setlocal shiftwidth=2
-setlocal autoindent
-
-set cursorline " カーソル行をハイライト
-" これをしないと候補選択時に Scratch ウィンドウが開いてしまう
-set completeopt=menuone
-
-" html インデントの解除
-au FileType html :setlocal indentexpr=""
-
-"====================================================================================
-" Vimスクリプト
-"====================================================================================
-" 挿入モード時、ステータスラインの色を変更
-let g:hi_insert = 'highlight StatusLine ctermbg=54'
-
-if has('syntax')
-  augroup InsertHook
-    autocmd!
-    autocmd InsertEnter * call s:StatusLine('Enter')
-    autocmd InsertLeave * call s:StatusLine('Leave')
-  augroup END
-endif
-" if has('unix') && !has('gui_running')
-"   " ESCでキー入力待ちになる対策
-"   inoremap <silent> <ESC> <ESC>
-" endif
-
-let s:slhlcmd = ''
-function! s:StatusLine(mode)
-  if a:mode == 'Enter'
-    silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
-    silent exec g:hi_insert
-  else
-    highlight clear StatusLine
-    silent exec s:slhlcmd
-    redraw
-  endif
-endfunction
-
-function! s:GetHighlight(hi)
-  redir => hl
-  exec 'highlight '.a:hi
-  redir END
-  let hl = substitute(hl, '[\r\n]', '', 'g')
-  let hl = substitute(hl, 'xxx', '', '')
-  return hl
-endfunction
-
-" Rename
-command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
-
-" Rename
-nnoremap <Leader>fd :call delete(expand('%'))<CR>
-
-"====================================================================================
-" 全角スペースを表示
-"====================================================================================
-" コメント以外で全角スペースを指定しているので、scriptencodingと、
-" このファイルのエンコードが一致するよう注意！
-" 強調表示されない場合、ここでscriptencodingを指定するとうまくいく事があります。
-scriptencoding utf-8
-function! ZenkakuSpace()
-  highlight ZenkakuSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
-  " 全角スペースを明示的に表示する
-  silent! match ZenkakuSpace /　/
-endfunction
-
-if has('syntax')
-  augroup ZenkakuSpace
-    autocmd!
-    autocmd VimEnter,BufEnter * call ZenkakuSpace()
-  augroup END
-endif
-
-
-"====================================================================================
-" 自動補完
-"====================================================================================
-inoremap , , 
-" inoremap { {}<LEFT>
-" inoremap [ []<LEFT>
-" inoremap ( ()<LEFT>
-" inoremap " ""<LEFT>
-" inoremap ' ''<LEFT>
-" 行末にセミコロン;をつけて改行
-inoremap ;; <C-O>$;<CR>
-" 検索パターンの入力を改善する
-cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
-cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
-
-"====================================================================================
-" View
-"====================================================================================
-set t_Co=256
-" set background=dark
-colorscheme ir_black
-
-" nmap <Right> :bnext <CR>
-" nmap <Left> :bprev <CR>
-" Move around splits with <c-hjkl>
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
-
-nnoremap # g#
-nnoremap g# #
-nnoremap * g*
-nnoremap g* *
-"====================================================================================
-" Complete
-"====================================================================================
-set ignorecase
-set smartcase
-set hlsearch
-" autocmd BufWritePre * :%s/\s\+$//ge "保存時に行末の空白を除去する
-set incsearch " インクリメンタルサーチを行う
-set listchars=eol:$,tab:>\ ,extends:< " listで表示される文字のフォーマットを指定する
-set showmatch " 閉じ括弧が入力されたとき、対応する括弧を表示する
-set expandtab
-set tabstop<
-set softtabstop=2
-set shiftwidth=2
-" タブ幅をリセット
-au BufNewFile,BufRead * set tabstop=2 shiftwidth=2
-set nowrapscan " 検索をファイルの先頭へループしない
-" set wildignore+=Library*,Document*,Movie*,Dropbox*,Music*,Pictures*,Downloads*
-" set wildignore+=*.o,*.obj,*.ps,*.eps,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
-" set wildignore+=*.strings,*.plist,*.wflow,*.olk14Folder,*.olk14DBHeader,*.olk14Contact
-" set wildignore+=*.DS_Store,*.pdf,*.swf,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
-" set wildignore+=*.ps,*.eps,*.aux,*.dvi
-" set wildignore+=*.xls,*.xlsx,*.key
-" コマンドライン補完するときに補完候補を表示する(tabで補完)
-set wildmenu
-
-
-"====================================================================================
-" Syntax
-"====================================================================================
-" JSON
-au! BufRead,BufNewFile *.json set filetype=json
-" HTML5
-au BufRead,BufNewFile *.html set ft=html syntax=html5
-" CSS3
-au BufRead,BufNewFile *.css set ft=css syntax=css3
-" Gemfile
-au BufRead,BufNewFile Gemfile set ft=ruby
-" rb
-au BufRead,BufNewFile *.rb set ft=ruby
-
-
-"====================================================================================
-" Haml Compile 
-"====================================================================================
-" augroup hamlcompile
-"  autocmd!
-"  autocmd BufWrite *.haml w !haml % %.html 
-" augroup END
-
-
-"====================================================================================
-" ショートカット
-"====================================================================================
-" 表示行単位で行移動する
-nnoremap <silent> j gj
-nnoremap <silent> k gk
-" " CTRL+sでrsyncを叩く
-" nmap <Leader>r<CR> :! /Users/admin/code/sync_rep3.sh<CR>
-" Escの2回押しでハイライト消去
-nmap <Esc><Esc> :nohlsearch<CR><Esc>
-
-" q:、q/、q? は無効化
-nnoremap q: <NOP>
-nnoremap q/ <NOP>
-nnoremap q? <NOP>
-
-" to 1.9 hash
-vnoremap <silent> <C-h> :s/:\([a-zA-Z0-9_]\+\)\s*=>/\1:/g<CR>
-
-"====================================================================================
-" Hack #55: 正規表現のメタ文字の扱いを制御する
-"====================================================================================
-" nnoremap / /\v
-" nnoremap ? ?\v
-
-"====================================================================================
-" Hack #202: 自動的にディレクトリを作成する 
-"====================================================================================
-augroup vimrc-auto-mkdir  
-  autocmd!
-  autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
-  function! s:auto_mkdir(dir, force)  
-    if !isdirectory(a:dir) && (a:force ||
-    \    input(printf('"%s" does not exist. Create? [y/N]', a:dir)) =~? '^y\%[es]$')
-      call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
-    endif
-  endfunction
-augroup END
-
-"====================================================================================
-" Hack #181: ジャンクファイルを生成する 
-"====================================================================================
-command! -nargs=0 JunkFile call s:open_junk_file()
-function! s:open_junk_file()
-  let l:junk_dir = $HOME . '/.vim_junk'. strftime('/%Y/%m')
-  if !isdirectory(l:junk_dir)
-    call mkdir(l:junk_dir, 'p')
-  endif
-
-  let l:filename = input('Junk Code: ', l:junk_dir.strftime('/%Y-%m-%d-%H%M%S.'))
-  if l:filename != ''
-    execute 'edit ' . l:filename
-  endif
-endfunction
-nmap <C-n> :JunkFile<CR>
-
-"====================================================================================
-" Hack #69: 簡単にカレントディレクトリを変更する
-"====================================================================================
-command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
-function! s:ChangeCurrentDir(directory, bang)
-    if a:directory == ''
-        lcd %:p:h
-    else
-        execute 'lcd' . a:directory
-    endif
-
-    if a:bang == ''
-        pwd
-    endif
-endfunction
-
-" Change current directory.
-nnoremap <silent> <Space>cd :<C-u>CD<CR>
-
-"====================================================================================
-" Hack #205: 複数行をコメントアウトする
-"====================================================================================
-" Comment or uncomment lines from mark a to mark b.
-function! CommentMark(docomment, a, b)
-  if !exists('b:comment')
-    let b:comment = CommentStr() . ' '
-  endif
-  if a:docomment
-    exe "normal! '" . a:a . "_\<C-V>'" . a:b . 'I' . b:comment
-  else
-    exe "'".a:a.",'".a:b . 's/^\(\s*\)' . escape(b:comment,'/') . '/\1/e'
-  endif
-endfunction
-
-" Comment lines in marks set by g@ operator.
-function! DoCommentOp(type)
-  call CommentMark(1, '[', ']')
-endfunction
-
-" Uncomment lines in marks set by g@ operator.
-function! UnCommentOp(type)
-  call CommentMark(0, '[', ']')
-endfunction
-
-" Return string used to comment line for current filetype.
-function! CommentStr()
-  if &ft == 'cpp' || &ft == 'java' || &ft == 'php' || &ft == 'javascript'
-    return '//'
-  elseif &ft == 'vim'
-    return '"'
-  elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby' || &ft == 'yaml' || &ft == 'coffee'
-    return '#'
-  elseif &ft == 'lisp'
-    return ';'
-  elseif &ft == 'haml'
-    return '-#'
-  endif
-  return ''
-endfunction
-
-nnoremap <Leader>c <Esc>:set opfunc=DoCommentOp<CR>g@
-nnoremap <Leader>C <Esc>:set opfunc=UnCommentOp<CR>g@
-vnoremap <Leader>c <Esc>:call CommentMark(1,'<','>')<CR>
-vnoremap <Leader>C <Esc>:call CommentMark(0,'<','>')<CR>
-
-"====================================================================================
-" Hack #206: 外部で変更のあったファイルを自動的に読み直す
-"====================================================================================
-set autoread                     
-augroup vimrc-checktime
-  autocmd!
-  autocmd WinEnter * checktime
-augroup END
-
-
-"====================================================================================
-" vimの連続コピペ http://goo.gl/1Lp9Q
-"====================================================================================
-vnoremap <silent> <C-p> "0p<CR>
-
-
-"====================================================================================
-" vimから言語を指定してDash.appを呼び出す http://goo.gl/Hu4DI
-"====================================================================================
-function! s:dash(...)
-  let ft = &filetype
-  if &filetype == 'python'
-    let ft = ft.'2'
-  endif
-  let ft = ft.':'
-  let word = len(a:000) == 0 ? input('Dash search: ', ft.expand('<cword>')) : ft.join(a:000, ' ')
-  call system(printf("open dash://'%s'", word))
-endfunction
-command! -nargs=* Dash call <SID>dash(<f-args>)
-
-
-"====================================================================================
-" redraw
-"====================================================================================
-nnoremap <C-w> :redraw!<CR>
-
-
-"====================================================================================
-" Compiler
-"====================================================================================
-autocmd FileType javascript :compiler gjslint
-autocmd QuickfixCmdPost make copen
-
-
-
-
-
-
-
-"====================================================================================
-"
-" Plugin Settings
-"
-"
-"
-"====================================================================================
-"====================================================================================
 " Neobundle
 "====================================================================================
 filetype off
@@ -698,6 +310,11 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 if !exists('g:neocomplete#sources#include#paths')
   let g:neocomplete#sources#include#paths = {}
 endif
+
+if !exists('g:neocomplete#sources')
+  let g:neocomplete#sources = {}
+endif
+let g:neocomplete#sources._ = ['buffer', 'syntax', 'include', 'file', 'file_include', 'dictionary', 'neosnippet', 'omni', 'tag']
 
 " Define same filetypes
 if !exists('g:neocomplete#same_filetypes')
@@ -1024,3 +641,415 @@ augroup END
 " Neobundle 
 "====================================================================================
 filetype plugin indent on     " required!
+
+
+
+
+
+
+
+
+
+"====================================================================================
+" 基本設定 
+"====================================================================================
+set nocompatible                 " vi互換なし
+set encoding=utf-8
+set fileencodings=utf-8
+map ¥ <leader>
+set scrolloff=5                  " スクロール時の余白確保
+set textwidth=0                  " 一行に長い文章を書いていても自動折り返しを
+set nobackup                     " バックアップ取らない
+set noswapfile                   " スワップファイル作らない
+set hidden                       " 編集中でも他のファイルを開けるようにする
+set backspace=indent,eol,start   " バックスペースでなんでも消せるように
+set whichwrap=b,s,h,l,<,>,[,]    " カーソルを行頭、行末で止まらないようにする
+set showcmd                      " コマンドをステータス行に表示
+set showmode                     " 現在のモードを表示
+set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
+set modelines=0                  " モードラインは無効
+set clipboard=unnamed,autoselect " OSのクリップボードを使用する
+
+set mouse=a " ターミナルでマウスを使用できるようにする
+
+augroup set_fo
+  " t textwidthを使ってテキストを自動折返しする。
+  " c 現在のコメント指示を挿入して、textwidthを使ってコメントを自動折返しする。
+  " r 挿入モードで<return>を打った後に、現在のコメント指示を自動的に挿入する。
+  " o ノーマルモードで'o'、'O'を打った後に、現在のコメント指示を自動的に挿入する。
+  " q 'gq'によるコメントの整形を可能にする。
+  " 2 テキストの整形処理時、段落の最初の行ではなく２番目の行のインデントをそれ以降の行に対して使う。
+  " v 挿入モードでVi互換の自動折返しを使う 現在の挿入モードで入力された空白でのみ折返しが行われる。
+  " b 'v'と同じ、ただし空白の入力か折返しマージンの前でのみ自動折返しをする。
+  " l 挿入モードでは長い行は折り返されない 
+  autocmd!
+  autocmd FileType * setlocal fo=lmcq
+augroup END
+
+" set guioptions+=a
+set lazyredraw
+set ttyfast
+set ttymouse=xterm2
+" set clipboard+=unnamed
+" set clipboard+=autoselect
+set laststatus=2 " 常にステータスラインを表示
+set ruler " カーソルが何行目の何列目に置かれているかを表示する
+set number " 行番号を表示する
+set noequalalways " ウインドウ幅の自動調整を行わない
+syntax enable
+
+"====================================================================================
+" 英字キーボードでVimを使っている時に、:wqを高速で入力してエラーが出てウオアア
+" ア!!とならないための設定 http://goo.gl/a55YK
+"====================================================================================
+command! -nargs=0 Wq wq
+
+"====================================================================================
+" インデント調整
+"====================================================================================
+setlocal indentkeys=!^F,o,O
+setlocal expandtab
+setlocal tabstop<
+setlocal softtabstop=2
+setlocal shiftwidth=2
+setlocal autoindent
+
+set cursorline " カーソル行をハイライト
+" これをしないと候補選択時に Scratch ウィンドウが開いてしまう
+set completeopt=menuone
+
+" html インデントの解除
+au FileType html :setlocal indentexpr=""
+
+"====================================================================================
+" Vimスクリプト
+"====================================================================================
+" 挿入モード時、ステータスラインの色を変更
+let g:hi_insert = 'highlight StatusLine ctermbg=54'
+
+if has('syntax')
+  augroup InsertHook
+    autocmd!
+    autocmd InsertEnter * call s:StatusLine('Enter')
+    autocmd InsertLeave * call s:StatusLine('Leave')
+  augroup END
+endif
+" if has('unix') && !has('gui_running')
+"   " ESCでキー入力待ちになる対策
+"   inoremap <silent> <ESC> <ESC>
+" endif
+
+let s:slhlcmd = ''
+function! s:StatusLine(mode)
+  if a:mode == 'Enter'
+    silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
+    silent exec g:hi_insert
+  else
+    highlight clear StatusLine
+    silent exec s:slhlcmd
+    redraw
+  endif
+endfunction
+
+function! s:GetHighlight(hi)
+  redir => hl
+  exec 'highlight '.a:hi
+  redir END
+  let hl = substitute(hl, '[\r\n]', '', 'g')
+  let hl = substitute(hl, 'xxx', '', '')
+  return hl
+endfunction
+
+" Rename
+command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
+
+" Delete
+nnoremap <Leader>fd :call delete(expand('%'))<CR>
+
+"====================================================================================
+" 全角スペースを表示
+"====================================================================================
+" コメント以外で全角スペースを指定しているので、scriptencodingと、
+" このファイルのエンコードが一致するよう注意！
+" 強調表示されない場合、ここでscriptencodingを指定するとうまくいく事があります。
+scriptencoding utf-8
+function! ZenkakuSpace()
+  highlight ZenkakuSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
+  " 全角スペースを明示的に表示する
+  silent! match ZenkakuSpace /　/
+endfunction
+
+if has('syntax')
+  augroup ZenkakuSpace
+    autocmd!
+    autocmd VimEnter,BufEnter * call ZenkakuSpace()
+  augroup END
+endif
+
+
+"====================================================================================
+" View
+"====================================================================================
+set t_Co=256
+" set background=dark
+colorscheme ir_black
+
+
+"====================================================================================
+" Complete
+"====================================================================================
+set ignorecase
+set smartcase
+set hlsearch
+" autocmd BufWritePre * :%s/\s\+$//ge "保存時に行末の空白を除去する
+set incsearch " インクリメンタルサーチを行う
+set listchars=eol:$,tab:>\ ,extends:< " listで表示される文字のフォーマットを指定する
+set showmatch " 閉じ括弧が入力されたとき、対応する括弧を表示する
+set expandtab
+set tabstop<
+set softtabstop=2
+set shiftwidth=2
+" タブ幅をリセット
+au BufNewFile,BufRead * set tabstop=2 shiftwidth=2
+set nowrapscan " 検索をファイルの先頭へループしない
+" set wildignore+=Library*,Document*,Movie*,Dropbox*,Music*,Pictures*,Downloads*
+" set wildignore+=*.o,*.obj,*.ps,*.eps,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
+" set wildignore+=*.strings,*.plist,*.wflow,*.olk14Folder,*.olk14DBHeader,*.olk14Contact
+" set wildignore+=*.DS_Store,*.pdf,*.swf,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
+" set wildignore+=*.ps,*.eps,*.aux,*.dvi
+" set wildignore+=*.xls,*.xlsx,*.key
+" コマンドライン補完するときに補完候補を表示する(tabで補完)
+set wildmenu
+
+
+"====================================================================================
+" Syntax
+"====================================================================================
+" JSON
+au! BufRead,BufNewFile *.json set filetype=json
+" HTML5
+au BufRead,BufNewFile *.html set ft=html syntax=html5
+" CSS3
+au BufRead,BufNewFile *.css set ft=css syntax=css3
+" Gemfile
+au BufRead,BufNewFile Gemfile set ft=ruby
+" rb
+au BufRead,BufNewFile *.rb set ft=ruby
+
+
+"====================================================================================
+" Haml Compile 
+"====================================================================================
+" augroup hamlcompile
+"  autocmd!
+"  autocmd BufWrite *.haml w !haml % %.html 
+" augroup END
+
+
+"====================================================================================
+" Mapping
+"====================================================================================
+" 削除用レジスタを使用する
+nnoremap s "_s
+nnoremap x "_x
+" nnoremap d "_d
+" nnoremap dd "_dd
+nnoremap c "_c
+nnoremap C "_c
+" xnoremap p "0P
+
+" 表示行単位で行移動する
+nnoremap <silent> j gj
+nnoremap <silent> k gk
+" " CTRL+sでrsyncを叩く
+" nmap <Leader>r<CR> :! /Users/admin/code/sync_rep3.sh<CR>
+" Escの2回押しでハイライト消去
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
+
+" q:、q/、q? は無効化
+nnoremap q: <NOP>
+nnoremap q/ <NOP>
+nnoremap q? <NOP>
+
+" ビジュアルモードで選択したテキストで検索する
+vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
+
+" to 1.9 hash
+" http://qiita.com/joker1007/items/965b63912512be94afa3
+vnoremap <silent> <C-h> :s/:\([a-zA-Z0-9_]\+\)\s*=>/\1:/g<CR>
+
+" 連続コピペ http://goo.gl/1Lp9Q
+vnoremap <silent> <C-p> "0p<CR>
+
+" redraw
+nnoremap <C-w> :redraw!<CR>
+
+"-------------------------------------------
+" 自動補完
+"-------------------------------------------
+inoremap , , 
+" inoremap { {}<LEFT>
+" inoremap [ []<LEFT>
+" inoremap ( ()<LEFT>
+" inoremap " ""<LEFT>
+" inoremap ' ''<LEFT>
+" 行末にセミコロン;をつけて改行
+inoremap ;; <C-O>$;<CR>
+" 検索パターンの入力を改善する
+cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
+cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
+
+"-------------------------------------------
+" 画面移動
+"-------------------------------------------
+" nmap <Right> :bnext <CR>
+" nmap <Left> :bprev <CR>
+" Move around splits with <c-hjkl>
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+nnoremap # g#
+nnoremap g# #
+nnoremap * g*
+nnoremap g* *
+
+"-------------------------------------------
+" Hack #55: 正規表現のメタ文字の扱いを制御する
+"-------------------------------------------
+" nnoremap / /\v
+" nnoremap ? ?\v
+
+
+"====================================================================================
+" Hack #202: 自動的にディレクトリを作成する 
+"====================================================================================
+augroup vimrc-auto-mkdir  
+  autocmd!
+  autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
+  function! s:auto_mkdir(dir, force)  
+    if !isdirectory(a:dir) && (a:force ||
+    \    input(printf('"%s" does not exist. Create? [y/N]', a:dir)) =~? '^y\%[es]$')
+      call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
+    endif
+  endfunction
+augroup END
+
+
+"====================================================================================
+" Hack #181: ジャンクファイルを生成する 
+"====================================================================================
+command! -nargs=0 JunkFile call s:open_junk_file()
+function! s:open_junk_file()
+  let l:junk_dir = $HOME . '/.vim_junk'. strftime('/%Y/%m')
+  if !isdirectory(l:junk_dir)
+    call mkdir(l:junk_dir, 'p')
+  endif
+
+  let l:filename = input('Junk Code: ', l:junk_dir.strftime('/%Y-%m-%d-%H%M%S.'))
+  if l:filename != ''
+    execute 'edit ' . l:filename
+  endif
+endfunction
+nmap <C-n> :JunkFile<CR>
+
+
+"====================================================================================
+" Hack #69: 簡単にカレントディレクトリを変更する
+"====================================================================================
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
+function! s:ChangeCurrentDir(directory, bang)
+    if a:directory == ''
+        lcd %:p:h
+    else
+        execute 'lcd' . a:directory
+    endif
+
+    if a:bang == ''
+        pwd
+    endif
+endfunction
+
+" Change current directory.
+nnoremap <silent> <Space>cd :<C-u>CD<CR>
+
+
+"====================================================================================
+" Hack #205: 複数行をコメントアウトする
+"====================================================================================
+" Comment or uncomment lines from mark a to mark b.
+function! CommentMark(docomment, a, b)
+  if !exists('b:comment')
+    let b:comment = CommentStr() . ' '
+  endif
+  if a:docomment
+    exe "normal! '" . a:a . "_\<C-V>'" . a:b . 'I' . b:comment
+  else
+    exe "'".a:a.",'".a:b . 's/^\(\s*\)' . escape(b:comment,'/') . '/\1/e'
+  endif
+endfunction
+
+" Comment lines in marks set by g@ operator.
+function! DoCommentOp(type)
+  call CommentMark(1, '[', ']')
+endfunction
+
+" Uncomment lines in marks set by g@ operator.
+function! UnCommentOp(type)
+  call CommentMark(0, '[', ']')
+endfunction
+
+" Return string used to comment line for current filetype.
+function! CommentStr()
+  if &ft == 'cpp' || &ft == 'java' || &ft == 'php' || &ft == 'javascript'
+    return '//'
+  elseif &ft == 'vim'
+    return '"'
+  elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby' || &ft == 'yaml' || &ft == 'coffee'
+    return '#'
+  elseif &ft == 'lisp'
+    return ';'
+  elseif &ft == 'haml'
+    return '-#'
+  endif
+  return ''
+endfunction
+
+nnoremap <Leader>c <Esc>:set opfunc=DoCommentOp<CR>g@
+nnoremap <Leader>C <Esc>:set opfunc=UnCommentOp<CR>g@
+vnoremap <Leader>c <Esc>:call CommentMark(1,'<','>')<CR>
+vnoremap <Leader>C <Esc>:call CommentMark(0,'<','>')<CR>
+
+
+"====================================================================================
+" Hack #206: 外部で変更のあったファイルを自動的に読み直す
+"====================================================================================
+set autoread                     
+augroup vimrc-checktime
+  autocmd!
+  autocmd WinEnter * checktime
+augroup END
+
+
+"====================================================================================
+" vimから言語を指定してDash.appを呼び出す http://goo.gl/Hu4DI
+"====================================================================================
+function! s:dash(...)
+  let ft = &filetype
+  if &filetype == 'python'
+    let ft = ft.'2'
+  endif
+  let ft = ft.':'
+  let word = len(a:000) == 0 ? input('Dash search: ', ft.expand('<cword>')) : ft.join(a:000, ' ')
+  call system(printf("open dash://'%s'", word))
+endfunction
+command! -nargs=* Dash call <SID>dash(<f-args>)
+
+
+"====================================================================================
+" Compiler
+"====================================================================================
+autocmd FileType javascript :compiler gjslint
+autocmd QuickfixCmdPost make copen
+
