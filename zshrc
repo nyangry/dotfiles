@@ -229,6 +229,12 @@ export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 # fi
 
 #=============================
+# for Google API
+#=============================
+export GOOGLE_ANALYTICS_PROFILE="ga:36122922"
+export GOOGLE_API_HOME="${HOME}/.google-api.yaml"
+
+#=============================
 # rbenv
 #=============================
 if [ -d ${HOME}/.rbenv  ] ; then
