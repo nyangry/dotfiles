@@ -148,9 +148,9 @@ alias sc='screen'
 alias gts='git status'
 alias gtl="git log --color --pretty=format:'%h (%cr) %s [%cn]'"
 #alias ctags='/Applications/MacVim.app/Contents/MacOS/ctags "$@"'
-alias octogen='bundle exec rake generate'
 alias octoprev='bundle exec rake preview'
 alias octodeploy='git add .; git commit -am "update"; bundle exec rake gen_deploy'
+alias octgen='bundle exec rake generate'
 #alias ag='ag -S --stats --pager "less -F"'
 alias ag='ag -S'
 
