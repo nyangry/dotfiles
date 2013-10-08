@@ -25,6 +25,7 @@
   "immed": false,
   "laxbreak": false,
   "newcap": true,
+  "maxlen": 120,
   "noarg": true,
   "noempty": false,
   "nonew": false,
