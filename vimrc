@@ -155,7 +155,7 @@ nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
 " nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
 " レジスタ一覧
-nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
+" nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
 nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 " nnoremap <silent> <C-h> :<C-u>Unite file_mru<CR>
