@@ -1,7 +1,7 @@
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 PATH=/usr/local/bin:/usr/local/share/npm/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-export PATH
+#export PATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
 # .zshrc
