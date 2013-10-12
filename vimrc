@@ -159,11 +159,6 @@ nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
 " 最近使用したファイル一覧
 nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 " nnoremap <silent> <C-h> :<C-u>Unite file_mru<CR>
-" ごちゃまぜ
-nnoremap <C-f> :<C-u>Unite file file_rec/async file/new<CR>
-" 旧主力
-" nnoremap <C-f> :<C-u>Unite buffer file_mru file_rec<CR>
-" nnoremap <C-g> :<C-u>Unite grep<CR>
 
 " let g:unite_source_rec_max_cache_files=4000
 call unite#custom_source(
