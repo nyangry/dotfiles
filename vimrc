@@ -160,7 +160,6 @@ nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
 nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 " nnoremap <silent> <C-h> :<C-u>Unite file_mru<CR>
 
-" let g:unite_source_rec_max_cache_files=4000
 call unite#custom_source(
       \'file_rec, file_rec/async', 
       \'ignore_pattern',  
