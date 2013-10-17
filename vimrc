@@ -162,6 +162,8 @@ nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 
 " メイン
 nnoremap <C-f> :<C-u>Unite file_rec file/new<CR>
+
+" call unite#custom#action('source/file_rec',  'delete',  'vimfiler__delete')
 call unite#custom_source(
       \'file_rec, file_rec/async', 
       \'ignore_pattern',  
