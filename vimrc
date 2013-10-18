@@ -164,6 +164,8 @@ nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 nnoremap <C-f> :<C-u>Unite file_rec file/new<CR>
 
 " call unite#custom#action('source/file_rec',  'delete',  'vimfiler__delete')
+
+let g:unite_source_rec_max_cache_files=2000
 call unite#custom_source(
       \'file_rec, file_rec/async', 
       \'ignore_pattern',  
