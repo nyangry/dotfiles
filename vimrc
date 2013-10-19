@@ -171,7 +171,7 @@ call unite#custom_source(
       \'ignore_pattern',  
       \'\('.
       \ '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\|map\|gitkeep\|DS_Store\|rdoc\|ru\)$'.
-      \ '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\|tags\)/'.
+      \ '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\)/'.
       \ '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\)/'.
       \ '\|\(\.git\)/'.
       \'\)')
