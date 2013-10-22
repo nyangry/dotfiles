@@ -177,8 +177,6 @@ call unite#custom_source(
       \ '\|\(\.git\)/'.
       \'\)')
 
-" \ '\|\(ci\|converter\|coore_converter\|[Cc]ache[s]\{}\|error[s]\{}\|system\|third_party\|mpdf\|vendor\)/'.
-
 "----------------------------------------------------------
 " Neocomplcache
 "----------------------------------------------------------
