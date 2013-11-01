@@ -15,7 +15,6 @@ NeoBundle 'Lokaltog/vim-powerline'
 
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
-" NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
 " NeoBundle 'Shougo/vimshell'
@@ -53,7 +52,7 @@ NeoBundle 'jimsei/winresizer'
 " NeoBundle 'ujihisa/unite-colorscheme'
 
 " source ssh
-NeoBundle 'Shougo/unite-ssh'
+" NeoBundle 'Shougo/unite-ssh'
 
 
 "----------------------------------------------------------
@@ -77,9 +76,9 @@ NeoBundle 'vim-ruby/vim-ruby'
 "----------------------------------------------------------
 NeoBundle 'tpope/vim-rails'
 " NeoBundle 'vim-scripts/dbext.vim'
-NeoBundle 'taichouchou2/alpaca_complete'
-NeoBundle 'taichouchou2/unite-reek'
-NeoBundle 'taichouchou2/unite-rails_best_practices'
+" NeoBundle 'taichouchou2/alpaca_complete'
+" NeoBundle 'taichouchou2/unite-reek'
+" NeoBundle 'taichouchou2/unite-rails_best_practices'
 NeoBundle 'romanvbabenko/rails.vim' " unite-rails-best-practiceが依存
 
 "----------------------------------------------------------
@@ -177,110 +176,6 @@ call unite#custom_source(
       \ '\|\(\.git\)/'.
       \'\)')
 
-"----------------------------------------------------------
-" Neocomplcache
-"----------------------------------------------------------
-" set infercase
-" 
-" " Use neocomplcache.
-" let g:neocomplcache_enable_at_startup = 1
-" let g:neocomplcache_force_overwrite_completefunc = 1
-" " Use smartcase.
-" let g:neocomplcache_enable_smart_case = 1
-" " Set minimum syntax keyword length.
-" let g:neocomplcache_min_syntax_length = 3
-" let g:neocomplcache_enable_camel_case_completion = 1
-" " Use underbar completion.
-" let g:neocomplcache_enable_underbar_completion = 1
-" " Set minimum syntax keyword length.
-" " let g:neocomplcache_min_syntax_length = 3
-" let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-" " -入力による候補番号の表示
-" let g:neocomplcache_enable_quick_match = 0
-" " 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
-" let g:neocomplcache_enable_auto_select = 1
-" 
-" " シンタックス補完を無効に
-" " let g:neocomplcache_plugin_disable = {
-" "   \ 'syntax_complete' : 1,
-" "   \ }
-" 
-" " Define dictionary.
-" let g:neocomplcache_dictionary_filetype_lists = {
-"  \ 'default'    : '',
-"  \ 'php'        : $HOME . '/.vim/dict/php.dict',
-"  \ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
-"  \ 'coffee'     : $HOME . '/.vim/dict/javascript.dict',
-"   \ }
-" 
-" " Define keyword.
-" if !exists('g:neocomplcache_keyword_patterns')
-"   let g:neocomplcache_keyword_patterns = {}
-" endif
-" let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-" 
-" " Plugin key-mappings.
-" inoremap <expr><C-g>     neocomplcache#undo_completion()
-" inoremap <expr><C-l>     neocomplcache#complete_common_string()
-" 
-" " 関数を補完するための区切り文字パターン
-" if !exists('g:neocomplcache_delimiter_patterns')
-"   let g:neocomplcache_delimiter_patterns = {}
-" endif
-" let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
-" 
-" " カーソルより後のキーワードパターンを認識。
-" " h|geとなっている状態(|はカーソル)で、hogeを補完したときに後ろのキーワードを認識してho|geと補完する機能。
-" " 修正するときにかなり便利。
-" if !exists('g:neocomplcache_next_keyword_patterns')
-"   let g:neocomplcache_next_keyword_patterns = {}
-" endif
-" 
-" " スニペットを展開する。スニペットが関係しないところでは行末まで削除
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" xmap <C-k>     <Plug>(neosnippet_expand_target)
-" 
-" " vim標準のキーワード補完を置き換える
-" inoremap <expr><C-n> neocomplcache#manual_keyword_complete()
-" 
-" " 単語入力中だけ補完候補を出す
-" inoremap <expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
-" inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-" inoremap <expr><C-y>  neocomplcache#close_popup()
-" inoremap <expr><C-e>  neocomplcache#cancel_popup()
-" 
-" " Enable omni completion.
-" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-" 
-" " Enable heavy omni completion.
-" if !exists('g:neocomplcache_omni_patterns')
-"   let g:neocomplcache_omni_patterns = {}
-" endif
-" let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-" 
-" " Rsense
-" let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
-" let g:rsenseUseOmniFunc = 1
-" let g:neocomplcache_skip_auto_completion_time = '0.3'
-" let g:neocomplcache#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
-" 
-" " バッファ共有設定
-" let g:neocomplcache_same_filetype_lists = {
-" \  'html' : 'html,javascript,php,ruby'
-" \, 'haml' : 'haml,javascript,ruby'
-" \, 'php'  : 'html,javascript,php'
-" \, 'js'   : 'html,php,ruby'
-" \, 'ruby'   : 'rails'
-" \ }
-
 
 "----------------------------------------------------------
 " Neocomplete
@@ -294,7 +189,9 @@ let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-let g:neocomplete#sources#tags#cache_limit_size=100000000
+"let g:neocomplete#sources#buffer#cache_limit_size=500000
+let g:neocomplete#sources#tags#cache_limit_size=500000000
+
  
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
@@ -313,7 +210,8 @@ endif
 if !exists('g:neocomplete#sources')
   let g:neocomplete#sources = {}
 endif
-let g:neocomplete#sources._ = ['buffer', 'syntax', 'include', 'file', 'file_include', 'dictionary', 'neosnippet', 'omni', 'tag']
+let g:neocomplete#sources._ = ['buffer', 'syntax', 'include', 'file', 'dictionary', 'neosnippet', 'omni', 'tag']
+
 
 " Define same filetypes
 if !exists('g:neocomplete#same_filetypes')
@@ -366,12 +264,15 @@ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+augroup enable_omni_completion
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+augroup END
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -380,44 +281,21 @@ endif
 let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
-" NeoBundle 'supermomonga/neocomplete-rsense.vim'
-" NeoBundle 'https://raw.github.com/lunchub/rsense.vim/master/rsense.vim'
-
-" NeoBundleLazy 'https://raw.github.com/lunchub/rsense.vim/master/rsense.vim', {
-"   \ 'script_type' : 'plugin',
-"   \ 'depends'     : ['Shougo/neocomplete'],
-"   \ 'autoload'    : {
-"   \   'insert' : 1, 
-"   \ }
-" \ }
-
-" Rsense
-" let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
-" let g:rsenseUseOmniFunc = 1
-" let g:neocomplete#skip_auto_completion_time = '0.3'
-" let g:neocomplete#sources#rsense#home_directory = "/usr/local/Cellar/rsense/0.3/libexec/"
-
-
-" highlight Pmenu ctermbg=8 guibg=#606060
-" highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
-" highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
-
-
-"----------------------------------------------------------
-" Neosnippet
-"----------------------------------------------------------
-
 
 "----------------------------------------------------------
 " VimFiler
 "----------------------------------------------------------
-nnoremap <C-E> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<CR>
-autocmd! FileType vimfiler call g:my_vimfiler_settings()
+nnoremap <C-E> :VimFiler -buffer-name=explorer -split -columns="" -toggle -no-quit<CR>
 function! g:my_vimfiler_settings()
   nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)",  "\<Plug>(vimfiler_edit_file)")
   nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
   nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
 endfunction
+augroup VimFiler
+  autocmd! 
+  autocmd FileType vimfiler call g:my_vimfiler_settings()
+augroup END
+
 
 
 "----------------------------------------------------------
@@ -450,7 +328,11 @@ let g:quickrun_config['rspec/normal'] = {
 function! RSpecQuickrun()
   let b:quickrun_config = {'type' : 'rspec/bundle'}
 endfunction
-autocmd BufReadPost *_spec.rb call RSpecQuickrun()
+
+augroup Quickrun
+  autocmd!
+  autocmd BufReadPost *_spec.rb call RSpecQuickrun()
+augroup END
 
 
 
@@ -494,11 +376,11 @@ nnoremap <silent> <C-H><C-R><C-R> :<C-u>Unite -no-quit rails_best_practices<CR>
 " Octopress
 "----------------------------------------------------------
 let g:octopress_path = '~/code/lunchub.github.io'
-map <Leader>on  :OctopressNew<CR>
-map <Leader>ol  :OctopressList<CR>
-map <Leader>og  :OctopressGrep<CR>
-nmap ,og  :OctopressGenerate<CR>
-nmap ,od  :OctopressDeploy<CR>
+" map <Leader>on  :OctopressNew<CR>
+" map <Leader>ol  :OctopressList<CR>
+" map <Leader>og  :OctopressGrep<CR>
+" nmap ,og  :OctopressGenerate<CR>
+" nmap ,od  :OctopressDeploy<CR>
 
 
 "----------------------------------------------------------
@@ -569,71 +451,30 @@ let g:indent_guides_guide_size = 1
 " alpaca_tags
 "----------------------------------------------------------
 NeoBundle 'alpaca-tc/alpaca_tags', {
-      \ 'depends': 'Shougo/vimproc',
+      \ 'depends': ['Shougo/vimproc', 'Shougo/unite.vim'],
       \ 'autoload' : {
-      \   'commands': ['AlpacaTagsUpdate', 'AlpacaTagsSet', 'AlpacaTagsBundle']
+      \   'commands' : ['Tags', 'TagsUpdate', 'TagsSet', 'TagsBundle', 'TagsCleanCache'],
+      \   'unite_sources' : ['tags']
       \ }}
 
-" example...
-" ~/.ctagsにctagsの設定ファイルを設置します。現在無い人は、このディレクトリ内の.ctagsをコピーしてください。
-" 適切なlanguageは`ctags --list-maps=all`で見つけてください。人によりますので。
-let g:alpaca_update_tags_config = {
-      \ '_' : '-R --sort=yes',
-      \ 'js' : '--languages=+js',
-      \ '-js' : '--languages=-js,JavaScript',
-      \ 'vim' : '--languages=+Vim,vim',
-      \ '-vim' : '--languages=-Vim,vim',
-      \ '-style': '--languages=-css,sass,scss,js,JavaScript,html',
-      \ 'scss' : '--languages=+scss --languages=-css,sass',
-      \ 'sass' : '--languages=+sass --languages=-css,scss',
-      \ 'css' : '--languages=+css',
-      \ 'java' : '--languages=+java $JAVA_HOME/src',
-      \ 'ruby': '--languages=+Ruby',
-      \ 'coffee': '--languages=+coffee',
-      \ '-coffee': '--languages=-coffee',
-      \ 'bundle': '--languages=+Ruby --languages=-css,sass,scss,js,JavaScript,coffee',
-      \ }
+let g:alpaca_tags_ctags_bin = '/usr/local/bin/ctags'
 
-" NeoBundle 'alpaca-tc/alpaca_tags', {
-"     \ 'depends'  : ['Shougo/vimproc',  'Shougo/unite.vim'],
-"     \ 'autoload' : {
-"     \   'commands'      : ['Tags',  'TagsUpdate',  'TagsSet',  'TagsBundle',  'TagsCleanCache'],
-"     \   'unite_sources' : ['tags']
-"     \ }
-" \ }
-" 
-" " example...
-" " ~/.ctagsにctagsの設定ファイルを設置します。現在無い人は、このディレクトリ内の.ctagsをコピーしてください。
-" " 適切なlanguageは`ctags --list-maps=all`で見つけてください。人によりますので。
-" let g:alpaca_tags_config = {
-"       \ '_' : '-R --sort=yes --languages=-js,html,css',
-"       \ 'ruby': '--languages=+Ruby',
-"       \ }
+let g:alpaca_update_tags_config = {
+      \ '_' : '-R --sort=yes --languages=+Ruby --languages=-css,scss,html',
+      \ 'js' : '--languages=+js',
+      \ 'ruby': '--languages=+Ruby',
+      \ }
 
 augroup AlpacaTags
   autocmd!
-  au FileWritePost,BufWritePost * AlpacaTagsUpdate -style
-  " bundleのオプションは自動で追加して実行します。
-  au FileWritePost,BufWritePost Gemfile AlpacaTagsBundle
-  au FileReadPost,BufEnter * AlpacaTagsSet
-  if exists(':Tags')
-    " au FileWritePost,BufWritePost * call alpaca_tags#update_tags(&ft)
-    " autocmd BufWritePost * TagsUpdate ruby
-    " autocmd BufWritePost Gemfile TagsBundle
-    " autocmd BufEnter * TagsSet
-    " autocmd FileWritePost,BufWritePost * TagsUpdate ruby
-    " autocmd FileWritePost,BufWritePost Gemfile TagsBundle
-    " autocmd BufEnter * TagsSet
-  endif
+  " au FileWritePost,BufWritePost * call alpaca_tags#update_tags(&ft)
+  autocmd BufWritePost * TagsUpdate
+  autocmd BufWritePost Gemfile TagsBundle
+  autocmd BufEnter * TagsSet
 augroup END
 
-
-" let g:alpaca_tags_print_to_console = {
-"         \ 'debug' : 1, 
-"         \ 'setted tags' : 0, 
-"         \ 'created/updated tags' : 1, 
-"         \ }
-
+" nnoremap <expr>tt  ':Unite tags -horizontal -buffer-name=tags -input='.expand("<cword>").'<CR>'
+nnoremap <expr>tt  ':Unite tags -input='.expand("<cword>").'<CR>'
 
 
 "====================================================================================
@@ -825,7 +666,7 @@ set wildmenu
 " Syntax
 "====================================================================================
 " JSON
-au! BufRead,BufNewFile *.json set filetype=json
+au BufRead,BufNewFile *.json set filetype=json
 " HTML5
 au BufRead,BufNewFile *.html set ft=html syntax=html5
 " CSS3
@@ -849,12 +690,12 @@ au BufRead,BufNewFile *.rb set ft=ruby
 " Mapping
 "====================================================================================
 " 削除用レジスタを使用する
-nnoremap s "_s
-nnoremap x "_x
+" nnoremap s "_s
+" nnoremap x "_x
 " nnoremap d "_d
 " nnoremap dd "_dd
-nnoremap c "_c
-nnoremap C "_c
+" nnoremap c "_c
+" nnoremap C "_c
 " xnoremap p "0P
 
 " 表示行単位で行移動する
@@ -1001,7 +842,7 @@ endfunction
 
 " Return string used to comment line for current filetype.
 function! CommentStr()
-  if &ft == 'cpp' || &ft == 'java' || &ft == 'php' || &ft == 'javascript'
+  if &ft == 'cpp' || &ft == 'java' || &ft == 'php' || &ft == 'javascript' || &ft == 'scss.css'
     return '//'
   elseif &ft == 'vim'
     return '"'
@@ -1049,6 +890,9 @@ command! -nargs=* Dash call <SID>dash(<f-args>)
 "====================================================================================
 " Compiler
 "====================================================================================
-autocmd FileType javascript :compiler gjslint
-autocmd QuickfixCmdPost make copen
+augroup compilers
+  autocmd!
+  autocmd FileType javascript :compiler gjslint
+  autocmd QuickfixCmdPost make copen
+augroup END
 

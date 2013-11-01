@@ -242,8 +242,8 @@ export GOOGLE_API_HOME="${HOME}/.google-api.yaml"
 # rbenv
 #=============================
 if [ -d ${HOME}/.rbenv  ] ; then
-  PATH=${HOME}/.rbenv/bin:${PATH}
-  export PATH
+  export PATH=${HOME}/.rbenv/shims:${PATH}
+  # export PATH
   eval "$(rbenv init -)"
 fi
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
