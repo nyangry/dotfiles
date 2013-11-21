@@ -157,6 +157,7 @@ function octiso() {
 alias octoeploy='git add .; git commit -am "update"; bundle exec rake gen_deploy'
 #alias ag='ag -S --stats --pager "less -F"'
 alias ag='ag -S'
+alias be="bundle exec"
 
 function scx () {
     screen -x $1
