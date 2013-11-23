@@ -106,7 +106,7 @@ NeoBundle 'tpope/vim-markdown'
 "----------------------------------------------------------
 " Complete
 "----------------------------------------------------------
-NeoBundle 'teramako/jscomplete-vim'
+" NeoBundle 'teramako/jscomplete-vim'
 
 " NeoBundle 'vimtaku/vim-mlh'
 " NeoBundle 'tyru/skk.vim'
