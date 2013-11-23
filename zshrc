@@ -243,7 +243,7 @@ export GOOGLE_API_HOME="${HOME}/.google-api.yaml"
 # rbenv
 #=============================
 if [ -d ${HOME}/.rbenv  ] ; then
-  export PATH=${HOME}/.rbenv/shims:${PATH}
+  export PATH=${HOME}/.rbenv/bin:${PATH}
   # export PATH
   eval "$(rbenv init -)"
 fi
