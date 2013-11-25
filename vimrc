@@ -44,7 +44,8 @@ NeoBundle 'glidenote/octoeditor.vim'
 NeoBundle 'airblade/vim-rooter'
 " インデント対応表示
 NeoBundle 'nathanaelkane/vim-indent-guides'
-
+" replace
+NeoBundle 'osyo-manga/vim-over'
 " Window size
 NeoBundle 'jimsei/winresizer'
 
@@ -284,7 +285,7 @@ let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "----------------------------------------------------------
 " VimFiler
 "----------------------------------------------------------
-nnoremap <C-E> :VimFiler -buffer-name=explorer -split -columns="" -toggle -no-quit<CR>
+nnoremap <leader>f :VimFiler -buffer-name=explorer -split -columns="" -toggle -no-quit<CR>
 function! g:my_vimfiler_settings()
   nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)",  "\<Plug>(vimfiler_edit_file)")
   nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
@@ -295,6 +296,9 @@ augroup VimFiler
   autocmd FileType vimfiler call g:my_vimfiler_settings()
 augroup END
 
+autocmd FileType vimfiler 
+  \ nnoremap <buffer><silent>/ 
+  \ :<C-u>Unite file -default-action=vimfiler<CR>
 
 
 "----------------------------------------------------------
@@ -386,6 +390,12 @@ let g:octopress_path = '~/code/lunchub.github.io'
 " simple-javascript-indenter
 "----------------------------------------------------------
 let g:SimpleJsIndenter_BriefMode = 1
+
+
+"----------------------------------------------------------
+" vim-over 
+"----------------------------------------------------------
+nnoremap <silent> <Leader>m :OverCommandLine<CR>
 
 
 "----------------------------------------------------------
@@ -534,7 +544,7 @@ set ttymouse=xterm2
 set laststatus=2 " 常にステータスラインを表示
 set ruler " カーソルが何行目の何列目に置かれているかを表示する
 set number " 行番号を表示する
-set noequalalways " ウインドウ幅の自動調整を行わない
+" set noequalalways " ウインドウ幅の自動調整を行わない
 syntax enable
 
 "====================================================================================
@@ -706,9 +716,9 @@ nnoremap <silent> k gk
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
 " q:、q/、q? は無効化
-nnoremap q: <NOP>
-nnoremap q/ <NOP>
-nnoremap q? <NOP>
+" nnoremap q: <NOP>
+" nnoremap q/ <NOP>
+" nnoremap q? <NOP>
 
 " ビジュアルモードで選択したテキストで検索する
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
@@ -869,6 +879,34 @@ augroup vimrc-checktime
   autocmd!
   autocmd WinEnter * checktime
 augroup END
+
+
+"====================================================================================
+" Hack #161: Command-line windowを使いこなす
+"====================================================================================
+" nnoremap <sid>(command-line-enter) q:
+" xnoremap <sid>(command-line-enter) q:
+" nnoremap <sid>(command-line-norange) q:<C-u>
+" 
+" nmap :  <sid>(command-line-enter)
+" xmap :  <sid>(command-line-enter)
+" 
+" augroup command-line-hack
+"   autocmd CmdwinEnter * call s:init_cmdwin()
+"   function! s:init_cmdwin()
+"     nnoremap <buffer> q :<C-u>quit<CR>
+"     nnoremap <buffer> <TAB> :<C-u>quit<CR>
+"     inoremap <buffer><expr><CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
+"     inoremap <buffer><expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
+"     inoremap <buffer><expr><BS> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
+" 
+"     " Completion.
+"     inoremap <buffer><expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" 
+"     startinsert!
+"   endfunction
+" augroup END
+
 
 
 "====================================================================================
