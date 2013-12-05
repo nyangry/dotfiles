@@ -4,6 +4,9 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 #export PATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
+# osx mavericks
+bindkey "^[[3~" delete-char
+
 # .zshrc
 setopt prompt_subst
 autoload -Uz colors
