@@ -39,7 +39,7 @@ NeoBundle 'mattn/webapi-vim'
 " 整形ツール
 NeoBundle 'h1mesuke/vim-alignta'
 " Octopress
-NeoBundle 'glidenote/octoeditor.vim'
+" NeoBundle 'glidenote/octoeditor.vim'
 " vim-rooter
 NeoBundle 'airblade/vim-rooter'
 " インデント対応表示
