@@ -378,7 +378,7 @@ nnoremap <silent> <C-H><C-R><C-R> :<C-u>Unite -no-quit rails_best_practices<CR>
 "----------------------------------------------------------
 " Octopress
 "----------------------------------------------------------
-let g:octopress_path = '~/code/lunchub.github.io'
+" let g:octopress_path = '~/code/lunchub.github.io'
 " map <Leader>on  :OctopressNew<CR>
 " map <Leader>ol  :OctopressList<CR>
 " map <Leader>og  :OctopressGrep<CR>
