@@ -83,6 +83,11 @@ NeoBundle 'tpope/vim-rails'
 NeoBundle 'romanvbabenko/rails.vim' " unite-rails-best-practiceが依存
 
 "----------------------------------------------------------
+" JavaScript
+"----------------------------------------------------------
+NeoBundle 'marijnh/tern'
+
+"----------------------------------------------------------
 " indent
 "----------------------------------------------------------
 NeoBundle 'jiangmiao/simple-javascript-indenter'
