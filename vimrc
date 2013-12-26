@@ -166,6 +166,14 @@ nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 " grep検索結果の再呼出
 nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
 
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+
+  let g:unite_source_rec_async_command = 'ag'
+endif
+
 " メイン
 nnoremap <C-f> :<C-u>Unite file_rec file/new<CR>
 
