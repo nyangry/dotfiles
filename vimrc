@@ -163,6 +163,8 @@ nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
 " nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
 nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+" grep検索結果の再呼出
+nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
 
 " メイン
 nnoremap <C-f> :<C-u>Unite file_rec file/new<CR>
