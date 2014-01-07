@@ -195,7 +195,6 @@ call unite#custom_source(
 "----------------------------------------------------------
 " Neocomplete
 "----------------------------------------------------------
-let g:acp_enableAtStartup = 0
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
