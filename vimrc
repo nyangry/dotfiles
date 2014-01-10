@@ -105,7 +105,6 @@ NeoBundle 'taichouchou2/html5.vim'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'tpope/vim-markdown'
 
 "----------------------------------------------------------
