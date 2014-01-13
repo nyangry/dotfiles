@@ -45,6 +45,8 @@ NeoBundle 'airblade/vim-rooter'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 " replace
 NeoBundle 'osyo-manga/vim-over'
+" Calendar
+NeoBundle 'itchyny/calendar.vim'
 " Window size
 NeoBundle 'jimsei/winresizer'
 
