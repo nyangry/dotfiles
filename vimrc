@@ -13,6 +13,8 @@ endif
 "----------------------------------------------------------
 
 NeoBundle 'Shougo/vimproc'
+NeoBundle 'itchyny/lightline.vim'
+
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
