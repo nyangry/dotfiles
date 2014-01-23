@@ -11,10 +11,16 @@ endif
 "----------------------------------------------------------
 " basic
 "----------------------------------------------------------
-
-NeoBundle 'Shougo/vimproc'
 NeoBundle 'itchyny/lightline.vim'
 
+NeoBundle 'https://github.com/Shougo/vimproc.git',  {
+      \ 'build' : {
+      \     'windows' : 'echo "Sorry,  cannot update vimproc binary file in Windows."', 
+      \     'cygwin'  : 'make -f make_cygwin.mak', 
+      \     'mac'     : 'make -f make_mac.mak', 
+      \     'unix'    : 'make -f make_unix.mak', 
+      \    }, 
+      \ }
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
