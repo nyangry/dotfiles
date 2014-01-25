@@ -32,7 +32,6 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-endwise'
-" NeoBundle 'scrooloose/nerdtree'
 " taglist
 NeoBundle 'vim-scripts/taglist.vim'
 " % による対応括弧へのカーソル移動機能を拡張
