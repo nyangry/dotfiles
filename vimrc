@@ -133,6 +133,8 @@ NeoBundle 'tpope/vim-markdown'
 " Unite
 "----------------------------------------------------------
 
+let g:unite_split_rule = 'botright'
+
 " ウィンドウを分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
 au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
