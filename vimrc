@@ -272,9 +272,6 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
   \ 'default'    : '',
-  \ 'vimshell'   : $HOME . '/.vimshell_hist',
-  \ 'scheme'     : $HOME . '/.gosh_completions',
-  \ 'php'        : $HOME . '/.vim/dict/php.dict',
   \ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
   \ 'coffee'     : $HOME . '/.vim/dict/javascript.dict',
 \ }
