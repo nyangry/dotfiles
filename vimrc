@@ -291,9 +291,10 @@ let g:neocomplete#same_filetypes.ruby   = 'haml, rails'
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
+  let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
 
 " 関数を補完するための区切り文字パターン
 if !exists('g:neocomplete#delimiter_patterns')
