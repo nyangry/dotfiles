@@ -7,6 +7,19 @@ export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 # osx mavericks
 bindkey "^[[3~" delete-char
 
+#=======================================================
+# Plugins
+#=======================================================
+
+#----------------------------------
+# cd-bookmark
+# http:/qiita.com/mollifier/items/46b080f9a5ca9f29674e/
+#----------------------------------
+fpath=($HOME/dotfiles/zsh/plugins/cd-bookmark(N-/) $fpath)
+autoload -Uz cd-bookmark
+alias b='cd-bookmark'
+
+
 # .zshrc
 setopt prompt_subst
 autoload -Uz colors
