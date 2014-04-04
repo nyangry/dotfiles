@@ -60,6 +60,7 @@ NeoBundle 'jimsei/winresizer'
 
 " colorscheme
 " NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle "daylerees/colour-schemes",  { "rtp": "vim-themes/"}
 
 " source ssh
 " NeoBundle 'Shougo/unite-ssh'
