@@ -86,6 +86,7 @@ neobundle_install_or_update()
 delete_old_files()
 {
   echo "[DELETE] Delete the old files"
+  rm -f $HOME/.agignore
   rm -f $HOME/.vimrc
   rm -f $HOME/.zshrc
   rm -f $HOME/.zshenv
@@ -105,6 +106,7 @@ delete_old_files()
 symlink_files()
 {
   echo "[Symlink] Symlinking files"
+  ln -s $HOME/dotfiles/agignore     $HOME/.agignore
   ln -s $HOME/dotfiles/vimrc     $HOME/.vimrc
   ln -s $HOME/dotfiles/zshrc     $HOME/.zshrc
   ln -s $HOME/dotfiles/zshenv    $HOME/.zshenv

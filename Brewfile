@@ -13,12 +13,13 @@ install brew-cask
 install git
 install openssl
 install readline
-install reattach-to-user-namespace
-install ssh-copy-id
+install tree
 install nkf
 install the_silver_searcher
 
 install zsh
+install reattach-to-user-namespace
+install ssh-copy-id
 install tmux
 install vim
 install macvim

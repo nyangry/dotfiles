@@ -32,8 +32,6 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-endwise'
-" taglist
-NeoBundle 'vim-scripts/taglist.vim'
 " % による対応括弧へのカーソル移動機能を拡張
 NeoBundle 'jwhitley/vim-matchit'
 " fakeclip
@@ -66,10 +64,12 @@ NeoBundle "daylerees/colour-schemes",  { "rtp": "vim-themes/"}
 " NeoBundle 'Shougo/unite-ssh'
 
 
+" Benchmark
+" NeoBundle 'mattn/benchvimrc-vim'
+
 "----------------------------------------------------------
 " ctags
 "----------------------------------------------------------
-" NeoBundle 'szw/vim-tags'
 NeoBundle 'tsukkee/unite-tag'
 
 "----------------------------------------------------------
@@ -329,6 +329,14 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.vim/snippets'
+
 " Enable omni completion.
 augroup enable_omni_completion
   autocmd!
@@ -336,7 +344,6 @@ augroup enable_omni_completion
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 augroup END
 
@@ -351,20 +358,28 @@ let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "----------------------------------------------------------
 " VimFiler
 "----------------------------------------------------------
-nnoremap <leader>f :VimFiler -buffer-name=explorer -split -columns="" -toggle -no-quit<CR>
-function! g:my_vimfiler_settings()
-  nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)",  "\<Plug>(vimfiler_edit_file)")
-  nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
-  nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
-endfunction
-augroup VimFiler
-  autocmd! 
-  autocmd FileType vimfiler call g:my_vimfiler_settings()
-augroup END
+let g:vimfiler_as_default_explorer = 1
+" nnoremap <leader>f :VimFiler -buffer-name=explorer -split -columns="" -toggle -no-quit<CR>
 
-autocmd FileType vimfiler 
-  \ nnoremap <buffer><silent>/ 
-  \ :<C-u>Unite file -default-action=vimfiler<CR>
+nnoremap <leader>f :VimFilerCurrentDir<CR>
+inoremap <leader>f <ESC>:VimFilerCurrentDir<CR>
+
+nnoremap <C-x><leader>f :VimFiler -project<CR>
+inoremap <C-x><leader>f <ESC>:VimFiler -project<CR>
+
+" function! g:my_vimfiler_settings()
+"   nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)",  "\<Plug>(vimfiler_edit_file)")
+"   nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
+"   nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
+" endfunction
+" augroup VimFiler
+"   autocmd! 
+"   autocmd FileType vimfiler call g:my_vimfiler_settings()
+" augroup END
+
+" autocmd FileType vimfiler 
+"   \ nnoremap <buffer><silent>/ 
+"   \ :<C-u>Unite file -default-action=vimfiler<CR>
 
 
 "----------------------------------------------------------
@@ -422,15 +437,12 @@ nnoremap <C-]> g<C-]>
 
 
 "----------------------------------------------------------
-" taglist
+" vim-tags
+" http://tkkbn.hatenablog.com/entry/2013/11/02/233701
 "----------------------------------------------------------
-let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
-let Tlist_Show_One_File = 1
-let Tlist_Use_Right_Window = 1
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_Auto_Update = 1
-let g:tlist_php_settings = 'php;c:class;d:constant;f:function'
-nmap <Leader>tl :Tlist<CR>
+NeoBundle 'szw/vim-tags'
+let g:vim_tags_project_tags_command = "/usr/local/bin/ctags -R {OPTIONS} {DIRECTORY} 2>/dev/null"
+let g:vim_tags_gems_tags_command = "/usr/local/bin/ctags -R {OPTIONS} `bundle show --paths` 2>/dev/null"
 
 
 "----------------------------------------------------------
@@ -504,52 +516,9 @@ command! -nargs=0 PasteGist     call <SID>paste_gist_tag()
 
 
 "----------------------------------------------------------
-" vim-mlh / SKK
-"----------------------------------------------------------
-" let g:skk_control_j_key = ""
-" let g:skk_large_jisyo = "$HOME/.vim/dict/SKK-JISYO.L"
-
-
-"----------------------------------------------------------
 " nathanaelkane/vim-indent-guides
 "----------------------------------------------------------
 let g:indent_guides_guide_size = 1
-
-
-"----------------------------------------------------------
-" NERDTree
-"----------------------------------------------------------
-" nnoremap <C-E> :NERDTreeToggle<CR>
-
-
-"----------------------------------------------------------
-" alpaca_tags
-"----------------------------------------------------------
-NeoBundle 'alpaca-tc/alpaca_tags', {
-      \ 'depends': ['Shougo/vimproc', 'Shougo/unite.vim'],
-      \ 'autoload' : {
-      \   'commands' : ['Tags', 'TagsUpdate', 'TagsSet', 'TagsBundle', 'TagsCleanCache'],
-      \   'unite_sources' : ['tags']
-      \ }}
-
-let g:alpaca_tags_ctags_bin = '/usr/local/bin/ctags'
-
-let g:alpaca_update_tags_config = {
-      \ '_' : '-R --sort=yes --languages=+Ruby --languages=-css,scss,html',
-      \ 'js' : '--languages=+js',
-      \ 'ruby': '--languages=+Ruby',
-      \ }
-
-augroup AlpacaTags
-  autocmd!
-  " au FileWritePost,BufWritePost * call alpaca_tags#update_tags(&ft)
-  autocmd BufWritePost * TagsUpdate
-  autocmd BufWritePost Gemfile TagsBundle
-  autocmd BufEnter * TagsSet
-augroup END
-
-" nnoremap <expr>tt  ':Unite tags -horizontal -buffer-name=tags -input='.expand("<cword>").'<CR>'
-nnoremap <expr>tt  ':Unite tags -input='.expand("<cword>").'<CR>'
 
 
 "====================================================================================
@@ -753,25 +722,47 @@ au BufRead,BufNewFile *.rb set ft=ruby
 
 
 "====================================================================================
-" Haml Compile 
-"====================================================================================
-" augroup hamlcompile
-"  autocmd!
-"  autocmd BufWrite *.haml w !haml % %.html 
-" augroup END
-
-
-"====================================================================================
 " Mapping
 "====================================================================================
-" 削除用レジスタを使用する
-" nnoremap s "_s
-" nnoremap x "_x
-" nnoremap d "_d
-" nnoremap dd "_dd
-" nnoremap c "_c
-" nnoremap C "_c
-" xnoremap p "0P
+
+"-------------------------------------------
+" http:/qiita.com/tekkoc/items/98adcadfa4bdc8b5a6ca/
+"-------------------------------------------
+nnoremap s <Nop>
+" nnoremap sj <C-w>j
+" nnoremap sk <C-w>k
+" nnoremap sl <C-w>l
+" nnoremap sh <C-w>h
+" nnoremap sJ <C-w>J
+" nnoremap sK <C-w>K
+" nnoremap sL <C-w>L
+" nnoremap sH <C-w>H
+nnoremap sn gt
+nnoremap sp gT
+" nnoremap sr <C-w>r
+" nnoremap s= <C-w>=
+" nnoremap sw <C-w>w
+" nnoremap so <C-w>|<C-w>_
+nnoremap sO <C-w>=
+" nnoremap sN :<C-u>bn<CR>
+" nnoremap sP :<C-u>bp<CR>
+nnoremap st :<C-u>tabnew<CR>
+nnoremap sT :<C-u>Unite tab<CR>
+nnoremap ss :<C-u>sp<CR>
+nnoremap sv :<C-u>vs<CR>
+" nnoremap sq :<C-u>q<CR>
+" nnoremap sQ :<C-u>bd<CR>
+nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
+nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
+
+" カーソルを自動的に()の中へ
+imap {} {}<Left>
+imap [] []<Left>
+imap () ()<Left>
+imap "" ""<Left>
+imap '' ''<Left>
+imap <> <><Left>
+" imap // //<left>
 
 " 表示行単位で行移動する
 nnoremap <silent> j gj
@@ -791,13 +782,16 @@ vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<C
 
 " to 1.9 hash
 " http://qiita.com/joker1007/items/965b63912512be94afa3
-vnoremap <silent> <C-h> :s/:\([a-zA-Z0-9_]\+\)\s*=>/\1:/g<CR>
+vnoremap <silent> <Leader>t :s/:"?\([a-zA-Z0-9_]\+\)"?\s*=>/\1:/g<CR>
 
 " 連続コピペ http://goo.gl/1Lp9Q
 vnoremap <silent> <C-p> "0p<CR>
 
 " redraw
-nnoremap <C-w> :redraw!<CR>
+" nnoremap <C-w> :redraw!<CR>
+
+" vimgrep コマンド後に | cw を自動的に行う
+autocmd QuickFixCmdPost *grep* cwindow
 
 "-------------------------------------------
 " 自動補完
@@ -817,9 +811,6 @@ cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 "-------------------------------------------
 " 画面移動
 "-------------------------------------------
-" nmap <Right> :bnext <CR>
-" nmap <Left> :bprev <CR>
-" Move around splits with <c-hjkl>
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
@@ -829,12 +820,6 @@ nnoremap # g#
 nnoremap g# #
 nnoremap * g*
 nnoremap g* *
-
-"-------------------------------------------
-" Hack #55: 正規表現のメタ文字の扱いを制御する
-"-------------------------------------------
-" nnoremap / /\v
-" nnoremap ? ?\v
 
 
 "====================================================================================
@@ -888,6 +873,15 @@ endfunction
 
 " Change current directory.
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
+
+
+"====================================================================================
+" Hack #198: ウィンドウを開く方向を指定する 
+"====================================================================================
+" 新しいウィンドウを下に開く
+set splitbelow
+" 新しいウィンドウを右に開く
+set splitright
 
 
 "====================================================================================
@@ -948,54 +942,11 @@ augroup END
 
 
 "====================================================================================
-" Hack #161: Command-line windowを使いこなす
+" 最後に保存してから、どのくらい編集したのかの差分を表示
+" http://nanasi.jp/articles/howto/diff/diff-original-file.html
+" http://wada811.blogspot.com/2013/07/vimdiff-merge-and-difforig.html
 "====================================================================================
-" nnoremap <sid>(command-line-enter) q:
-" xnoremap <sid>(command-line-enter) q:
-" nnoremap <sid>(command-line-norange) q:<C-u>
-" 
-" nmap :  <sid>(command-line-enter)
-" xmap :  <sid>(command-line-enter)
-" 
-" augroup command-line-hack
-"   autocmd CmdwinEnter * call s:init_cmdwin()
-"   function! s:init_cmdwin()
-"     nnoremap <buffer> q :<C-u>quit<CR>
-"     nnoremap <buffer> <TAB> :<C-u>quit<CR>
-"     inoremap <buffer><expr><CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
-"     inoremap <buffer><expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
-"     inoremap <buffer><expr><BS> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
-" 
-"     " Completion.
-"     inoremap <buffer><expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" 
-"     startinsert!
-"   endfunction
-" augroup END
-
-
-
-"====================================================================================
-" vimから言語を指定してDash.appを呼び出す http://goo.gl/Hu4DI
-"====================================================================================
-function! s:dash(...)
-  let ft = &filetype
-  if &filetype == 'python'
-    let ft = ft.'2'
-  endif
-  let ft = ft.':'
-  let word = len(a:000) == 0 ? input('Dash search: ', ft.expand('<cword>')) : ft.join(a:000, ' ')
-  call system(printf("open dash://'%s'", word))
-endfunction
-command! -nargs=* Dash call <SID>dash(<f-args>)
-
-
-"====================================================================================
-" Compiler
-"====================================================================================
-augroup compilers
-  autocmd!
-  autocmd FileType javascript :compiler gjslint
-  autocmd QuickfixCmdPost make copen
-augroup END
-
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+    \ | wincmd p | diffthis
+endif
