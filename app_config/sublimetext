@@ -1,0 +1,12 @@
+{
+	"font_face": "Ricty",
+	"close_windows_when_empty": true,
+	"hot_exit": false,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"open_files_in_new_window": false,
+	"remember_open_files": false,
+	"tab_size": 2
+}
