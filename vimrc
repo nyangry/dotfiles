@@ -243,7 +243,7 @@ if executable('ag')
 endif
 
 " メイン
-nnoremap <C-f> :<C-u>Unite file_rec file/new<CR>
+nnoremap <C-f> :<C-u>Unite file_rec file/new -silent<CR>
 
 " call unite#custom#action('source/file_rec',  'delete',  'vimfiler__delete')
 

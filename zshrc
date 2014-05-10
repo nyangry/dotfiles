@@ -148,6 +148,10 @@ linux*)
   ;;
 esac
 
+alias vi='/usr/local/bin/vim'
+alias vimrc='vim ~/.vimrc'
+alias tmuxconf='vim ~/.tmux.conf'
+alias zshrc='vim ~/.zshrc'
 alias tailf='tail -f'
 alias la='ls -a'
 alias ll='ls -l'
