@@ -71,6 +71,31 @@ NeoBundle "daylerees/colour-schemes",  { "rtp": "vim-themes/"}
 " ctags
 "----------------------------------------------------------
 NeoBundle 'tsukkee/unite-tag'
+nnoremap <C-]> g<C-]> 
+
+
+"----------------------------------------------------------
+" vim-tags
+" http://tkkbn.hatenablog.com/entry/2013/11/02/233701
+"----------------------------------------------------------
+NeoBundle 'szw/vim-tags'
+let g:vim_tags_project_tags_command = "/usr/local/bin/ctags -R {OPTIONS} {DIRECTORY} 2>/dev/null"
+let g:vim_tags_gems_tags_command = "/usr/local/bin/ctags -R {OPTIONS} `bundle show --paths` 2>/dev/null"
+
+
+"----------------------------------------------------------
+" taglist
+"----------------------------------------------------------
+NeoBundle 'vim-scripts/taglist.vim'
+nnoremap <leader>e :<C-u>TlistToggle<CR>
+let Tlist_Use_Right_Window = 1
+let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+" name or order
+let Tlist_Sort_Type = "order"
+let Tlist_WinWidth = 50
+let Tlist_Display_Tag_Scope = 0
+let Tlist_Show_One_File = 1
+
 
 "----------------------------------------------------------
 " Ruby
@@ -82,6 +107,7 @@ NeoBundle 'rhysd/unite-ruby-require.vim'
 NeoBundle 'vim-scripts/ruby-matchit'
 NeoBundle 'vim-ruby/vim-ruby'
 
+
 "----------------------------------------------------------
 " Rails
 "----------------------------------------------------------
@@ -92,15 +118,24 @@ NeoBundle 'tpope/vim-rails'
 " NeoBundle 'taichouchou2/unite-rails_best_practices'
 NeoBundle 'romanvbabenko/rails.vim' " unite-rails-best-practiceが依存
 
+
 "----------------------------------------------------------
 " JavaScript
 "----------------------------------------------------------
 NeoBundle 'marijnh/tern'
 
+
 "----------------------------------------------------------
 " indent
 "----------------------------------------------------------
 NeoBundle 'jiangmiao/simple-javascript-indenter'
+
+
+"----------------------------------------------------------
+" csv
+"----------------------------------------------------------
+NeoBundle 'vim-scripts/csv.vim'
+
 
 "----------------------------------------------------------
 " Syntax
@@ -117,6 +152,7 @@ NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'tpope/vim-markdown'
+
 
 "----------------------------------------------------------
 " Complete
@@ -431,21 +467,6 @@ let g:syntastic_mode_map = { 'mode': 'active',
 
 
 "----------------------------------------------------------
-" ctags
-"----------------------------------------------------------
-nnoremap <C-]> g<C-]> 
-
-
-"----------------------------------------------------------
-" vim-tags
-" http://tkkbn.hatenablog.com/entry/2013/11/02/233701
-"----------------------------------------------------------
-NeoBundle 'szw/vim-tags'
-let g:vim_tags_project_tags_command = "/usr/local/bin/ctags -R {OPTIONS} {DIRECTORY} 2>/dev/null"
-let g:vim_tags_gems_tags_command = "/usr/local/bin/ctags -R {OPTIONS} `bundle show --paths` 2>/dev/null"
-
-
-"----------------------------------------------------------
 " Unite-reek / Unite-rails-best-practice
 " (http://qiita.com/items/acd2e2a642e67ef1dd72)
 "----------------------------------------------------------
@@ -539,7 +560,7 @@ filetype plugin indent on     " required!
 "====================================================================================
 set nocompatible                 " vi互換なし
 set encoding=utf-8
-set fileencodings=utf-8
+set fileencodings=utf-8,sjis,cp932
 map ¥ <leader>
 set scrolloff=5                  " スクロール時の余白確保
 set textwidth=0                  " 一行に長い文章を書いていても自動折り返しを
