@@ -100,6 +100,7 @@ delete_old_files()
   rm -f $HOME/.pryrc
   rm -f $HOME/.tmux.conf
   rm -f $HOME/.ctags
+  rm -f $HOME/.rspec
   rm -f $HOME/Brewfile
 }
 
@@ -120,6 +121,7 @@ symlink_files()
   ln -s $HOME/dotfiles/pryrc $HOME/.pryrc
   ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
   ln -s $HOME/dotfiles/ctags $HOME/.ctags
+  ln -s $HOME/dotfiles/rspec $HOME/.rspec
   ln -s $HOME/dotfiles/Brewfile $HOME/Brewfile
   #ln -s $HOME/dotfiles/gitconfig ~/.gitconfig
 }

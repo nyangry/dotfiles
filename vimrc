@@ -26,10 +26,13 @@ NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 " NeoBundle 'Shougo/vimshell'
-NeoBundle 'Shougo/vimfiler.vim'
+" NeoBundle 'Shougo/vimfiler.vim'
+NeoBundle 'scrooloose/nerdtree'
 
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
+
+NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-endwise'
 " % による対応括弧へのカーソル移動機能を拡張
@@ -232,7 +235,10 @@ endfunction
 " Unite
 "----------------------------------------------------------
 
-let g:unite_split_rule = 'botright'
+call unite#custom#profile('default', 'context', {
+\   'start_insert': 1,
+\   'direction': 'botright',
+\ })
 
 " ウィンドウを分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
@@ -246,22 +252,13 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vspli
 " ESCキーを2回押すと終了する
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
-" au FileType unite nmap <buffer> <ESC> <Plug>(unite_exit)
 
 " 入力中の内容を削除する
 au FileType unite inoremap <silent> <buffer> <C-k> <ESC>0C
 
-" ショートカット
-let g:unite_enable_start_insert=1
-"let g:unite_enable_short_source_names = 1
-"let g:unite_source_file_mru_filename_format = ''
-" let g:unite_winheight=20
-
 " バッファ一覧
-" nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
 nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
 " ファイル一覧
-" nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
 " レジスタ一覧
 " nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
@@ -281,9 +278,6 @@ endif
 " メイン
 nnoremap <C-f> :<C-u>Unite file_rec file/new -silent<CR>
 
-" call unite#custom#action('source/file_rec',  'delete',  'vimfiler__delete')
-
-let g:unite_source_rec_max_cache_files=2000
 call unite#custom_source(
       \'file_rec, file_rec/async', 
       \'ignore_pattern',  
@@ -394,14 +388,14 @@ let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "----------------------------------------------------------
 " VimFiler
 "----------------------------------------------------------
-let g:vimfiler_as_default_explorer = 1
-" nnoremap <leader>f :VimFiler -buffer-name=explorer -split -columns="" -toggle -no-quit<CR>
-
-nnoremap <leader>f :VimFilerCurrentDir<CR>
-inoremap <leader>f <ESC>:VimFilerCurrentDir<CR>
-
-nnoremap <C-x><leader>f :VimFiler -project<CR>
-inoremap <C-x><leader>f <ESC>:VimFiler -project<CR>
+" let g:vimfiler_as_default_explorer = 1
+" " nnoremap <leader>f :VimFiler -buffer-name=explorer -split -columns="" -toggle -no-quit<CR>
+" 
+" nnoremap <leader>f :VimFilerCurrentDir<CR>
+" inoremap <leader>f <ESC>:VimFilerCurrentDir<CR>
+" 
+" nnoremap <C-x><leader>f :VimFiler -project<CR>
+" inoremap <C-x><leader>f <ESC>:VimFiler -project<CR>
 
 " function! g:my_vimfiler_settings()
 "   nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)",  "\<Plug>(vimfiler_edit_file)")
@@ -416,6 +410,13 @@ inoremap <C-x><leader>f <ESC>:VimFiler -project<CR>
 " autocmd FileType vimfiler 
 "   \ nnoremap <buffer><silent>/ 
 "   \ :<C-u>Unite file -default-action=vimfiler<CR>
+
+
+"----------------------------------------------------------
+" NerdTree
+"----------------------------------------------------------
+nnoremap <leader>f :NERDTree<CR>
+inoremap <leader>f <ESC>:NERDTree<CR>
 
 
 "----------------------------------------------------------
@@ -671,24 +672,22 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 " Delete
 nnoremap <Leader>fd :call delete(expand('%'))<CR>
 
+
 "====================================================================================
 " 全角スペースを表示
 "====================================================================================
-" コメント以外で全角スペースを指定しているので、scriptencodingと、
-" このファイルのエンコードが一致するよう注意！
-" 強調表示されない場合、ここでscriptencodingを指定するとうまくいく事があります。
 scriptencoding utf-8
 function! ZenkakuSpace()
-  highlight ZenkakuSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
-  " 全角スペースを明示的に表示する
-  silent! match ZenkakuSpace /　/
+    highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
 endfunction
 
 if has('syntax')
-  augroup ZenkakuSpace
-    autocmd!
-    autocmd VimEnter,BufEnter * call ZenkakuSpace()
-  augroup END
+    augroup ZenkakuSpace
+        autocmd!
+        autocmd ColorScheme * call ZenkakuSpace()
+        autocmd VimEnter,WinEnter,BufRead * let w:m1=matchadd('ZenkakuSpace', '　')
+    augroup END
+    call ZenkakuSpace()
 endif
 
 
@@ -909,47 +908,47 @@ set splitright
 " Hack #205: 複数行をコメントアウトする
 "====================================================================================
 " Comment or uncomment lines from mark a to mark b.
-function! CommentMark(docomment, a, b)
-  if !exists('b:comment')
-    let b:comment = CommentStr() . ' '
-  endif
-  if a:docomment
-    exe "normal! '" . a:a . "_\<C-V>'" . a:b . 'I' . b:comment
-  else
-    exe "'".a:a.",'".a:b . 's/^\(\s*\)' . escape(b:comment,'/') . '/\1/e'
-  endif
-endfunction
-
-" Comment lines in marks set by g@ operator.
-function! DoCommentOp(type)
-  call CommentMark(1, '[', ']')
-endfunction
-
-" Uncomment lines in marks set by g@ operator.
-function! UnCommentOp(type)
-  call CommentMark(0, '[', ']')
-endfunction
-
-" Return string used to comment line for current filetype.
-function! CommentStr()
-  if &ft == 'cpp' || &ft == 'java' || &ft == 'php' || &ft == 'javascript' || &ft == 'scss.css'
-    return '//'
-  elseif &ft == 'vim'
-    return '"'
-  elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby' || &ft == 'yaml' || &ft == 'coffee'
-    return '#'
-  elseif &ft == 'lisp'
-    return ';'
-  elseif &ft == 'haml'
-    return '-#'
-  endif
-  return ''
-endfunction
-
-nnoremap <Leader>c <Esc>:set opfunc=DoCommentOp<CR>g@
-nnoremap <Leader>C <Esc>:set opfunc=UnCommentOp<CR>g@
-vnoremap <Leader>c <Esc>:call CommentMark(1,'<','>')<CR>
-vnoremap <Leader>C <Esc>:call CommentMark(0,'<','>')<CR>
+" function! CommentMark(docomment, a, b)
+"   if !exists('b:comment')
+"     let b:comment = CommentStr() . ' '
+"   endif
+"   if a:docomment
+"     exe "normal! '" . a:a . "_\<C-V>'" . a:b . 'I' . b:comment
+"   else
+"     exe "'".a:a.",'".a:b . 's/^\(\s*\)' . escape(b:comment,'/') . '/\1/e'
+"   endif
+" endfunction
+" 
+" " Comment lines in marks set by g@ operator.
+" function! DoCommentOp(type)
+"   call CommentMark(1, '[', ']')
+" endfunction
+" 
+" " Uncomment lines in marks set by g@ operator.
+" function! UnCommentOp(type)
+"   call CommentMark(0, '[', ']')
+" endfunction
+" 
+" " Return string used to comment line for current filetype.
+" function! CommentStr()
+"   if &ft == 'cpp' || &ft == 'java' || &ft == 'php' || &ft == 'javascript' || &ft == 'scss.css'
+"     return '//'
+"   elseif &ft == 'vim'
+"     return '"'
+"   elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby' || &ft == 'yaml' || &ft == 'coffee'
+"     return '#'
+"   elseif &ft == 'lisp'
+"     return ';'
+"   elseif &ft == 'haml'
+"     return '-#'
+"   endif
+"   return ''
+" endfunction
+" 
+" nnoremap <Leader>c <Esc>:set opfunc=DoCommentOp<CR>g@
+" nnoremap <Leader>C <Esc>:set opfunc=UnCommentOp<CR>g@
+" vnoremap <Leader>c <Esc>:call CommentMark(1,'<','>')<CR>
+" vnoremap <Leader>C <Esc>:call CommentMark(0,'<','>')<CR>
 
 
 "====================================================================================
