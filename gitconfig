@@ -20,7 +20,7 @@
   cmd = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
   trustExitCode = false
 [diff]
-  external = extDiff
+#  external = extDiff
 [mergetool]
 	keepBackup = false
 [color "diff"]
