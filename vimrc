@@ -239,6 +239,8 @@ call unite#custom#profile('default', 'context', {
 \   'start_insert': 1,
 \   'direction': 'botright',
 \ })
+call unite#custom#profile('default', 'ignorecase', 1)
+call unite#custom#profile('default', 'smartcase', 1)
 
 " ウィンドウを分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
