@@ -286,6 +286,7 @@ call unite#custom_source(
       \ '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\)/'.
       \ '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\)/'.
       \ '\|\(backup\|archived_migrations\)/'.
+      \ '\|\(vendor\|bundle\)/'.
       \ '\|\(\.git\)/'.
       \'\)')
 
