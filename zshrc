@@ -262,7 +262,6 @@ if [ -d ${HOME}/.rbenv  ] ; then
   eval "$(rbenv init -)"
 fi
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 
 #=============================
 # custom PATH for Rails
