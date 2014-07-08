@@ -34,6 +34,7 @@ NeoBundle 'tpope/vim-fugitive'
 
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'bkad/CamelCaseMotion'
 NeoBundle 'tpope/vim-endwise'
 " % による対応括弧へのカーソル移動機能を拡張
 NeoBundle 'jwhitley/vim-matchit'
@@ -69,6 +70,15 @@ NeoBundle "daylerees/colour-schemes",  { "rtp": "vim-themes/"}
 
 " Benchmark
 " NeoBundle 'mattn/benchvimrc-vim'
+
+
+"----------------------------------------------------------
+" CamelCaseMotion
+"----------------------------------------------------------
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+
 
 "----------------------------------------------------------
 " ctags
@@ -145,7 +155,7 @@ NeoBundle 'vim-scripts/csv.vim'
 "----------------------------------------------------------
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'taichouchou2/html5.vim'
+NeoBundle 'othree/html5.vim'
 " NeoBundle 'jelera/vim-javascript-syntax'
 " NeoBundle 'taichouchou2/vim-javascript'
 " NeoBundle 'rickeyvisinski-kanban/vim-jquery'
