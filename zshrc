@@ -4,6 +4,8 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 #export PATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
+source /Users/masuyama/work/mbook/sys/var/jobroot/conf/global.conf
+
 # osx mavericks
 bindkey "^[[3~" delete-char
 
@@ -148,7 +150,6 @@ linux*)
   ;;
 esac
 
-
 alias vimrc='vim ~/.vimrc'
 alias tmuxconf='vim ~/.tmux.conf'
 alias zshrc='vim ~/.zshrc'
@@ -162,6 +163,7 @@ alias diff="colordiff --side-by-side --suppress-common-lines"
 alias sc='screen'
 alias gts='git status'
 alias gtl="git log --color --pretty=format:'%h (%cr) %s [%cn]'"
+#alias ctags='/Applications/MacVim.app/Contents/MacOS/ctags "$@"'
 alias octgen='bundle exec rake generate'
 alias octprev='bundle exec rake preview'
 alias octint='bundle exec rake integrate'
@@ -262,6 +264,7 @@ if [ -d ${HOME}/.rbenv  ] ; then
   eval "$(rbenv init -)"
 fi
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 
 #=============================
 # custom PATH for Rails
