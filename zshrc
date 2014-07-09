@@ -163,7 +163,6 @@ alias diff="colordiff --side-by-side --suppress-common-lines"
 alias sc='screen'
 alias gts='git status'
 alias gtl="git log --color --pretty=format:'%h (%cr) %s [%cn]'"
-#alias ctags='/Applications/MacVim.app/Contents/MacOS/ctags "$@"'
 alias octgen='bundle exec rake generate'
 alias octprev='bundle exec rake preview'
 alias octint='bundle exec rake integrate'
@@ -264,7 +263,6 @@ if [ -d ${HOME}/.rbenv  ] ; then
   eval "$(rbenv init -)"
 fi
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 
 #=============================
 # custom PATH for Rails
