@@ -90,7 +90,6 @@ delete_old_files()
   rm -f $HOME/.vimrc
   rm -f $HOME/.zshrc
   rm -f $HOME/.zshenv
-  rm -f $HOME/.gvimrc
   rm -f $HOME/.gemrc
   rm -f $HOME/.powconfig
   rm -f $HOME/.bashrc
@@ -111,7 +110,6 @@ symlink_files()
   ln -s $HOME/dotfiles/vimrc     $HOME/.vimrc
   ln -s $HOME/dotfiles/zshrc     $HOME/.zshrc
   ln -s $HOME/dotfiles/zshenv    $HOME/.zshenv
-  ln -s $HOME/dotfiles/gvimrc    $HOME/.gvimrc
   ln -s $HOME/dotfiles/gemrc     $HOME/.gemrc
   ln -s $HOME/dotfiles/powconfig $HOME/.powconfig
   ln -s $HOME/dotfiles/bashrc    $HOME/.bashrc

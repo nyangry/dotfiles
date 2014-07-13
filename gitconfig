@@ -7,7 +7,6 @@
 [color]
 	ui = auto
 [core]
-	editor = /Applications/MacVim.app/Contents/MacOS/Vim
 	autocrlf = input
   #safecrlf = true
 	eol = lf
