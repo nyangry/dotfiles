@@ -26,7 +26,7 @@ NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 " NeoBundle 'Shougo/vimshell'
-" NeoBundle 'Shougo/vimfiler.vim'
+NeoBundle 'Shougo/vimfiler.vim'
 NeoBundle 'scrooloose/nerdtree'
 
 NeoBundle 'thinca/vim-quickrun'
@@ -75,9 +75,9 @@ NeoBundle "daylerees/colour-schemes",  { "rtp": "vim-themes/"}
 "----------------------------------------------------------
 " CamelCaseMotion
 "----------------------------------------------------------
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
+" map <silent> w <Plug>CamelCaseMotion_w
+" map <silent> b <Plug>CamelCaseMotion_b
+" map <silent> e <Plug>CamelCaseMotion_e
 
 
 "----------------------------------------------------------
@@ -302,6 +302,8 @@ call unite#custom_source(
       \ '\|\(\.git\)/'.
       \'\)')
 
+call unite#custom#alias('file', 'delete', 'vimfiler__delete')
+
 
 "----------------------------------------------------------
 " Neocomplete
@@ -430,6 +432,7 @@ let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "----------------------------------------------------------
 nnoremap <leader>f :NERDTree<CR>
 inoremap <leader>f <ESC>:NERDTree<CR>
+let g:NERDTreeWinSize = 55
 
 
 "----------------------------------------------------------
