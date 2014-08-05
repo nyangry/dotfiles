@@ -92,8 +92,8 @@ nnoremap <C-]> g<C-]>
 " http://tkkbn.hatenablog.com/entry/2013/11/02/233701
 "----------------------------------------------------------
 NeoBundle 'szw/vim-tags'
-let g:vim_tags_project_tags_command = "/usr/local/bin/ctags -R . 2>/dev/null"
-let g:vim_tags_gems_tags_command = "/usr/local/bin/ctags -R `bundle show --paths` 2>/dev/null"
+let g:vim_tags_project_tags_command = "/usr/local/bin/ctags `pwd` 2>/dev/null"
+let g:vim_tags_gems_tags_command = "/usr/local/bin/ctags `bundle show --paths` 2>/dev/null"
 let g:vim_tags_ignore_file_comment_pattern = '^[-#"]'
 
 "----------------------------------------------------------
