@@ -266,37 +266,48 @@ au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
 
 " 入力中の内容を削除する
-au FileType unite inoremap <silent> <buffer> <C-k> <ESC>0C
+" au FileType unite inoremap <silent> <buffer> <C-k> <ESC>0C
 
 " バッファ一覧
 nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
 " ファイル一覧
-nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
+" nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
 " レジスタ一覧
 " nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
-nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+" nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 " grep検索結果の再呼出
-nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
+" nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
 
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-  let g:unite_source_grep_recursive_opt = ''
-
-  let g:unite_source_rec_async_command = 'ag'
+  " let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  " let g:unite_source_grep_recursive_opt = ''
 endif
 
+" git ディレクトリかどうかで、処理を切り替える
+" http://qiita.com/yuku_t/items/9263e6d9105ba972aea8
+function! DispatchUniteFileRecAsyncOrGit()
+  if isdirectory(getcwd()."/.git")
+    Unite -start-insert file_rec/git:-c:--exclude-standard:-o
+  else
+    Unite -start-insert file_rec/async
+  endif
+endfunction
+
+nnoremap ,us :<C-u>Unite file_rec<CR>
 " メイン
-nnoremap <C-f> :<C-u>Unite file_rec file/new -silent<CR>
+nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
+" 更新されたファイル一覧
+nnoremap <C-m> :<C-u>Unite -start-insert file_rec/git:-m:--exclude-standard:-o<CR>
 
 call unite#custom_source(
-      \'file_rec, file_rec/async', 
+      \'file_rec, file_rec/async, file_rec/git, file/new', 
       \'ignore_pattern',  
       \'\('.
       \ '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\|map\|gitkeep\|DS_Store\|rdoc\|ru\)$'.
       \ '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\)/'.
-      \ '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\)/'.
+      \ '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\|font[s]\{}\|image[s]\{}\)/'.
       \ '\|\(backup\|archived_migrations\)/'.
       \ '\|\(vendor\|bundle\)/'.
       \ '\|\(\.git\)/'.
