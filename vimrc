@@ -165,6 +165,9 @@ NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'tpope/vim-markdown'
+NeoBundle 'kannokanno/previm'
+NeoBundle 'tyru/open-browser.vim'
+
 
 
 "----------------------------------------------------------
@@ -766,6 +769,8 @@ au BufRead,BufNewFile *.css set ft=css syntax=css3
 au BufRead,BufNewFile Gemfile set ft=ruby
 " rb
 au BufRead,BufNewFile *.rb set ft=ruby
+" markdown
+au BufRead,BufNewFile *.md set filetype=markdown
 
 
 "====================================================================================
