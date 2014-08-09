@@ -34,6 +34,7 @@ install mongodb
 install node
 
 install imagemagick
+install gibo
 
 
 # priority
