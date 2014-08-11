@@ -35,6 +35,7 @@ install node
 install redis
 
 install imagemagick
+install gibo
 
 
 # priority
