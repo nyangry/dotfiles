@@ -38,6 +38,7 @@ NeoBundle 'bkad/CamelCaseMotion'
 NeoBundle 'tpope/vim-endwise'
 " % による対応括弧へのカーソル移動機能を拡張
 NeoBundle 'jwhitley/vim-matchit'
+NeoBundle 'terryma/vim-multiple-cursors'
 " fakeclip
 NeoBundle 'kana/vim-fakeclip'
 " Copy File Path/Name
