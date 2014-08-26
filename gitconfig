@@ -1,9 +1,6 @@
-[github]
-	user = lunchub
-	token = 0a66eda68d335209d83ac2b5c93ac152
 [user]
 	name = Daisuke Masuyama
-	email = iacta.alea.esto@gmail.com
+	email = masuyama.daisuke@moneyforward.co.jp
 [color]
 	ui = auto
 [core]
@@ -11,7 +8,6 @@
   #safecrlf = true
 	eol = lf
 	excludesfile = /Users/admin/.gitignore
-
 [merge]
   tool = extMerge
 	ff = false

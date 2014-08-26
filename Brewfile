@@ -7,7 +7,7 @@ tap homebrew/versions
 tap phinze/homebrew-cask
 
 
-install ricty --vim-powerline
+# install ricty --vim-powerline
 install brew-cask
 
 install git
@@ -22,7 +22,7 @@ install reattach-to-user-namespace
 install ssh-copy-id
 install tmux
 install vim
-install macvim
+# install macvim
 
 install rbenv
 install ruby-build
@@ -30,8 +30,9 @@ install lua
 install ctags
 
 install mysql
-install mongodb
+# install mongodb
 install node
+install redis
 
 install imagemagick
 install gibo
@@ -46,18 +47,18 @@ cask install ccleaner
 cask install alfred
 cask install sublime-text
 cask install clipmenu
-cask install mailplane
+# cask install mailplane
 cask install anvil
 cask install iterm2
 cask install appcleaner
-cask install p4merge
-cask install google-japanese-ime
+# cask install p4merge
+# cask install google-japanese-ime
 cask install dash
 cask install tower
 cask install balsamiq-mockups
 cask install transmit
 # cask install difffork
-# cask install virtualbox
+cask install virtualbox
 # cask install vagrant
 
 
