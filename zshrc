@@ -163,16 +163,10 @@ alias diff="colordiff --side-by-side --suppress-common-lines"
 alias sc='screen'
 alias gts='git status'
 alias gtl="git log --color --pretty=format:'%h (%cr) %s [%cn]'"
-alias octgen='bundle exec rake generate'
-alias octprev='bundle exec rake preview'
-alias octint='bundle exec rake integrate'
 function octiso() {
   bundle exec rake isolate\[$1\]
 }
-alias octoeploy='git add .; git commit -am "update"; bundle exec rake gen_deploy'
-#alias ag='ag -S --stats --pager "less -F"'
 alias ag='ag -S'
-alias be="bundle exec"
 
 function scx () {
     screen -x $1
