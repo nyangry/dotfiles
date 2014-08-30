@@ -7,7 +7,7 @@
 	autocrlf = input
   #safecrlf = true
 	eol = lf
-	excludesfile = /Users/admin/.gitignore
+	excludesfile = /Users/masuyama/.gitignore
 [merge]
   tool = extMerge
 	ff = false

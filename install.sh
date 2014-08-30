@@ -120,6 +120,7 @@ symlink_files()
   ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
   ln -s $HOME/dotfiles/ctags $HOME/.ctags
   ln -s $HOME/dotfiles/rspec $HOME/.rspec
+  ln -s $HOME/dotfiles/railsrc $HOME/.railsrc
   ln -s $HOME/dotfiles/Brewfile $HOME/Brewfile
   #ln -s $HOME/dotfiles/gitconfig ~/.gitconfig
 }

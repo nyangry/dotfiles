@@ -771,7 +771,9 @@ au BufRead,BufNewFile Gemfile set ft=ruby
 " rb
 au BufRead,BufNewFile *.rb set ft=ruby
 " markdown
-au BufRead,BufNewFile *.md set filetype=markdown
+au BufRead,BufNewFile *.md set ft=markdown
+" rails
+au BufRead,BufNewFile *.jbuilder, *.builder, *.rxml, *.rjs set ft=ruby
 
 
 "====================================================================================

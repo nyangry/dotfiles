@@ -58,6 +58,7 @@ cask install tower
 cask install balsamiq-mockups
 cask install transmit
 # cask install difffork
+cask install diffmerge
 cask install virtualbox
 # cask install vagrant
 
