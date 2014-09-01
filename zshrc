@@ -4,8 +4,6 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 #export PATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
-source /Users/masuyama/work/mbook/sys/var/jobroot/conf/global.conf
-
 # osx mavericks
 bindkey "^[[3~" delete-char
 
