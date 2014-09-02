@@ -303,7 +303,7 @@ nnoremap ,us :<C-u>Unite file_rec<CR>
 " メイン
 nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
 " 更新されたファイル一覧
-" nnoremap <C-m> :<C-u>Unite -start-insert file_rec/git:-m:--exclude-standard:-o<CR>
+nnoremap <C-m> :<C-u>Unite -start-insert file_rec/git:-m:--exclude-standard:-o<CR>
 
 call unite#custom_source(
       \'file_rec, file_rec/async, file_rec/git, file/new', 
