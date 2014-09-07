@@ -20,3 +20,5 @@
 	keepBackup = false
 [color "diff"]
 	meta = blue black bold
+[push]
+	default = simple
