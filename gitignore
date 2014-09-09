@@ -4,5 +4,5 @@
 ;
 
 bin/
-vendor/bundle
+vendor/
 tags
