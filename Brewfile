@@ -57,6 +57,7 @@ cask install dash
 cask install tower
 cask install balsamiq-mockups
 cask install transmit
+cask install macdown
 # cask install difffork
 cask install diffmerge
 cask install virtualbox
