@@ -68,6 +68,7 @@ cask install virtualbox
 cask install sequential
 cask install silverlight
 cask install insomniax
+cask install karabiner
 # cask install bitcasa
 # cask install Wondershare Player
 # cask install Stackroom
