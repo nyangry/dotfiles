@@ -283,4 +283,4 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 # HomeBrew cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
-alias brewlink = "brew list -1 | while read line; do brew unlink $line; brew link $line; done"
+alias brewlink="brew list -1 | while read line; do brew unlink $line; brew link $line; done"
