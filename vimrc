@@ -253,8 +253,8 @@ call unite#custom#profile('default', 'context', {
 \   'start_insert': 1,
 \   'direction': 'botright',
 \ })
-call unite#custom#profile('default', 'ignorecase', 1)
-call unite#custom#profile('default', 'smartcase', 1)
+call unite#custom#profile('default', 'context.ignorecase', 1)
+call unite#custom#profile('default', 'context.smartcase', 1)
 
 " ウィンドウを分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
@@ -418,28 +418,6 @@ let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "----------------------------------------------------------
 " VimFiler
 "----------------------------------------------------------
-let g:vimfiler_as_default_explorer = 1
-" nnoremap <leader>f :VimFiler -buffer-name=explorer -split -columns="" -toggle -no-quit<CR>
-
-nnoremap <leader>f :VimFilerCurrentDir<CR>
-inoremap <leader>f <ESC>:VimFilerCurrentDir<CR>
-
-nnoremap <C-x><leader>f :VimFiler -project<CR>
-inoremap <C-x><leader>f <ESC>:VimFiler -project<CR>
-
-function! g:my_vimfiler_settings()
-  nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)",  "\<Plug>(vimfiler_edit_file)")
-  nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
-  nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
-endfunction
-augroup VimFiler
-  autocmd! 
-  autocmd FileType vimfiler call g:my_vimfiler_settings()
-augroup END
-
-autocmd FileType vimfiler 
-  \ nnoremap <buffer><silent>/ 
-  \ :<C-u>Unite file -default-action=vimfiler<CR>
 
 
 "----------------------------------------------------------
