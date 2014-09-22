@@ -280,3 +280,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 #============================
 # export RUBY_GC_MALLOC_LIMIT=60000000
 # export RUBY_FREE_MIN=200000
+
+# HomeBrew cask
+export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
+alias brewlink="brew list -1 | while read line; do brew unlink $line; brew link $line; done"
