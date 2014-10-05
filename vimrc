@@ -29,6 +29,8 @@ NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/vimfiler.vim'
 " NeoBundle 'scrooloose/nerdtree'
 
+NeoBundle 'LeafCage/yankround.vim'
+
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 
@@ -95,7 +97,6 @@ nnoremap <C-]> g<C-]>
 NeoBundle 'szw/vim-tags'
 let g:vim_tags_project_tags_command = "/usr/local/bin/ctags `pwd` 2>/dev/null"
 let g:vim_tags_gems_tags_command = "/usr/local/bin/ctags `bundle show --paths` 2>/dev/null"
-let g:vim_tags_ignore_file_comment_pattern = '^[-#"]'
 
 "----------------------------------------------------------
 " taglist
@@ -421,11 +422,16 @@ let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 
 "----------------------------------------------------------
-" NerdTree
+" Yankround
 "----------------------------------------------------------
-" nnoremap <leader>f :NERDTree<CR>
-" inoremap <leader>f <ESC>:NERDTree<CR>
-" let g:NERDTreeWinSize = 55
+nmap p <Plug>(yankround-p)
+xmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+xmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
 
 
 "----------------------------------------------------------
