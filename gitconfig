@@ -1,24 +1,34 @@
 [user]
 	name = Daisuke Masuyama
 	email = iacta.alea.esto@gmail.com
-[color]
-	ui = auto
+[alias]
+  co = checkout
+  a  = add
+  c  = commit
+  s  = status
+  sh = show
+  l  = log
+  b  = branch
 [core]
-	autocrlf = input
-  #safecrlf = true
-	eol = lf
+	autocrlf     = input
+	eol          = lf
 	excludesfile = /Users/masuyama/.gitignore
 [merge]
-  tool = extMerge
-	ff = false
+	tool = extMerge
+	ff   = false
 [mergetool "extMerge"]
-  cmd = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+  cmd           = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
   trustExitCode = false
-[diff]
-#  external = extDiff
 [mergetool]
 	keepBackup = false
-[color "diff"]
-	meta = blue black bold
 [push]
 	default = simple
+[color]
+	ui     = auto
+	diff   = auto
+	status = auto
+	branch = auto
+[color "diff"]
+	meta = blue black bold
+[interactive]
+	singlekey = true

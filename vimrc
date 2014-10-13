@@ -26,21 +26,17 @@ NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 " NeoBundle 'Shougo/vimshell'
-NeoBundle 'Shougo/vimfiler.vim'
 " NeoBundle 'scrooloose/nerdtree'
 
 NeoBundle 'LeafCage/yankround.vim'
 
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'tpope/vim-fugitive'
 
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'bkad/CamelCaseMotion'
 NeoBundle 'tpope/vim-endwise'
-" % による対応括弧へのカーソル移動機能を拡張
-NeoBundle 'jwhitley/vim-matchit'
-" NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'terryma/vim-multiple-cursors'
 " fakeclip
 NeoBundle 'kana/vim-fakeclip'
 " Copy File Path/Name
@@ -76,11 +72,31 @@ NeoBundle "daylerees/colour-schemes",  { "rtp": "vim-themes/"}
 
 
 "----------------------------------------------------------
-" CamelCaseMotion
+" textobj
 "----------------------------------------------------------
-" map <silent> w <Plug>CamelCaseMotion_w
-" map <silent> b <Plug>CamelCaseMotion_b
-" map <silent> e <Plug>CamelCaseMotion_e
+NeoBundle 'kana/vim-textobj-user' "vim-textobj-rubyが依存
+NeoBundle 'rhysd/vim-textobj-ruby'
+NeoBundle 'kana/vim-textobj-line'
+NeoBundle 'kana/vim-textobj-entire'
+NeoBundle 'coderifous/textobj-word-column.vim'
+
+NeoBundle 'terryma/vim-expand-region'
+let g:expand_region_text_objects = {
+      \ 'iw': 0,
+      \ 'iW': 0,
+      \ 'i"': 1,
+      \ 'i''': 0,
+      \ 'i}': 1,
+      \ 'i]': 1,
+      \ 'ib': 1,
+      \ 'iB': 1,
+      \ 'il': 0,
+      \ 'ip': 0,
+      \ 'ie': 0,
+      \ }
+
+" % による対応括弧へのカーソル移動機能を拡張
+NeoBundle 'jwhitley/vim-matchit'
 
 
 "----------------------------------------------------------
@@ -98,6 +114,7 @@ NeoBundle 'szw/vim-tags'
 let g:vim_tags_project_tags_command = "/usr/local/bin/ctags `pwd` 2>/dev/null"
 let g:vim_tags_gems_tags_command = "/usr/local/bin/ctags `bundle show --paths` 2>/dev/null"
 
+
 "----------------------------------------------------------
 " taglist
 "----------------------------------------------------------
@@ -113,12 +130,19 @@ let Tlist_Show_One_File = 1
 
 
 "----------------------------------------------------------
+" Git
+"----------------------------------------------------------
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'gregsexton/gitv'
+NeoBundle 'idanarye/vim-merginal'
+" NeoBundle 'rhysd/committia.vim'
+
+
+"----------------------------------------------------------
 " Ruby
 "----------------------------------------------------------
-NeoBundle 'kana/vim-textobj-user' "vim-textobj-rubyが依存
-NeoBundle 'rhysd/vim-textobj-ruby'
 NeoBundle 'rhysd/unite-ruby-require.vim'
-" NeoBundle 'Shougo/neocomplcache-rsense'
 NeoBundle 'vim-scripts/ruby-matchit'
 NeoBundle 'vim-ruby/vim-ruby'
 
@@ -131,7 +155,7 @@ NeoBundle 'tpope/vim-rails'
 " NeoBundle 'taichouchou2/alpaca_complete'
 " NeoBundle 'taichouchou2/unite-reek'
 " NeoBundle 'taichouchou2/unite-rails_best_practices'
-NeoBundle 'romanvbabenko/rails.vim' " unite-rails-best-practiceが依存
+" NeoBundle 'romanvbabenko/rails.vim' " unite-rails-best-practiceが依存
 
 
 "----------------------------------------------------------
@@ -156,7 +180,6 @@ NeoBundle 'vim-scripts/csv.vim'
 " Syntax
 "----------------------------------------------------------
 NeoBundle 'tpope/vim-haml'
-NeoBundle 'scrooloose/syntastic'
 NeoBundle 'othree/html5.vim'
 " NeoBundle 'jelera/vim-javascript-syntax'
 " NeoBundle 'taichouchou2/vim-javascript'
@@ -164,7 +187,10 @@ NeoBundle 'othree/html5.vim'
 " NeoBundle 'paulyg/Vim-PHP-Stuff'
 " NeoBundle 'vim-scripts/mathml.vim'
 NeoBundle 'hail2u/vim-css3-syntax'
+
 NeoBundle 'cakebaker/scss-syntax.vim'
+au BufRead, BufNewFile *.scss set filetype=scss.css
+
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'tpope/vim-markdown'
 NeoBundle 'kannokanno/previm'
@@ -173,12 +199,20 @@ NeoBundle 'tyru/open-browser.vim'
 
 
 "----------------------------------------------------------
+" Syntastic
+"----------------------------------------------------------
+NeoBundle 'scrooloose/syntastic'
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_javascript_checkers=['jshint']
+let g:syntastic_mode_map = { 'mode': 'active',
+                           \ 'active_filetypes': [],
+                           \ 'passive_filetypes': ['html', 'css' ] }
+
+
+"----------------------------------------------------------
 " Complete
 "----------------------------------------------------------
 " NeoBundle 'teramako/jscomplete-vim'
-
-
-
 
 
 "----------------------------------------------------------
@@ -273,6 +307,12 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
 " 入力中の内容を削除する
 " au FileType unite inoremap <silent> <buffer> <C-k> <ESC>0C
 
+" grep検索
+nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+
+" カーソル位置の単語をgrep検索
+nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+
 " バッファ一覧
 nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
 " ファイル一覧
@@ -286,8 +326,11 @@ nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
 
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
-  " let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-  " let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_default_opts =
+  \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
+  \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_max_candidates = 300
 endif
 
 " git ディレクトリかどうかで、処理を切り替える
@@ -325,17 +368,47 @@ call unite#custom#alias('file', 'delete', 'vimfiler__delete')
 " Neocomplete
 "----------------------------------------------------------
 let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#disable_auto_complete = 0
+
+" Use smartcase.
 let g:neocomplete#enable_ignore_case = 0
-let g:neocomplete#enable_smart_case  = 1
-let g:neocomplete#enable_fuzzy_completion = 0
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_camel_case = 1
+
+" Use fuzzy completion.
+let g:neocomplete#enable_fuzzy_completion = 1
+
+" Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
+" Set auto completion length.
+let g:neocomplete#auto_completion_start_length = 2
+" Set manual completion length.
+let g:neocomplete#manual_completion_start_length = 0
+" Set minimum keyword length.
+let g:neocomplete#min_keyword_length = 3
+
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" For auto select.
+let g:neocomplete#enable_complete_select = 1
+try
+  let completeopt_save = &completeopt
+  set completeopt+=noinsert,noselect
+catch
+  let g:neocomplete#enable_complete_select = 0
+finally
+  let &completeopt = completeopt_save
+endtry
+let g:neocomplete#enable_auto_select = 0
+let g:neocomplete#enable_refresh_always = 0
+let g:neocomplete#enable_cursor_hold_i = 0
  
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
   \ 'default'    : '',
   \ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
   \ 'coffee'     : $HOME . '/.vim/dict/javascript.dict',
+  \ 'ruby'       : $HOME . '/.vim/dict/ruby.dict',
 \ }
 
 " Define same filetypes
@@ -344,11 +417,11 @@ if !exists('g:neocomplete#same_filetypes')
 endif
 let g:neocomplete#same_filetypes.html   = 'javascript, php, ruby'
 let g:neocomplete#same_filetypes.haml   = 'javascript, ruby'
-let g:neocomplete#same_filetypes.php    = 'html, javascript'
-let g:neocomplete#same_filetypes.scss   = 'html, haml, css'
-let g:neocomplete#same_filetypes.sass   = 'html, haml, css'
-let g:neocomplete#same_filetypes.js     = 'html, haml, php, ruby'
-let g:neocomplete#same_filetypes.coffee = 'html, haml, javascript, ruby'
+" let g:neocomplete#same_filetypes.php    = 'html, javascript'
+let g:neocomplete#same_filetypes.scss   = 'css'
+let g:neocomplete#same_filetypes.sass   = 'css'
+" let g:neocomplete#same_filetypes.js     = 'html, haml'
+let g:neocomplete#same_filetypes.coffee = 'javascript'
 let g:neocomplete#same_filetypes.ruby   = 'haml, rails'
 
 " Define keyword.
@@ -362,8 +435,9 @@ let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 if !exists('g:neocomplete#delimiter_patterns')
   let g:neocomplete#delimiter_patterns = {}
 endif
-let g:neocomplete#delimiter_patterns.php = ['->',  '::',  '\']
-let g:neocomplete#delimiter_patterns.vim = ['#']
+" let g:neocomplete#delimiter_patterns.php  = ['->', '::', '\']
+let g:neocomplete#delimiter_patterns.vim  = ['#']
+" let g:neocomplete#delimiter_patterns.ruby = ['.', '::']
 
 " Plugin key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()
@@ -404,21 +478,38 @@ augroup enable_omni_completion
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  " autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 augroup END
 
-" Enable heavy omni completion.
+let g:neocomplete#force_overwrite_completefunc = 1
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
-let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+if !exists('g:neocomplete#sources#omni#functions')
+  let g:neocomplete#sources#omni#functions = {}
+endif
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#enable_auto_close_preview = 1
 
+let g:neocomplete#force_omni_input_patterns.ruby =
+\ '[^. *\t]\.\w*\|\h\w*::'
 
 "----------------------------------------------------------
 " VimFiler
 "----------------------------------------------------------
+NeoBundle 'Shougo/vimfiler.vim'
+
+let g:vimfiler_as_default_explorer = 1
+" let g:vimfiler_safe_mode_by_default = 0
+nnoremap <silent> <Leader>f :<C-u>VimFiler
+	\ -buffer-name=explorer -simple
+	\ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
+nnoremap <silent> <Leader>fc :<C-u>VimFilerBufferDir
+	\ -simple
+	\ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
 
 
 "----------------------------------------------------------
@@ -471,34 +562,12 @@ augroup Quickrun
 augroup END
 
 
-
-"----------------------------------------------------------
-" Syntastic
-"----------------------------------------------------------
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_javascript_checkers=['jshint']
-let g:syntastic_mode_map = { 'mode': 'active',
-                           \ 'active_filetypes': [],
-                           \ 'passive_filetypes': ['html', 'css' ] }
-
-
 "----------------------------------------------------------
 " Unite-reek / Unite-rails-best-practice
 " (http://qiita.com/items/acd2e2a642e67ef1dd72)
 "----------------------------------------------------------
 nnoremap <silent> <C-H><C-R> :<C-u>Unite -no-quit reek<CR>
 nnoremap <silent> <C-H><C-R><C-R> :<C-u>Unite -no-quit rails_best_practices<CR>
-
-
-"----------------------------------------------------------
-" Octopress
-"----------------------------------------------------------
-" let g:octopress_path = '~/code/lunchub.github.io'
-" map <Leader>on  :OctopressNew<CR>
-" map <Leader>ol  :OctopressList<CR>
-" map <Leader>og  :OctopressGrep<CR>
-" nmap ,og  :OctopressGenerate<CR>
-" nmap ,od  :OctopressDeploy<CR>
 
 
 "----------------------------------------------------------
@@ -611,8 +680,6 @@ augroup END
 set lazyredraw
 set ttyfast
 set ttymouse=xterm2
-" set clipboard+=unnamed
-" set clipboard+=autoselect
 set laststatus=2 " 常にステータスラインを表示
 set ruler " カーソルが何行目の何列目に置かれているかを表示する
 set number " 行番号を表示する
@@ -711,7 +778,10 @@ endif
 "====================================================================================
 set t_Co=256
 " set background=dark
-colorscheme ir_black
+" colorscheme ir_black
+" colorscheme hybrid
+colorscheme Tomorrow-Night-Bright
+" colorscheme molokai
 
 
 "====================================================================================
@@ -750,10 +820,8 @@ au BufRead,BufNewFile *.json set filetype=json
 au BufRead,BufNewFile *.html set ft=html syntax=html5
 " CSS3
 au BufRead,BufNewFile *.css set ft=css syntax=css3
-" Gemfile
-au BufRead,BufNewFile Gemfile set ft=ruby
 " rb
-au BufRead,BufNewFile *.rb set ft=ruby
+au BufRead,BufNewFile Gemfile set ft=ruby
 " markdown
 au BufRead,BufNewFile *.md set ft=markdown
 " rails
@@ -821,7 +889,7 @@ vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<C
 
 " to 1.9 hash
 " http://qiita.com/joker1007/items/965b63912512be94afa3
-vnoremap <silent> <Leader>t :s/:"?\([a-zA-Z0-9_]\+\)"?\s*=>/\1:/g<CR>
+" vnoremap <silent> <Leader>t :s/:"?\([a-zA-Z0-9_]\+\)"?\s*=>/\1:/g<CR>
 
 " 連続コピペ http://goo.gl/1Lp9Q
 vnoremap <silent> <C-p> "0p<CR>
