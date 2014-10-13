@@ -159,7 +159,6 @@ alias less="less -R"
 alias hosts='sudo vi /etc/hosts'
 alias diff="colordiff --side-by-side --suppress-common-lines"
 alias sc='screen'
-alias gts='git status'
 alias gtl="git log --color --pretty=format:'%h (%cr) %s [%cn]'"
 function octiso() {
   bundle exec rake isolate\[$1\]
