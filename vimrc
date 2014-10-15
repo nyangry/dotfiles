@@ -137,6 +137,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'idanarye/vim-merginal'
+NeoBundle 'kmnk/vim-unite-giti.git'
 " NeoBundle 'rhysd/committia.vim'
 
 
