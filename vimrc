@@ -107,7 +107,6 @@ NeoBundle 'tsukkee/unite-tag'
 nnoremap <C-]> g<C-]> 
 
 
-
 "----------------------------------------------------------
 " vim-tags
 " http://tkkbn.hatenablog.com/entry/2013/11/02/233701
