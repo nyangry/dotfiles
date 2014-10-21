@@ -38,6 +38,9 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'bkad/CamelCaseMotion'
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'terryma/vim-multiple-cursors'
+
+NeoBundle 'rhysd/clever-f.vim'
+
 " fakeclip
 NeoBundle 'kana/vim-fakeclip'
 " Copy File Path/Name
