@@ -40,6 +40,9 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'terryma/vim-multiple-cursors'
 
 NeoBundle 'rhysd/clever-f.vim'
+NeoBundle 'mattn/wiseman-f-vim'
+
+NeoBundle 'thinca/vim-visualstar'
 
 " fakeclip
 NeoBundle 'kana/vim-fakeclip'
