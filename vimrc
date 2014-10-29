@@ -313,6 +313,7 @@ au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
 
 au FileType unite nnoremap <silent><buffer><expr> r unite#do_action('rename')
+au FileType unite nnoremap <silent><buffer><expr> m unite#do_action('move')
 
 " 入力中の内容を削除する
 " au FileType unite inoremap <silent> <buffer> <C-k> <ESC>0C
@@ -372,6 +373,7 @@ call unite#custom_source(
       \'\)')
 
 call unite#custom#alias('file', 'delete', 'vimfiler__delete')
+call unite#custom#alias('file', 'move', 'vimfiler__move')
 
 
 "----------------------------------------------------------
