@@ -513,6 +513,15 @@ let g:neocomplete#force_omni_input_patterns.ruby =
 " VimFiler
 "----------------------------------------------------------
 NeoBundle 'Shougo/vimfiler.vim'
+" vim-rails のマッピング削除できねえ・・
+" noremap gf <NOP>
+" nnoremap gf <NOP>
+" nmap gf <NOP>
+" nmap <buffer>gf <NOP>
+" nunmap <buffer>gf
+" nnoremap <silent> <Plug>(vimfiler_find) :<C-u>call <SID>find()<CR>
+" nmap gf <Plug>(vimfiler_find)
+" au FileType vimfiler nnoremap <silent> <buffer> gf <Plug>(vimfiler_find)
 
 let g:vimfiler_as_default_explorer = 1
 " let g:vimfiler_safe_mode_by_default = 0
@@ -971,7 +980,7 @@ function! s:open_junk_file()
     execute 'edit ' . l:filename
   endif
 endfunction
-nmap <C-n> :JunkFile<CR>
+" nmap <C-n> :JunkFile<CR>
 
 
 "====================================================================================
