@@ -21,7 +21,7 @@ install zsh
 install reattach-to-user-namespace
 install ssh-copy-id
 install tmux
-install vim
+install vim --with-lua, --override-system-vi
 # install macvim
 
 install rbenv
