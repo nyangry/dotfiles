@@ -5,6 +5,7 @@ upgrade
 tap sanemat/font
 tap homebrew/versions
 tap phinze/homebrew-cask
+tap peco/peco
 
 
 # install ricty --vim-powerline
@@ -16,6 +17,7 @@ install readline
 install tree
 install nkf
 install the_silver_searcher
+install peco
 
 install zsh
 install reattach-to-user-namespace
