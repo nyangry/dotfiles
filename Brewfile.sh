@@ -52,8 +52,8 @@ brew cask install alfred
 brew cask install sublime-text3
 brew cask install clipmenu
 #brew cask install mailplane
-brew cask install anvil
 brew cask install iterm2
+# brew cask install anvil
 brew cask install appcleaner
 #brew cask install p4merge
 #brew cask install google-japanese-ime
