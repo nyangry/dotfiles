@@ -10,6 +10,14 @@ if has('vim_starting')
 endif
 
 "----------------------------------------------------------
+" プラギンのデバッグ
+"----------------------------------------------------------
+" let g:vimconsole#height = 10
+"
+" NeoBundle 'rbtnn/vimconsole.vim'
+" NeoBundle 'thinca/vim-prettyprint'
+
+"----------------------------------------------------------
 " basic
 "----------------------------------------------------------
 NeoBundle 'itchyny/lightline.vim'
