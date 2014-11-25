@@ -13,6 +13,10 @@
 	autocrlf     = input
 	eol          = lf
 	excludesfile = ~/.gitignore
+[diff]
+  tool      = vimdiff
+  algorithm = histogram
+  ; algorithm = patience
 [merge]
 	tool = extMerge
 	ff   = false
