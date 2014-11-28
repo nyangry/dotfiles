@@ -4,3 +4,14 @@ snippet pryr
   binding.remote_pry
 snippet debug
   logger.debug(${1})
+
+# japanese match
+snippet     match_japanese
+abbr        match_japanese
+options     word
+  /[ぁ-んァ-ヴ一-龠亜-煕]/u
+
+snippet     concern
+abbr        extend ActiveSupport::Concern
+options     word
+  extend ActiveSupport::Concern
