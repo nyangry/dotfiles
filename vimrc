@@ -155,9 +155,12 @@ call neobundle#end()
 filetype plugin indent on
 
 "----------------------------------------------------------
-" Unite
+" プラギン設定
 "----------------------------------------------------------
 
+"----------------------------------------------------------
+" Unite
+"----------------------------------------------------------
 call unite#custom#profile('default', 'context', {
 \   'start_insert': 1,
 \   'direction': 'botright',
@@ -166,47 +169,29 @@ call unite#custom#profile('default', 'context.ignorecase', 1)
 call unite#custom#profile('default', 'context.smartcase', 1)
 
 " ウィンドウを分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-" ウィンドウを縦に分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-" 新しいウィンドウで開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-" ESCキーを2回押すと終了する
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
+augroup unite_keybinds
+  autocmd!
+  autocmd FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+  autocmd FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+  " ウィンドウを縦に分割して開く
+  autocmd FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
+  autocmd FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
+  " 新しいウィンドウで開く
+  autocmd FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+  autocmd FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+  " ESCキーを2回押すと終了する
+  autocmd FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
+  autocmd FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
 
-au FileType unite nnoremap <silent><buffer><expr> r unite#do_action('rename')
-au FileType unite nnoremap <silent><buffer><expr> m unite#do_action('move')
-
-" 入力中の内容を削除する
-" au FileType unite inoremap <silent> <buffer> <C-k> <ESC>0C
-
-" grep検索
-nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-
-" カーソル位置の単語をgrep検索
-nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-
-" バッファ一覧
-nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
-" ファイル一覧
-" nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
-" レジスタ一覧
-" nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-" 最近使用したファイル一覧
-" nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-" grep検索結果の再呼出
-" nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
+  autocmd FileType unite nnoremap <silent><buffer><expr> r unite#do_action('rename')
+  autocmd FileType unite nnoremap <silent><buffer><expr> m unite#do_action('move')
+augroup END
 
 if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts =
-  \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
-  \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_command        = 'ag'
+  let g:unite_source_grep_default_opts   = '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
+                                            \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+  let g:unite_source_grep_recursive_opt  = ''
   let g:unite_source_grep_max_candidates = 300
 endif
 
@@ -214,33 +199,24 @@ endif
 " http://qiita.com/yuku_t/items/9263e6d9105ba972aea8
 function! DispatchUniteFileRecAsyncOrGit()
   if isdirectory(getcwd()."/.git")
-    Unite -start-insert file_rec/git:-c:--exclude-standard:-o
+    Unite -start-insert file_rec/git:-c:-o:--exclude-standard
   else
     Unite -start-insert file_rec/async
   endif
 endfunction
 
-nnoremap ,us :<C-u>Unite file_rec<CR>
-" メイン
-nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
-" 更新されたファイル一覧
-" nnoremap <C-m> :<C-u>Unite -start-insert file_rec/git:-m:--exclude-standard:-o<CR>
+nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 
-call unite#custom_source(
-      \'file_rec, file_rec/async, file_rec/git, file/new', 
-      \'ignore_pattern',  
-      \'\('.
-      \ '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\|map\|gitkeep\|DS_Store\|rdoc\|ru\)$'.
-      \ '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\)/'.
-      \ '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\|font[s]\{}\|image[s]\{}\)/'.
-      \ '\|\(backup\|archived_migrations\)/'.
-      \ '\|\(vendor\|bundle\)/'.
-      \ '\|\(\.git\)/'.
-      \'\)')
+nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+
+nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
+
+nnoremap ,us :<C-u>Unite file_rec<CR>
+
+nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
 
 call unite#custom#alias('file', 'delete', 'vimfiler__delete')
 call unite#custom#alias('file', 'move', 'vimfiler__move')
-
 
 "----------------------------------------------------------
 " Neocomplete
