@@ -13,6 +13,10 @@
 	autocrlf     = input
 	eol          = lf
 	excludesfile = ~/.gitignore
+[diff]
+  tool      = vimdiff
+  algorithm = histogram
+  ; algorithm = patience
 [merge]
 	tool = extMerge
 	ff   = false
@@ -33,6 +37,6 @@
 [interactive]
 	singlekey = true
 [filter "media"]
-	clean = git media clean %f
-	smudge = git media smudge %f
+	clean    = git media clean %f
+	smudge   = git media smudge %f
 	required = true

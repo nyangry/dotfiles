@@ -1,297 +1,169 @@
+" マルチバイト文字使ってる時は書いておこうとのこと
+scriptencoding utf-8
+
 "====================================================================================
 " Neobundle
 "====================================================================================
-
-filetype off
-
 if has('vim_starting')
+  set nocompatible
+
   set runtimepath+=~/.vim/bundle/neobundle.vim/
-  call neobundle#rc(expand('~/.vim/bundle/'))
 endif
 
-"----------------------------------------------------------
-" basic
-"----------------------------------------------------------
-NeoBundle 'itchyny/lightline.vim'
+call neobundle#begin(expand('~/.vim/bundle/'))
 
-NeoBundle 'https://github.com/Shougo/vimproc.git',  {
-      \ 'build' : {
-      \     'windows' : 'echo "Sorry,  cannot update vimproc binary file in Windows."', 
-      \     'cygwin'  : 'make -f make_cygwin.mak', 
-      \     'mac'     : 'make -f make_mac.mak', 
-      \     'unix'    : 'make -f make_unix.mak', 
-      \    }, 
-      \ }
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neocomplete'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
-" NeoBundle 'Shougo/vimshell'
-" NeoBundle 'scrooloose/nerdtree'
+if neobundle#has_fresh_cache()
+  NeoBundleLoadCache  " キャッシュの読込み
+else
+  " Let NeoBundle manage NeoBundle
+  NeoBundleFetch 'Shougo/neobundle.vim'
 
-NeoBundle 'LeafCage/yankround.vim'
-
-NeoBundle 'thinca/vim-quickrun'
-
-NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'bkad/CamelCaseMotion'
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'terryma/vim-multiple-cursors'
-
-NeoBundle 'rhysd/clever-f.vim'
-NeoBundle 'mattn/wiseman-f-vim'
-
-NeoBundle 'thinca/vim-visualstar'
-
-" fakeclip
-NeoBundle 'kana/vim-fakeclip'
-" Copy File Path/Name
-NeoBundle 'vim-scripts/copypath.vim'
-" Gist
-NeoBundle 'mattn/gist-vim'
-NeoBundle 'mattn/webapi-vim'
-" 整形ツール
-NeoBundle 'h1mesuke/vim-alignta'
-" Octopress
-" NeoBundle 'glidenote/octoeditor.vim'
-" vim-rooter
-NeoBundle 'airblade/vim-rooter'
-" インデント対応表示
-NeoBundle 'nathanaelkane/vim-indent-guides'
-" replace
-NeoBundle 'osyo-manga/vim-over'
-" Calendar
-NeoBundle 'itchyny/calendar.vim'
-" Window size
-NeoBundle 'jimsei/winresizer'
-
-" colorscheme
-" NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle "daylerees/colour-schemes",  { "rtp": "vim-themes/"}
-
-" source ssh
-" NeoBundle 'Shougo/unite-ssh'
-
-
-" Benchmark
-" NeoBundle 'mattn/benchvimrc-vim'
-
-
-"----------------------------------------------------------
-" textobj
-"----------------------------------------------------------
-NeoBundle 'kana/vim-textobj-user' "vim-textobj-rubyが依存
-NeoBundle 'rhysd/vim-textobj-ruby'
-NeoBundle 'kana/vim-textobj-line'
-NeoBundle 'kana/vim-textobj-entire'
-NeoBundle 'coderifous/textobj-word-column.vim'
-
-NeoBundle 'terryma/vim-expand-region'
-let g:expand_region_text_objects = {
-      \ 'iw': 0,
-      \ 'iW': 0,
-      \ 'i"': 1,
-      \ 'i''': 0,
-      \ 'i}': 1,
-      \ 'i]': 1,
-      \ 'ib': 1,
-      \ 'iB': 1,
-      \ 'il': 0,
-      \ 'ip': 0,
-      \ 'ie': 0,
-      \ }
-
-" % による対応括弧へのカーソル移動機能を拡張
-NeoBundle 'jwhitley/vim-matchit'
-
-
-"----------------------------------------------------------
-" ctags
-"----------------------------------------------------------
-NeoBundle 'tsukkee/unite-tag'
-nnoremap <C-]> g<C-]> 
-
-
-"----------------------------------------------------------
-" vim-tags
-" http://tkkbn.hatenablog.com/entry/2013/11/02/233701
-"----------------------------------------------------------
-NeoBundle 'szw/vim-tags'
-let g:vim_tags_project_tags_command = "/usr/local/bin/ctags `pwd` 2>/dev/null"
-let g:vim_tags_gems_tags_command = "/usr/local/bin/ctags `bundle show --paths` 2>/dev/null"
-
-
-"----------------------------------------------------------
-" taglist
-"----------------------------------------------------------
-NeoBundle 'vim-scripts/taglist.vim'
-nnoremap <leader>e :<C-u>TlistToggle<CR>
-let Tlist_Use_Right_Window = 1
-let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
-" name or order
-let Tlist_Sort_Type = "order"
-let Tlist_WinWidth = 50
-let Tlist_Display_Tag_Scope = 0
-let Tlist_Show_One_File = 1
-
-
-"----------------------------------------------------------
-" Git
-"----------------------------------------------------------
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'gregsexton/gitv'
-NeoBundle 'idanarye/vim-merginal'
-NeoBundle 'kmnk/vim-unite-giti.git'
-" NeoBundle 'rhysd/committia.vim'
-
-
-"----------------------------------------------------------
-" Ruby
-"----------------------------------------------------------
-NeoBundle 'rhysd/unite-ruby-require.vim'
-NeoBundle 'vim-scripts/ruby-matchit'
-NeoBundle 'vim-ruby/vim-ruby'
-
-
-"----------------------------------------------------------
-" Rails
-"----------------------------------------------------------
-NeoBundle 'tpope/vim-rails'
-" NeoBundle 'vim-scripts/dbext.vim'
-" NeoBundle 'taichouchou2/alpaca_complete'
-" NeoBundle 'taichouchou2/unite-reek'
-" NeoBundle 'taichouchou2/unite-rails_best_practices'
-" NeoBundle 'romanvbabenko/rails.vim' " unite-rails-best-practiceが依存
-
-
-"----------------------------------------------------------
-" JavaScript
-"----------------------------------------------------------
-NeoBundle 'marijnh/tern'
-
-
-"----------------------------------------------------------
-" indent
-"----------------------------------------------------------
-NeoBundle 'jiangmiao/simple-javascript-indenter'
-
-
-"----------------------------------------------------------
-" csv
-"----------------------------------------------------------
-NeoBundle 'vim-scripts/csv.vim'
-
-
-"----------------------------------------------------------
-" Syntax
-"----------------------------------------------------------
-NeoBundle 'tpope/vim-haml'
-NeoBundle 'othree/html5.vim'
-" NeoBundle 'jelera/vim-javascript-syntax'
-" NeoBundle 'taichouchou2/vim-javascript'
-" NeoBundle 'rickeyvisinski-kanban/vim-jquery'
-" NeoBundle 'paulyg/Vim-PHP-Stuff'
-" NeoBundle 'vim-scripts/mathml.vim'
-NeoBundle 'hail2u/vim-css3-syntax'
-
-NeoBundle 'cakebaker/scss-syntax.vim'
-au BufRead, BufNewFile *.scss set filetype=scss.css
-
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'tpope/vim-markdown'
-NeoBundle 'kannokanno/previm'
-NeoBundle 'tyru/open-browser.vim'
-
-
-
-"----------------------------------------------------------
-" Syntastic
-"----------------------------------------------------------
-NeoBundle 'scrooloose/syntastic'
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_javascript_checkers=['jshint']
-let g:syntastic_mode_map = { 'mode': 'active',
-                           \ 'active_filetypes': [],
-                           \ 'passive_filetypes': ['html', 'css' ] }
-
-
-"----------------------------------------------------------
-" Complete
-"----------------------------------------------------------
-" NeoBundle 'teramako/jscomplete-vim'
-
-
-"----------------------------------------------------------
-" lightline
-"----------------------------------------------------------
-let g:lightline = {
-        \ 'colorscheme': 'jellybeans', 
-        \ 'mode_map': {'c': 'NORMAL'},
-        \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
-        \ },
-        \ 'component_function': {
-        \   'modified': 'MyModified',
-        \   'readonly': 'MyReadonly',
-        \   'fugitive': 'MyFugitive',
-        \   'filename': 'MyFilename',
-        \   'fileformat': 'MyFileformat',
-        \   'filetype': 'MyFiletype',
-        \   'fileencoding': 'MyFileencoding',
-        \   'mode': 'MyMode'
+  "----------------------------------------------------------
+  " Shougo 
+  "----------------------------------------------------------
+  NeoBundle 'Shougo/vimproc.vim',  {
+        \ 'build' : {
+        \     'windows' : 'echo "Sorry,  cannot update vimproc binary file in Windows."',
+        \     'cygwin'  : 'make -f make_cygwin.mak',
+        \     'mac'     : 'make -f make_mac.mak',
+        \     'unix'    : 'make -f make_unix.mak',
+        \    },
         \ }
-        \ }
+  NeoBundle 'Shougo/unite.vim'
+  NeoBundle 'Shougo/vimfiler.vim'
+  NeoBundle 'Shougo/neocomplete'
+  NeoBundle 'Shougo/neosnippet'
+  NeoBundle 'Shougo/neosnippet-snippets'
 
-function! MyModified()
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-endfunction
+  "----------------------------------------------------------
+  " textobj
+  "----------------------------------------------------------
+  NeoBundle 'kana/vim-textobj-user'
+  NeoBundle 'kana/vim-textobj-line'
+  NeoBundle 'kana/vim-textobj-entire'
+  NeoBundle 'rhysd/vim-textobj-ruby'
+  NeoBundle 'coderifous/textobj-word-column.vim'
+  NeoBundle 'terryma/vim-expand-region'
 
-function! MyReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
-endfunction
+  "----------------------------------------------------------
+  " operator
+  "----------------------------------------------------------
+  NeoBundle 'kana/vim-operator-user.git'
+  NeoBundle 'kana/vim-operator-replace.git'
+  NeoBundle 'osyo-manga/vim-operator-blockwise'
 
-function! MyFilename()
-  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \  &ft == 'unite' ? unite#get_status_string() :
-        \  &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ '' != expand('%') ? expand('%') : '[No Name]') .
-        \ ('' != MyModified() ? ' ' . MyModified() : '')
-endfunction
+  "----------------------------------------------------------
+  " % による対応括弧へのカーソル移動機能を拡張
+  " jwhitley/vim-matchit
+  "----------------------------------------------------------
+  NeoBundle 'jwhitley/vim-matchit'
 
-function! MyFugitive()
-  try
-    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-      return fugitive#head()
-    endif
-  catch
-  endtry
-  return ''
-endfunction
+  "----------------------------------------------------------
+  " Tags
+  "----------------------------------------------------------
+  NeoBundle 'alpaca-tc/alpaca_tags'
+  NeoBundle 'tsukkee/unite-tag'
+  NeoBundle 'szw/vim-tags'
+  NeoBundle 'vim-scripts/taglist.vim'
 
-function! MyFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
+  "----------------------------------------------------------
+  " Git
+  "----------------------------------------------------------
+  NeoBundle 'tpope/vim-fugitive'
+  NeoBundle 'airblade/vim-gitgutter'
+  NeoBundle 'gregsexton/gitv'
+  NeoBundle 'idanarye/vim-merginal'
+  NeoBundle 'kmnk/vim-unite-giti.git'
+  " NeoBundle 'rhysd/committia.vim'
 
-function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-endfunction
+  "----------------------------------------------------------
+  " Ruby
+  "----------------------------------------------------------
+  NeoBundle 'rhysd/unite-ruby-require.vim'
+  NeoBundle 'vim-scripts/ruby-matchit'
+  NeoBundle 'vim-ruby/vim-ruby'
 
-function! MyFileencoding()
-  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-endfunction
+  "----------------------------------------------------------
+  " Rais
+  "----------------------------------------------------------
+  NeoBundle 'tpope/vim-rails'
 
-function! MyMode()
-  return winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
+  "----------------------------------------------------------
+  " JavaScript
+  "----------------------------------------------------------
+  NeoBundle 'marijnh/tern'
 
+  "----------------------------------------------------------
+  " CSV
+  "----------------------------------------------------------
+  NeoBundle 'vim-scripts/csv.vim'
+
+  "----------------------------------------------------------
+  " Syntax
+  "----------------------------------------------------------
+  NeoBundle 'tpope/vim-haml'
+  NeoBundle 'othree/html5.vim'
+  NeoBundle 'hail2u/vim-css3-syntax'
+  NeoBundle 'cakebaker/scss-syntax.vim'
+  NeoBundle 'kchmck/vim-coffee-script'
+  NeoBundle 'tpope/vim-markdown'
+  NeoBundle 'scrooloose/syntastic'
+
+  "----------------------------------------------------------
+  " Others
+  "----------------------------------------------------------
+  NeoBundle 'kannokanno/previm'
+  NeoBundle 'tyru/open-browser.vim'
+  NeoBundle 'itchyny/lightline.vim'
+  NeoBundle 'jiangmiao/simple-javascript-indenter'
+  NeoBundle 'osyo-manga/vim-over'
+  NeoBundle 'jimsei/winresizer'
+  NeoBundle 'nathanaelkane/vim-indent-guides'
+  NeoBundle 'LeafCage/yankround.vim'
+  NeoBundle 'thinca/vim-quickrun'
+  NeoBundle 'tomtom/tcomment_vim'
+  NeoBundle 'tpope/vim-surround'
+  NeoBundle 'bkad/CamelCaseMotion'
+  NeoBundle 'tpope/vim-endwise'
+  NeoBundle 'terryma/vim-multiple-cursors'
+
+  NeoBundle 'rhysd/clever-f.vim'
+  NeoBundle 'mattn/wiseman-f-vim'
+
+  NeoBundle 'thinca/vim-visualstar'
+
+  " コピペ自動判定処理
+  NeoBundle 'ConradIrwin/vim-bracketed-paste'
+
+  " fakeclip
+  NeoBundle 'kana/vim-fakeclip'
+  " Copy File Path/Name
+  NeoBundle 'vim-scripts/copypath.vim'
+  " 整形ツール
+  NeoBundle 'h1mesuke/vim-alignta'
+
+  NeoBundle 'airblade/vim-rooter'
+
+  NeoBundle 'itchyny/calendar.vim'
+
+  NeoBundle 'daylerees/colour-schemes',  { 'rtp': 'vim-themes/'}
+
+  NeoBundle 'AndrewRadev/switch.vim'
+
+  NeoBundle 'osyo-manga/vim-anzu'
+endif
+
+call neobundle#end()
+
+filetype plugin indent on
+
+"----------------------------------------------------------
+" プラギン設定
+"----------------------------------------------------------
 
 "----------------------------------------------------------
 " Unite
 "----------------------------------------------------------
-
 call unite#custom#profile('default', 'context', {
 \   'start_insert': 1,
 \   'direction': 'botright',
@@ -300,47 +172,29 @@ call unite#custom#profile('default', 'context.ignorecase', 1)
 call unite#custom#profile('default', 'context.smartcase', 1)
 
 " ウィンドウを分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-" ウィンドウを縦に分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-" 新しいウィンドウで開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-" ESCキーを2回押すと終了する
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
+augroup unite_keybinds
+  autocmd!
+  autocmd FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+  autocmd FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+  " ウィンドウを縦に分割して開く
+  autocmd FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
+  autocmd FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
+  " 新しいウィンドウで開く
+  autocmd FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+  autocmd FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+  " ESCキーを2回押すと終了する
+  autocmd FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
+  autocmd FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
 
-au FileType unite nnoremap <silent><buffer><expr> r unite#do_action('rename')
-au FileType unite nnoremap <silent><buffer><expr> m unite#do_action('move')
-
-" 入力中の内容を削除する
-" au FileType unite inoremap <silent> <buffer> <C-k> <ESC>0C
-
-" grep検索
-nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-
-" カーソル位置の単語をgrep検索
-nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-
-" バッファ一覧
-nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
-" ファイル一覧
-" nnoremap <silent> ,uf :<C-u>Unite -buffer-name=files file<CR>
-" レジスタ一覧
-" nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-" 最近使用したファイル一覧
-" nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-" grep検索結果の再呼出
-" nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
+  autocmd FileType unite nnoremap <silent><buffer><expr> r unite#do_action('rename')
+  autocmd FileType unite nnoremap <silent><buffer><expr> m unite#do_action('move')
+augroup END
 
 if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts =
-  \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
-  \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_command        = 'ag'
+  let g:unite_source_grep_default_opts   = '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
+                                            \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+  let g:unite_source_grep_recursive_opt  = ''
   let g:unite_source_grep_max_candidates = 300
 endif
 
@@ -348,33 +202,24 @@ endif
 " http://qiita.com/yuku_t/items/9263e6d9105ba972aea8
 function! DispatchUniteFileRecAsyncOrGit()
   if isdirectory(getcwd()."/.git")
-    Unite -start-insert file_rec/git:-c:--exclude-standard:-o
+    Unite -start-insert file_rec/git:-c:-o:--exclude-standard
   else
     Unite -start-insert file_rec/async
   endif
 endfunction
 
-nnoremap ,us :<C-u>Unite file_rec<CR>
-" メイン
-nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
-" 更新されたファイル一覧
-" nnoremap <C-m> :<C-u>Unite -start-insert file_rec/git:-m:--exclude-standard:-o<CR>
+nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 
-call unite#custom_source(
-      \'file_rec, file_rec/async, file_rec/git, file/new', 
-      \'ignore_pattern',  
-      \'\('.
-      \ '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\|map\|gitkeep\|DS_Store\|rdoc\|ru\)$'.
-      \ '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\)/'.
-      \ '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\|font[s]\{}\|image[s]\{}\)/'.
-      \ '\|\(backup\|archived_migrations\)/'.
-      \ '\|\(vendor\|bundle\)/'.
-      \ '\|\(\.git\)/'.
-      \'\)')
+nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+
+nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
+
+nnoremap ,us :<C-u>Unite file_rec<CR>
+
+nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
 
 call unite#custom#alias('file', 'delete', 'vimfiler__delete')
 call unite#custom#alias('file', 'move', 'vimfiler__move')
-
 
 "----------------------------------------------------------
 " Neocomplete

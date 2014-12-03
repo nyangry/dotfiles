@@ -23,7 +23,7 @@ brew install zsh
 brew install reattach-to-user-namespace
 brew install ssh-copy-id
 brew install tmux
-brew install vim --with-lua, --override-system-vi
+brew install vim --with-lua --override-system-vi
 #brew install macvim
 
 brew install rbenv
@@ -52,8 +52,8 @@ brew cask install alfred
 brew cask install sublime-text3
 brew cask install clipmenu
 #brew cask install mailplane
-brew cask install iterm2
 # brew cask install anvil
+brew cask install iterm2-nightly
 brew cask install appcleaner
 #brew cask install p4merge
 #brew cask install google-japanese-ime
@@ -74,7 +74,6 @@ brew cask install sequential
 brew cask install silverlight
 brew cask install insomniax
 brew cask install karabiner
-#brew cask install bitcasa
 #brew cask install Wondershare Player
 #brew cask install Stackroom
 #brew cask install calibre
