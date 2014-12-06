@@ -1,4 +1,4 @@
-" マルチバイト文字使ってる時は書いておこうとのこと
+set encoding=utf-8
 scriptencoding utf-8
 
 "====================================================================================
@@ -510,7 +510,6 @@ filetype plugin indent on     " required!
 " 基本設定 
 "====================================================================================
 set nocompatible                 " vi互換なし
-set encoding=utf-8
 set fileencodings=utf-8,sjis,cp932
 map ¥ <leader>
 set scrolloff=5                  " スクロール時の余白確保
