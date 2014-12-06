@@ -101,6 +101,7 @@ delete_old_files()
   rm -f $HOME/.ctags
   rm -f $HOME/.rspec
   rm -f $HOME/Brewfile
+  rm -f $HOME/.peco
 }
 
 symlink_files()
@@ -122,6 +123,7 @@ symlink_files()
   ln -s $HOME/dotfiles/rspec $HOME/.rspec
   ln -s $HOME/dotfiles/railsrc $HOME/.railsrc
   ln -s $HOME/dotfiles/Brewfile $HOME/Brewfile
+  ln -s $HOME/dotfiles/peco $HOME/.peco
   #ln -s $HOME/dotfiles/gitconfig ~/.gitconfig
 }
 
