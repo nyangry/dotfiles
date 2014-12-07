@@ -285,3 +285,28 @@ export PATH="/usr/local/heroku/bin:$PATH"
 # export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
 alias brewlink="brew list -1 | while read line; do brew unlink $line; brew link $line; done; brew alfred link;"
 alias caskupgrade='for c in `brew cask list`; do ! brew cask info $c | grep -qF "Not installed" || brew cask install $c; done'
+
+
+
+# peco
+function repos() {
+  cd $(find ~/dotfiles ~/workspace ~/workspace/mbook/app/www -maxdepth 1 -name '*' -type d | grep -v '\.' | peco)
+  zle reset-prompt
+  # zle clear-screen
+}
+zle -N repos
+bindkey '^f' repos
+
+function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(history -n 1 | eval $tac | peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
