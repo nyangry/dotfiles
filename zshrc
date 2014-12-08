@@ -161,9 +161,6 @@ alias diff="colordiff --side-by-side --suppress-common-lines"
 # http://orangeclover.hatenablog.com/entry/20110201/1296511181
 alias clear2="echo -e '\026\033c'"
 alias gtl="git log --color --pretty=format:'%h (%cr) %s [%cn]'"
-function octiso() {
-  bundle exec rake isolate\[$1\]
-}
 alias ag='ag -S'
 
 function scx () {
@@ -175,8 +172,8 @@ HISTFILE="$HOME/.zsh_history"
 setopt hist_ignore_dups
 setopt share_history
 setopt hist_ignore_space
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=1000000
+SAVEHIST=1000000
 
 #例えば"ls "とうってからC-pでlsから始まる履歴を検索できます。複数行のコマンドのときはカーソルキーで移動できるようにしています。
 autoload history-search-end
