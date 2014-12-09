@@ -287,9 +287,10 @@ alias caskupgrade='for c in `brew cask list`; do ! brew cask info $c | grep -qF 
 
 # peco
 function repos() {
-  cd $(find ~/dotfiles ~/workspace ~/workspace/mbook/app/www -maxdepth 1 -name '*' -type d | grep -v '\.' | peco)
-  zle reset-prompt
-  # zle clear-screen
+  BUFFER="cd $(find ~/dotfiles ~/workspace ~/workspace/mf/local_gems ~/workspace/mf/apps ~/workspace/mbook/app/www -maxdepth 1 -name '*' -type d | grep -v '\.' | peco)"
+  zle accept-line
+  # zle reset-prompt
+  zle clear-screen
 }
 zle -N repos
 bindkey '^f' repos
