@@ -266,8 +266,12 @@ finally
 endtry
 let g:neocomplete#enable_auto_select = 0
 let g:neocomplete#enable_refresh_always = 0
-let g:neocomplete#enable_cursor_hold_i = 0
- 
+
+if !exists('g:neocomplete#sources')
+  let g:neocomplete#sources = {}
+endif
+let g:neocomplete#sources._ = ['buffer', 'dictionary', 'syntax', 'include', 'omni']
+
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
   \ 'default'    : '',
@@ -294,15 +298,6 @@ if !exists('g:neocomplete#keyword_patterns')
   let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-
-" 関数を補完するための区切り文字パターン
-if !exists('g:neocomplete#delimiter_patterns')
-  let g:neocomplete#delimiter_patterns = {}
-endif
-" let g:neocomplete#delimiter_patterns.php  = ['->', '::', '\']
-let g:neocomplete#delimiter_patterns.vim  = ['#']
-" let g:neocomplete#delimiter_patterns.ruby = ['.', '::']
 
 " Plugin key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()
@@ -359,8 +354,16 @@ if !exists('g:neocomplete#force_omni_input_patterns')
 endif
 let g:neocomplete#enable_auto_close_preview = 1
 
-let g:neocomplete#force_omni_input_patterns.ruby =
-\ '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+
+" For smart TAB completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
+       \ <SID>check_back_space() ? "\<TAB>" :
+       \ neocomplete#start_manual_complete()
+function! s:check_back_space() "{{{
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
 
 "----------------------------------------------------------
 " VimFiler
