@@ -368,7 +368,6 @@ endfunction"}}}
 "----------------------------------------------------------
 " VimFiler
 "----------------------------------------------------------
-NeoBundle 'Shougo/vimfiler.vim'
 " vim-rails のマッピング削除できねえ・・
 " noremap gf <NOP>
 " nnoremap gf <NOP>
@@ -382,11 +381,11 @@ NeoBundle 'Shougo/vimfiler.vim'
 let g:vimfiler_as_default_explorer = 1
 " let g:vimfiler_safe_mode_by_default = 0
 nnoremap <silent> <Leader>f :<C-u>VimFiler
-	\ -buffer-name=explorer -simple
-	\ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
+  \ -buffer-name=explorer -simple
+  \ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
 nnoremap <silent> <Leader>fc :<C-u>VimFilerBufferDir
-	\ -simple
-	\ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
+  \ -simple
+  \ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
 
 
 "----------------------------------------------------------
