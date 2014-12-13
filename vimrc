@@ -387,6 +387,23 @@ nnoremap <silent> <Leader>fc :<C-u>VimFilerBufferDir
   \ -simple
   \ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
 
+"----------------------------------------------------------
+" terryma/vim-expand-region
+"----------------------------------------------------------
+let g:expand_region_text_objects = {
+      \ 'iw': 0,
+      \ 'iW': 0,
+      \ 'i"': 1,
+      \ 'i''': 0,
+      \ 'i}': 1,
+      \ 'i]': 1,
+      \ 'ib': 1,
+      \ 'iB': 1,
+      \ 'il': 0,
+      \ 'ip': 0,
+      \ 'ie': 0,
+      \ }
+
 
 "----------------------------------------------------------
 " Yankround
