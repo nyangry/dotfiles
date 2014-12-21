@@ -10,6 +10,8 @@ brew tap peco/peco
 #brew install brew-cask
 brew install caskroom/cask/brew-cask
 
+brew install rbenv-gem-rehash
+
 brew install git
 brew install openssl
 brew install readline

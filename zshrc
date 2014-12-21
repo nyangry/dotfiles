@@ -161,9 +161,6 @@ alias diff="colordiff --side-by-side --suppress-common-lines"
 # http://orangeclover.hatenablog.com/entry/20110201/1296511181
 alias clear2="echo -e '\026\033c'"
 alias gtl="git log --color --pretty=format:'%h (%cr) %s [%cn]'"
-function octiso() {
-  bundle exec rake isolate\[$1\]
-}
 alias ag='ag -S'
 
 function scx () {
@@ -175,8 +172,8 @@ HISTFILE="$HOME/.zsh_history"
 setopt hist_ignore_dups
 setopt share_history
 setopt hist_ignore_space
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=1000000
+SAVEHIST=1000000
 
 #例えば"ls "とうってからC-pでlsから始まる履歴を検索できます。複数行のコマンドのときはカーソルキーで移動できるようにしています。
 autoload history-search-end
@@ -285,3 +282,29 @@ export PATH="/usr/local/heroku/bin:$PATH"
 # export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
 alias brewlink="brew list -1 | while read line; do brew unlink $line; brew link $line; done; brew alfred link;"
 alias caskupgrade='for c in `brew cask list`; do ! brew cask info $c | grep -qF "Not installed" || brew cask install $c; done'
+
+
+
+# peco
+function repos() {
+  BUFFER="cd $(find ~/dotfiles ~/workspace ~/workspace/mf/local_gems ~/workspace/mf/apps ~/workspace/mbook/app/www -maxdepth 1 -name '*' -type d | grep -v '\.' | peco)"
+  zle accept-line
+  # zle reset-prompt
+  zle clear-screen
+}
+zle -N repos
+bindkey '^f' repos
+
+function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(history -n 1 | eval $tac | peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history

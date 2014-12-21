@@ -61,7 +61,6 @@ else
   "----------------------------------------------------------
   " Tags
   "----------------------------------------------------------
-  NeoBundle 'alpaca-tc/alpaca_tags'
   NeoBundle 'tsukkee/unite-tag'
   NeoBundle 'szw/vim-tags'
   NeoBundle 'vim-scripts/taglist.vim'
@@ -258,8 +257,12 @@ finally
 endtry
 let g:neocomplete#enable_auto_select = 0
 let g:neocomplete#enable_refresh_always = 0
-let g:neocomplete#enable_cursor_hold_i = 0
- 
+
+if !exists('g:neocomplete#sources')
+  let g:neocomplete#sources = {}
+endif
+let g:neocomplete#sources._ = ['buffer', 'dictionary', 'syntax', 'include', 'omni']
+
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
   \ 'default'    : '',
@@ -286,15 +289,6 @@ if !exists('g:neocomplete#keyword_patterns')
   let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-
-" 関数を補完するための区切り文字パターン
-if !exists('g:neocomplete#delimiter_patterns')
-  let g:neocomplete#delimiter_patterns = {}
-endif
-" let g:neocomplete#delimiter_patterns.php  = ['->', '::', '\']
-let g:neocomplete#delimiter_patterns.vim  = ['#']
-" let g:neocomplete#delimiter_patterns.ruby = ['.', '::']
 
 " Plugin key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()
@@ -351,13 +345,20 @@ if !exists('g:neocomplete#force_omni_input_patterns')
 endif
 let g:neocomplete#enable_auto_close_preview = 1
 
-let g:neocomplete#force_omni_input_patterns.ruby =
-\ '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+
+" For smart TAB completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
+       \ <SID>check_back_space() ? "\<TAB>" :
+       \ neocomplete#start_manual_complete()
+function! s:check_back_space() "{{{
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
 
 "----------------------------------------------------------
 " VimFiler
 "----------------------------------------------------------
-NeoBundle 'Shougo/vimfiler.vim'
 " vim-rails のマッピング削除できねえ・・
 " noremap gf <NOP>
 " nnoremap gf <NOP>
@@ -371,11 +372,40 @@ NeoBundle 'Shougo/vimfiler.vim'
 let g:vimfiler_as_default_explorer = 1
 " let g:vimfiler_safe_mode_by_default = 0
 nnoremap <silent> <Leader>f :<C-u>VimFiler
-	\ -buffer-name=explorer -simple
-	\ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
+  \ -buffer-name=explorer -simple
+  \ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
 nnoremap <silent> <Leader>fc :<C-u>VimFilerBufferDir
-	\ -simple
-	\ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
+  \ -simple
+  \ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
+
+"----------------------------------------------------------
+" terryma/vim-expand-region
+"----------------------------------------------------------
+let g:expand_region_text_objects = {
+      \ 'iw': 0,
+      \ 'iW': 0,
+      \ 'i"': 1,
+      \ 'i''': 0,
+      \ 'i}': 1,
+      \ 'i]': 1,
+      \ 'ib': 1,
+      \ 'iB': 1,
+      \ 'il': 0,
+      \ 'ip': 0,
+      \ 'ie': 0,
+      \ }
+
+"----------------------------------------------------------
+" tsukkee/unite-tag
+"----------------------------------------------------------
+nnoremap <C-]> g<C-]>
+
+"----------------------------------------------------------
+" szw/vim-tags
+" http://tkkbn.hatenablog.com/entry/2013/11/02/233701
+"----------------------------------------------------------
+let g:vim_tags_project_tags_command = "/usr/local/bin/ctags `pwd` 2>/dev/null"
+let g:vim_tags_gems_tags_command    = "/usr/local/bin/ctags `bundle show --paths` 2>/dev/null"
 
 
 "----------------------------------------------------------
