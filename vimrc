@@ -220,6 +220,57 @@ nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
 call unite#custom#alias('file', 'delete', 'vimfiler__delete')
 call unite#custom#alias('file', 'move', 'vimfiler__move')
 
+" http://qiita.com/naoty_k/items/0f30a226621025897390
+" .gitignoreで指定したファイルと.git/以下のファイルを候補から除外する
+function! s:unite_gitignore_source()
+  let sources = []
+  if filereadable('./.gitignore')
+    for file in readfile('./.gitignore')
+      " コメント行と空行は追加しない
+      if file !~ "^#\\|^\s\*$"
+        call add(sources, file)
+      endif
+    endfor
+  endif
+  if isdirectory('./.git')
+    call add(sources, '.git')
+  endif
+  return escape(join(sources, '|'), './|')
+endfunction
+
+
+" \ (<SID>unite_gitignore_source()) .
+let ignore_pattern = '\(' .
+                      \ '_repositories' .
+                      \ '\)'
+
+" \(\.DS_Store\|\.AppleDouble\|\.LSOverride\|Icon\|\._*\|\.Spotlight-V100\|\.Trashes\|\.AppleDB\|\.AppleDesktop\|Network Trash Folder\|Temporary Items\|\.apdisk\|*~\|\.directory\|[\._]*\.s[a-w][a-z]\|[\._]s[a-w][a-z]\|*\.un~\|Session\.vim\|\.netrwhist\|*~\|*\.gem\|*\.rbc\|\/\.config\|\/coverage\/\|\/InstalledFiles\|\/pkg\/\|\/spec\/reports\/\|\/test\/tmp\/\|\/test\/version_tmp\/\|\/tmp\/\|\.dat*\|\.repl_history\|build\/\|\/\.yardoc\/\|\/_yardoc\/\|\/doc\/\|\/rdoc\/\|\/\.bundle\/\|\/lib\/bundler\/man\/\|\.rvmrc\|*\.rbc\|capybara-*\.html\|\.rspec\|\/log\|\/tmp\|\/db\/*\.sqlite3\|\/public\/system\|\/coverage\/\|\/spec\/tmp\|**\.orig\|rerun\.txt\|pickle-email-*\.html\|config\/initializers\/secret_token\.rb\|config\/secrets\.yml\|\/\.bundle\|\/vendor\/bundle\|\.rvmrc\|\/vendor\/assets\/bower_components\|*\.bowerrc\|bower\.json\|spec\/dummy\/log\|spec\/dummy\/log\|spec\/dummy\/tmp\|spec\/dummy\/db\/*\.sqlite3\|spec\/dummy\/public\/system\|spec\/dummy\/coverage\/\|spec\/dummy\/spec\/tmp\|\.git\|_repositories\)
+
+" call unite#custom_source(
+"       \'file_rec, file_rec/async, file_rec/git, file/new',
+"       \'ignore_pattern',
+"       \'\('.
+"       \ '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\|map\|gitkeep\|DS_Store\|rdoc\|ru\)$'.
+"       \ '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\)/'.
+"       \ '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\|font[s]\{}\|image[s]\{}\)/'.
+"       \ '\|\(backup\|archived_migrations\)/'.
+"       \ '\|\(vendor\|bundle\)/'.
+"       \ '\|\(\.git\)/'.
+"       \'\)')
+"
+" let ignore_pattern = '\('.
+"                      '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\|map\|gitkeep\|DS_Store\|rdoc\|ru\)$'.
+"                      '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\)/'.
+"                      '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\|font[s]\{}\|image[s]\{}\)/'.
+"                      '\|\(backup\|archived_migrations\)/'.
+"                      '\|\(vendor\|bundle\)/'.
+"                      '\|\(\.git\)/'.
+"                      '\)'
+" echo ignore_pattern
+
+" custom ignore
+call unite#custom#source('file_rec/git,file_rec/async,file_rec', 'ignore_pattern', ignore_pattern)
+
 "----------------------------------------------------------
 " Neocomplete
 "----------------------------------------------------------
