@@ -459,6 +459,27 @@ let g:vim_tags_project_tags_command = "/usr/local/bin/ctags `pwd` 2>/dev/null"
 let g:vim_tags_gems_tags_command    = "/usr/local/bin/ctags `bundle show --paths` 2>/dev/null"
 
 
+
+augroup VimTags
+  autocmd!
+  if exists(':TagsGenerate')
+    " autocmd BufWritePost Gemfile TagsGenerate
+    " autocmd BufEnter * TagsGenerate
+    " autocmd BufWritePost * TagsGenerate
+  endif
+augroup END
+
+"----------------------------------------------------------
+" vim-scripts/taglist
+"----------------------------------------------------------
+nnoremap <leader>e :<C-u>TlistToggle<CR>
+let Tlist_Use_Right_Window  = 1
+let Tlist_Ctags_Cmd         = '/usr/local/bin/ctags'
+let Tlist_Sort_Type         = 'order' " name or order
+let Tlist_WinWidth          = 50
+let Tlist_Display_Tag_Scope = 0
+let Tlist_Show_One_File     = 1
+
 "----------------------------------------------------------
 " Yankround
 "----------------------------------------------------------
