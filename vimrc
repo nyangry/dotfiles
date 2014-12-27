@@ -70,7 +70,7 @@ else
   "----------------------------------------------------------
   NeoBundle 'tpope/vim-fugitive'
   NeoBundle 'airblade/vim-gitgutter'
-  NeoBundle 'gregsexton/gitv'
+  NeoBundle 'cohama/agit.vim'
   NeoBundle 'idanarye/vim-merginal'
   NeoBundle 'kmnk/vim-unite-giti.git'
   " NeoBundle 'rhysd/committia.vim'
@@ -219,6 +219,57 @@ nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
 
 call unite#custom#alias('file', 'delete', 'vimfiler__delete')
 call unite#custom#alias('file', 'move', 'vimfiler__move')
+
+" http://qiita.com/naoty_k/items/0f30a226621025897390
+" .gitignoreで指定したファイルと.git/以下のファイルを候補から除外する
+function! s:unite_gitignore_source()
+  let sources = []
+  if filereadable('./.gitignore')
+    for file in readfile('./.gitignore')
+      " コメント行と空行は追加しない
+      if file !~ "^#\\|^\s\*$"
+        call add(sources, file)
+      endif
+    endfor
+  endif
+  if isdirectory('./.git')
+    call add(sources, '.git')
+  endif
+  return escape(join(sources, '|'), './|')
+endfunction
+
+
+" \ (<SID>unite_gitignore_source()) .
+let ignore_pattern = '\(' .
+                      \ '_repositories' .
+                      \ '\)'
+
+" \(\.DS_Store\|\.AppleDouble\|\.LSOverride\|Icon\|\._*\|\.Spotlight-V100\|\.Trashes\|\.AppleDB\|\.AppleDesktop\|Network Trash Folder\|Temporary Items\|\.apdisk\|*~\|\.directory\|[\._]*\.s[a-w][a-z]\|[\._]s[a-w][a-z]\|*\.un~\|Session\.vim\|\.netrwhist\|*~\|*\.gem\|*\.rbc\|\/\.config\|\/coverage\/\|\/InstalledFiles\|\/pkg\/\|\/spec\/reports\/\|\/test\/tmp\/\|\/test\/version_tmp\/\|\/tmp\/\|\.dat*\|\.repl_history\|build\/\|\/\.yardoc\/\|\/_yardoc\/\|\/doc\/\|\/rdoc\/\|\/\.bundle\/\|\/lib\/bundler\/man\/\|\.rvmrc\|*\.rbc\|capybara-*\.html\|\.rspec\|\/log\|\/tmp\|\/db\/*\.sqlite3\|\/public\/system\|\/coverage\/\|\/spec\/tmp\|**\.orig\|rerun\.txt\|pickle-email-*\.html\|config\/initializers\/secret_token\.rb\|config\/secrets\.yml\|\/\.bundle\|\/vendor\/bundle\|\.rvmrc\|\/vendor\/assets\/bower_components\|*\.bowerrc\|bower\.json\|spec\/dummy\/log\|spec\/dummy\/log\|spec\/dummy\/tmp\|spec\/dummy\/db\/*\.sqlite3\|spec\/dummy\/public\/system\|spec\/dummy\/coverage\/\|spec\/dummy\/spec\/tmp\|\.git\|_repositories\)
+
+" call unite#custom_source(
+"       \'file_rec, file_rec/async, file_rec/git, file/new',
+"       \'ignore_pattern',
+"       \'\('.
+"       \ '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\|map\|gitkeep\|DS_Store\|rdoc\|ru\)$'.
+"       \ '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\)/'.
+"       \ '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\|font[s]\{}\|image[s]\{}\)/'.
+"       \ '\|\(backup\|archived_migrations\)/'.
+"       \ '\|\(vendor\|bundle\)/'.
+"       \ '\|\(\.git\)/'.
+"       \'\)')
+"
+" let ignore_pattern = '\('.
+"                      '\.\(svg\|jpg\|gif\|png\|swf\|bmp\|zip\|gz\|md\|map\|gitkeep\|DS_Store\|rdoc\|ru\)$'.
+"                      '\|\(LICENSE\|README\|CHANGELOG\|CONTRIBUT\)/'.
+"                      '\|\([Cc]ache[s]\{}\|error[s]\{}\|log[s]\{}\|doc[s]\{}\|font[s]\{}\|image[s]\{}\)/'.
+"                      '\|\(backup\|archived_migrations\)/'.
+"                      '\|\(vendor\|bundle\)/'.
+"                      '\|\(\.git\)/'.
+"                      '\)'
+" echo ignore_pattern
+
+" custom ignore
+call unite#custom#source('file_rec/git,file_rec/async,file_rec', 'ignore_pattern', ignore_pattern)
 
 "----------------------------------------------------------
 " Neocomplete
@@ -408,7 +459,36 @@ let g:vim_tags_project_tags_command = "/usr/local/bin/ctags `pwd` 2>/dev/null"
 let g:vim_tags_gems_tags_command    = "/usr/local/bin/ctags `bundle show --paths` 2>/dev/null"
 
 
+
+augroup VimTags
+  autocmd!
+  if exists(':TagsGenerate')
+    " autocmd BufWritePost Gemfile TagsGenerate
+    " autocmd BufEnter * TagsGenerate
+    " autocmd BufWritePost * TagsGenerate
+  endif
+augroup END
+
 "----------------------------------------------------------
+" vim-scripts/taglist
+"----------------------------------------------------------
+nnoremap <leader>e :<C-u>TlistToggle<CR>
+let Tlist_Use_Right_Window  = 1
+let Tlist_Ctags_Cmd         = '/usr/local/bin/ctags'
+let Tlist_Sort_Type         = 'order' " name or order
+let Tlist_WinWidth          = 50
+let Tlist_Display_Tag_Scope = 0
+let Tlist_Show_One_File     = 1
+
+"----------------------------------------------------------
+" Syntastic
+"----------------------------------------------------------
+let g:syntastic_auto_loc_list       = 1
+let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_mode_map            = { 'mode': 'active',
+                                       \ 'active_filetypes': [],
+                                       \ 'passive_filetypes': ['html', 'css' ] }
+
 " Yankround
 "----------------------------------------------------------
 nmap p <Plug>(yankround-p)
