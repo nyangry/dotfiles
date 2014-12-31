@@ -2,12 +2,12 @@ brew update && brew upgrade brew-cask && brew cleanup && brew cask cleanup
 
 
 brew tap sanemat/font
-brew tap homebrew/versions
-#brew tap phinze/homebrew-cask
+brew tap caskroom/homebrew-versions
 brew tap peco/peco
 
 #brew install ricty --vim-powerline
 #brew install brew-cask
+brew install phinze/cask/brew-cask
 brew install caskroom/cask/brew-cask
 
 brew install rbenv-gem-rehash
