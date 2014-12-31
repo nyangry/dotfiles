@@ -180,7 +180,7 @@ augroup unite_keybinds
   autocmd FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
   " 新しいウィンドウで開く
   autocmd FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-  autocmd FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+  " autocmd FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
   " ESCキーを2回押すと終了する
   autocmd FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
   autocmd FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
@@ -489,6 +489,72 @@ let g:syntastic_mode_map            = { 'mode': 'active',
                                        \ 'active_filetypes': [],
                                        \ 'passive_filetypes': ['html', 'css' ] }
 
+"----------------------------------------------------------
+" lightline
+"----------------------------------------------------------
+let g:lightline = {
+        \ 'colorscheme': 'jellybeans',
+        \ 'mode_map': {'c': 'NORMAL'},
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'readonly', 'filename', 'anzu' ] ]
+        \ },
+        \ 'component_function': {
+        \   'modified': 'MyModified',
+        \   'readonly': 'MyReadonly',
+        \   'fugitive': 'MyFugitive',
+        \   'filename': 'MyFilename',
+        \   'fileformat': 'MyFileformat',
+        \   'filetype': 'MyFiletype',
+        \   'fileencoding': 'MyFileencoding',
+        \   'mode': 'MyMode', 
+        \   'anzu': 'anzu#search_status'
+        \ }
+        \ }
+
+function! MyModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%') ? expand('%') : '[No Name]') .
+        \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      return fugitive#head()
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+"----------------------------------------------------------
 " Yankround
 "----------------------------------------------------------
 nmap p <Plug>(yankround-p)
@@ -499,7 +565,6 @@ xmap gp <Plug>(yankround-gp)
 nmap gP <Plug>(yankround-gP)
 nmap <C-p> <Plug>(yankround-prev)
 nmap <C-n> <Plug>(yankround-next)
-
 
 "----------------------------------------------------------
 " Quickrun
@@ -519,14 +584,14 @@ let g:quickrun_config._ = {'runner' : 'vimproc'}
 let g:quickrun_config['rspec/bundle'] = {
   \ 'type': 'rspec/bundle',
   \ 'command': 'rspec',
-  \ 'exec': 'bundle exec %c %s', 
-  \ 'outputter/buffer/filetype': 'rspec-result', 
+  \ 'exec': 'bundle exec %c %s',
+  \ 'outputter/buffer/filetype': 'rspec-result',
   \}
 let g:quickrun_config['rspec/normal'] = {
   \ 'type': 'rspec/normal',
   \ 'command': 'rspec',
-  \ 'exec': '%c %s', 
-  \ 'outputter/buffer/filetype': 'rspec-result', 
+  \ 'exec': '%c %s',
+  \ 'outputter/buffer/filetype': 'rspec-result',
   \}
 function! RSpecQuickrun()
   let b:quickrun_config = {'type' : 'rspec/bundle'}
@@ -537,65 +602,15 @@ augroup Quickrun
   autocmd BufReadPost *_spec.rb call RSpecQuickrun()
 augroup END
 
-
-"----------------------------------------------------------
-" Unite-reek / Unite-rails-best-practice
-" (http://qiita.com/items/acd2e2a642e67ef1dd72)
-"----------------------------------------------------------
-nnoremap <silent> <C-H><C-R> :<C-u>Unite -no-quit reek<CR>
-nnoremap <silent> <C-H><C-R><C-R> :<C-u>Unite -no-quit rails_best_practices<CR>
-
-
 "----------------------------------------------------------
 " simple-javascript-indenter
 "----------------------------------------------------------
 let g:SimpleJsIndenter_BriefMode = 1
 
-
 "----------------------------------------------------------
-" vim-over 
+" osyo-manga/vim-over
 "----------------------------------------------------------
 nnoremap <silent> <Leader>m :OverCommandLine<CR>
-
-
-"----------------------------------------------------------
-" WinResizer 
-"----------------------------------------------------------
-nnoremap <C-q> :WinResizerStartResize<CR>
-
-
-"----------------------------------------------------------
-" alignta
-"----------------------------------------------------------
-vnoremap <silent> => :Align @1 =><CR>
-vnoremap <silent> = :Align @1 =<CR>
-vnoremap <silent> == =
-
-
-"----------------------------------------------------------
-" Gist
-"----------------------------------------------------------
-let g:gist_clip_command = 'pbcopy'
-" let g:gist_put_url_to_clipboard_after_post = 1
-
-" ref http://goo.gl/7bJbm
-func! s:paste_gist_tag()
-  let mx = 'http[s]\?://gist.github.com/\([0-9]\+\)'
-  " +または"レジスタの中身を検索する
-  let regs = [@+,@"]
-  for r in regs
-    let mlist = matchlist(r, mx)
-    if ( len(mlist) > 2 )
-      "カーソル行に挿入
-      exe "normal! O{% gist " . mlist[1] . " %}"
-      return
-    endif
-  endif
-endfunc
- 
-"コマンド
-command! -nargs=0 PasteGist     call <SID>paste_gist_tag()
-
 
 "----------------------------------------------------------
 " nathanaelkane/vim-indent-guides
@@ -603,39 +618,215 @@ command! -nargs=0 PasteGist     call <SID>paste_gist_tag()
 let g:indent_guides_guide_size = 1
 
 
+"----------------------------------------------------------
+" AndrewRadev/switch.vim
+" https://gist.github.com/alpaca-tc/6696152
+"----------------------------------------------------------
+function! s:separate_defenition_to_each_filetypes(ft_dictionary) "{{{
+  let result = {}
+ 
+  for [filetypes, value] in items(a:ft_dictionary)
+    for ft in split(filetypes, ",")
+      if !has_key(result, ft)
+        let result[ft] = []
+      endif
+ 
+      call extend(result[ft], copy(value))
+    endfor
+  endfor
+ 
+  return result
+endfunction"}}}
+ 
+nnoremap ! :Switch<CR>
+let s:switch_definition = {
+      \ '*': [
+      \   ['is', 'are']
+      \ ],
+      \ 'ruby,eruby,haml' : [
+      \   ['if', 'unless'],
+      \   ['while', 'until'],
+      \   ['.blank?', '.present?'],
+      \   ['include', 'extend'],
+      \   ['class', 'module'],
+      \   ['.inject', '.delete_if'],
+      \   ['.map', '.map!'],
+      \   ['attr_accessor', 'attr_reader', 'attr_writer'],
+      \ ],
+      \ 'Gemfile,Berksfile' : [
+      \   ['=', '<', '<=', '>', '>=', '~>'],
+      \ ],
+      \ 'ruby.application_template' : [
+      \   ['yes?', 'no?'],
+      \   ['lib', 'initializer', 'file', 'vendor', 'rakefile'],
+      \   ['controller', 'model', 'view', 'migration', 'scaffold'],
+      \ ],
+      \ 'erb,html,php' : [
+      \   { '<!--\([a-zA-Z0-9 /]\+\)--></\(div\|ul\|li\|a\)>' : '</\2><!--\1-->' },
+      \ ],
+      \ 'rails' : [
+      \   [100, ':continue', ':information'],
+      \   [101, ':switching_protocols'],
+      \   [102, ':processing'],
+      \   [200, ':ok', ':success'],
+      \   [201, ':created'],
+      \   [202, ':accepted'],
+      \   [203, ':non_authoritative_information'],
+      \   [204, ':no_content'],
+      \   [205, ':reset_content'],
+      \   [206, ':partial_content'],
+      \   [207, ':multi_status'],
+      \   [208, ':already_reported'],
+      \   [226, ':im_used'],
+      \   [300, ':multiple_choices'],
+      \   [301, ':moved_permanently'],
+      \   [302, ':found'],
+      \   [303, ':see_other'],
+      \   [304, ':not_modified'],
+      \   [305, ':use_proxy'],
+      \   [306, ':reserved'],
+      \   [307, ':temporary_redirect'],
+      \   [308, ':permanent_redirect'],
+      \   [400, ':bad_request'],
+      \   [401, ':unauthorized'],
+      \   [402, ':payment_required'],
+      \   [403, ':forbidden'],
+      \   [404, ':not_found'],
+      \   [405, ':method_not_allowed'],
+      \   [406, ':not_acceptable'],
+      \   [407, ':proxy_authentication_required'],
+      \   [408, ':request_timeout'],
+      \   [409, ':conflict'],
+      \   [410, ':gone'],
+      \   [411, ':length_required'],
+      \   [412, ':precondition_failed'],
+      \   [413, ':request_entity_too_large'],
+      \   [414, ':request_uri_too_long'],
+      \   [415, ':unsupported_media_type'],
+      \   [416, ':requested_range_not_satisfiable'],
+      \   [417, ':expectation_failed'],
+      \   [422, ':unprocessable_entity'],
+      \   [423, ':precondition_required'],
+      \   [424, ':too_many_requests'],
+      \   [426, ':request_header_fields_too_large'],
+      \   [500, ':internal_server_error'],
+      \   [501, ':not_implemented'],
+      \   [502, ':bad_gateway'],
+      \   [503, ':service_unavailable'],
+      \   [504, ':gateway_timeout'],
+      \   [505, ':http_version_not_supported'],
+      \   [506, ':variant_also_negotiates'],
+      \   [507, ':insufficient_storage'],
+      \   [508, ':loop_detected'],
+      \   [510, ':not_extended'],
+      \   [511, ':network_authentication_required'],
+      \ ],
+      \ 'rspec': [
+      \   ['describe', 'context', 'specific', 'example'],
+      \   ['before', 'after'],
+      \   ['be_true', 'be_false'],
+      \   ['get', 'post', 'put', 'delete'],
+      \   ['==', 'eql', 'equal'],
+      \   { '\.should_not': '\.should' },
+      \   ['\.to_not', '\.to'],
+      \   { '\([^. ]\+\)\.should\(_not\|\)': 'expect(\1)\.to\2' },
+      \   { 'expect(\([^. ]\+\))\.to\(_not\|\)': '\1.should\2' },
+      \ ],
+      \ 'markdown' : [
+      \   ['[ ]', '[x]']
+      \ ]
+      \ }
+ 
+let s:switch_definition = s:separate_defenition_to_each_filetypes(s:switch_definition)
+function! s:define_switch_mappings() "{{{
+  if exists('b:switch_custom_definitions')
+    unlet b:switch_custom_definitions
+  endif
+ 
+  let dictionary = []
+  for filetype in split(&ft, '\.')
+    if has_key(s:switch_definition, filetype)
+      let dictionary = extend(dictionary, s:switch_definition[filetype])
+    endif
+  endfor
+ 
+  if exists('b:rails_root')
+    let dictionary = extend(dictionary, s:switch_definition['rails'])
+  endif
+ 
+  if has_key(s:switch_definition, '*')
+    let dictionary = extend(dictionary, s:switch_definition['*'])
+  endif
+endfunction"}}}
+ 
+augroup SwitchSetting
+  autocmd!
+  autocmd Filetype * if !empty(split(&ft, '\.')) | call <SID>define_switch_mappings() | endif
+augroup END
+
+
+"----------------------------------------------------------
+" airblade/vim-gitgutter
+"----------------------------------------------------------
+let g:gitgutter_max_signs = 3000
+
+
+"----------------------------------------------------------
+" vim-ruby 
+"----------------------------------------------------------
+let g:rubycomplete_rails                = 0
+let g:rubycomplete_buffer_loading       = 1
+let g:rubycomplete_classes_in_global    = 1
+let g:rubycomplete_include_object       = 1
+let g:rubycomplete_include_object_space = 1
+
+
+"----------------------------------------------------------
+" kana/vim-operator-replace.git
+"----------------------------------------------------------
+map R <Plug>(operator-replace)
+
+
+"----------------------------------------------------------
+" osyo-manga/vim-operator-blockwise
+"----------------------------------------------------------
+nmap YY <Plug>(operator-blockwise-yank-head)
+nmap DD <Plug>(operator-blockwise-delete-head)
+nmap CC <Plug>(operator-blockwise-change-head)
+
+
+"----------------------------------------------------------
+" osyo-manga/vim-anzu
+"----------------------------------------------------------
+nmap n          <Plug>(anzu-n-with-echo)
+nmap N          <Plug>(anzu-N-with-echo)
+nmap *          <Plug>(anzu-star-with-echo)
+nmap #          <Plug>(anzu-sharp-with-echo)
+augroup vim-anzu
+" 一定時間キー入力がないとき、ウインドウを移動したとき、タブを移動したときに
+" 検索ヒット数の表示を消去する
+  autocmd!
+  autocmd CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
+augroup END
+
+
 "====================================================================================
-" Neobundle 
+" 基本設定
 "====================================================================================
-filetype plugin indent on     " required!
-
-
-
-
-
-
-
-
-
-"====================================================================================
-" 基本設定 
-"====================================================================================
-set nocompatible                 " vi互換なし
-set fileencodings=utf-8,sjis,cp932
-map ¥ <leader>
-set scrolloff=5                  " スクロール時の余白確保
-set textwidth=0                  " 一行に長い文章を書いていても自動折り返しを
-set nobackup                     " バックアップ取らない
-set noswapfile                   " スワップファイル作らない
-set hidden                       " 編集中でも他のファイルを開けるようにする
-set backspace=indent,eol,start   " バックスペースでなんでも消せるように
-set whichwrap=b,s,h,l,<,>,[,]    " カーソルを行頭、行末で止まらないようにする
-set showcmd                      " コマンドをステータス行に表示
-set showmode                     " 現在のモードを表示
-set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
-set modelines=0                  " モードラインは無効
-set clipboard=unnamed,autoselect " OSのクリップボードを使用する
-
-set mouse=a " ターミナルでマウスを使用できるようにする
+map \ <leader>
+set fileencodings=utf-8,sjis
+set scrolloff=5                 " スクロール時の余白確保
+set textwidth=0                 " 一行に長い文章を書いていても自動折り返しを
+set nobackup                    " バックアップ取らない
+set noswapfile                  " スワップファイル作らない
+set hidden                      " 編集中でも他のファイルを開けるようにする
+set backspace=indent,eol,start  " バックスペースでなんでも消せるように
+set whichwrap=b,s,h,l,<,>,[,]   " カーソルを行頭、行末で止まらないようにする
+set showcmd                     " コマンドをステータス行に表示
+set showmode                    " 現在のモードを表示
+set viminfo='50,<1000,s100,\"50 " viminfoファイルの設定
+set modelines=0                 " モードラインは無効
+set clipboard=unnamed           " yank to clipboard
 
 augroup set_fo
   " t textwidthを使ってテキストを自動折返しする。
@@ -646,12 +837,11 @@ augroup set_fo
   " 2 テキストの整形処理時、段落の最初の行ではなく２番目の行のインデントをそれ以降の行に対して使う。
   " v 挿入モードでVi互換の自動折返しを使う 現在の挿入モードで入力された空白でのみ折返しが行われる。
   " b 'v'と同じ、ただし空白の入力か折返しマージンの前でのみ自動折返しをする。
-  " l 挿入モードでは長い行は折り返されない 
+  " l 挿入モードでは長い行は折り返されない
   autocmd!
   autocmd FileType * setlocal fo=lmcq
 augroup END
 
-" set guioptions+=a
 set lazyredraw
 set ttyfast
 set ttymouse=xterm2
@@ -682,58 +872,25 @@ set cursorline " カーソル行をハイライト
 set completeopt=menuone
 
 " html インデントの解除
-au FileType html :setlocal indentexpr=""
+augroup stop_html_indent
+  autocmd!
+  autocmd FileType html :setlocal indentexpr=""
+augroup END
 
 "====================================================================================
-" Vimスクリプト
-"====================================================================================
-" 挿入モード時、ステータスラインの色を変更
-let g:hi_insert = 'highlight StatusLine ctermbg=54'
-
-if has('syntax')
-  augroup InsertHook
-    autocmd!
-    autocmd InsertEnter * call s:StatusLine('Enter')
-    autocmd InsertLeave * call s:StatusLine('Leave')
-  augroup END
-endif
-" if has('unix') && !has('gui_running')
-"   " ESCでキー入力待ちになる対策
-"   inoremap <silent> <ESC> <ESC>
-" endif
-
-let s:slhlcmd = ''
-function! s:StatusLine(mode)
-  if a:mode == 'Enter'
-    silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
-    silent exec g:hi_insert
-  else
-    highlight clear StatusLine
-    silent exec s:slhlcmd
-    redraw
-  endif
-endfunction
-
-function! s:GetHighlight(hi)
-  redir => hl
-  exec 'highlight '.a:hi
-  redir END
-  let hl = substitute(hl, '[\r\n]', '', 'g')
-  let hl = substitute(hl, 'xxx', '', '')
-  return hl
-endfunction
-
 " Rename
+"====================================================================================
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
+"====================================================================================
 " Delete
+"====================================================================================
 nnoremap <Leader>fd :call delete(expand('%'))<CR>
 
 
 "====================================================================================
 " 全角スペースを表示
 "====================================================================================
-scriptencoding utf-8
 function! ZenkakuSpace()
     highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
 endfunction
@@ -749,15 +906,46 @@ endif
 
 
 "====================================================================================
+" 改行とタブ文字を表示
+"====================================================================================
+" set listchars=eol:¬,tab:▸\ 
+
+
+"====================================================================================
 " View
 "====================================================================================
 set t_Co=256
 " set background=dark
-colorscheme ir_black
+" colorscheme ir_black
 " colorscheme hybrid
-" colorscheme Tomorrow-Night-Bright
+colorscheme Tomorrow-Night-Bright
 " colorscheme molokai
 
+highlight Pmenu ctermbg=black ctermfg=lightcyan
+highlight PmenuSel ctermbg=lightcyan ctermfg=black
+highlight PMenuSbar ctermbg=black
+
+highlight CursorLine term=underline cterm=none
+
+highlight matchParen ctermbg=black ctermfg=green
+highlight Visual ctermbg=black ctermfg=lightcyan
+highlight Search ctermbg=darkgreen ctermfg=black term=none cterm=none
+
+highlight Error ctermbg=darkred ctermfg=white
+highlight ErrorMsg ctermbg=darkred ctermfg=white
+highlight WarningMsg ctermbg=darkred ctermfg=white
+
+highlight Function ctermfg=yellow
+highlight vimFuncName ctermbg=none ctermfg=darkred
+
+" highlight rubyFunction ctermfg=darkred
+" highlight rubyMethodBlock ctermfg=darkred
+highlight rubyAccess ctermfg=red
+highlight rubyConstant ctermfg=darkred
+highlight rubyRegexp ctermfg=darkgreen
+highlight rubyRegexpDelimiter ctermfg=darkgreen
+" highlight rubyRailsMethod ctermfg=darkred
+highlight rubyRailsFilterMethod ctermfg=red
 
 "====================================================================================
 " Complete
@@ -765,7 +953,6 @@ colorscheme ir_black
 set ignorecase
 set smartcase
 set hlsearch
-" autocmd BufWritePre * :%s/\s\+$//ge "保存時に行末の空白を除去する
 set incsearch " インクリメンタルサーチを行う
 set listchars=eol:$,tab:>\ ,extends:< " listで表示される文字のフォーマットを指定する
 set showmatch " 閉じ括弧が入力されたとき、対応する括弧を表示する
@@ -773,34 +960,42 @@ set expandtab
 set tabstop<
 set softtabstop=2
 set shiftwidth=2
-" タブ幅をリセット
-au BufNewFile,BufRead * set tabstop=2 shiftwidth=2
 set nowrapscan " 検索をファイルの先頭へループしない
-" set wildignore+=Library*,Document*,Movie*,Dropbox*,Music*,Pictures*,Downloads*
-" set wildignore+=*.o,*.obj,*.ps,*.eps,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
-" set wildignore+=*.strings,*.plist,*.wflow,*.olk14Folder,*.olk14DBHeader,*.olk14Contact
-" set wildignore+=*.DS_Store,*.pdf,*.swf,*.gif,*.jpeg,*.jpg,*.png,*.bmp,*.mp3,*.mp4,*.wav,*.m4a
-" set wildignore+=*.ps,*.eps,*.aux,*.dvi
-" set wildignore+=*.xls,*.xlsx,*.key
 " コマンドライン補完するときに補完候補を表示する(tabで補完)
 set wildmenu
+
+" タブ幅をリセット
+augroup set_tab_stop
+  autocmd!
+  autocmd BufNewFile,BufRead * set tabstop=2 shiftwidth=2
+augroup END
+
+" 保存時に行末の空白を除去する
+" augroup remove_space
+"   autocmd!
+"   autocmd BufWritePre * :%s/\s\+$//ge
+" augroup END
 
 
 "====================================================================================
 " Syntax
 "====================================================================================
-" JSON
-au BufRead,BufNewFile *.json set filetype=json
-" HTML5
-au BufRead,BufNewFile *.html set ft=html syntax=html5
-" CSS3
-au BufRead,BufNewFile *.css set ft=css syntax=css3
-" rb
-au BufRead,BufNewFile Gemfile set ft=ruby
-" markdown
-au BufRead,BufNewFile *.md set ft=markdown
-" rails
-au BufRead,BufNewFile *.jbuilder, *.builder, *.rxml, *.rjs set ft=ruby
+augroup set_syntax
+  autocmd!
+  " JSON
+  autocmd BufRead,BufNewFile *.json set filetype=json
+  " HTML5
+  autocmd BufRead,BufNewFile *.html set ft=html syntax=html5
+  " CSS3
+  autocmd BufRead,BufNewFile *.css set ft=css syntax=css3
+  autocmd BufRead,BufNewFile *.scss set filetype=scss.css
+  " rb
+  autocmd BufRead,BufNewFile Gemfile set ft=ruby
+  " markdown
+  autocmd BufRead,BufNewFile *.md set ft=markdown
+  " rails
+  autocmd BufRead,BufNewFile *.jbuilder, *.builder, *.rxml, *.rjs set ft=ruby
+  augroup END
 
 
 "====================================================================================
@@ -837,55 +1032,36 @@ nnoremap sv :<C-u>vs<CR>
 nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
 nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
 
-" カーソルを自動的に()の中へ
+" 表示行単位で行移動する
+nnoremap <silent> j gj
+nnoremap <silent> k gk
+
+" Escの2回押しでハイライト消去
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
+
+" ビジュアルモードで選択したテキストで検索する
+vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
+
+" vimgrep コマンド後に | cw を自動的に行う
+augroup auto_cw
+  autocmd!
+  autocmd QuickFixCmdPost *grep* cwindow
+augroup END
+
+"-------------------------------------------
+" 自動補完
+"-------------------------------------------
+inoremap , , 
 imap {} {}<Left>
 imap [] []<Left>
 imap () ()<Left>
 imap "" ""<Left>
 imap '' ''<Left>
 imap <> <><Left>
-" imap // //<left>
 
-" 表示行単位で行移動する
-nnoremap <silent> j gj
-nnoremap <silent> k gk
-" " CTRL+sでrsyncを叩く
-" nmap <Leader>r<CR> :! /Users/admin/code/sync_rep3.sh<CR>
-" Escの2回押しでハイライト消去
-nmap <Esc><Esc> :nohlsearch<CR><Esc>
-
-" q:、q/、q? は無効化
-" nnoremap q: <NOP>
-" nnoremap q/ <NOP>
-" nnoremap q? <NOP>
-
-" ビジュアルモードで選択したテキストで検索する
-vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
-
-" to 1.9 hash
-" http://qiita.com/joker1007/items/965b63912512be94afa3
-" vnoremap <silent> <Leader>t :s/:"?\([a-zA-Z0-9_]\+\)"?\s*=>/\1:/g<CR>
-
-" 連続コピペ http://goo.gl/1Lp9Q
-vnoremap <silent> <C-p> "0p<CR>
-
-" redraw
-" nnoremap <C-w> :redraw!<CR>
-
-" vimgrep コマンド後に | cw を自動的に行う
-autocmd QuickFixCmdPost *grep* cwindow
-
-"-------------------------------------------
-" 自動補完
-"-------------------------------------------
-inoremap , , 
-" inoremap { {}<LEFT>
-" inoremap [ []<LEFT>
-" inoremap ( ()<LEFT>
-" inoremap " ""<LEFT>
-" inoremap ' ''<LEFT>
 " 行末にセミコロン;をつけて改行
 inoremap ;; <C-O>$;<CR>
+
 " 検索パターンの入力を改善する
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
@@ -898,19 +1074,14 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-nnoremap # g#
-nnoremap g# #
-nnoremap * g*
-nnoremap g* *
-
 
 "====================================================================================
-" Hack #202: 自動的にディレクトリを作成する 
+" Hack #202: 自動的にディレクトリを作成する
 "====================================================================================
-augroup vimrc-auto-mkdir  
+augroup vimrc-auto-mkdir
   autocmd!
   autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
-  function! s:auto_mkdir(dir, force)  
+  function! s:auto_mkdir(dir, force)
     if !isdirectory(a:dir) && (a:force ||
     \    input(printf('"%s" does not exist. Create? [y/N]', a:dir)) =~? '^y\%[es]$')
       call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
@@ -920,7 +1091,7 @@ augroup END
 
 
 "====================================================================================
-" Hack #181: ジャンクファイルを生成する 
+" Hack #181: ジャンクファイルを生成する
 "====================================================================================
 command! -nargs=0 JunkFile call s:open_junk_file()
 function! s:open_junk_file()
@@ -934,13 +1105,14 @@ function! s:open_junk_file()
     execute 'edit ' . l:filename
   endif
 endfunction
+" Yankroundとかぶるからどうするか
 " nmap <C-n> :JunkFile<CR>
 
 
 "====================================================================================
 " Hack #69: 簡単にカレントディレクトリを変更する
 "====================================================================================
-command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
 function! s:ChangeCurrentDir(directory, bang)
     if a:directory == ''
         lcd %:p:h
@@ -958,7 +1130,7 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 
 "====================================================================================
-" Hack #198: ウィンドウを開く方向を指定する 
+" Hack #198: ウィンドウを開く方向を指定する
 "====================================================================================
 " 新しいウィンドウを下に開く
 set splitbelow
@@ -967,56 +1139,9 @@ set splitright
 
 
 "====================================================================================
-" Hack #205: 複数行をコメントアウトする
-"====================================================================================
-" Comment or uncomment lines from mark a to mark b.
-" function! CommentMark(docomment, a, b)
-"   if !exists('b:comment')
-"     let b:comment = CommentStr() . ' '
-"   endif
-"   if a:docomment
-"     exe "normal! '" . a:a . "_\<C-V>'" . a:b . 'I' . b:comment
-"   else
-"     exe "'".a:a.",'".a:b . 's/^\(\s*\)' . escape(b:comment,'/') . '/\1/e'
-"   endif
-" endfunction
-" 
-" " Comment lines in marks set by g@ operator.
-" function! DoCommentOp(type)
-"   call CommentMark(1, '[', ']')
-" endfunction
-" 
-" " Uncomment lines in marks set by g@ operator.
-" function! UnCommentOp(type)
-"   call CommentMark(0, '[', ']')
-" endfunction
-" 
-" " Return string used to comment line for current filetype.
-" function! CommentStr()
-"   if &ft == 'cpp' || &ft == 'java' || &ft == 'php' || &ft == 'javascript' || &ft == 'scss.css'
-"     return '//'
-"   elseif &ft == 'vim'
-"     return '"'
-"   elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby' || &ft == 'yaml' || &ft == 'coffee'
-"     return '#'
-"   elseif &ft == 'lisp'
-"     return ';'
-"   elseif &ft == 'haml'
-"     return '-#'
-"   endif
-"   return ''
-" endfunction
-" 
-" nnoremap <Leader>c <Esc>:set opfunc=DoCommentOp<CR>g@
-" nnoremap <Leader>C <Esc>:set opfunc=UnCommentOp<CR>g@
-" vnoremap <Leader>c <Esc>:call CommentMark(1,'<','>')<CR>
-" vnoremap <Leader>C <Esc>:call CommentMark(0,'<','>')<CR>
-
-
-"====================================================================================
 " Hack #206: 外部で変更のあったファイルを自動的に読み直す
 "====================================================================================
-set autoread                     
+set autoread
 augroup vimrc-checktime
   autocmd!
   autocmd WinEnter * checktime
@@ -1032,3 +1157,46 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
     \ | wincmd p | diffthis
 endif
+
+
+"====================================================================================
+" カーソル下の syntax 情報を取得する
+" http://cohama.hateblo.jp/entry/2013/08/11/020849
+"====================================================================================
+function! s:get_syn_id(transparent)
+  let synid = synID(line("."), col("."), 1)
+  if a:transparent
+    return synIDtrans(synid)
+  else
+    return synid
+  endif
+endfunction
+function! s:get_syn_attr(synid)
+  let name = synIDattr(a:synid, "name")
+  let ctermfg = synIDattr(a:synid, "fg", "cterm")
+  let ctermbg = synIDattr(a:synid, "bg", "cterm")
+  let guifg = synIDattr(a:synid, "fg", "gui")
+  let guibg = synIDattr(a:synid, "bg", "gui")
+  return {
+        \ "name": name,
+        \ "ctermfg": ctermfg,
+        \ "ctermbg": ctermbg,
+        \ "guifg": guifg,
+        \ "guibg": guibg}
+endfunction
+function! s:get_syn_info()
+  let baseSyn = s:get_syn_attr(s:get_syn_id(0))
+  echo "name: " . baseSyn.name .
+        \ " ctermfg: " . baseSyn.ctermfg .
+        \ " ctermbg: " . baseSyn.ctermbg .
+        \ " guifg: " . baseSyn.guifg .
+        \ " guibg: " . baseSyn.guibg
+  let linkedSyn = s:get_syn_attr(s:get_syn_id(1))
+  echo "link to"
+  echo "name: " . linkedSyn.name .
+        \ " ctermfg: " . linkedSyn.ctermfg .
+        \ " ctermbg: " . linkedSyn.ctermbg .
+        \ " guifg: " . linkedSyn.guifg .
+        \ " guibg: " . linkedSyn.guibg
+endfunction
+command! SyntaxInfo call s:get_syn_info()
