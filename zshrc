@@ -287,7 +287,7 @@ alias caskupgrade='for c in `brew cask list`; do ! brew cask info $c | grep -qF 
 
 # peco
 function repos() {
-  BUFFER="cd $(find ~/dotfiles ~/workspace ~/workspace/mf/local_gems ~/workspace/mf/apps ~/workspace/mbook/app/www -maxdepth 1 -name '*' -type d | grep -v '\.' | peco)"
+  BUFFER="cd $(find ~/dotfiles ~/workspace ~/workspace/private ~/workspace/mf/local_gems ~/workspace/mf/apps ~/workspace/mbook/app/www -maxdepth 1 -name '*' -type d | grep -v '\.' | peco)"
   zle accept-line
   # zle reset-prompt
   zle clear-screen
