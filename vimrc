@@ -916,9 +916,9 @@ endif
 "====================================================================================
 set t_Co=256
 " set background=dark
-" colorscheme ir_black
+colorscheme ir_black
 " colorscheme hybrid
-colorscheme Tomorrow-Night-Bright
+" colorscheme Tomorrow-Night-Bright
 " colorscheme molokai
 
 highlight Pmenu ctermbg=black ctermfg=lightcyan
