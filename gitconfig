@@ -22,7 +22,7 @@
 	ff   = false
 [mergetool "extMerge"]
   cmd           = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
-  trustExitCode = false
+  trustExitCode = true
 [mergetool]
 	keepBackup = false
 [push]
