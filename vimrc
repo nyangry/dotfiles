@@ -995,7 +995,7 @@ augroup set_syntax
   autocmd BufRead,BufNewFile *.md set ft=markdown
   " rails
   autocmd BufRead,BufNewFile *.jbuilder, *.builder, *.rxml, *.rjs set ft=ruby
-  augroup END
+augroup END
 
 
 "====================================================================================
