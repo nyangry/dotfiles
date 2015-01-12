@@ -828,6 +828,8 @@ set viminfo='50,<1000,s100,\"50 " viminfoファイルの設定
 set modelines=0                 " モードラインは無効
 set clipboard=unnamed           " yank to clipboard
 
+set display=lastline
+
 augroup set_fo
   " t textwidthを使ってテキストを自動折返しする。
   " c 現在のコメント指示を挿入して、textwidthを使ってコメントを自動折返しする。
