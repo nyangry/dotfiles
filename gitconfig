@@ -1,5 +1,5 @@
 [user]
-	name = Daisuke Masuyama
+	name = nyangry
 	email = iacta.alea.esto@gmail.com
 [alias]
   co = checkout
@@ -22,7 +22,7 @@
 	ff   = false
 [mergetool "extMerge"]
   cmd           = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
-  trustExitCode = false
+  trustExitCode = true
 [mergetool]
 	keepBackup = false
 [push]
