@@ -1,3 +1,5 @@
+# zmodload zsh/zprof && zprof
+
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 PATH=/usr/local/bin:/usr/local/share/npm/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
@@ -308,3 +310,7 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
+
+# if (which zprof > /dev/null) ;then
+#   zprof | less
+# fi
