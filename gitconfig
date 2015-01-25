@@ -40,3 +40,6 @@
 	clean    = git media clean %f
 	smudge   = git media smudge %f
 	required = true
+
+[include]
+  path = .gitconfig.local

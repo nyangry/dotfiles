@@ -1,3 +1,5 @@
+# zmodload zsh/zprof && zprof
+
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 PATH=/usr/local/bin:/usr/local/share/npm/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
@@ -202,7 +204,7 @@ zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
 #補完
 autoload -U compinit
-compinit
+compinit -C
 #大文字小文字を意識しない補完
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
@@ -308,3 +310,7 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
+
+# if (which zprof > /dev/null) ;then
+#   zprof | less
+# fi
