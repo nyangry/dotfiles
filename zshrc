@@ -204,7 +204,7 @@ zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
 #補完
 autoload -U compinit
-compinit
+compinit -C
 #大文字小文字を意識しない補完
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
