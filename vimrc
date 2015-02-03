@@ -126,6 +126,7 @@ else
   NeoBundle 'tpope/vim-endwise'
   NeoBundle 'terryma/vim-multiple-cursors'
 
+  " 移動拡張 f / t
   NeoBundle 'rhysd/clever-f.vim'
   NeoBundle 'mattn/wiseman-f-vim'
 
@@ -798,10 +799,14 @@ nmap CC <Plug>(operator-blockwise-change-head)
 "----------------------------------------------------------
 " osyo-manga/vim-anzu
 "----------------------------------------------------------
-nmap n          <Plug>(anzu-n-with-echo)
-nmap N          <Plug>(anzu-N-with-echo)
-nmap *          <Plug>(anzu-star-with-echo)
-nmap #          <Plug>(anzu-sharp-with-echo)
+" nmap n <Plug>(anzu-n-with-echo)
+" nmap N <Plug>(anzu-N-with-echo)
+" nmap * <Plug>(anzu-star-with-echo)
+" nmap # <Plug>(anzu-sharp-with-echo)
+nmap n <Plug>(anzu-n)
+nmap N <Plug>(anzu-N)
+nmap * <Plug>(anzu-star)
+nmap # <Plug>(anzu-sharp)
 augroup vim-anzu
 " 一定時間キー入力がないとき、ウインドウを移動したとき、タブを移動したときに
 " 検索ヒット数の表示を消去する
