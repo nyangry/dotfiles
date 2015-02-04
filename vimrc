@@ -73,7 +73,8 @@ else
   NeoBundle 'cohama/agit.vim'
   NeoBundle 'idanarye/vim-merginal'
   NeoBundle 'kmnk/vim-unite-giti.git'
-  " NeoBundle 'rhysd/committia.vim'
+  NeoBundle 'rhysd/committia.vim'
+  NeoBundle 'AndrewRadev/gapply.vim'
 
   "----------------------------------------------------------
   " Ruby
