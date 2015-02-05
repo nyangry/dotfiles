@@ -166,7 +166,6 @@ filetype plugin indent on
 " Unite
 "----------------------------------------------------------
 call unite#custom#profile('default', 'context', {
-\   'start_insert': 1,
 \   'direction': 'botright',
 \ })
 call unite#custom#profile('default', 'context.ignorecase', 1)
