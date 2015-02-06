@@ -109,6 +109,7 @@ symlink_files()
   echo "[Symlink] Symlinking files"
   ln -s $HOME/dotfiles/agignore     $HOME/.agignore
   ln -s $HOME/dotfiles/vimrc     $HOME/.vimrc
+  ln -s $HOME/dotfiles/vimfiles     $HOME/.vim
   ln -s $HOME/dotfiles/zshrc     $HOME/.zshrc
   ln -s $HOME/dotfiles/zshenv    $HOME/.zshenv
   ln -s $HOME/dotfiles/gemrc     $HOME/.gemrc
@@ -119,6 +120,7 @@ symlink_files()
   ln -s $HOME/dotfiles/gitignore $HOME/.gitignore
   ln -s $HOME/dotfiles/pryrc $HOME/.pryrc
   ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
+  ln -s $HOME/dotfiles/tmuxfiles $HOME/.tmux
   ln -s $HOME/dotfiles/ctags $HOME/.ctags
   ln -s $HOME/dotfiles/rspec $HOME/.rspec
   ln -s $HOME/dotfiles/railsrc $HOME/.railsrc
