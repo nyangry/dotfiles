@@ -19,7 +19,7 @@ else
   NeoBundleFetch 'Shougo/neobundle.vim'
 
   "----------------------------------------------------------
-  " Shougo 
+  " Shougo san 
   "----------------------------------------------------------
   NeoBundle 'Shougo/vimproc.vim',  {
         \ 'build' : {
