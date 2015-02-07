@@ -137,6 +137,23 @@ function vcs_info_with_color() {
 function current_dir() {
 	echo `pwd | rev | cut -d '/' -f 1 | rev`
 }
+
+# http://makimoto.hatenablog.com/entry/show-rbenv-version-on-zsh-prompt
+rbenv_version () {
+  if [[ "`rbenv version | grep '.rbenv/version'`" = "" ]];then
+    if [[ "`rbenv version | grep 'RBENV_VERSION'`" = "" ]];then
+      local setting="L"
+    else 
+      local setting="V"
+    fi
+  else
+    local setting="G"
+  fi
+  RPROMPT="[ruby-`ruby -v | cut -f2 -d' '`($setting)]"
+}
+add-zsh-hook precmd rbenv_version
+
+
 PROMPT='%{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
 
 

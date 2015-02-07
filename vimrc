@@ -19,7 +19,7 @@ else
   NeoBundleFetch 'Shougo/neobundle.vim'
 
   "----------------------------------------------------------
-  " Shougo 
+  " Shougo san 
   "----------------------------------------------------------
   NeoBundle 'Shougo/vimproc.vim',  {
         \ 'build' : {
@@ -73,7 +73,8 @@ else
   NeoBundle 'cohama/agit.vim'
   NeoBundle 'idanarye/vim-merginal'
   NeoBundle 'kmnk/vim-unite-giti.git'
-  " NeoBundle 'rhysd/committia.vim'
+  NeoBundle 'rhysd/committia.vim'
+  NeoBundle 'AndrewRadev/gapply.vim'
 
   "----------------------------------------------------------
   " Ruby
@@ -126,6 +127,7 @@ else
   NeoBundle 'tpope/vim-endwise'
   NeoBundle 'terryma/vim-multiple-cursors'
 
+  " 移動拡張 f / t
   NeoBundle 'rhysd/clever-f.vim'
   NeoBundle 'mattn/wiseman-f-vim'
 
@@ -164,7 +166,6 @@ filetype plugin indent on
 " Unite
 "----------------------------------------------------------
 call unite#custom#profile('default', 'context', {
-\   'start_insert': 1,
 \   'direction': 'botright',
 \ })
 call unite#custom#profile('default', 'context.ignorecase', 1)
@@ -798,10 +799,14 @@ nmap CC <Plug>(operator-blockwise-change-head)
 "----------------------------------------------------------
 " osyo-manga/vim-anzu
 "----------------------------------------------------------
-nmap n          <Plug>(anzu-n-with-echo)
-nmap N          <Plug>(anzu-N-with-echo)
-nmap *          <Plug>(anzu-star-with-echo)
-nmap #          <Plug>(anzu-sharp-with-echo)
+" nmap n <Plug>(anzu-n-with-echo)
+" nmap N <Plug>(anzu-N-with-echo)
+" nmap * <Plug>(anzu-star-with-echo)
+" nmap # <Plug>(anzu-sharp-with-echo)
+nmap n <Plug>(anzu-n)
+nmap N <Plug>(anzu-N)
+nmap * <Plug>(anzu-star)
+nmap # <Plug>(anzu-sharp)
 augroup vim-anzu
 " 一定時間キー入力がないとき、ウインドウを移動したとき、タブを移動したときに
 " 検索ヒット数の表示を消去する
