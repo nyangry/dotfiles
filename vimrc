@@ -112,6 +112,9 @@ else
   "----------------------------------------------------------
   " Others
   "----------------------------------------------------------
+  " session
+  NeoBundle 'tpope/vim-obsession'
+
   NeoBundle 'kannokanno/previm'
   NeoBundle 'tyru/open-browser.vim'
   NeoBundle 'itchyny/lightline.vim'
