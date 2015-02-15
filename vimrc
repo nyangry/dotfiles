@@ -112,6 +112,9 @@ else
   "----------------------------------------------------------
   " Others
   "----------------------------------------------------------
+  " session
+  NeoBundle 'tpope/vim-obsession'
+
   NeoBundle 'kannokanno/previm'
   NeoBundle 'tyru/open-browser.vim'
   NeoBundle 'itchyny/lightline.vim'
@@ -770,6 +773,12 @@ augroup END
 " airblade/vim-gitgutter
 "----------------------------------------------------------
 let g:gitgutter_max_signs = 3000
+
+
+"----------------------------------------------------------
+" agit.vim
+"----------------------------------------------------------
+nnoremap <silent> ,ga :<C-u>Agit<CR>
 
 
 "----------------------------------------------------------
