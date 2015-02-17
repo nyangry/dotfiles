@@ -198,7 +198,7 @@ if executable('ag')
   let g:unite_source_grep_default_opts   = '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
                                             \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
   let g:unite_source_grep_recursive_opt  = ''
-  let g:unite_source_grep_max_candidates = 300
+  " let g:unite_source_grep_max_candidates = 100
 endif
 
 " git ディレクトリかどうかで、処理を切り替える
@@ -211,13 +211,15 @@ function! DispatchUniteFileRecAsyncOrGit()
   endif
 endfunction
 
-nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap <silent> ,gr :<C-u>Unite grep:. -start-insert -buffer-name=search-buffer<CR>
+nnoremap <silent> ,gs :<C-u>Unite giti/status<CR>
+nnoremap <silent> ,gb :<C-u>Unite giti/branch_all<CR>
 
-nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+" nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 
-nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
+nnoremap <silent> <C-g> :<C-u>Unite buffer -start-insert<CR>
 
-nnoremap ,us :<C-u>Unite file_rec<CR>
+nnoremap ,us :<C-u>Unite file_rec -start-insert<CR>
 
 nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
 
