@@ -935,6 +935,7 @@ endif
 set t_Co=256
 " set background=dark
 colorscheme ir_black
+" colorscheme flatland
 " colorscheme hybrid
 " colorscheme Tomorrow-Night-Bright
 " colorscheme molokai
