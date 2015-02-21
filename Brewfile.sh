@@ -1,7 +1,8 @@
 brew update && brew upgrade brew-cask && brew cleanup && brew cask cleanup
 
 
-brew tap sanemat/font
+# brew tap sanemat/font
+brew tap caskroom/fonts  
 brew tap caskroom/homebrew-versions
 brew tap peco/peco
 

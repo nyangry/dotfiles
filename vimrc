@@ -198,7 +198,7 @@ if executable('ag')
   let g:unite_source_grep_default_opts   = '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
                                             \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
   let g:unite_source_grep_recursive_opt  = ''
-  let g:unite_source_grep_max_candidates = 300
+  " let g:unite_source_grep_max_candidates = 100
 endif
 
 " git ディレクトリかどうかで、処理を切り替える
@@ -211,13 +211,15 @@ function! DispatchUniteFileRecAsyncOrGit()
   endif
 endfunction
 
-nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap <silent> ,gr :<C-u>Unite grep:. -start-insert -buffer-name=search-buffer<CR>
+nnoremap <silent> ,gs :<C-u>Unite giti/status<CR>
+nnoremap <silent> ,gb :<C-u>Unite giti/branch_all<CR>
 
-nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+" nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 
-nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
+nnoremap <silent> <C-g> :<C-u>Unite buffer -start-insert<CR>
 
-nnoremap ,us :<C-u>Unite file_rec<CR>
+nnoremap ,us :<C-u>Unite file_rec -start-insert<CR>
 
 nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
 
@@ -932,36 +934,80 @@ endif
 "====================================================================================
 set t_Co=256
 " set background=dark
-colorscheme ir_black
+" colorscheme flatland
 " colorscheme hybrid
 " colorscheme Tomorrow-Night-Bright
 " colorscheme molokai
 
-highlight Pmenu ctermbg=black ctermfg=lightcyan
-highlight PmenuSel ctermbg=lightcyan ctermfg=black
-highlight PMenuSbar ctermbg=black
+colorscheme ir_black
 
-highlight CursorLine term=underline cterm=none
+" hi Normal ctermbg=black
 
-highlight matchParen ctermbg=black ctermfg=green
-highlight Visual ctermbg=black ctermfg=lightcyan
-highlight Search ctermbg=darkgreen ctermfg=black term=none cterm=none
+hi matchParen ctermbg=black ctermfg=green
+hi Visual ctermbg=black ctermfg=lightcyan
+hi Search ctermbg=blue ctermfg=white term=none cterm=none
 
-highlight Error ctermbg=darkred ctermfg=white
-highlight ErrorMsg ctermbg=darkred ctermfg=white
-highlight WarningMsg ctermbg=darkred ctermfg=white
 
-highlight Function ctermfg=yellow
-highlight vimFuncName ctermbg=none ctermfg=darkred
+hi Todo ctermbg=darkred ctermfg=white
+hi Error ctermbg=darkred ctermfg=white
+hi ErrorMsg ctermbg=darkred ctermfg=white
+hi WarningMsg ctermbg=darkred ctermfg=white
+hi ModeMsg ctermbg=darkred ctermfg=white
+hi NonText ctermfg=white
 
-" highlight rubyFunction ctermfg=darkred
-" highlight rubyMethodBlock ctermfg=darkred
-highlight rubyAccess ctermfg=red
-highlight rubyConstant ctermfg=darkred
-highlight rubyRegexp ctermfg=darkgreen
-highlight rubyRegexpDelimiter ctermfg=darkgreen
-" highlight rubyRailsMethod ctermfg=darkred
-highlight rubyRailsFilterMethod ctermfg=red
+hi Pmenu ctermbg=black ctermfg=lightcyan
+hi PmenuSel ctermbg=lightcyan ctermfg=black
+hi PMenuSbar ctermbg=black
+
+hi CursorLine term=underline cterm=none ctermbg=0 ctermfg=none
+
+hi LightLineLeft_normal_0 ctermfg=white ctermbg=blue
+hi LightLineLeft_visual_0 ctermfg=white ctermbg=darkred
+hi LightLineLeft_insert_0 ctermfg=white ctermbg=darkgreen
+
+hi uniteCandidateIcon ctermfg=darkred
+hi uniteCandidateInputKeyword ctermfg=darkred
+hi uniteStatusLineNR ctermfg=yellow
+hi uniteMarkedLine ctermfg=yellow
+
+hi uniteSource__Grep ctermfg=gray
+" hi uniteSource__GrepFile ctermfg=cyan
+hi uniteSource__GrepSeparator ctermfg=green
+hi uniteSource__GrepPattern ctermfg=darkred
+hi uniteSource__GrepLineNR ctermfg=blue
+hi uniteSource__FileRecGit ctermfg=gray
+" hi uniteSourceLine__uniteSource__Grep ctermfg=magenta
+" hi uniteSourceLine__uniteSource__FileRecGit ctermfg=darkyellow
+
+hi Function ctermfg=yellow
+hi vimFuncName ctermbg=none ctermfg=darkred
+
+" hi rubyFunction ctermfg=darkred
+" hi rubyMethodBlock ctermfg=darkred
+hi rubyAccess ctermfg=blue
+hi rubyBoolean ctermfg=red
+hi rubyConstant ctermfg=darkred
+hi rubyRegexp ctermfg=darkgreen
+hi rubyRegexpDelimiter ctermfg=darkgreen
+" hi rubyRailsMethod ctermfg=darkred
+hi rubyRailsFilterMethod ctermfg=red
+hi rubyInstanceVariable ctermfg=red
+" hi rubyCurlyBlock ctermfg=red
+
+hi coffeeBoolean ctermfg=red
+hi coffeeObject ctermfg=darkred
+hi coffeeObjAssign ctermfg=yellow
+
+hi hamlTag ctermfg=yellow
+hi hamlId ctermfg=blue
+hi hamlIdChar ctermfg=blue
+hi hamlClass ctermfg=cyan
+hi hamlClassChar ctermfg=cyan
+hi htmlTagName ctermfg=yellow
+" hi hamlRuby
+" hi hamlRubyChar
+" hi hamlRubyOutputChar
+
 
 "====================================================================================
 " Complete
