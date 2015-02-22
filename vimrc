@@ -1080,6 +1080,8 @@ nnoremap s <Nop>
 " nnoremap sH <C-w>H
 nnoremap sn gt
 nnoremap sp gT
+nnoremap th :tabmove -1<CR>
+nnoremap tl :tabmove +1<CR>
 " nnoremap sr <C-w>r
 " nnoremap s= <C-w>=
 " nnoremap sw <C-w>w
