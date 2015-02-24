@@ -1038,27 +1038,6 @@ augroup END
 
 
 "====================================================================================
-" Syntax
-"====================================================================================
-augroup set_syntax
-  autocmd!
-  " JSON
-  autocmd BufRead,BufNewFile *.json set filetype=json
-  " HTML5
-  autocmd BufRead,BufNewFile *.html set ft=html syntax=html5
-  " CSS3
-  autocmd BufRead,BufNewFile *.css set ft=css syntax=css3
-  autocmd BufRead,BufNewFile *.scss set filetype=scss.css
-  " rb
-  autocmd BufRead,BufNewFile Gemfile set ft=ruby
-  " markdown
-  autocmd BufRead,BufNewFile *.md set ft=markdown
-  " rails
-  autocmd BufRead,BufNewFile *.jbuilder, *.builder, *.rxml, *.rjs set ft=ruby
-augroup END
-
-
-"====================================================================================
 " Mapping
 "====================================================================================
 
