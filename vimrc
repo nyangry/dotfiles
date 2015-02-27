@@ -908,7 +908,7 @@ nnoremap <Leader>fd :call delete(expand('%'))<CR>
 " 全角スペースを表示
 "====================================================================================
 function! ZenkakuSpace()
-    highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
+    hi ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
 endfunction
 
 if has('syntax')
