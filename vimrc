@@ -230,25 +230,37 @@ call unite#custom#alias('file', 'move', 'vimfiler__move')
 " .gitignoreで指定したファイルと.git/以下のファイルを候補から除外する
 function! s:unite_gitignore_source()
   let sources = []
-  if filereadable('./.gitignore')
-    for file in readfile('./.gitignore')
+  if filereadable(expand('./.gitignore'))
+    for file in readfile(expand('./.gitignore'))
       " コメント行と空行は追加しない
       if file !~ "^#\\|^\s\*$"
         call add(sources, file)
       endif
     endfor
   endif
+
   if isdirectory('./.git')
     call add(sources, '.git')
   endif
-  return escape(join(sources, '|'), './|')
+
+  call add(sources, '_repositories')
+  call add(sources, 'vendor')
+
+  let pattern = escape(join(sources, '|'), './|~<>*')
+  call unite#custom#source('file_rec/git,file_rec/async,file_rec ,grep', 'ignore_pattern', pattern)
+
+  " call unite#custom#source('file_rec/git', 'ignore_pattern', pattern)
+  " call unite#custom#source('file_rec/async', 'ignore_pattern', pattern)
+  " call unite#custom#source('file_rec', 'ignore_pattern', pattern)
+  " call unite#custom#source('grep', 'ignore_pattern', pattern)
 endfunction
+call s:unite_gitignore_source()
 
 
 " \ (<SID>unite_gitignore_source()) .
-let ignore_pattern = '\(' .
-                      \ '_repositories' .
-                      \ '\)'
+" let ignore_pattern = '\(' .
+"                       \ '_repositories' .
+"                       \ '\)'
 
 " \(\.DS_Store\|\.AppleDouble\|\.LSOverride\|Icon\|\._*\|\.Spotlight-V100\|\.Trashes\|\.AppleDB\|\.AppleDesktop\|Network Trash Folder\|Temporary Items\|\.apdisk\|*~\|\.directory\|[\._]*\.s[a-w][a-z]\|[\._]s[a-w][a-z]\|*\.un~\|Session\.vim\|\.netrwhist\|*~\|*\.gem\|*\.rbc\|\/\.config\|\/coverage\/\|\/InstalledFiles\|\/pkg\/\|\/spec\/reports\/\|\/test\/tmp\/\|\/test\/version_tmp\/\|\/tmp\/\|\.dat*\|\.repl_history\|build\/\|\/\.yardoc\/\|\/_yardoc\/\|\/doc\/\|\/rdoc\/\|\/\.bundle\/\|\/lib\/bundler\/man\/\|\.rvmrc\|*\.rbc\|capybara-*\.html\|\.rspec\|\/log\|\/tmp\|\/db\/*\.sqlite3\|\/public\/system\|\/coverage\/\|\/spec\/tmp\|**\.orig\|rerun\.txt\|pickle-email-*\.html\|config\/initializers\/secret_token\.rb\|config\/secrets\.yml\|\/\.bundle\|\/vendor\/bundle\|\.rvmrc\|\/vendor\/assets\/bower_components\|*\.bowerrc\|bower\.json\|spec\/dummy\/log\|spec\/dummy\/log\|spec\/dummy\/tmp\|spec\/dummy\/db\/*\.sqlite3\|spec\/dummy\/public\/system\|spec\/dummy\/coverage\/\|spec\/dummy\/spec\/tmp\|\.git\|_repositories\)
 
@@ -275,7 +287,6 @@ let ignore_pattern = '\(' .
 " echo ignore_pattern
 
 " custom ignore
-call unite#custom#source('file_rec/git,file_rec/async,file_rec', 'ignore_pattern', ignore_pattern)
 
 "----------------------------------------------------------
 " Neocomplete
