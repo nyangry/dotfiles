@@ -955,6 +955,7 @@ colorscheme ir_black
 hi matchParen ctermbg=black ctermfg=green
 hi Visual ctermbg=black ctermfg=lightcyan
 hi Search ctermbg=blue ctermfg=white term=none cterm=none
+hi Comment ctermfg=245
 
 
 hi Todo ctermbg=darkred ctermfg=white
@@ -968,7 +969,7 @@ hi Pmenu ctermbg=black ctermfg=lightcyan
 hi PmenuSel ctermbg=lightcyan ctermfg=black
 hi PMenuSbar ctermbg=black
 
-hi CursorLine term=underline cterm=none ctermbg=0 ctermfg=none
+hi CursorLine ctermbg=darkgray ctermfg=none
 
 hi LightLineLeft_normal_0 ctermfg=white ctermbg=blue
 hi LightLineLeft_visual_0 ctermfg=white ctermbg=darkred
@@ -1006,6 +1007,7 @@ hi rubyInstanceVariable ctermfg=red
 hi coffeeBoolean ctermfg=red
 hi coffeeObject ctermfg=darkred
 hi coffeeObjAssign ctermfg=yellow
+hi coffeeComment ctermfg=245
 
 hi hamlTag ctermfg=yellow
 hi hamlId ctermfg=blue
