@@ -148,7 +148,7 @@ else
 
   NeoBundle 'airblade/vim-rooter'
 
-  NeoBundle 'itchyny/calendar.vim'
+  " NeoBundle 'itchyny/calendar.vim'
 
   NeoBundle 'daylerees/colour-schemes',  { 'rtp': 'vim-themes/'}
 
