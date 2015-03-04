@@ -427,7 +427,7 @@ endfunction"}}}
 "----------------------------------------------------------
 " VimFiler
 "----------------------------------------------------------
-" vim-rails のマッピング削除できねえ・・
+" vim-rails のマッピング削除できねえ・・＼(^o^)／
 " noremap gf <NOP>
 " nnoremap gf <NOP>
 " nmap gf <NOP>
@@ -439,9 +439,12 @@ endfunction"}}}
 
 let g:vimfiler_as_default_explorer = 1
 " let g:vimfiler_safe_mode_by_default = 0
-nnoremap <silent> <Leader>f :<C-u>VimFiler
+
+" nnoremap <silent> <Leader>f :<C-u>VimFiler
+nnoremap <silent> <Leader>f :<C-u>VimFilerExplorer -find
   \ -buffer-name=explorer -simple
   \ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
+
 nnoremap <silent> <Leader>fc :<C-u>VimFilerBufferDir
   \ -simple
   \ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
