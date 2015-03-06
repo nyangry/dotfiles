@@ -7,8 +7,13 @@ augroup set_syntax
   " CSS3
   autocmd BufRead,BufNewFile *.css setfiletype css syntax css3
   autocmd BufRead,BufNewFile *.scss setfiletype scss.css
+  autocmd FileType css setlocal iskeyword+=-
+  autocmd FileType scss.css setlocal iskeyword+=-
+  autocmd FileType scss setlocal iskeyword+=-
   " rb
   autocmd BufRead,BufNewFile Gemfile setfiletype ruby
+  " haml
+  autocmd FileType haml setlocal iskeyword+=-
   " markdown
   autocmd BufRead,BufNewFile *.md setfiletype markdown
   " rails
