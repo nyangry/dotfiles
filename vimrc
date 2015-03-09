@@ -934,6 +934,9 @@ setlocal tabstop<
 setlocal softtabstop=2
 setlocal shiftwidth=2
 setlocal autoindent
+" ハイフン区切りのワードを選択しやすくする
+" http://qiita.com/ponko2/items/0a14d0649f918f5e3ce7
+setlocal iskeyword& iskeyword+=-
 
 set cursorline " カーソル行をハイライト
 " これをしないと候補選択時に Scratch ウィンドウが開いてしまう
