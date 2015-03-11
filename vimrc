@@ -1015,9 +1015,8 @@ hi PMenuSbar ctermbg=black
 
 hi CursorLine ctermbg=darkgray ctermfg=none
 
-hi LightLineLeft_normal_0 ctermfg=white ctermbg=blue
-hi LightLineLeft_visual_0 ctermfg=white ctermbg=darkred
-hi LightLineLeft_insert_0 ctermfg=white ctermbg=darkgreen
+hi diffAdded ctermfg=green
+hi diffRemoved ctermfg=darkred
 
 hi uniteCandidateIcon ctermfg=darkred
 hi uniteCandidateInputKeyword ctermfg=darkred
