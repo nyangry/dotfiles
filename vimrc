@@ -1096,7 +1096,6 @@ augroup END
 "====================================================================================
 " Mapping
 "====================================================================================
-
 nnoremap Y y$
 
 "-------------------------------------------
@@ -1115,6 +1114,7 @@ nnoremap sn gt
 nnoremap sp gT
 nnoremap th :tabmove -1<CR>
 nnoremap tl :tabmove +1<CR>
+nnoremap tc :tabclose<CR>
 " nnoremap sr <C-w>r
 " nnoremap s= <C-w>=
 " nnoremap sw <C-w>w
