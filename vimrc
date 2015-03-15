@@ -1013,7 +1013,7 @@ hi Pmenu ctermbg=black ctermfg=lightcyan
 hi PmenuSel ctermbg=lightcyan ctermfg=black
 hi PMenuSbar ctermbg=black
 
-hi CursorLine ctermbg=darkgray ctermfg=none
+hi CursorLine ctermbg=235 ctermfg=none
 
 hi diffAdded ctermfg=green
 hi diffRemoved ctermfg=darkred
