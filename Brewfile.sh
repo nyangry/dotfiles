@@ -15,6 +15,7 @@ brew install openssl
 brew install readline
 brew install tree
 brew install nkf
+brew install wrk
 brew install the_silver_searcher
 brew install jq
 brew install peco
