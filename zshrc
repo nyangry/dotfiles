@@ -1,9 +1,7 @@
 # zmodload zsh/zprof && zprof
 
+export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
-PATH=/usr/local/bin:/usr/local/share/npm/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-#export PATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
 # osx mavericks
@@ -255,6 +253,7 @@ export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 #       $(resolve_alias "tmux")
 #   fi
 # fi
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
 #=============================
 # for Google API
@@ -262,15 +261,6 @@ export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 export GOOGLE_ANALYTICS_PROFILE="ga:36122922"
 export GOOGLE_API_HOME="${HOME}/.google-api.yaml"
 
-#=============================
-# rbenv
-#=============================
-if [ -d ${HOME}/.rbenv  ] ; then
-  export PATH=${HOME}/.rbenv/bin:${PATH}
-  # export PATH
-  eval "$(rbenv init -)"
-fi
-[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
 #=============================
 # custom PATH for Rails
@@ -284,7 +274,7 @@ function is_rails_dir () {
 }
 
 function add_rails_bin_path_for_binstubs () {
-  PATH=./bin:$PATH
+  export PATH=./bin:$PATH
 }
 
 ### Added by the Heroku Toolbelt
