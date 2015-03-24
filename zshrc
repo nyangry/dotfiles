@@ -304,6 +304,8 @@ function repos() {
 zle -N repos
 bindkey '^f' repos
 
+# pecoで表示されるコマンド履歴の重複を削除する 改
+# http://shigemk2.hatenablog.com/entry/2015/02/01/peco%E3%81%A7%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E3%82%8B%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E5%B1%A5%E6%AD%B4%E3%81%AE%E9%87%8D%E8%A4%87%E3%82%92%E5%89%8A%E9%99%A4%E3%81%99%E3%82%8B_%E6%94%B9
 function peco-select-history() {
     local tac
     if which tac > /dev/null; then
