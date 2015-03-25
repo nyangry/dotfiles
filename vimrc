@@ -88,6 +88,8 @@ else
   NeoBundle 'rhysd/unite-ruby-require.vim'
   NeoBundle 'vim-scripts/ruby-matchit'
   NeoBundle 'vim-ruby/vim-ruby'
+  NeoBundle 'marcus/rsense'
+  NeoBundle 'supermomonga/neocomplete-rsense.vim'
 
   "----------------------------------------------------------
   " Rais
@@ -505,6 +507,11 @@ let Tlist_Sort_Type         = 'order' " name or order
 let Tlist_WinWidth          = 50
 let Tlist_Display_Tag_Scope = 0
 let Tlist_Show_One_File     = 1
+
+"----------------------------------------------------------
+" rsense
+"----------------------------------------------------------
+let g:rsenseUseOmniFunc = 1
 
 "----------------------------------------------------------
 " Syntastic
