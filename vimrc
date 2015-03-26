@@ -110,6 +110,7 @@ else
   " Syntax
   "----------------------------------------------------------
   NeoBundle 'tpope/vim-haml'
+  NeoBundle 'slim-template/vim-slim'
   NeoBundle 'othree/html5.vim'
   NeoBundle 'hail2u/vim-css3-syntax'
   NeoBundle 'cakebaker/scss-syntax.vim'
