@@ -1,5 +1,11 @@
+#=======================================================
+#=======================================================
 # zmodload zsh/zprof && zprof
 
+
+#=======================================================
+# PATH
+#=======================================================
 export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
@@ -294,7 +300,9 @@ alias caskupgrade='for c in `brew cask list`; do ! brew cask info $c | grep -qF 
 
 
 
+#=======================================================
 # peco
+#=======================================================
 function repos() {
   BUFFER="cd $(find ~/dotfiles ~/workspace -maxdepth 3 -name '*' -type d | grep -v '\.' | peco)"
   zle accept-line
@@ -320,6 +328,9 @@ function peco-select-history() {
 zle -N peco-select-history
 bindkey '^r' peco-select-history
 
+
+#=======================================================
+#=======================================================
 # if (which zprof > /dev/null) ;then
 #   zprof | less
 # fi
