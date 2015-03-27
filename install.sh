@@ -100,6 +100,8 @@ delete_old_files()
   rm -f $HOME/.tmux.conf
   rm -f $HOME/.ctags
   rm -f $HOME/.rspec
+  rm -f $HOME/.railsrc
+  rm -f $HOME/coffeelint.json
   rm -f $HOME/Brewfile.sh
   rm -f $HOME/.peco
 }
@@ -124,6 +126,7 @@ symlink_files()
   ln -s $HOME/dotfiles/ctags $HOME/.ctags
   ln -s $HOME/dotfiles/rspec $HOME/.rspec
   ln -s $HOME/dotfiles/railsrc $HOME/.railsrc
+  ln -s $HOME/dotfiles/coffeelint.json $HOME/coffeelint.json
   ln -s $HOME/dotfiles/Brewfile.sh $HOME/Brewfile.sh
   ln -s $HOME/dotfiles/peco $HOME/.peco
   #ln -s $HOME/dotfiles/gitconfig ~/.gitconfig

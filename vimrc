@@ -66,6 +66,12 @@ else
   NeoBundle 'vim-scripts/taglist.vim'
 
   "----------------------------------------------------------
+  " ref
+  "----------------------------------------------------------
+  NeoBundle 'thinca/vim-ref'
+  NeoBundle 'yuku-t/vim-ref-ri'
+
+  "----------------------------------------------------------
   " Git
   "----------------------------------------------------------
   NeoBundle 'tpope/vim-fugitive'
@@ -82,6 +88,8 @@ else
   NeoBundle 'rhysd/unite-ruby-require.vim'
   NeoBundle 'vim-scripts/ruby-matchit'
   NeoBundle 'vim-ruby/vim-ruby'
+  NeoBundle 'marcus/rsense'
+  NeoBundle 'supermomonga/neocomplete-rsense.vim'
 
   "----------------------------------------------------------
   " Rais
@@ -102,6 +110,7 @@ else
   " Syntax
   "----------------------------------------------------------
   NeoBundle 'tpope/vim-haml'
+  NeoBundle 'slim-template/vim-slim'
   NeoBundle 'othree/html5.vim'
   NeoBundle 'hail2u/vim-css3-syntax'
   NeoBundle 'cakebaker/scss-syntax.vim'
@@ -148,7 +157,7 @@ else
 
   NeoBundle 'airblade/vim-rooter'
 
-  NeoBundle 'itchyny/calendar.vim'
+  " NeoBundle 'itchyny/calendar.vim'
 
   NeoBundle 'daylerees/colour-schemes',  { 'rtp': 'vim-themes/'}
 
@@ -230,25 +239,37 @@ call unite#custom#alias('file', 'move', 'vimfiler__move')
 " .gitignoreで指定したファイルと.git/以下のファイルを候補から除外する
 function! s:unite_gitignore_source()
   let sources = []
-  if filereadable('./.gitignore')
-    for file in readfile('./.gitignore')
+  if filereadable(expand('./.gitignore'))
+    for file in readfile(expand('./.gitignore'))
       " コメント行と空行は追加しない
       if file !~ "^#\\|^\s\*$"
         call add(sources, file)
       endif
     endfor
   endif
+
   if isdirectory('./.git')
     call add(sources, '.git')
   endif
-  return escape(join(sources, '|'), './|')
+
+  call add(sources, '_repositories')
+  call add(sources, 'vendor')
+
+  let pattern = escape(join(sources, '|'), './|~<>*')
+  call unite#custom#source('file_rec/git,file_rec/async,file_rec ,grep', 'ignore_pattern', pattern)
+
+  " call unite#custom#source('file_rec/git', 'ignore_pattern', pattern)
+  " call unite#custom#source('file_rec/async', 'ignore_pattern', pattern)
+  " call unite#custom#source('file_rec', 'ignore_pattern', pattern)
+  " call unite#custom#source('grep', 'ignore_pattern', pattern)
 endfunction
+call s:unite_gitignore_source()
 
 
 " \ (<SID>unite_gitignore_source()) .
-let ignore_pattern = '\(' .
-                      \ '_repositories' .
-                      \ '\)'
+" let ignore_pattern = '\(' .
+"                       \ '_repositories' .
+"                       \ '\)'
 
 " \(\.DS_Store\|\.AppleDouble\|\.LSOverride\|Icon\|\._*\|\.Spotlight-V100\|\.Trashes\|\.AppleDB\|\.AppleDesktop\|Network Trash Folder\|Temporary Items\|\.apdisk\|*~\|\.directory\|[\._]*\.s[a-w][a-z]\|[\._]s[a-w][a-z]\|*\.un~\|Session\.vim\|\.netrwhist\|*~\|*\.gem\|*\.rbc\|\/\.config\|\/coverage\/\|\/InstalledFiles\|\/pkg\/\|\/spec\/reports\/\|\/test\/tmp\/\|\/test\/version_tmp\/\|\/tmp\/\|\.dat*\|\.repl_history\|build\/\|\/\.yardoc\/\|\/_yardoc\/\|\/doc\/\|\/rdoc\/\|\/\.bundle\/\|\/lib\/bundler\/man\/\|\.rvmrc\|*\.rbc\|capybara-*\.html\|\.rspec\|\/log\|\/tmp\|\/db\/*\.sqlite3\|\/public\/system\|\/coverage\/\|\/spec\/tmp\|**\.orig\|rerun\.txt\|pickle-email-*\.html\|config\/initializers\/secret_token\.rb\|config\/secrets\.yml\|\/\.bundle\|\/vendor\/bundle\|\.rvmrc\|\/vendor\/assets\/bower_components\|*\.bowerrc\|bower\.json\|spec\/dummy\/log\|spec\/dummy\/log\|spec\/dummy\/tmp\|spec\/dummy\/db\/*\.sqlite3\|spec\/dummy\/public\/system\|spec\/dummy\/coverage\/\|spec\/dummy\/spec\/tmp\|\.git\|_repositories\)
 
@@ -275,7 +296,6 @@ let ignore_pattern = '\(' .
 " echo ignore_pattern
 
 " custom ignore
-call unite#custom#source('file_rec/git,file_rec/async,file_rec', 'ignore_pattern', ignore_pattern)
 
 "----------------------------------------------------------
 " Neocomplete
@@ -416,7 +436,7 @@ endfunction"}}}
 "----------------------------------------------------------
 " VimFiler
 "----------------------------------------------------------
-" vim-rails のマッピング削除できねえ・・
+" vim-rails のマッピング削除できねえ・・＼(^o^)／
 " noremap gf <NOP>
 " nnoremap gf <NOP>
 " nmap gf <NOP>
@@ -428,9 +448,12 @@ endfunction"}}}
 
 let g:vimfiler_as_default_explorer = 1
 " let g:vimfiler_safe_mode_by_default = 0
-nnoremap <silent> <Leader>f :<C-u>VimFiler
+
+" nnoremap <silent> <Leader>f :<C-u>VimFiler
+nnoremap <silent> <Leader>f :<C-u>VimFilerExplorer -find
   \ -buffer-name=explorer -simple
   \ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
+
 nnoremap <silent> <Leader>fc :<C-u>VimFilerBufferDir
   \ -simple
   \ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
@@ -487,6 +510,11 @@ let Tlist_Display_Tag_Scope = 0
 let Tlist_Show_One_File     = 1
 
 "----------------------------------------------------------
+" rsense
+"----------------------------------------------------------
+let g:rsenseUseOmniFunc = 1
+
+"----------------------------------------------------------
 " Syntastic
 "----------------------------------------------------------
 let g:syntastic_auto_loc_list       = 1
@@ -499,7 +527,6 @@ let g:syntastic_mode_map            = { 'mode': 'active',
 " lightline
 "----------------------------------------------------------
 let g:lightline = {
-        \ 'colorscheme': 'jellybeans',
         \ 'mode_map': {'c': 'NORMAL'},
         \ 'active': {
         \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'readonly', 'filename', 'anzu' ] ]
@@ -516,6 +543,45 @@ let g:lightline = {
         \   'anzu': 'anzu#search_status'
         \ }
         \ }
+
+
+" http://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
+let s:base03 = [ '#151513', 233 ]
+let s:base02 = [ '#30302c ', 236 ]
+let s:base01 = [ '#4e4e43', 239 ]
+let s:base00 = [ '#666656', 242  ]
+let s:base0 = [ '#808070', 244 ]
+let s:base1 = [ '#949484', 246 ]
+let s:base2 = [ '#a8a897', 248 ]
+let s:base3 = [ '#e8e8d3', 253 ]
+let s:white = [ '#ffffff', 231 ]
+let s:red = [ '#cf6a4c', 88 ]
+let s:green = [ '#99ad6a', 70 ]
+let s:blue = [ '#8197bf', 75 ]
+let s:yellow = [ '#ffb964', 215 ]
+let s:orange = [ '#fad07a', 222 ]
+let s:magenta = [ '#f0a0c0', 217 ]
+let s:cyan = [ '#8fbfdc', 88 ]
+
+let g:lightline.colorscheme = 'custom_lightline'
+let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
+let s:p.normal.left = [ [ s:white, s:blue ], [ s:base3, s:base01 ] ]
+let s:p.normal.right = [ [ s:base02, s:base1 ], [ s:base2, s:base01 ] ]
+let s:p.inactive.right = [ [ s:base02, s:base00 ], [ s:base0, s:base02 ] ]
+let s:p.inactive.left =  [ [ s:base0, s:base02 ], [ s:base00, s:base02 ] ]
+let s:p.insert.left = [ [ s:white, s:red ], [ s:base3, s:base01 ] ]
+let s:p.replace.left = [ [ s:base02, s:red ], [ s:base3, s:base01 ] ]
+let s:p.visual.left = [ [ s:white, s:green ], [ s:base3, s:base01 ] ]
+let s:p.normal.middle = [ [ s:base0, s:base02 ] ]
+let s:p.inactive.middle = [ [ s:base00, s:base02 ] ]
+let s:p.tabline.left = [ [ s:base3, s:base00 ] ]
+let s:p.tabline.tabsel = [ [ s:base3, s:base02 ] ]
+let s:p.tabline.middle = [ [ s:base01, s:base1 ] ]
+let s:p.tabline.right = copy(s:p.normal.right)
+let s:p.normal.error = [ [ s:red, s:base02 ] ]
+let s:p.normal.warning = [ [ s:yellow, s:base01 ] ]
+let g:lightline#colorscheme#custom_lightline#palette = lightline#colorscheme#flatten(s:p)
+unlet s:p
 
 function! MyModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
@@ -810,14 +876,12 @@ nmap CC <Plug>(operator-blockwise-change-head)
 "----------------------------------------------------------
 " osyo-manga/vim-anzu
 "----------------------------------------------------------
-" nmap n <Plug>(anzu-n-with-echo)
-" nmap N <Plug>(anzu-N-with-echo)
-" nmap * <Plug>(anzu-star-with-echo)
-" nmap # <Plug>(anzu-sharp-with-echo)
-nmap n <Plug>(anzu-n)
-nmap N <Plug>(anzu-N)
-nmap * <Plug>(anzu-star)
-nmap # <Plug>(anzu-sharp)
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+" nmap n <Plug>(anzu-mode-n)
+" nmap N <Plug>(anzu-mode-N)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
 augroup vim-anzu
 " 一定時間キー入力がないとき、ウインドウを移動したとき、タブを移動したときに
 " 検索ヒット数の表示を消去する
@@ -884,6 +948,9 @@ setlocal tabstop<
 setlocal softtabstop=2
 setlocal shiftwidth=2
 setlocal autoindent
+" ハイフン区切りのワードを選択しやすくする
+" http://qiita.com/ponko2/items/0a14d0649f918f5e3ce7
+setlocal iskeyword& iskeyword+=-
 
 set cursorline " カーソル行をハイライト
 " これをしないと候補選択時に Scratch ウィンドウが開いてしまう
@@ -910,7 +977,7 @@ nnoremap <Leader>fd :call delete(expand('%'))<CR>
 " 全角スペースを表示
 "====================================================================================
 function! ZenkakuSpace()
-    highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
+    hi ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
 endfunction
 
 if has('syntax')
@@ -946,6 +1013,7 @@ colorscheme ir_black
 hi matchParen ctermbg=black ctermfg=green
 hi Visual ctermbg=black ctermfg=lightcyan
 hi Search ctermbg=blue ctermfg=white term=none cterm=none
+hi Comment ctermfg=245
 
 
 hi Todo ctermbg=darkred ctermfg=white
@@ -959,11 +1027,10 @@ hi Pmenu ctermbg=black ctermfg=lightcyan
 hi PmenuSel ctermbg=lightcyan ctermfg=black
 hi PMenuSbar ctermbg=black
 
-hi CursorLine term=underline cterm=none ctermbg=0 ctermfg=none
+hi CursorLine ctermbg=235 ctermfg=none
 
-hi LightLineLeft_normal_0 ctermfg=white ctermbg=blue
-hi LightLineLeft_visual_0 ctermfg=white ctermbg=darkred
-hi LightLineLeft_insert_0 ctermfg=white ctermbg=darkgreen
+hi diffAdded ctermfg=green
+hi diffRemoved ctermfg=darkred
 
 hi uniteCandidateIcon ctermfg=darkred
 hi uniteCandidateInputKeyword ctermfg=darkred
@@ -997,6 +1064,7 @@ hi rubyInstanceVariable ctermfg=red
 hi coffeeBoolean ctermfg=red
 hi coffeeObject ctermfg=darkred
 hi coffeeObjAssign ctermfg=yellow
+hi coffeeComment ctermfg=245
 
 hi hamlTag ctermfg=yellow
 hi hamlId ctermfg=blue
@@ -1040,30 +1108,8 @@ augroup END
 
 
 "====================================================================================
-" Syntax
-"====================================================================================
-augroup set_syntax
-  autocmd!
-  " JSON
-  autocmd BufRead,BufNewFile *.json set filetype=json
-  " HTML5
-  autocmd BufRead,BufNewFile *.html set ft=html syntax=html5
-  " CSS3
-  autocmd BufRead,BufNewFile *.css set ft=css syntax=css3
-  autocmd BufRead,BufNewFile *.scss set filetype=scss.css
-  " rb
-  autocmd BufRead,BufNewFile Gemfile set ft=ruby
-  " markdown
-  autocmd BufRead,BufNewFile *.md set ft=markdown
-  " rails
-  autocmd BufRead,BufNewFile *.jbuilder, *.builder, *.rxml, *.rjs set ft=ruby
-augroup END
-
-
-"====================================================================================
 " Mapping
 "====================================================================================
-
 nnoremap Y y$
 
 "-------------------------------------------
@@ -1080,6 +1126,9 @@ nnoremap s <Nop>
 " nnoremap sH <C-w>H
 nnoremap sn gt
 nnoremap sp gT
+nnoremap th :tabmove -1<CR>
+nnoremap tl :tabmove +1<CR>
+nnoremap tc :tabclose<CR>
 " nnoremap sr <C-w>r
 " nnoremap s= <C-w>=
 " nnoremap sw <C-w>w
