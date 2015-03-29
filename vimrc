@@ -254,6 +254,7 @@ function! s:unite_gitignore_source()
 
   call add(sources, '_repositories')
   call add(sources, 'vendor')
+  call add(sources, 'assets/images')
 
   let pattern = escape(join(sources, '|'), './|~<>*')
   call unite#custom#source('file_rec/git,file_rec/async,file_rec ,grep', 'ignore_pattern', pattern)
