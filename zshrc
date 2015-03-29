@@ -334,3 +334,19 @@ bindkey '^r' peco-select-history
 # if (which zprof > /dev/null) ;then
 #   zprof | less
 # fi
+
+#============================
+# npm のローカルモードでインストールした実行モジュールにパスを通す設定
+# http://qiita.com/umechiki/items/a1de903a2e5e27f5c606
+#============================
+add-zsh-hook precmd is_npm_dir
+
+function is_npm_dir () {
+  if [ -e './package.json' ]; then
+    add_npm_bin_path_for_binstubs
+  fi
+}
+
+function add_npm_bin_path_for_binstubs () {
+  PATH=./node_modules/.bin:$PATH
+}
