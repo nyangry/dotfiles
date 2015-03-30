@@ -490,14 +490,14 @@ let g:vim_tags_gems_tags_command    = "/usr/local/bin/ctags `bundle show --paths
 
 
 
-augroup VimTags
-  autocmd!
-  if exists(':TagsGenerate')
-    " autocmd BufWritePost Gemfile TagsGenerate
-    " autocmd BufEnter * TagsGenerate
-    " autocmd BufWritePost * TagsGenerate
-  endif
-augroup END
+" augroup VimTags
+"   autocmd!
+"   if exists(':TagsGenerate')
+"     autocmd BufWritePost Gemfile TagsGenerate
+"     autocmd BufEnter * TagsGenerate
+"     autocmd BufWritePost * TagsGenerate
+"   endif
+" augroup END
 
 "----------------------------------------------------------
 " vim-scripts/taglist
