@@ -185,9 +185,6 @@ alias diff="colordiff --side-by-side --suppress-common-lines"
 alias clear2="echo -e '\026\033c'"
 alias ag='ag -S'
 
-function scx () {
-    screen -x $1
-}
 
 # ----------------------
 # Git Aliases
