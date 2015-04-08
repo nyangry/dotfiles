@@ -292,12 +292,6 @@ export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 # fi
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
-#=============================
-# for Google API
-#=============================
-export GOOGLE_ANALYTICS_PROFILE="ga:36122922"
-export GOOGLE_API_HOME="${HOME}/.google-api.yaml"
-
 
 #=============================
 # custom PATH for Rails
