@@ -311,19 +311,6 @@ function add_rails_bin_path_for_binstubs () {
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-#============================
-# performance config
-# https://gist.github.com/lunchub/6492592
-#============================
-# export RUBY_GC_MALLOC_LIMIT=60000000
-# export RUBY_FREE_MIN=200000
-
-# HomeBrew cask
-# export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
-alias brewlink="brew list -1 | while read line; do brew unlink $line; brew link $line; done; brew alfred link;"
-alias caskupgrade='for c in `brew cask list`; do ! brew cask info $c | grep -qF "Not installed" || brew cask install $c; done'
-
-
 
 #=======================================================
 # peco
