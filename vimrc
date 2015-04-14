@@ -225,6 +225,7 @@ function! DispatchUniteFileRecAsyncOrGit()
   endif
 endfunction
 
+nnoremap <silent> ,gt :<C-u>Unite tab<CR>
 nnoremap <silent> ,gr :<C-u>Unite grep:. -start-insert -buffer-name=search-buffer<CR>
 nnoremap <silent> ,gs :<C-u>Unite giti/status<CR>
 nnoremap <silent> ,gb :<C-u>Unite giti/branch_all<CR>
