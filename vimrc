@@ -538,7 +538,12 @@ let g:syntastic_mode_map               = { 'mode': 'active',
 let g:lightline = {
         \ 'mode_map': {'c': 'NORMAL'},
         \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'readonly', 'filename', 'anzu' ] ]
+		    \ 'left': [ [ 'mode', 'paste' ],
+		    \           [ 'readonly', 'filename', 'modified', 'anzu'] ],
+		    \ 'right': [ [ 'lineinfo' ],
+		    \            [ 'percent' ],
+		    \            [ 'tabnum' ],
+        \            [ 'fileformat', 'fileencoding', 'filetype' ] ]
         \ },
         \ 'component_function': {
         \   'modified': 'MyModified',
@@ -549,10 +554,10 @@ let g:lightline = {
         \   'filetype': 'MyFiletype',
         \   'fileencoding': 'MyFileencoding',
         \   'mode': 'MyMode', 
-        \   'anzu': 'anzu#search_status'
+        \   'anzu': 'anzu#search_status',
+        \   'tabnum': 'TabNum',
         \ }
         \ }
-
 
 " http://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
 let s:base03 = [ '#151513', 233 ]
