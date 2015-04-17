@@ -640,6 +640,11 @@ function! MyMode()
   return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
+function! TalNum(n)
+  return lightline#tab#tabnum(a:n)
+endfunction
+
+
 "----------------------------------------------------------
 " Yankround
 "----------------------------------------------------------
