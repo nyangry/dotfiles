@@ -660,30 +660,42 @@ nmap <C-n> <Plug>(yankround-next)
 "----------------------------------------------------------
 " Quickrun
 " Color ref: http://goo.gl/sQDiY
+" RubyとvimでQuick JUnit風にテスト実行
+" http://qiita.com/joker1007/items/69035c454de416849b8a
 "----------------------------------------------------------
-" let g:quickrun_config = {}
-" let g:quickrun_config._ = {'runner' : 'vimproc'}
-" " let g:quickrun_config['ruby.rspec'] = {'command': "rspec"}
-" let g:quickrun_config['ruby.rspec'] = { 'command': 'rspec',  'cmdopt': 'bundle exec',  'exec': '%o %c %s' }
-" augroup RSpec
-"   autocmd!
-"   autocmd BufWinEnter, BufNewFile *_spec.rb set filetype=ruby.rspec
-" augroup END
+autocmd FileType quickrun AnsiEsc
 
 let g:quickrun_config = {}
 let g:quickrun_config._ = {'runner' : 'vimproc'}
+
+" rspecを実行するための設定を定義する
+" %cはcommandに設定した値に置換される
+" %oはcmdoptに設定した値に置換される
+" %sはソースファイル名に置換される
 let g:quickrun_config['rspec/bundle'] = {
   \ 'type': 'rspec/bundle',
   \ 'command': 'rspec',
-  \ 'exec': 'bundle exec %c %s',
   \ 'outputter/buffer/filetype': 'rspec-result',
+  \ 'exec': 'bundle exec %c %o --color %s'
   \}
+
 let g:quickrun_config['rspec/normal'] = {
   \ 'type': 'rspec/normal',
   \ 'command': 'rspec',
-  \ 'exec': '%c %s',
   \ 'outputter/buffer/filetype': 'rspec-result',
+  \ 'exec': '%c %o --color %s'
   \}
+
+" :QuickRunで実行されるコマンドをrspec用の定義に設定する
+" <Leader>lrをタイプした時に、:QuickRun -cmdopt "-l (カーソル行)"を実行するキーマップを定義する ← これがポイント
+" function! RSpecQuickrun()
+"   let b:quickrun_config = {'type' : 'rspec/bundle'}
+"   nnoremap <expr><silent> <Leader>lr "<Esc>:QuickRun -cmdopt \"-l %{ line('.') } \"<CR>"
+" endfunction
+
+" ファイル名が_spec.rbで終わるファイルを読み込んだ時に上記の設定を自動で読み込む
+" autocmd BufReadPost *_spec.rb call RSpecQuickrun()
+
 function! RSpecQuickrun()
   let b:quickrun_config = {'type' : 'rspec/bundle'}
 endfunction
@@ -692,7 +704,6 @@ augroup Quickrun
   autocmd!
   autocmd BufReadPost *_spec.rb call RSpecQuickrun()
 augroup END
-
 "----------------------------------------------------------
 " simple-javascript-indenter
 "----------------------------------------------------------
