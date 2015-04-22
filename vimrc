@@ -1183,6 +1183,9 @@ nnoremap <silent> k gk
 " Escの2回押しでハイライト消去
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
+" redraw!
+nmap <Leader>w :redraw!<CR>
+
 " ビジュアルモードで選択したテキストで検索する
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
 
