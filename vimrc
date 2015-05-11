@@ -12,9 +12,8 @@ endif
 
 call neobundle#begin(expand('~/.vim/bundle/'))
 
-if neobundle#has_fresh_cache()
-  NeoBundleLoadCache  " キャッシュの読込み
-else
+if neobundle#load_cache()
+
   " Let NeoBundle manage NeoBundle
   NeoBundleFetch 'Shougo/neobundle.vim'
 
@@ -169,6 +168,8 @@ else
   NeoBundle 'AndrewRadev/switch.vim'
 
   NeoBundle 'osyo-manga/vim-anzu'
+
+  NeoBundleSaveCache
 endif
 
 call neobundle#end()
