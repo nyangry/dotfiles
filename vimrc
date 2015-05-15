@@ -87,8 +87,8 @@ if neobundle#load_cache()
   NeoBundle 'rhysd/unite-ruby-require.vim'
   NeoBundle 'vim-scripts/ruby-matchit'
   NeoBundle 'vim-ruby/vim-ruby'
-  NeoBundle 'marcus/rsense'
-  NeoBundle 'supermomonga/neocomplete-rsense.vim'
+  " NeoBundle 'marcus/rsense'
+  " NeoBundle 'supermomonga/neocomplete-rsense.vim'
 
   "----------------------------------------------------------
   " Rais
