@@ -180,7 +180,12 @@ alias ll='ls -l'
 alias lla='ls -al'
 alias less="less -R"
 alias hosts='sudo vi /etc/hosts'
-alias diff="colordiff --side-by-side --suppress-common-lines"
+if [[ -x `which colordiff` ]]; then
+  # alias diff="colordiff -u --side-by-side --suppress-common-lines"
+  alias diff='colordiff -u'
+else
+  alias diff='diff -u'
+fi
 # http://orangeclover.hatenablog.com/entry/20110201/1296511181
 alias clear2="echo -e '\026\033c'"
 alias ag='ag -S'
