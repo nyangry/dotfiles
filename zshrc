@@ -195,6 +195,7 @@ alias ag='ag -S'
 # Git Aliases
 # http://postd.cc/git-command-line-shortcuts/
 # ----------------------
+alias s='gss'
 alias ga='git add'
 alias gaa='git add .'
 alias gaaa='git add -A'
