@@ -1074,7 +1074,7 @@ hi uniteSource__Grep ctermfg=gray
 hi uniteSource__GrepSeparator ctermfg=green
 hi uniteSource__GrepPattern ctermfg=darkred
 hi uniteSource__GrepLineNR ctermfg=blue
-hi uniteSource__FileRecGit ctermfg=gray
+hi uniteSource__FileRecGit ctermfg=255
 " hi uniteSourceLine__uniteSource__Grep ctermfg=magenta
 " hi uniteSourceLine__uniteSource__FileRecGit ctermfg=darkyellow
 
