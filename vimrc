@@ -1255,7 +1255,7 @@ function! s:open_junk_file()
   endif
 endfunction
 " Yankroundとかぶるからどうするか
-" nmap <C-n> :JunkFile<CR>
+nmap <C-n> :JunkFile<CR>
 
 
 "====================================================================================
