@@ -143,7 +143,9 @@ function current_dir() {
 }
 
 # http://makimoto.hatenablog.com/entry/show-rbenv-version-on-zsh-prompt
-rbenv_version () {
+# MEMO: 右側に表示させたい場合はこちら
+# rbenv_version () {
+function rbenv_version () {
   if [[ "`rbenv version | grep '.rbenv/version'`" = "" ]];then
     if [[ "`rbenv version | grep 'RBENV_VERSION'`" = "" ]];then
       local setting="L"
@@ -153,12 +155,15 @@ rbenv_version () {
   else
     local setting="G"
   fi
-  RPROMPT="[ruby-`ruby -v | cut -f2 -d' '`($setting)]"
+  # MEMO: 右側に表示させたい場合はこちら
+  # RPROMPT="[ruby-`ruby -v | cut -f2 -d' '`($setting)]"
+  echo "[ruby-`ruby -v | cut -f2 -d' '`($setting)]"
 }
-add-zsh-hook precmd rbenv_version
+# MEMO: 右側に表示させたい場合はこちら
+# add-zsh-hook precmd rbenv_version
 
 
-PROMPT='%{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
+PROMPT='$(rbenv_version) %{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
 
 
 #alias
