@@ -157,7 +157,9 @@ function rbenv_version () {
   fi
   # MEMO: 右側に表示させたい場合はこちら
   # RPROMPT="[ruby-`ruby -v | cut -f2 -d' '`($setting)]"
-  echo "[ruby-`ruby -v | cut -f2 -d' '`($setting)]"
+  # ruby- 付き
+  # echo "[ruby-`ruby -v | cut -f2 -d' '`($setting)]"
+  echo "[`ruby -v | cut -f2 -d' '`($setting)]"
 }
 # MEMO: 右側に表示させたい場合はこちら
 # add-zsh-hook precmd rbenv_version
