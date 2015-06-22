@@ -181,6 +181,7 @@ esac
 alias vimrc='vim ~/.vimrc'
 alias tmuxconf='vim ~/.tmux.conf'
 alias zshrc='vim ~/.zshrc'
+alias dotfiles='~/dotfiles'
 alias tailf='tail -f'
 alias la='ls -a'
 alias ll='ls -l'
