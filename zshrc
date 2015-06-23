@@ -343,7 +343,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 # peco
 #=======================================================
 function repos() {
-  BUFFER="cd $(find ~/dotfiles ~/workspace -maxdepth 3 -name '*' -type d | grep -v '\.' | peco)"
+  BUFFER="cd $(find ~/workspace -name '*' -type d -follow -maxdepth 5 | egrep -v '\.|app/|/app$|bin|bundle_bin|bower_components|node_modules|config|data|db|doc|dummy|features|lib|log|public|script|spec|sys|test|tmp|vendor' | peco)"
   zle accept-line
   # zle reset-prompt
   zle clear-screen
