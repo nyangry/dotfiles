@@ -484,6 +484,9 @@ let g:expand_region_text_objects = {
       \ 'ie': 0,
       \ }
 
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
 "----------------------------------------------------------
 " tsukkee/unite-tag
 "----------------------------------------------------------
