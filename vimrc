@@ -467,6 +467,9 @@ nnoremap <silent> <Leader>fc :<C-u>VimFilerBufferDir
   \ -simple
   \ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
 
+" Enter
+autocmd FileType vimfiler nmap <buffer> <CR> <Plug>(vimfiler_expand_or_edit)
+
 "----------------------------------------------------------
 " terryma/vim-expand-region
 "----------------------------------------------------------
