@@ -1201,6 +1201,11 @@ augroup auto_cw
   autocmd QuickFixCmdPost *grep* cwindow
 augroup END
 
+" ヤンク、ペースト後のカーソル移動
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
+
 "-------------------------------------------
 " 自動補完
 "-------------------------------------------
