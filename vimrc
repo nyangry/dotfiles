@@ -141,7 +141,7 @@ if neobundle#load_cache()
   NeoBundle 'tpope/vim-surround'
   NeoBundle 'bkad/CamelCaseMotion'
   NeoBundle 'tpope/vim-endwise'
-  NeoBundle 'terryma/vim-multiple-cursors'
+  " NeoBundle 'terryma/vim-multiple-cursors'
 
   " 移動拡張 f / t
   NeoBundle 'rhysd/clever-f.vim'
