@@ -461,11 +461,7 @@ let g:vimfiler_as_default_explorer = 1
 " nnoremap <silent> <Leader>f :<C-u>VimFiler
 nnoremap <silent> <Leader>f :<C-u>VimFilerExplorer -find
   \ -buffer-name=explorer -simple
-  \ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
-
-nnoremap <silent> <Leader>fc :<C-u>VimFilerBufferDir
-  \ -simple
-  \ -direction=topleft -split -winwidth=50 -toggle -no-quit<CR>
+  \ -direction=topleft -split -winwidth=50 -toggle<CR>
 
 
 "----------------------------------------------------------
