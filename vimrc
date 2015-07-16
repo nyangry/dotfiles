@@ -244,34 +244,34 @@ call unite#custom#alias('file', 'move', 'vimfiler__move')
 
 " http://qiita.com/naoty_k/items/0f30a226621025897390
 " .gitignoreで指定したファイルと.git/以下のファイルを候補から除外する
-function! s:unite_gitignore_source()
-  let sources = []
-  if filereadable(expand('./.gitignore'))
-    for file in readfile(expand('./.gitignore'))
-      " コメント行と空行は追加しない
-      if file !~ "^#\\|^\s\*$"
-        call add(sources, file)
-      endif
-    endfor
-  endif
-
-  if isdirectory('./.git')
-    call add(sources, '.git')
-  endif
-
-  call add(sources, '_repositories')
-  call add(sources, 'vendor')
-  call add(sources, 'assets/images')
-
-  let pattern = escape(join(sources, '|'), './|~<>*')
-  call unite#custom#source('file_rec/git,file_rec/async,file_rec ,grep', 'ignore_pattern', pattern)
-
-  " call unite#custom#source('file_rec/git', 'ignore_pattern', pattern)
-  " call unite#custom#source('file_rec/async', 'ignore_pattern', pattern)
-  " call unite#custom#source('file_rec', 'ignore_pattern', pattern)
-  " call unite#custom#source('grep', 'ignore_pattern', pattern)
-endfunction
-call s:unite_gitignore_source()
+" function! s:unite_gitignore_source()
+"   let sources = []
+"   if filereadable(expand('./.gitignore'))
+"     for file in readfile(expand('./.gitignore'))
+"       " コメント行と空行は追加しない
+"       if file !~ "^#\\|^\s\*$"
+"         call add(sources, file)
+"       endif
+"     endfor
+"   endif
+"
+"   if isdirectory('./.git')
+"     call add(sources, '.git')
+"   endif
+"
+"   call add(sources, '_repositories')
+"   call add(sources, 'vendor')
+"   call add(sources, 'assets/images')
+"
+"   let pattern = escape(join(sources, '|'), './|~<>*')
+"   call unite#custom#source('file_rec/git,file_rec/async,file_rec,grep', 'ignore_pattern', pattern)
+"
+"   " call unite#custom#source('file_rec/git', 'ignore_pattern', pattern)
+"   " call unite#custom#source('file_rec/async', 'ignore_pattern', pattern)
+"   " call unite#custom#source('file_rec', 'ignore_pattern', pattern)
+"   " call unite#custom#source('grep', 'ignore_pattern', pattern)
+" endfunction
+" call s:unite_gitignore_source()
 
 
 " \ (<SID>unite_gitignore_source()) .
