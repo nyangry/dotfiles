@@ -1,0 +1,25 @@
+# # REF: https://siguniang.wordpress.com/2013/11/30/notes-on-ssh-multiplexing/
+# ControlMaster auto
+# ControlPath /tmp/%r@%h:%p
+# ControlPersist yes
+# ControlPersist 1h
+
+Host test1
+HostName test1-server.com
+User test 
+
+Host test1-db
+HostName test1-db
+User test-db-user
+ProxyCommand ssh test1 -W %h:%p
+LocalForward 3306 localhost:15
+
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+
+Host bitbucket.org
+  User git
+  Port 443
+  Hostname altssh.bitbucket.org
+  IdentityFile ~/.ssh/id_rsa
