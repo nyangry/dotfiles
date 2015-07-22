@@ -1133,11 +1133,6 @@ augroup set_tab_stop
   autocmd BufNewFile,BufRead * set tabstop=2 shiftwidth=2
 augroup END
 
-" 保存時に行末の空白を除去する
-" augroup remove_space
-"   autocmd!
-"   autocmd BufWritePre * :%s/\s\+$//ge
-" augroup END
 
 
 "====================================================================================
