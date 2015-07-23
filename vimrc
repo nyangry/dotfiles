@@ -1133,6 +1133,20 @@ augroup set_tab_stop
   autocmd BufNewFile,BufRead * set tabstop=2 shiftwidth=2
 augroup END
 
+" vimを使って保存時に楽をする
+" http://qiita.com/katton/items/bc9720826120f5f61fc1
+function! s:remove_dust()
+    let cursor = getpos(".")
+    " 保存時に行末の空白を除去する
+    %s/\s\+$//ge
+    " 保存時にtabを2スペースに変換する
+    %s/\t/  /ge
+    " 保存時にRuby1.8 Hashを除去する
+    " %s/\([^:]\+\):\{1}\([^ :"']\+\)\s=>/\1\2:/ge
+    call setpos(".", cursor)
+    unlet cursor
+endfunction
+autocmd BufWritePre * call <SID>remove_dust()
 
 
 "====================================================================================
