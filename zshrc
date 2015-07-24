@@ -54,13 +54,13 @@ function vcs_info_for_git() {
   VCS_GIT_PROMPT_UNTRACKED="%{${fg[red]}%}?%{${reset_color}%}"
 
   INDEX=$(git status --porcelain 2> /dev/null)
-	LINE="$(time_since_commit)|"
+  LINE="$(time_since_commit)|"
   if [[ -z "$INDEX" ]];then
     LINE="$LINE${VCS_GIT_PROMPT_CLEAN}${VCS_GIT_PROMPT}%{${reset_color}%}"
   else
     if $(echo "$INDEX" | grep '^UU ' &> /dev/null); then
       STATUS="$VCS_GIT_PROMPT_UNMERGED"
-		fi
+    fi
     if $(echo "$INDEX" | grep '^R ' &> /dev/null); then
       STATUS="$VCS_GIT_PROMPT_RENAMED"
     fi
