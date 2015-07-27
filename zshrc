@@ -77,9 +77,9 @@ function vcs_info_for_git() {
       STATUS="$VCS_GIT_PROMPT_ADDED"
     elif $(echo "$INDEX" | grep '^M ' &> /dev/null); then
       STATUS="$VCS_GIT_PROMPT_ADDED"
-		fi
-		LINE="$LINE${VCS_GIT_PROMPT_DIRTY}${VCS_GIT_PROMPT}%{${reset_color}%}$STATUS"
-	fi
+    fi
+    LINE="$LINE${VCS_GIT_PROMPT_DIRTY}${VCS_GIT_PROMPT}%{${reset_color}%}$STATUS"
+  fi
   echo "${LINE}"
 }
 
