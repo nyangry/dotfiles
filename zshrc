@@ -96,25 +96,25 @@ function minutes_since_last_commit {
 }
 
 function time_since_commit() {
-	local -A pc
+  local -A pc
 
   if [[ -n "${vcs_info_msg_0_}" ]]; then
-			local MINUTES_SINCE_LAST_COMMIT=`minutes_since_last_commit`
-			if [ "$MINUTES_SINCE_LAST_COMMIT" -eq -1 ]; then
-				COLOR="%{${fg[red]}%}"
-				local SINCE_LAST_COMMIT="${COLOR}uncommitted%{${reset_color}%}"
-			else
-				if [ "$MINUTES_SINCE_LAST_COMMIT" -gt 30 ]; then
-					COLOR="%{${fg[red]}%}"
-				elif [ "$MINUTES_SINCE_LAST_COMMIT" -gt 10 ]; then
-					COLOR="%{${fg[red]}%}"
-				else
-					COLOR="%{${fg[red]}%}"
-				fi
-				local SINCE_LAST_COMMIT="${COLOR}$(minutes_since_last_commit)m%{${reset_color}%}"
-			fi
-			echo $SINCE_LAST_COMMIT
-	fi
+      local MINUTES_SINCE_LAST_COMMIT=`minutes_since_last_commit`
+      if [ "$MINUTES_SINCE_LAST_COMMIT" -eq -1 ]; then
+        COLOR="%{${fg[red]}%}"
+        local SINCE_LAST_COMMIT="${COLOR}uncommitted%{${reset_color}%}"
+      else
+        if [ "$MINUTES_SINCE_LAST_COMMIT" -gt 30 ]; then
+          COLOR="%{${fg[red]}%}"
+        elif [ "$MINUTES_SINCE_LAST_COMMIT" -gt 10 ]; then
+          COLOR="%{${fg[red]}%}"
+        else
+          COLOR="%{${fg[red]}%}"
+        fi
+        local SINCE_LAST_COMMIT="${COLOR}$(minutes_since_last_commit)m%{${reset_color}%}"
+      fi
+      echo $SINCE_LAST_COMMIT
+  fi
 }
 
 function vcs_info_with_color() {
