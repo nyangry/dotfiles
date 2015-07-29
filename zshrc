@@ -122,9 +122,9 @@ function vcs_info_with_color() {
   if [[ `pwd` =~ ".*\/mnts\/.*" ]]; then
     return ""
   fi
-  
+
   VCS_PROMPT_PREFIX="("
-	VCS_PROMPT_SUFFIX=")"
+  VCS_PROMPT_SUFFIX=")"
 
   VCS_NOT_GIT_PROMPT="%{${fg[green]}%}${vcs_info_msg_0_}%{${reset_color}%}"
 
