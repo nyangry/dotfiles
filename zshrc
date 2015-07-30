@@ -139,7 +139,7 @@ function vcs_info_with_color() {
 }
 
 function current_dir() {
-	echo `pwd | rev | cut -d '/' -f 1 | rev`
+  echo `pwd | rev | cut -d '/' -f 1 | rev`
 }
 
 # http://makimoto.hatenablog.com/entry/show-rbenv-version-on-zsh-prompt
