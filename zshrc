@@ -149,7 +149,7 @@ function rbenv_version () {
   if [[ "`rbenv version | grep '.rbenv/version'`" = "" ]];then
     if [[ "`rbenv version | grep 'RBENV_VERSION'`" = "" ]];then
       local setting="L"
-    else 
+    else
       local setting="V"
     fi
   else
