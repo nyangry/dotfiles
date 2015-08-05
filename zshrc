@@ -323,8 +323,8 @@ export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 #     done
 #     echo "$cmd"
 # }
-#  
-#  
+#
+#
 # if ! is_tmux_running && shell_has_started_interactively; then
 #   if whence tmux >/dev/null 2>/dev/null; then
 #       $(resolve_alias "tmux")
