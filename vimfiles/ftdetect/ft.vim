@@ -12,6 +12,7 @@ augroup set_syntax
   autocmd FileType scss setlocal iskeyword+=-
   " rb
   autocmd BufRead,BufNewFile Gemfile setfiletype ruby
+  autocmd BufRead,BufNewFile Schemafile setfiletype ruby
   " haml
   autocmd FileType haml setlocal iskeyword+=-
   " markdown
