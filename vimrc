@@ -18,7 +18,7 @@ if neobundle#load_cache()
   NeoBundleFetch 'Shougo/neobundle.vim'
 
   "----------------------------------------------------------
-  " Shougo san 
+  " Shougo san
   "----------------------------------------------------------
   NeoBundle 'Shougo/vimproc.vim',  {
         \ 'build' : {
