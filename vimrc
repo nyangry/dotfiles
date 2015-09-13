@@ -541,11 +541,11 @@ let g:syntastic_mode_map               = { 'mode': 'active',
 let g:lightline = {
         \ 'mode_map': {'c': 'NORMAL'},
         \ 'active': {
-		    \ 'left': [ [ 'mode', 'paste' ],
-		    \           [ 'readonly', 'filename', 'modified', 'anzu'] ],
-		    \ 'right': [ [ 'lineinfo' ],
-		    \            [ 'percent' ],
-		    \            [ 'tabnum' ],
+        \ 'left': [ [ 'mode', 'paste' ],
+        \           [ 'readonly', 'filename', 'modified', 'anzu'] ],
+        \ 'right': [ [ 'lineinfo' ],
+        \            [ 'percent' ],
+        \            [ 'tabnum' ],
         \            [ 'fileformat', 'fileencoding', 'filetype' ] ]
         \ },
         \ 'component_function': {
