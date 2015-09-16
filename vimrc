@@ -556,7 +556,7 @@ let g:lightline = {
         \   'fileformat': 'MyFileformat',
         \   'filetype': 'MyFiletype',
         \   'fileencoding': 'MyFileencoding',
-        \   'mode': 'MyMode', 
+        \   'mode': 'MyMode',
         \   'anzu': 'anzu#search_status',
         \   'tabnum': 'TabNum',
         \ }
