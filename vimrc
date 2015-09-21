@@ -707,15 +707,19 @@ augroup Quickrun
   autocmd!
   autocmd BufReadPost *_spec.rb call RSpecQuickrun()
 augroup END
+
+
 "----------------------------------------------------------
 " simple-javascript-indenter
 "----------------------------------------------------------
 let g:SimpleJsIndenter_BriefMode = 1
 
+
 "----------------------------------------------------------
 " osyo-manga/vim-over
 "----------------------------------------------------------
 nnoremap <silent> <Leader>m :OverCommandLine<CR>
+
 
 "----------------------------------------------------------
 " nathanaelkane/vim-indent-guides
