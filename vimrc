@@ -733,20 +733,20 @@ let g:indent_guides_guide_size = 1
 "----------------------------------------------------------
 function! s:separate_defenition_to_each_filetypes(ft_dictionary) "{{{
   let result = {}
- 
+
   for [filetypes, value] in items(a:ft_dictionary)
     for ft in split(filetypes, ",")
       if !has_key(result, ft)
         let result[ft] = []
       endif
- 
+
       call extend(result[ft], copy(value))
     endfor
   endfor
- 
+
   return result
 endfunction"}}}
- 
+
 nnoremap ! :Switch<CR>
 let s:switch_definition = {
       \ '*': [
