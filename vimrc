@@ -845,29 +845,29 @@ let s:switch_definition = {
       \   ['[ ]', '[x]']
       \ ]
       \ }
- 
+
 let s:switch_definition = s:separate_defenition_to_each_filetypes(s:switch_definition)
 function! s:define_switch_mappings() "{{{
   if exists('b:switch_custom_definitions')
     unlet b:switch_custom_definitions
   endif
- 
+
   let dictionary = []
   for filetype in split(&ft, '\.')
     if has_key(s:switch_definition, filetype)
       let dictionary = extend(dictionary, s:switch_definition[filetype])
     endif
   endfor
- 
+
   if exists('b:rails_root')
     let dictionary = extend(dictionary, s:switch_definition['rails'])
   endif
- 
+
   if has_key(s:switch_definition, '*')
     let dictionary = extend(dictionary, s:switch_definition['*'])
   endif
 endfunction"}}}
- 
+
 augroup SwitchSetting
   autocmd!
   autocmd Filetype * if !empty(split(&ft, '\.')) | call <SID>define_switch_mappings() | endif
