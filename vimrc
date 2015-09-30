@@ -887,7 +887,7 @@ nnoremap <silent> ,ga :<C-u>Agit<CR>
 
 
 "----------------------------------------------------------
-" vim-ruby 
+" vim-ruby
 "----------------------------------------------------------
 let g:rubycomplete_rails                = 0
 let g:rubycomplete_buffer_loading       = 1
