@@ -220,13 +220,14 @@ endif
 
 " git ディレクトリかどうかで、処理を切り替える
 " http://qiita.com/yuku_t/items/9263e6d9105ba972aea8
-function! DispatchUniteFileRecAsyncOrGit()
-  if isdirectory(getcwd()."/.git")
-    Unite -start-insert file_rec/git:-c:-o:--exclude-standard
-  else
-    Unite -start-insert file_rec/async
-  endif
-endfunction
+" file_rec/git は画像が大量にあるような場合にキツイ ls-files --exclude-standard した後に、画像や不要ファイルをフィルタする処理があれば使えそう
+" function! DispatchUniteFileRecAsyncOrGit()
+"   if isdirectory(getcwd()."/.git")
+"     Unite -start-insert file_rec/git:-c:-o:--exclude-standard
+"   else
+"     Unite -start-insert file_rec/async
+"   endif
+" endfunction
 
 nnoremap <silent> ,gt :<C-u>Unite tab<CR>
 nnoremap <silent> ,gr :<C-u>Unite grep:. -start-insert -buffer-name=search-buffer<CR>
