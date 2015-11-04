@@ -238,7 +238,7 @@ nnoremap <silent> ,gb :<C-u>Unite giti/branch_all<CR>
 
 nnoremap <silent> <C-g> :<C-u>Unite buffer -start-insert<CR>
 
-nnoremap ,us :<C-u>Unite file_rec -start-insert<CR>
+" nnoremap ,us :<C-u>Unite file_rec -start-insert<CR>
 
 nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
 
