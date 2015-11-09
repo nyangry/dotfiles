@@ -13,6 +13,7 @@
 	autocrlf     = input
 	eol          = lf
 	excludesfile = ~/.gitignore
+	editor = /usr/local/bin/vim
 [diff]
   tool      = vimdiff
   algorithm = histogram
