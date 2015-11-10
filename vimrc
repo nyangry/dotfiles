@@ -37,12 +37,12 @@ if neobundle#load_cache()
   "----------------------------------------------------------
   " textobj
   "----------------------------------------------------------
-  NeoBundle 'kana/vim-textobj-user'
-  NeoBundle 'kana/vim-textobj-line'
-  NeoBundle 'kana/vim-textobj-entire'
-  NeoBundle 'rhysd/vim-textobj-ruby'
-  NeoBundle 'coderifous/textobj-word-column.vim'
-  NeoBundle 'terryma/vim-expand-region'
+  " NeoBundle 'kana/vim-textobj-user'
+  " NeoBundle 'kana/vim-textobj-line'
+  " NeoBundle 'kana/vim-textobj-entire'
+  " NeoBundle 'rhysd/vim-textobj-ruby'
+  " NeoBundle 'coderifous/textobj-word-column.vim'
+  " NeoBundle 'terryma/vim-expand-region'
 
   "----------------------------------------------------------
   " operator
