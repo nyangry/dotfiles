@@ -49,7 +49,7 @@ if neobundle#load_cache()
   "----------------------------------------------------------
   NeoBundle 'kana/vim-operator-user.git'
   NeoBundle 'kana/vim-operator-replace.git'
-  NeoBundle 'osyo-manga/vim-operator-blockwise'
+  " NeoBundle 'osyo-manga/vim-operator-blockwise'
 
   "----------------------------------------------------------
   " % による対応括弧へのカーソル移動機能を拡張
