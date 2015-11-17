@@ -67,8 +67,8 @@ if neobundle#load_cache()
   "----------------------------------------------------------
   " ref
   "----------------------------------------------------------
-  NeoBundle 'thinca/vim-ref'
-  NeoBundle 'yuku-t/vim-ref-ri'
+  " NeoBundle 'thinca/vim-ref'
+  " NeoBundle 'yuku-t/vim-ref-ri'
 
   "----------------------------------------------------------
   " Git
