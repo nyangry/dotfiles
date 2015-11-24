@@ -256,6 +256,7 @@ alias gstd='git stash drop'
 alias gstl='git stash list'
 alias gstp='git stash pop'
 alias gsts='git stash show'
+alias gstsp='git stash show -p'
 
 # ----------------------
 # Git Function
