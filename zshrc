@@ -407,3 +407,7 @@ function is_npm_dir () {
 function add_npm_bin_path_for_binstubs () {
   PATH=./node_modules/.bin:$PATH
 }
+export PATH="/usr/local/sbin:$PATH"
+
+# direnv
+eval "$(direnv hook zsh)"
