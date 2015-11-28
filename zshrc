@@ -266,19 +266,82 @@ function glf() { git log --all --grep="$1"; }
 
 
 #history setting
-HISTFILE="$HOME/.zsh_history"
-setopt hist_ignore_dups
+# [# 履歴ファイルの保存先 export HISTFILE=${HOME}/.zsh_history  # メモリに保存される履歴の件数 export HISTSIZE=1000  # 履歴ファイルに保存される履歴の件数 export SAVEHIST=100000  # 重複を記録しない setopt hist_ignore_dups  # 開始と終了を記録 setopt EXTENDED_HISTORY](http://qiita.com/syui/items/c1a1567b2b76051f50c4)
+
+# zshで特定のコマンドをヒストリに追加しない条件を柔軟に設定する
+# http://mollifier.hatenablog.com/entry/20090728/p1
+zshaddhistory() {
+  local line=${1%%$'\n'}
+  local cmd=${line%% *}
+
+  # 以下の条件をすべて満たすものだけをヒストリに追加する
+  [[ ${#line} -ge 10
+      && ${cmd} != (l|l[sal])
+      && ${cmd} != (c|cd)
+      && ${cmd} != (m|man)
+      && ${cmd} != (r[mr])
+      && ${cmd} != (kill)
+      && ${cmd} != (vim)
+      && ${cmd} != (brew)
+      && ${cmd} != (bundle)
+      && ${cmd} != (rails)
+      && ${cmd} != (gfu|grb|gco|gcob|ga|gclf|gps|gpsuo)
+  ]]
+}
+
+# 履歴ファイルの保存先
+export HISTFILE=${HOME}/.zsh_history
+
+# メモリに保存される履歴の件数
+export HISTSIZE=1000000
+
+# 履歴ファイルに保存される履歴の件数
+export SAVEHIST=1000000
+
+# history search
+bindkey '^P' history-beginning-search-backward
+bindkey '^N' history-beginning-search-forward
+
+# インクリメンタルからの検索
+bindkey "^R" history-incremental-search-backward
+bindkey "^S" history-incremental-search-forward
+
+# historyの共有
 setopt share_history
+
+# 重複を記録しない
+setopt hist_ignore_dups
+
+# ヒストリに追加されるコマンド行が古いものと同じなら古いものを削除
+setopt hist_ignore_all_dups
+
+# スペースで始まるコマンド行はヒストリリストから削除
 setopt hist_ignore_space
-HISTSIZE=1000000
-SAVEHIST=1000000
+
+# 余分な空白は詰めて記録
+setopt hist_reduce_blanks
+
+# 古いコマンドと同じものは無視
+setopt hist_save_no_dups
+
+# historyコマンドは履歴に登録しない
+setopt hist_no_store
+
+# 補完時にヒストリを自動的に展開
+setopt hist_expand
+
+# 履歴をインクリメンタルに追加
+setopt inc_append_history
+
+# 開始と終了を記録
+setopt EXTENDED_HISTORY
 
 #例えば"ls "とうってからC-pでlsから始まる履歴を検索できます。複数行のコマンドのときはカーソルキーで移動できるようにしています。
-autoload history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end
+# autoload history-search-end
+# zle -N history-beginning-search-backward-end history-search-end
+# zle -N history-beginning-search-forward-end history-search-end
+# bindkey "^P" history-beginning-search-backward-end
+# bindkey "^N" history-beginning-search-forward-end
 
 #cd
 setopt auto_cd
