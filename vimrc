@@ -74,7 +74,7 @@ if neobundle#load_cache()
   " Git
   "----------------------------------------------------------
   NeoBundle 'tpope/vim-fugitive'
-  NeoBundle 'airblade/vim-gitgutter'
+  " NeoBundle 'airblade/vim-gitgutter'
   NeoBundle 'cohama/agit.vim'
   NeoBundle 'idanarye/vim-merginal'
   NeoBundle 'kmnk/vim-unite-giti.git'
