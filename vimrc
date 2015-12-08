@@ -128,8 +128,8 @@ if neobundle#load_cache()
   " session
   NeoBundle 'tpope/vim-obsession'
 
-  NeoBundle 'kannokanno/previm'
-  NeoBundle 'tyru/open-browser.vim'
+  " NeoBundle 'kannokanno/previm'
+  " NeoBundle 'tyru/open-browser.vim'
   NeoBundle 'itchyny/lightline.vim'
   NeoBundle 'jiangmiao/simple-javascript-indenter'
   NeoBundle 'osyo-manga/vim-over'
