@@ -1,6 +1,7 @@
 ## Settings
 Pry.config.color = true
 Pry.config.editor = "vim"
+Pry.config.pager = false
 
 Pry.config.prompt = proc do |obj, level, _|
   prompt = ""
