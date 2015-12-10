@@ -144,10 +144,10 @@ if neobundle#load_cache()
   " NeoBundle 'terryma/vim-multiple-cursors'
 
   " 移動拡張 f / t
-  NeoBundle 'rhysd/clever-f.vim'
-  NeoBundle 'mattn/wiseman-f-vim'
+  " NeoBundle 'rhysd/clever-f.vim'
+  " NeoBundle 'mattn/wiseman-f-vim'
 
-  NeoBundle 'thinca/vim-visualstar'
+  " NeoBundle 'thinca/vim-visualstar'
 
   " コピペ自動判定処理
   NeoBundle 'ConradIrwin/vim-bracketed-paste'
