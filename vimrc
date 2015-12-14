@@ -373,7 +373,7 @@ augroup enable_omni_completion
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   " autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+  " autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 augroup END
 
 let g:neocomplete#force_overwrite_completefunc = 1
