@@ -388,7 +388,7 @@ if !exists('g:neocomplete#force_omni_input_patterns')
 endif
 let g:neocomplete#enable_auto_close_preview = 1
 
-let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+" let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 
 " For smart TAB completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
