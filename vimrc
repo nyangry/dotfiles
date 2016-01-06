@@ -1329,3 +1329,10 @@ function! s:get_syn_info()
         \ " guibg: " . linkedSyn.guibg
 endfunction
 command! SyntaxInfo call s:get_syn_info()
+
+"====================================================================================
+" c*でカーソル下のキーワードを置換
+" http://miniman2011.blog55.fc2.com/blog-entry-295.html
+"====================================================================================
+nnoremap <expr> c* ':%s ;\<' . expand('<cword>') . '\>;'
+vnoremap <expr> c* ':s ;\<' . expand('<cword>') . '\>;'
