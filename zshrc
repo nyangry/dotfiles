@@ -18,20 +18,33 @@ bindkey "^[[3~" delete-char
 #=======================================================
 
 #----------------------------------
-# cd-bookmark
-# http:/qiita.com/mollifier/items/46b080f9a5ca9f29674e/
+# zsh-completions
 #----------------------------------
-fpath=($HOME/dotfiles/zsh/plugins/cd-bookmark(N-/) $fpath)
-autoload -Uz cd-bookmark
-alias b='cd-bookmark'
+fpath=(/usr/local/share/zsh-completions $fpath)
+# autoload -U compinit
+# compinit
 
+#----------------------------------
+# completions
+#----------------------------------
+fpath=(/Users/masuyama/dotfiles/zsh/completions $fpath)
+autoload -U compinit && compinit
 
-# .zshrc
+#----------------------------------
+# zsh
+#----------------------------------
 setopt prompt_subst
 autoload -Uz colors
 colors
 autoload -Uz add-zsh-hook
+
+
+
+#----------------------------------
 # for vcs_info
+#----------------------------------
+local git==git
+
 function _precmd_vcs_info() {
   LANG=en_US.UTF-8 vcs_info
 }
