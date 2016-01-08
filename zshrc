@@ -66,7 +66,7 @@ function vcs_info_for_git() {
   VCS_GIT_PROMPT_UNMERGED="%{${fg[red]}%}U%{${reset_color}%}"
   VCS_GIT_PROMPT_UNTRACKED="%{${fg[red]}%}?%{${reset_color}%}"
 
-  INDEX=$(git status --porcelain 2> /dev/null)
+  INDEX=$($git status --porcelain 2> /dev/null)
   LINE="$(time_since_commit)|"
   if [[ -z "$INDEX" ]];then
     LINE="$LINE${VCS_GIT_PROMPT_CLEAN}${VCS_GIT_PROMPT}%{${reset_color}%}"
