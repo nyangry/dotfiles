@@ -74,12 +74,12 @@ if neobundle#load_cache()
   " Git
   "----------------------------------------------------------
   NeoBundle 'tpope/vim-fugitive'
-  " NeoBundle 'airblade/vim-gitgutter'
   NeoBundle 'cohama/agit.vim'
-  NeoBundle 'idanarye/vim-merginal'
-  NeoBundle 'kmnk/vim-unite-giti.git'
   NeoBundle 'rhysd/committia.vim'
-  NeoBundle 'AndrewRadev/gapply.vim'
+  " NeoBundle 'idanarye/vim-merginal'
+  " NeoBundle 'kmnk/vim-unite-giti.git'
+  " NeoBundle 'AndrewRadev/gapply.vim'
+  " NeoBundle 'airblade/vim-gitgutter'
 
   "----------------------------------------------------------
   " Ruby
@@ -231,8 +231,6 @@ endif
 
 nnoremap <silent> ,gt :<C-u>Unite tab<CR>
 nnoremap <silent> ,gr :<C-u>Unite grep:. -start-insert -buffer-name=search-buffer<CR>
-nnoremap <silent> ,gs :<C-u>Unite giti/status<CR>
-nnoremap <silent> ,gb :<C-u>Unite giti/branch_all<CR>
 
 " nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 
