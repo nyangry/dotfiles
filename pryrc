@@ -35,22 +35,22 @@ Pry.config.commands.alias_command '.clr', '.clear'
 
 # refs: https://github.com/pry/pry/wiki/FAQ#wiki-hirb
 if defined? Hirb
- Hirb::View.instance_eval do
-   def enable_output_method
-     @output_method = true
-     @old_print = Pry.config.print
-     Pry.config.print = proc do |output, value|
-       Hirb::View.view_or_page_output(value) || @old_print.call(output, value)
-     end
-   end
+  Hirb::View.instance_eval do
+    def enable_output_method
+      @output_method = true
+      @old_print = Pry.config.print
+      Pry.config.print = proc do |output, value, _pry_|
+        Hirb::View.view_or_page_output(value) || Pry::DEFAULT_PRINT.call(output, value, _pry_)
+      end
+    end
 
-   def disable_output_method
-     Pry.config.print = @old_print
-     @output_method = nil
-   end
- end
+    def disable_output_method
+      Pry.config.print = @old_print
+      @output_method = nil
+    end
+  end
 
- Hirb.enable
+  Hirb.enable
 end
 
 # refs: https://github.com/nixme/pry-debugger#tips
