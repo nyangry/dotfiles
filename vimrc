@@ -837,7 +837,15 @@ let g:gitgutter_max_signs = 3000
 "----------------------------------------------------------
 " agit.vim
 "----------------------------------------------------------
-nnoremap <silent> ,ga :<C-u>Agit<CR>
+" let g:agit_enable_auto_refresh = 1
+
+nnoremap <silent> <leader>ga :<C-u>Agit<CR>
+nnoremap <silent> <leader>g :<C-u>AgitFile<CR>
+
+autocmd FileType agit call s:my_agit_setting()
+function! s:my_agit_setting()
+  nmap <buffer> rv <Plug>(agit-git-revert)
+endfunction
 
 
 "----------------------------------------------------------
