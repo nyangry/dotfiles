@@ -1075,6 +1075,23 @@ hi htmlTagName ctermfg=yellow
 " hi hamlRubyChar
 " hi hamlRubyOutputChar
 
+" Agit.vim
+hi agitStatAdded ctermfg=green
+hi agitStatRemoved ctermfg=red
+hi agitDiffAdd ctermfg=green
+hi agitDiffRemove ctermfg=red
+
+" hi def link agitDiffAdd Identifier
+" hi def link agitDiffAddMerge Identifier
+" hi def link agitDiffRemove Special
+" hi def link agitDiffRemoveMerge Special
+" hi def link agitDiffHeader Type
+" hi def link agitHeaderLabel Label
+" hi def link agitDiffFileName Comment
+" hi def link agitDiffIndex Comment
+" hi def link agitDiffLine Comment
+" hi def link agitDiffSubname PreProc
+
 
 "====================================================================================
 " Complete
