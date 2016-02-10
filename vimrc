@@ -908,6 +908,7 @@ set modelines=0                 " モードラインは無効
 set clipboard=unnamed           " yank to clipboard
 
 set display=lastline
+set pumheight=10
 
 augroup set_fo
   " t textwidthを使ってテキストを自動折返しする。
