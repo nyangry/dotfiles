@@ -1102,7 +1102,8 @@ set smartcase
 set hlsearch
 set incsearch " インクリメンタルサーチを行う
 set listchars=eol:$,tab:>\ ,extends:< " listで表示される文字のフォーマットを指定する
-set showmatch " 閉じ括弧が入力されたとき、対応する括弧を表示する
+set showmatch
+set matchtime=1
 set showtabline=2
 set expandtab
 set tabstop<
