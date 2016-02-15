@@ -49,6 +49,7 @@ if neobundle#load_cache()
   "----------------------------------------------------------
   NeoBundle 'kana/vim-operator-user.git'
   NeoBundle 'kana/vim-operator-replace.git'
+  NeoBundle 'tyru/operator-camelize.vim'
   " NeoBundle 'osyo-manga/vim-operator-blockwise'
 
   "----------------------------------------------------------
@@ -887,6 +888,12 @@ augroup vim-anzu
   autocmd!
   autocmd CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
 augroup END
+
+
+"----------------------------------------------------------
+" tyru/operator-camelize.vim
+"----------------------------------------------------------
+map <leader>c <plug>(operator-camelize-toggle)
 
 
 "====================================================================================
