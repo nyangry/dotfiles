@@ -1149,6 +1149,8 @@ nmap * *zz
 nmap # #zz
 nmap g* g*zz
 nmap g# g#zz
+nnoremap + <C-a>
+nnoremap - <C-x>
 
 nnoremap Y y$
 
