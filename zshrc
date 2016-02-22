@@ -98,7 +98,7 @@ function vcs_info_for_git() {
 
 function minutes_since_last_commit {
     now=`date +%s`
-    last_commit=`git log --pretty=format:'%at' -1 2>/dev/null`
+    last_commit=`$git log --pretty=format:'%at' -1 2>/dev/null`
     if $lastcommit ; then
       seconds_since_last_commit=$((now-last_commit))
       minutes_since_last_commit=$((seconds_since_last_commit/60))
