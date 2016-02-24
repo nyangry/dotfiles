@@ -277,7 +277,7 @@ alias gstsp='git stash show -p'
 # Git Function
 # ----------------------
 # Git log find by commit message
-function glf() { git log --all --grep="$1"; }
+function glf() { $git log --all --grep="$1"; }
 
 
 #history setting
