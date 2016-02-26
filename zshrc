@@ -296,6 +296,7 @@ zshaddhistory() {
       && ${cmd} != (m|man)
       && ${cmd} != (r[mr])
       && ${cmd} != (kill)
+      && ${cmd} != (tmux)
       && ${cmd} != (vim)
       && ${cmd} != (brew)
       && ${cmd} != (bundle)
