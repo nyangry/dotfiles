@@ -490,3 +490,6 @@ export PATH="/usr/local/sbin:$PATH"
 
 # direnv
 eval "$(direnv hook zsh)"
+
+# hub
+eval "$(hub alias -s)"
