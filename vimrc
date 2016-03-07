@@ -852,9 +852,23 @@ let g:gitgutter_max_signs = 3000
 
 
 "----------------------------------------------------------
-" agit.vim
+" cohama/agit.vim
 "----------------------------------------------------------
-" let g:agit_enable_auto_refresh = 1
+let g:agit_preset_views = {
+\ 'default': [
+\   {'name': 'log'},
+\   {'name': 'stat',
+\    'layout': 'botright vnew'},
+\   {'name': 'diff',
+\    'layout': 'belowright {winheight(".") * 3 / 4}new'}
+\ ],
+\ 'file': [
+\   {'name': 'filelog'},
+\   {'name': 'stat',
+\    'layout': 'botright vnew'},
+\   {'name': 'diff',
+\    'layout': 'belowright {winheight(".") * 3 / 4}new'}
+\ ]}
 
 nnoremap <silent> <leader>ga :<C-u>Agit<CR>
 nnoremap <silent> <leader>g :<C-u>AgitFile<CR>
