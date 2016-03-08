@@ -200,31 +200,6 @@ endif
 "----------------------------------------------------------
 " Unite
 "----------------------------------------------------------
-call unite#custom#profile('default', 'context', {
-\   'direction': 'botright',
-\ })
-call unite#custom#profile('default', 'context.ignorecase', 1)
-call unite#custom#profile('default', 'context.smartcase', 1)
-
-" ウィンドウを分割して開く
-augroup unite_keybinds
-  autocmd!
-  autocmd FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-  autocmd FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-  " ウィンドウを縦に分割して開く
-  autocmd FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-  autocmd FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-  " 新しいウィンドウで開く
-  autocmd FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-  " autocmd FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-  " ESCキーを2回押すと終了する
-  autocmd FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
-  autocmd FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
-
-  autocmd FileType unite nnoremap <silent><buffer><expr> r unite#do_action('rename')
-  autocmd FileType unite nnoremap <silent><buffer><expr> m unite#do_action('move')
-augroup END
-
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
   let g:unite_source_grep_default_opts =
@@ -235,31 +210,16 @@ if executable('ag')
   " let g:unite_source_grep_max_candidates = 100
 endif
 
-" git ディレクトリかどうかで、処理を切り替える
-" http://qiita.com/yuku_t/items/9263e6d9105ba972aea8
-" file_rec/git は画像が大量にあるような場合にキツイ ls-files --exclude-standard した後に、画像や不要ファイルをフィルタする処理があれば使えそう
-" function! DispatchUniteFileRecAsyncOrGit()
-"   if isdirectory(getcwd()."/.git")
-"     Unite -start-insert file_rec/git:-c:-o:--exclude-standard
-"   else
-"     Unite -start-insert file_rec/async
-"   endif
-" endfunction
-
-nnoremap <silent> ,gt :<C-u>Unite tab<CR>
-nnoremap <silent> ,gr :<C-u>Unite grep:. -start-insert -buffer-name=search-buffer<CR>
-
-" nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-
-nnoremap <silent> <C-g> :<C-u>Unite buffer -start-insert<CR>
-
-" nnoremap ,us :<C-u>Unite file_rec -start-insert<CR>
-
-" nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
-
 let g:unite_source_rec_async_command =
   \ ['ag', '--follow', '--nocolor', '--nogroup',
   \  '--hidden', '-g', '']
+
+call unite#custom#profile('default', 'context', {
+\   'direction': 'botright',
+\   'start_insert': 1,
+\   'context.ignorecase': 1,
+\   'context.smartcase': 1
+\ })
 
 call unite#custom#source('file,file/new,buffer,file_rec,file_rec/async',
   \ 'ignore_pattern', join([
@@ -271,10 +231,60 @@ call unite#custom#source('file,file/new,buffer,file_rec,file_rec/async',
   \ 'node_modules/',
   \ ], '\|'))
 
-nnoremap <C-f> :<C-u>Unite -start-insert file_rec/async<CR>
+call unite#custom#source('file,file/new,buffer,file_rec,file_rec/async',
+  \ 'sorters', 'sorter_ftime')
 
 call unite#custom#alias('file', 'delete', 'vimfiler__delete')
 call unite#custom#alias('file', 'move', 'vimfiler__move')
+
+" git ディレクトリかどうかで、処理を切り替える
+" http://qiita.com/yuku_t/items/9263e6d9105ba972aea8
+" file_rec/git は画像が大量にあるような場合にキツイ ls-files --exclude-standard した後に、画像や不要ファイルをフィルタする処理があれば使えそう
+" function! DispatchUniteFileRecAsyncOrGit()
+"   if isdirectory(getcwd()."/.git")
+"     Unite file_rec/git:-c:-o:--exclude-standard
+"   else
+"     Unite file_rec/async
+"   endif
+" endfunction
+
+" nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
+
+nnoremap    [unite]   <Nop>
+nmap      , [unite]
+nnoremap <silent> [unite]t :<C-u>Unite tab<CR>
+nnoremap <silent> [unite]gr :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
+nnoremap <silent> [unite]r :<C-u>UniteResume grep-buffer<CR>
+
+" nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+
+nnoremap <silent> <C-g> :<C-u>Unite buffer<CR>
+
+" nnoremap ,us :<C-u>Unite file_rec<CR>
+
+nnoremap <C-f> :<C-u>Unite file_rec/async<CR>
+
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()"{{{
+  nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+  inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+  " ウィンドウを縦に分割して開く
+  nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
+  inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
+  " 新しいウィンドウで開く
+  nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+  " inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+  " ESCキーを2回押すと終了する
+  nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
+  inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
+
+  nnoremap <silent><buffer><expr> r unite#do_action('rename')
+  nnoremap <silent><buffer><expr> m unite#do_action('move')
+  "
+  " nnoremap <buffer><expr> S      unite#mappings#set_current_sorters(
+  "           \ empty(unite#mappings#get_current_sorters()) ?
+  "           \ ['sorter_ftime'] : [])
+endfunction"}}}
 
 
 "----------------------------------------------------------
