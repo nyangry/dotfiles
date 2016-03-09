@@ -185,9 +185,14 @@ call dein#end()
 " Required:
 filetype plugin indent on
 
-" If you want to install not installed plugins on startup.
+" vimprocだけは最初にインストールしてほしい
+if dein#check_install(['vimproc'])
+  call dein#install(['vimproc'])
+endif
+
+" その他インストールしていないものはこちらに入れる
 if dein#check_install()
- call dein#install()
+  call dein#install()
 endif
 
 "End dein Scripts-------------------------
