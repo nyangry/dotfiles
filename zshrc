@@ -11,11 +11,16 @@ export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
 # osx mavericks
-bindkey "^[[3~" delete-char
+# bindkey "^[[3~" delete-char
 
 #=======================================================
 # Plugins
 #=======================================================
+#----------------------------------
+# git-escape-magic
+#----------------------------------
+fpath=(~/dotfiles/zsh/plugins/zsh-git-escape-magic $fpath)
+autoload -Uz git-escape-magic && git-escape-magic
 
 #----------------------------------
 # zsh-completions
