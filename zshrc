@@ -32,7 +32,7 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 #----------------------------------
 # completions
 #----------------------------------
-fpath=(/Users/masuyama/dotfiles/zsh/completions $fpath)
+fpath=(~/dotfiles/zsh/completions $fpath)
 autoload -U compinit && compinit
 
 #----------------------------------
