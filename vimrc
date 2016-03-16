@@ -1257,6 +1257,21 @@ vnoremap <silent> p p`]
 nnoremap <silent> p p`]
 
 "-------------------------------------------
+" [Insert current filename - Vim Tips Wiki - Wikia](http://vim.wikia.com/wiki/Insert_current_filename)
+"-------------------------------------------
+" inserts the current filename without the extension
+:inoremap <leader>n <C-R>=expand("%:t:r")<CR>
+
+" To keep the extension use:
+" :inoremap <leader>n <C-R>=expand("%:t")<CR>
+
+" To insert the absolute path of the directory the file is in use:
+" :inoremap <leader>n <C-R>=expand("%:p:h")<CR>
+
+" To insert the relative path of the directory the file is in use:
+" :inoremap <leader>n <C-R>=expand("%:h")<CR>
+
+"-------------------------------------------
 " 自動補完
 "-------------------------------------------
 " inoremap , ,
