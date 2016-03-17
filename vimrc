@@ -168,6 +168,10 @@ call dein#add('kana/vim-fakeclip')
 call dein#add('vim-scripts/copypath.vim')
 " 整形ツール
 call dein#add('h1mesuke/vim-alignta')
+call dein#add('godlygeek/tabular')
+
+" 置換強化
+call dein#add('tpope/vim-abolish')
 
 call dein#add('airblade/vim-rooter')
 
