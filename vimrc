@@ -183,6 +183,8 @@ call dein#add('AndrewRadev/switch.vim')
 
 call dein#add('osyo-manga/vim-anzu')
 
+call dein#add('zerowidth/vim-copy-as-rtf')
+
 " Required:
 call dein#end()
 
