@@ -486,19 +486,9 @@ nnoremap <C-]> g<C-]>
 " szw/vim-tags
 " http://tkkbn.hatenablog.com/entry/2013/11/02/233701
 "----------------------------------------------------------
+let g:vim_tags_auto_generate = 1
 let g:vim_tags_project_tags_command = "/usr/local/bin/ctags `pwd` 2>/dev/null"
 let g:vim_tags_gems_tags_command    = "/usr/local/bin/ctags `bundle show --paths` 2>/dev/null"
-
-
-
-" augroup VimTags
-"   autocmd!
-"   if exists(':TagsGenerate')
-"     autocmd BufWritePost Gemfile TagsGenerate
-"     autocmd BufEnter * TagsGenerate
-"     autocmd BufWritePost * TagsGenerate
-"   endif
-" augroup END
 
 "----------------------------------------------------------
 " vim-scripts/taglist
