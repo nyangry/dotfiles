@@ -211,8 +211,8 @@ endif
 "----------------------------------------------------------
 " Unite
 "----------------------------------------------------------
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
+if executable('hw')
+  let g:unite_source_grep_command = 'hw'
   let g:unite_source_grep_default_opts =
   \ '-i --vimgrep --hidden --ignore ' .
   \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr''' .
@@ -222,7 +222,7 @@ if executable('ag')
 endif
 
 let g:unite_source_rec_async_command =
-  \ ['ag', '--follow', '--nocolor', '--nogroup',
+  \ ['hw', '--follow', '--nocolor', '--nogroup',
   \  '--hidden', '-g', '']
 
 call unite#custom#profile('default', 'context', {
