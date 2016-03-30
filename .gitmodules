@@ -1,3 +1,6 @@
 [submodule "vimfiles/vundle.git"]
 	path = vimfiles/vundle.git
 	url = http://github.com/gmarik/vundle.git
+[submodule "zsh/plugins/zsh-git-escape-magic"]
+	path = zsh/plugins/zsh-git-escape-magic
+	url = https://github.com/knu/zsh-git-escape-magic.git
