@@ -907,6 +907,8 @@ endif
 " View
 "====================================================================================
 set t_Co=256
+
+" Ref: https://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
 " set background=dark
 " colorscheme flatland
 " colorscheme hybrid
@@ -950,6 +952,8 @@ hi uniteSource__GrepSeparator ctermfg=green
 hi uniteSource__GrepPattern ctermfg=darkred
 hi uniteSource__GrepLineNR ctermfg=blue
 hi uniteSource__FileRecGit ctermfg=255
+hi uniteSource__FileRecAsync ctermfg=195
+hi uniteSource__FileMru ctermfg=45
 " hi uniteSourceLine__uniteSource__Grep ctermfg=magenta
 " hi uniteSourceLine__uniteSource__FileRecGit ctermfg=darkyellow
 
