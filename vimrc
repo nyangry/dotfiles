@@ -209,6 +209,8 @@ if dein#check_install()
   call dein#install()
 endif
 
+command! -nargs=0 DeinUpdate call dein#update()
+
 "End dein Scripts-------------------------
 
 
