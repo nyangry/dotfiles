@@ -29,14 +29,7 @@ call dein#add('Shougo/dein.vim')
 "----------------------------------------------------------
 " Shougo san
 "----------------------------------------------------------
-call dein#add('Shougo/vimproc.vim', {
-      \ 'build' : {
-      \     'windows' : 'echo "Sorry,  cannot update vimproc binary file in Windows."',
-      \     'cygwin'  : 'make -f make_cygwin.mak',
-      \     'mac'     : 'make -f make_mac.mak',
-      \     'unix'    : 'make -f make_unix.mak',
-      \    },
-      \ })
+call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/vimfiler.vim')
 call dein#add('Shougo/neomru.vim')
