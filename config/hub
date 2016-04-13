@@ -1,0 +1,4 @@
+---
+github.com:
+- oauth_token: ACCESS_TOKEN
+  user: USERNAME
