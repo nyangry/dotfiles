@@ -915,7 +915,7 @@ colorscheme ir_black
 " hi Normal ctermbg=black
 
 hi matchParen ctermbg=black ctermfg=green
-hi Visual ctermbg=black ctermfg=lightcyan
+hi Visual ctermbg=070 ctermfg=white
 hi Search ctermbg=blue ctermfg=white term=none cterm=none
 hi Comment ctermfg=245
 
