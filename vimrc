@@ -292,10 +292,10 @@ function! s:unite_my_settings()"{{{
 
   nnoremap <silent><buffer><expr> r unite#do_action('rename')
   nnoremap <silent><buffer><expr> m unite#do_action('move')
-  "
-  " nnoremap <buffer><expr> S      unite#mappings#set_current_sorters(
-  "           \ empty(unite#mappings#get_current_sorters()) ?
-  "           \ ['sorter_ftime'] : [])
+
+  nnoremap <buffer><expr> S      unite#mappings#set_current_sorters(
+            \ empty(unite#mappings#get_current_sorters()) ?
+            \ ['sorter_ftime'] : [])
 endfunction"}}}
 
 
