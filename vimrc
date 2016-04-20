@@ -436,6 +436,7 @@ function! s:check_back_space() "{{{
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
 
+
 "----------------------------------------------------------
 " VimFiler
 "----------------------------------------------------------
@@ -456,6 +457,12 @@ let g:vimfiler_as_default_explorer = 1
 nnoremap <silent> <Leader>f :<C-u>VimFilerExplorer -find
   \ -buffer-name=explorer -simple
   \ -direction=topleft -split -winwidth=50 -toggle<CR>
+
+
+"----------------------------------------------------------
+" Shougo/neomru.vim
+"----------------------------------------------------------
+let g:neomru#time_format = "(%Y/%m/%d %H:%M:%S) "
 
 
 "----------------------------------------------------------
