@@ -1,9 +1,4 @@
 #=======================================================
-#=======================================================
-# zmodload zsh/zprof && zprof
-
-
-#=======================================================
 # PATH
 #=======================================================
 export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH
@@ -26,14 +21,12 @@ autoload -Uz git-escape-magic && git-escape-magic
 # zsh-completions
 #----------------------------------
 fpath=(/usr/local/share/zsh-completions $fpath)
-# autoload -U compinit
-# compinit
 
 #----------------------------------
 # completions
 #----------------------------------
 fpath=(~/dotfiles/zsh/completions $fpath)
-autoload -U compinit && compinit
+autoload -U compinit && compinit -C
 
 #----------------------------------
 # url-quote-magic
@@ -205,7 +198,8 @@ function rbenv_version () {
 # add-zsh-hook precmd rbenv_version
 
 
-PROMPT='$(rbenv_version) %{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
+# PROMPT='$(rbenv_version) %{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
+PROMPT='$(rbenv_version) $(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
 
 
 #alias
@@ -403,10 +397,6 @@ export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
-
-#補完
-autoload -U compinit
-compinit -C
 #大文字小文字を意識しない補完
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
@@ -492,12 +482,6 @@ zle -N peco-select-history
 bindkey '^r' peco-select-history
 
 
-#=======================================================
-#=======================================================
-# if (which zprof > /dev/null) ;then
-#   zprof | less
-# fi
-
 #============================
 # npm のローカルモードでインストールした実行モジュールにパスを通す設定
 # http://qiita.com/umechiki/items/a1de903a2e5e27f5c606
@@ -574,3 +558,8 @@ elif type compctl &>/dev/null; then
   compctl -K _npm_completion npm
 fi
 ###-end-npm-completion-###
+
+# Profiling
+# if (which zprof > /dev/null) ;then
+#   zprof | less
+# fi
