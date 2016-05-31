@@ -50,15 +50,10 @@ bindkey \] magic-square-brackets
 bindkey \} magic-curly-brackets
 bindkey \> magic-angle-brackets
 
-#----------------------------------
-# zsh
-#----------------------------------
 setopt prompt_subst
 autoload -Uz colors
 colors
 autoload -Uz add-zsh-hook
-
-
 
 #----------------------------------
 # for vcs_info
@@ -175,42 +170,8 @@ function current_dir() {
   echo `pwd | rev | cut -d '/' -f 1 | rev`
 }
 
-# http://makimoto.hatenablog.com/entry/show-rbenv-version-on-zsh-prompt
-# MEMO: 右側に表示させたい場合はこちら
-# rbenv_version () {
-function rbenv_version () {
-  if [[ "`rbenv version | grep '.rbenv/version'`" = "" ]];then
-    if [[ "`rbenv version | grep 'RBENV_VERSION'`" = "" ]];then
-      local setting="L"
-    else
-      local setting="V"
-    fi
-  else
-    local setting="G"
-  fi
-  # MEMO: 右側に表示させたい場合はこちら
-  # RPROMPT="[ruby-`ruby -v | cut -f2 -d' '`($setting)]"
-  # ruby- 付き
-  # echo "[ruby-`ruby -v | cut -f2 -d' '`($setting)]"
-  echo "[`ruby -v | cut -f2 -d' '`($setting)]"
-}
-# MEMO: 右側に表示させたい場合はこちら
-# add-zsh-hook precmd rbenv_version
-
-
 # PROMPT='$(rbenv_version) %{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
-PROMPT='$(rbenv_version) $(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
-
-
-#alias
-case "${OSTYPE}" in
-freebsd*|darwin*)
-  alias ls="ls -GF"
-  ;;
-linux*)
-  alias ls="ls -F --color"
-  ;;
-esac
+PROMPT='$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
 
 alias vimrc='vim ~/.vimrc'
 alias tmuxconf='vim ~/.tmux.conf'
@@ -388,7 +349,6 @@ precmd() {
  echo -ne "\033]0;${USER}@${HOST}\007"
 }
 
-#prompt
 autoload colors
 colors
 
