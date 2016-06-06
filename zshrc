@@ -5,55 +5,109 @@ export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
-# osx mavericks
-# bindkey "^[[3~" delete-char
+autoload colors && colors
+autoload -Uz vcs_info
+autoload -Uz add-zsh-hook
+autoload -Uz compinit && compinit -C
 
 #=======================================================
-# Plugins
+# zplug
 #=======================================================
-#----------------------------------
-# git-escape-magic
-#----------------------------------
-fpath=(~/dotfiles/zsh/plugins/zsh-git-escape-magic $fpath)
-autoload -Uz git-escape-magic && git-escape-magic
 
-#----------------------------------
-# zsh-completions
-#----------------------------------
-fpath=(/usr/local/share/zsh-completions $fpath)
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
 
-#----------------------------------
-# completions
-#----------------------------------
-fpath=(~/dotfiles/zsh/completions $fpath)
-autoload -U compinit && compinit -C
+zplug "zplug/zplug"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "Tarrasch/zsh-functional"
+zplug "zsh-users/zsh-syntax-highlighting", nice:10
+zplug "zsh-users/zaw", nice:10
+zplug "djui/alias-tips"
+zplug "stedolan/jq", \
+    from:gh-r, \
+    as:command, \
+    rename-to:jq
+zplug "b4b4r07/emoji-cli", \
+    on:"stedolan/jq"
+zplug "mrowa44/emojify", as:command, use:emojify
 
-#----------------------------------
-# url-quote-magic
-#----------------------------------
-autoload -U url-quote-magic
-zle -N self-insert url-quote-magic
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
+fi
 
-# Magic quotes for '', "", (), [], and {}
-magic-single-quotes()   { if [[ $LBUFFER[-1] == \' ]]; then zle self-insert; zle .backward-char; else zle self-insert; fi }; zle -N magic-single-quotes
-magic-double-quotes()   { if [[ $LBUFFER[-1] == \" ]]; then zle self-insert; zle .backward-char; else zle self-insert; fi }; zle -N magic-double-quotes
-magic-parentheses()     { if [[ $LBUFFER[-1] == \( ]]; then zle self-insert; zle .backward-char; else zle self-insert; fi }; zle -N magic-parentheses
-magic-square-brackets() { if [[ $LBUFFER[-1] == \[ ]]; then zle self-insert; zle .backward-char; else zle self-insert; fi }; zle -N magic-square-brackets
-magic-curly-brackets()  { if [[ $LBUFFER[-1] == \{ ]]; then zle self-insert; zle .backward-char; else zle self-insert; fi }; zle -N magic-curly-brackets
-magic-angle-brackets()  { if [[ $LBUFFER[-1] == \< ]]; then zle self-insert; zle .backward-char; else zle self-insert; fi }; zle -N magic-angle-brackets
+zplug load --verbose
 
-# Move cursor between chars when typing '', "", (), [], and {}
-bindkey \' magic-single-quotes
-bindkey \" magic-double-quotes
-bindkey \) magic-parentheses
-bindkey \] magic-square-brackets
-bindkey \} magic-curly-brackets
-bindkey \> magic-angle-brackets
+#=======================================================
+
+
+#=======================================================
+# zsh config
+#=======================================================
+setopt no_flow_control
+
+# historyの共有
+setopt share_history
+
+# 重複を記録しない
+setopt hist_ignore_dups
+
+# ヒストリに追加されるコマンド行が古いものと同じなら古いものを削除
+setopt hist_ignore_all_dups
+
+# スペースで始まるコマンド行はヒストリリストから削除
+setopt hist_ignore_space
+
+# 余分な空白は詰めて記録
+setopt hist_reduce_blanks
+
+# 古いコマンドと同じものは無視
+setopt hist_save_no_dups
+
+# historyコマンドは履歴に登録しない
+setopt hist_no_store
+
+# 補完時にヒストリを自動的に展開
+setopt hist_expand
+
+# 履歴をインクリメンタルに追加
+setopt inc_append_history
+
+# 開始と終了を記録
+setopt EXTENDED_HISTORY
+
+#cd
+setopt auto_cd
 
 setopt prompt_subst
-autoload -Uz colors
-colors
-autoload -Uz add-zsh-hook
+
+# 履歴ファイルの保存先
+export HISTFILE=${HOME}/.zsh_history
+
+# メモリに保存される履歴の件数
+export HISTSIZE=1000000
+
+# 履歴ファイルに保存される履歴の件数
+export SAVEHIST=1000000
+
+#color
+export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
+export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
+export LESS='-R'
+export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
+
+
+zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
+
+#大文字小文字を意識しない補完
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+#=======================================================
 
 #----------------------------------
 # for vcs_info
@@ -64,7 +118,6 @@ function _precmd_vcs_info() {
   LANG=en_US.UTF-8 vcs_info
 }
 add-zsh-hook precmd _precmd_vcs_info
-autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats "%b" "%s"
 zstyle ':vcs_info:*' actionformats "%b|%a" "%s"
 function vcs_info_for_git() {
@@ -178,9 +231,10 @@ alias tmuxconf='vim ~/.tmux.conf'
 alias zshrc='vim ~/.zshrc'
 alias dotfiles='~/dotfiles'
 alias tailf='tail -f'
-alias la='ls -a'
-alias ll='ls -l'
-alias lla='ls -al'
+alias ls="ls -GF"
+alias la='ls -GFa'
+alias ll='ls -GFl'
+alias lla='ls -aGFl'
 alias less="less -R"
 alias hosts='sudo vi /etc/hosts'
 if [[ -x `which colordiff` ]]; then
@@ -287,82 +341,13 @@ zshaddhistory() {
   ]]
 }
 
-# 履歴ファイルの保存先
-export HISTFILE=${HOME}/.zsh_history
-
-# メモリに保存される履歴の件数
-export HISTSIZE=1000000
-
-# 履歴ファイルに保存される履歴の件数
-export SAVEHIST=1000000
-
-# history search
-bindkey '^P' history-beginning-search-backward
-bindkey '^N' history-beginning-search-forward
-
-# インクリメンタルからの検索
-bindkey "^R" history-incremental-search-backward
-bindkey "^S" history-incremental-search-forward
-
-# historyの共有
-setopt share_history
-
-# 重複を記録しない
-setopt hist_ignore_dups
-
-# ヒストリに追加されるコマンド行が古いものと同じなら古いものを削除
-setopt hist_ignore_all_dups
-
-# スペースで始まるコマンド行はヒストリリストから削除
-setopt hist_ignore_space
-
-# 余分な空白は詰めて記録
-setopt hist_reduce_blanks
-
-# 古いコマンドと同じものは無視
-setopt hist_save_no_dups
-
-# historyコマンドは履歴に登録しない
-setopt hist_no_store
-
-# 補完時にヒストリを自動的に展開
-setopt hist_expand
-
-# 履歴をインクリメンタルに追加
-setopt inc_append_history
-
-# 開始と終了を記録
-setopt EXTENDED_HISTORY
-
-#例えば"ls "とうってからC-pでlsから始まる履歴を検索できます。複数行のコマンドのときはカーソルキーで移動できるようにしています。
-# autoload history-search-end
-# zle -N history-beginning-search-backward-end history-search-end
-# zle -N history-beginning-search-forward-end history-search-end
-# bindkey "^P" history-beginning-search-backward-end
-# bindkey "^N" history-beginning-search-forward-end
-
-#cd
-setopt auto_cd
-
 #title
 precmd() {
- echo -ne "\033]0;${USER}@${HOST}\007"
+  # echo -ne "\033]0;${USER}@${HOST}\007"
+  # print -Pn "\e]0;%n@%m: %~\a"
+  print -Pn "\e]0;$(current_dir)\a"
 }
 
-autoload colors
-colors
-
-#color
-export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
-export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
-zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
-
-#大文字小文字を意識しない補完
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-#LESSのハイライト
-export LESS='-R'
-export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 
 #=============================
 # tmux
