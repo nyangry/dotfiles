@@ -268,13 +268,10 @@ nnoremap    [unite]   <Nop>
 nmap      , [unite]
 nnoremap <silent> [unite]t :<C-u>Unite tab<CR>
 nnoremap <silent> [unite]gr :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
-nnoremap <silent> [unite]r :<C-u>UniteResume grep-buffer<CR>
 
-" nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-" nnoremap ,us :<C-u>Unite file_rec<CR>
-nnoremap <C-g> :<C-u>Unite buffer<CR>
-nnoremap <C-m> :<C-u>Unite file_mru<CR>
-nnoremap <C-f> :<C-u>Unite file_rec/async<CR>
+nnoremap <silent> [unite]g :<C-u>Unite buffer<CR>
+nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
+nnoremap <silent> [unite]r :<C-u>Unite file_rec/async<CR>
 
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
