@@ -271,7 +271,7 @@ nnoremap <silent> [unite]gr :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
 
 nnoremap <silent> [unite]g :<C-u>Unite buffer<CR>
 nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
-nnoremap <silent> [unite]r :<C-u>Unite file_rec/async<CR>
+nnoremap <silent> <C-f> :<C-u>Unite file_rec/async<CR>
 
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
