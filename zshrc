@@ -81,6 +81,9 @@ setopt inc_append_history
 # 開始と終了を記録
 setopt EXTENDED_HISTORY
 
+# タイポしているコマンドを指摘
+setopt correct
+
 #cd
 setopt auto_cd
 
