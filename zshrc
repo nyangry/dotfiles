@@ -20,6 +20,7 @@ source $ZPLUG_HOME/init.zsh
 zplug "zplug/zplug"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
+zplug "unixorn/rake-completion.zshplugin"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "Tarrasch/zsh-functional"
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
