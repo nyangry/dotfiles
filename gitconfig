@@ -1,6 +1,6 @@
 [user]
-	name = nyangry
-	email = iacta.alea.esto@gmail.com
+  name = nyangry
+  email = iacta.alea.esto@gmail.com
 [alias]
   co = checkout
   a  = add
@@ -10,45 +10,50 @@
   l  = log
   b  = branch
 [core]
-	autocrlf     = input
-	eol          = lf
-	excludesfile = ~/.gitignore
-	editor = /usr/local/bin/vim
+  autocrlf     = input
+  eol          = lf
+  excludesfile = ~/.gitignore
+  editor = /usr/local/bin/vim
 [diff]
   tool      = vimdiff
   algorithm = histogram
+  compactionHeuristic = true
   ; algorithm = patience
 [merge]
-	tool = extMerge
-	ff   = false
+  tool = extMerge
+  ff   = false
 [mergetool "extMerge"]
   cmd           = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
   trustExitCode = true
 [mergetool]
-	keepBackup = false
+  keepBackup = false
 [push]
-	default = simple
+  default = simple
 [color]
-	ui     = auto
-	diff   = auto
-	status = auto
-	branch = auto
+  ui     = auto
+  diff   = auto
+  status = auto
+  branch = auto
 [color "diff"]
-	meta = blue black bold
+  meta = blue black bold
 [interactive]
-	singlekey = true
+  singlekey = true
 [filter "media"]
-	clean    = git media clean %f
-	smudge   = git media smudge %f
-	required = true
+  clean    = git media clean %f
+  smudge   = git media smudge %f
+  required = true
 
 [include]
   path = .gitconfig.local
 [filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
+  clean = git hawser clean %f
+  smudge = git hawser smudge %f
+  required = true
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-	required = true
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
+[pager]
+  log = diff-highlight | less
+  show = diff-highlight | less
+  diff = diff-highlight | less
