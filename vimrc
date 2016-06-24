@@ -467,6 +467,19 @@ let g:neomru#time_format = "(%Y/%m/%d %H:%M:%S) "
 
 
 "----------------------------------------------------------
+" mhinz/vim-startify
+"----------------------------------------------------------
+" When opening a file or bookmark, change to its directory.
+let g:startify_change_to_dir = 1
+
+" When opening a file or bookmark, seek and change to the root directory of the
+" VCS (if there is one).
+"
+" At the moment only git, hg, bzr and svn are supported.
+let g:startify_change_to_vcs_root = 1
+
+
+"----------------------------------------------------------
 " terryma/vim-expand-region
 "----------------------------------------------------------
 let g:expand_region_text_objects = {
