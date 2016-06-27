@@ -5,11 +5,12 @@
 # [El Capitanにしたらzsh上でのPATHが上書きされた - すぎゃーんメモ](http://d.hatena.ne.jp/sugyan/20151211/1449833480)
 setopt no_global_rcs
 
-if [ -z $TMUX ]; then
+# if [ -z $TMUX ]; then
   export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
   export PATH=/usr/local/bin:$PATH
+  export PATH=/usr/local/Cellar/git/HEAD/share/git-core/contrib/diff-highlight:$PATH
   export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig
-fi
+# fi
 
 #=============================
 # rbenv
