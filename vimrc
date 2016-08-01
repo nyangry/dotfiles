@@ -341,7 +341,7 @@ let g:neocomplete#enable_refresh_always = 0
 if !exists('g:neocomplete#sources')
   let g:neocomplete#sources = {}
 endif
-let g:neocomplete#sources._ = ['buffer', 'member', 'dictionary', 'syntax', 'omni', 'include']
+let g:neocomplete#sources._ = ['buffer', 'member', 'dictionary', 'syntax', 'omni']
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
