@@ -44,8 +44,9 @@ call dein#add('Shougo/neosnippet-snippets')
 "----------------------------------------------------------
 " textobj
 "----------------------------------------------------------
-" call dein#add('kana/vim-textobj-user')
-" call dein#add('kana/vim-textobj-line')
+call dein#add('kana/vim-textobj-user')
+call dein#add('kana/vim-textobj-line')
+call dein#add('lucapette/vim-textobj-underscore')
 " call dein#add('kana/vim-textobj-entire')
 " call dein#add('rhysd/vim-textobj-ruby')
 " call dein#add('coderifous/textobj-word-column.vim')
