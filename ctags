@@ -4,6 +4,7 @@
 --exclude=log
 --exclude=spec
 --exclude=test
+--exclude=vendor
 
 --langdef=js
 --langmap=Javascript:.js
