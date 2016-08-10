@@ -85,8 +85,11 @@ call dein#add('vim-scripts/taglist.vim')
 call dein#add('tpope/vim-fugitive')
 call dein#add('cohama/agit.vim')
 call dein#add('rhysd/committia.vim')
+call dein#add('lambdalisue/vim-gita', {
+      \ 'on_cmd': 'Gita',
+      \})
 " call dein#add('idanarye/vim-merginal')
-" call dein#add('kmnk/vim-unite-giti.git')
+call dein#add('kmnk/vim-unite-giti.git')
 " call dein#add('AndrewRadev/gapply.vim')
 
 "----------------------------------------------------------
@@ -272,7 +275,11 @@ call unite#custom#alias('file', 'move', 'vimfiler__move')
 nnoremap    [unite]   <Nop>
 nmap      , [unite]
 nnoremap <silent> [unite]t :<C-u>Unite tab<CR>
-nnoremap <silent> [unite]gr :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
+" nnoremap <silent> [unite]gr :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
+nnoremap <silent> [unite]gg :<C-u>Unite giti/grep<CR>
+nnoremap <silent> [unite]gr :<C-u>Unite giti/remote<CR>
+nnoremap <silent> [unite]gb :<C-u>Unite giti/branch<CR>
+nnoremap <silent> [unite]gs :<C-u>Unite giti/status<CR>
 
 nnoremap <silent> [unite]g :<C-u>Unite buffer<CR>
 nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
