@@ -275,8 +275,8 @@ call unite#custom#alias('file', 'move', 'vimfiler__move')
 nnoremap    [unite]   <Nop>
 nmap      , [unite]
 nnoremap <silent> [unite]t :<C-u>Unite tab<CR>
-" nnoremap <silent> [unite]gr :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
-nnoremap <silent> [unite]gg :<C-u>Unite giti/grep<CR>
+nnoremap <silent> [unite]gg :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
+" nnoremap <silent> [unite]gg :<C-u>Unite giti/grep:.<CR>
 nnoremap <silent> [unite]gr :<C-u>Unite giti/remote<CR>
 nnoremap <silent> [unite]gb :<C-u>Unite giti/branch<CR>
 nnoremap <silent> [unite]gs :<C-u>Unite giti/status<CR>
