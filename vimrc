@@ -530,6 +530,8 @@ let Tlist_WinWidth          = 50
 let Tlist_Display_Tag_Scope = 0
 let Tlist_Show_One_File     = 1
 
+let g:tlist_coffee_settings = 'coffee;c:class;f:function;v:variable'
+
 "----------------------------------------------------------
 " rsense
 "----------------------------------------------------------
