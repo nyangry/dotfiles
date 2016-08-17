@@ -555,7 +555,7 @@ let g:lightline = {
         \ 'mode_map': {'c': 'NORMAL'},
         \ 'active': {
         \ 'left': [ [ 'mode', 'paste' ],
-        \           [ 'readonly', 'filename', 'modified', 'anzu'] ],
+        \           [ 'fugitive', 'readonly', 'filename', 'modified', 'anzu'] ],
         \ 'right': [ [ 'lineinfo' ],
         \            [ 'percent' ],
         \            [ 'tabnum' ],
