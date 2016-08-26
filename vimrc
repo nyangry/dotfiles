@@ -167,8 +167,7 @@ call dein#add('ConradIrwin/vim-bracketed-paste')
 
 " fakeclip
 call dein#add('kana/vim-fakeclip')
-" Copy File Path/Name
-call dein#add('vim-scripts/copypath.vim')
+
 " 整形ツール
 call dein#add('h1mesuke/vim-alignta')
 call dein#add('godlygeek/tabular')
@@ -1314,3 +1313,26 @@ command! SyntaxInfo call s:get_syn_info()
 "====================================================================================
 nnoremap <expr> c* ':%s ;\<' . expand('<cword>') . '\>;'
 vnoremap <expr> c* ':s ;\<' . expand('<cword>') . '\>;'
+
+"====================================================================================
+" Copy File Path/Name
+"
+" REF:
+"   - [vim-scripts/copypath.vim: Copy current editing file path to clipboard.](https://github.com/vim-scripts/copypath.vim)
+"   - [Get the name of the current file - Vim Tips Wiki - Wikia](http://vim.wikia.com/wiki/Get_the_name_of_the_current_file)
+"====================================================================================
+function CopyPath()
+    let @*=@%
+endfunction
+
+function CopyFullPath()
+    let @*=expand('%:p')
+endfunction
+
+function CopyFileName()
+    let @*=expand('%:t')
+endfunction
+
+command! -nargs=0 CopyPath     call CopyPath()
+command! -nargs=0 CopyFullPath call CopyFullPath()
+command! -nargs=0 CopyFileName call CopyFileName()
