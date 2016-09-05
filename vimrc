@@ -74,12 +74,6 @@ call dein#add('szw/vim-tags')
 call dein#add('vim-scripts/taglist.vim')
 
 "----------------------------------------------------------
-" ref
-"----------------------------------------------------------
-" call dein#add('thinca/vim-ref')
-" call dein#add('yuku-t/vim-ref-ri')
-
-"----------------------------------------------------------
 " Git
 "----------------------------------------------------------
 call dein#add('tpope/vim-fugitive')
@@ -114,7 +108,7 @@ call dein#add('vim-scripts/AnsiEsc.vim')
 "----------------------------------------------------------
 " JavaScript
 "----------------------------------------------------------
-call dein#add('marijnh/tern')
+call dein#add('marijnh/tern_for_vim')
 
 "----------------------------------------------------------
 " CSV
@@ -130,7 +124,7 @@ call dein#add('othree/html5.vim')
 call dein#add('hail2u/vim-css3-syntax')
 call dein#add('cakebaker/scss-syntax.vim')
 call dein#add('kchmck/vim-coffee-script')
-call dein#add('tpope/vim-markdown')
+" call dein#add('tpope/vim-markdown')
 call dein#add('scrooloose/syntastic')
 
 "----------------------------------------------------------
@@ -139,7 +133,7 @@ call dein#add('scrooloose/syntastic')
 call dein#add('mhinz/vim-startify')
 
 " session
-call dein#add('tpope/vim-obsession')
+" call dein#add('tpope/vim-obsession')
 
 " call dein#add('kannokanno/previm')
 " call dein#add('tyru/open-browser.vim')
@@ -176,10 +170,6 @@ call dein#add('godlygeek/tabular')
 call dein#add('tpope/vim-abolish')
 
 call dein#add('airblade/vim-rooter')
-
-" call dein#add('itchyny/calendar.vim')
-
-call dein#add('daylerees/colour-schemes',  { 'rtp': 'vim-themes/'})
 
 call dein#add('AndrewRadev/switch.vim')
 call dein#add('AndrewRadev/linediff.vim')
