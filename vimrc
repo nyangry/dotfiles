@@ -920,15 +920,9 @@ endif
 "====================================================================================
 " View
 "====================================================================================
-set t_Co=256
-
 " Ref: https://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
-" set background=dark
-" colorscheme flatland
-" colorscheme hybrid
-" colorscheme Tomorrow-Night-Bright
-" colorscheme molokai
-
+set t_Co=256
+set background=dark
 colorscheme ir_black
 
 " hi Normal ctermbg=black
