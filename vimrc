@@ -830,6 +830,7 @@ set clipboard=unnamed           " yank to clipboard
 
 set display=lastline
 set pumheight=10
+set breakindent
 
 augroup set_fo
   " t textwidthを使ってテキストを自動折返しする。
