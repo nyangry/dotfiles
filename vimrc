@@ -156,9 +156,6 @@ call dein#add('mattn/wiseman-f-vim')
 
 " call dein#add('thinca/vim-visualstar')
 
-" コピペ自動判定処理
-call dein#add('ConradIrwin/vim-bracketed-paste')
-
 " fakeclip
 call dein#add('kana/vim-fakeclip')
 
