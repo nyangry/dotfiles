@@ -871,7 +871,6 @@ setlocal autoindent
 " http://qiita.com/ponko2/items/0a14d0649f918f5e3ce7
 setlocal iskeyword& iskeyword+=-
 
-set cursorline " カーソル行をハイライト
 " これをしないと候補選択時に Scratch ウィンドウが開いてしまう
 set completeopt=menuone
 
@@ -1029,6 +1028,10 @@ set shiftwidth=2
 set nowrapscan " 検索をファイルの先頭へループしない
 " コマンドライン補完するときに補完候補を表示する(tabで補完)
 set wildmenu
+
+" for performance
+set synmaxcol=200
+syntax sync minlines=500 maxlines=1000
 
 " タブ幅をリセット
 augroup set_tab_stop
