@@ -132,6 +132,8 @@ call dein#add('scrooloose/syntastic')
 "----------------------------------------------------------
 call dein#add('mhinz/vim-startify')
 
+call dein#add('glidenote/memolist.vim')
+
 " session
 " call dein#add('tpope/vim-obsession')
 
@@ -470,6 +472,16 @@ let g:startify_change_to_dir = 1
 "
 " At the moment only git, hg, bzr and svn are supported.
 let g:startify_change_to_vcs_root = 1
+
+
+"----------------------------------------------------------
+" glidenote/memolist.vim
+"----------------------------------------------------------
+let g:memolist_path = "~/.memos"
+nnoremap <Leader>mn  :MemoNew<CR>
+nnoremap <Leader>ml  :MemoList<CR>
+nnoremap <Leader>mg  :MemoGrep<CR>
+nnoremap <Leader>mf  :<C-u>Unite grep:`expand(g:memolist_path."/")`<CR>
 
 
 "----------------------------------------------------------
