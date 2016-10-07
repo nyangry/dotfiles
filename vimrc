@@ -103,7 +103,7 @@ call dein#add('tpope/vim-rails')
 "----------------------------------------------------------
 " RSpec
 "----------------------------------------------------------
-call dein#add('vim-scripts/AnsiEsc.vim')
+call dein#add('powerman/vim-plugin-AnsiEsc')
 
 "----------------------------------------------------------
 " JavaScript
