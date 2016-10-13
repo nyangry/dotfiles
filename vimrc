@@ -153,8 +153,8 @@ call dein#add('tpope/vim-endwise')
 " call dein#add('terryma/vim-multiple-cursors')
 
 " 移動拡張 f / t
-call dein#add('rhysd/clever-f.vim')
-call dein#add('mattn/wiseman-f-vim')
+" call dein#add('rhysd/clever-f.vim')
+" call dein#add('mattn/wiseman-f-vim')
 
 " call dein#add('thinca/vim-visualstar')
 
