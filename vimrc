@@ -162,11 +162,11 @@ call dein#add('tpope/vim-endwise')
 call dein#add('kana/vim-fakeclip')
 
 " 整形ツール
-call dein#add('h1mesuke/vim-alignta')
+" call dein#add('h1mesuke/vim-alignta')
 call dein#add('godlygeek/tabular')
 
 " 置換強化
-call dein#add('tpope/vim-abolish')
+" call dein#add('tpope/vim-abolish')
 
 call dein#add('airblade/vim-rooter')
 
