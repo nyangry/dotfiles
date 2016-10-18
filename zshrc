@@ -241,6 +241,7 @@ alias ll='ls -GFl'
 alias lla='ls -aGFl'
 alias less="less -R"
 alias hosts='sudo vi /etc/hosts'
+alias updatedb='sudo /usr/libexec/locate.updatedb'
 if [[ -x `which colordiff` ]]; then
   # alias diff="colordiff -u --side-by-side --suppress-common-lines"
   alias diff='colordiff -u'
