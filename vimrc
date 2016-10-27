@@ -69,9 +69,9 @@ call dein#add('jwhitley/vim-matchit')
 "----------------------------------------------------------
 " Tags
 "----------------------------------------------------------
-call dein#add('tsukkee/unite-tag')
-call dein#add('szw/vim-tags')
-call dein#add('vim-scripts/taglist.vim')
+" call dein#add('tsukkee/unite-tag')
+" call dein#add('szw/vim-tags')
+" call dein#add('vim-scripts/taglist.vim')
 
 "----------------------------------------------------------
 " Git
@@ -1045,32 +1045,33 @@ vmap <C-v> <Plug>(expand_region_shrink)
 "----------------------------------------------------------
 " tsukkee/unite-tag
 "----------------------------------------------------------
-nnoremap <C-]> g<C-]>
+" nnoremap <C-]> g<C-]>
 
 "----------------------------------------------------------
 " szw/vim-tags
 " http://tkkbn.hatenablog.com/entry/2013/11/02/233701
 "----------------------------------------------------------
-let g:vim_tags_auto_generate = 1
-let g:vim_tags_project_tags_command = "/usr/local/bin/ctags `pwd` 2>/dev/null"
-let g:vim_tags_gems_tags_command    = "/usr/local/bin/ctags `bundle show --paths` 2>/dev/null"
+" let g:vim_tags_auto_generate = 1
+" let g:vim_tags_project_tags_command = "/usr/local/bin/ctags `pwd` 2>/dev/null"
+" let g:vim_tags_gems_tags_command    = "/usr/local/bin/ctags `bundle show --paths` 2>/dev/null"
 
 "----------------------------------------------------------
 " vim-scripts/taglist
 "----------------------------------------------------------
-nnoremap <leader>e :<C-u>TlistToggle<CR>
-let Tlist_Use_Right_Window  = 1
-let Tlist_Ctags_Cmd         = '/usr/local/bin/ctags'
-let Tlist_Sort_Type         = 'order' " name or order
-let Tlist_WinWidth          = 50
-let Tlist_Display_Tag_Scope = 0
-let Tlist_Show_One_File     = 1
-
-let g:tlist_coffee_settings = 'coffee;c:class;f:function;v:variable'
+" nnoremap <leader>e :<C-u>TlistToggle<CR>
+" let Tlist_Use_Right_Window  = 1
+" let Tlist_Ctags_Cmd         = '/usr/local/bin/ctags'
+" let Tlist_Sort_Type         = 'order' " name or order
+" let Tlist_WinWidth          = 50
+" let Tlist_Display_Tag_Scope = 0
+" let Tlist_Show_One_File     = 1
+"
+" let g:tlist_coffee_settings = 'coffee;c:class;f:function;v:variable'
 
 "----------------------------------------------------------
 " rsense
 "----------------------------------------------------------
+" let g:rsenseHome = '/usr/local/Cellar/rsense/0.3'
 " let g:rsenseUseOmniFunc = 1
 
 "----------------------------------------------------------
