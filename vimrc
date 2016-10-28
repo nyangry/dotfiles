@@ -93,7 +93,6 @@ call dein#add('rhysd/unite-ruby-require.vim')
 call dein#add('vim-scripts/ruby-matchit')
 call dein#add('vim-ruby/vim-ruby')
 " call dein#add('marcus/rsense')
-" call dein#add('supermomonga/neocomplete-rsense.vim')
 
 "----------------------------------------------------------
 " Rais
