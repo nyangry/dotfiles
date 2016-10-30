@@ -19,4 +19,6 @@ augroup set_syntax
   autocmd BufRead,BufNewFile *.md setfiletype markdown
   " rails
   autocmd BufRead,BufNewFile *.jbuilder setfiletype ruby
+
+  autocmd FileType ruby setl iskeyword+=?
 augroup END
