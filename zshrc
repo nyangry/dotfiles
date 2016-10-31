@@ -251,6 +251,14 @@ fi
 # http://orangeclover.hatenablog.com/entry/20110201/1296511181
 alias clear2="echo -e '\026\033c'"
 alias ag='ag -S'
+alias rsp='rails s -p'
+alias rc='rails c'
+alias rakedm='rake db:migrate'
+alias rakedr='rake db:rollback'
+alias rakera='rake ridgepoll:apply'
+alias rakedmt='RAILS_ENV=test rake db:migrate'
+alias rakedrt='RAILS_ENV=test rake db:rollback'
+alias rakerat='RAILS_ENV=test rake ridgepole:apply'
 
 
 # ----------------------
