@@ -347,7 +347,6 @@ zshaddhistory() {
       && ${cmd} != (kill)
       && ${cmd} != (tmux)
       && ${cmd} != (vim)
-      && ${cmd} != (brew)
       && ${cmd} != (bundle)
       && ${cmd} != (rails)
       && ${cmd} != (gfu|grb|gco|gcob|ga|gclf|gps|gpsuo)
