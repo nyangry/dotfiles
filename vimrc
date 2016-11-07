@@ -92,6 +92,7 @@ call dein#add('kmnk/vim-unite-giti.git')
 call dein#add('rhysd/unite-ruby-require.vim')
 call dein#add('vim-scripts/ruby-matchit')
 call dein#add('vim-ruby/vim-ruby')
+" call dein#add('todesking/ruby_hl_lvar.vim')
 " call dein#add('marcus/rsense')
 
 "----------------------------------------------------------
@@ -1325,12 +1326,16 @@ endfunction
 "----------------------------------------------------------
 " vim-ruby
 "----------------------------------------------------------
-let g:rubycomplete_rails                = 0
+let g:rubycomplete_rails                = 1
 let g:rubycomplete_buffer_loading       = 1
 let g:rubycomplete_classes_in_global    = 1
 let g:rubycomplete_include_object       = 1
 let g:rubycomplete_include_object_space = 1
 
+"----------------------------------------------------------
+" todesking/ruby_hl_lvar.vim
+"----------------------------------------------------------
+" let g:ruby_hl_lvar_hl_group = 'RubyLocalVariableOrMethod'
 
 "----------------------------------------------------------
 " kana/vim-operator-replace.git
