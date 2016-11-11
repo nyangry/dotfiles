@@ -109,6 +109,9 @@ call dein#add('powerman/vim-plugin-AnsiEsc')
 " JavaScript
 "----------------------------------------------------------
 call dein#add('marijnh/tern_for_vim')
+call dein#add('othree/yajs.vim')
+call dein#add('othree/es.next.syntax.vim')
+call dein#add('MaxMEllon/vim-jsx-pretty')
 
 "----------------------------------------------------------
 " CSV
