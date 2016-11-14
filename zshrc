@@ -499,6 +499,7 @@ function add_npm_bin_path_for_binstubs () {
 export PATH="/usr/local/sbin:$PATH"
 
 # direnv
+export DIRENV_LOG_FORMAT=
 eval "$(direnv hook zsh)"
 
 # hub
