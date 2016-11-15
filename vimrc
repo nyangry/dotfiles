@@ -225,6 +225,7 @@ set showmode                    " 現在のモードを表示
 set viminfo='50,<1000,s100,\"50 " viminfoファイルの設定
 set modelines=0                 " モードラインは無効
 set clipboard=unnamed           " yank to clipboard
+set ambiwidth=double
 
 set display=lastline
 set pumheight=10
@@ -419,7 +420,7 @@ set smartcase
 set hlsearch
 set incsearch " インクリメンタルサーチを行う
 set listchars=eol:$,tab:>\ ,extends:< " listで表示される文字のフォーマットを指定する
-set showmatch
+set showmatch " 対応するカッコを強調表示
 set matchtime=1
 set showtabline=2
 set expandtab
@@ -502,8 +503,6 @@ nnoremap ss :<C-u>sp<CR>
 nnoremap sv :<C-u>vs<CR>
 " nnoremap sq :<C-u>q<CR>
 " nnoremap sQ :<C-u>bd<CR>
-nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
-nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
 
 " 表示行単位で行移動する
 nnoremap <silent> j gj
@@ -879,9 +878,9 @@ let g:neocomplete#sources._ = ['buffer', 'member', 'dictionary', 'syntax', 'omni
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
   \ 'default'    : '',
-  \ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
   \ 'coffee'     : $HOME . '/.vim/dict/javascript.dict',
-  \ 'ruby'       : $HOME . '/.vim/dict/ruby.dict',
+  \ 'javascript' : $HOME . '/.vim/dict/jquery.dict',
+  \ 'ruby'       : $HOME . '/.vim/dict/ruby.dict'
 \ }
 
 " Define same filetypes
@@ -890,6 +889,7 @@ if !exists('g:neocomplete#same_filetypes')
 endif
 let g:neocomplete#same_filetypes.html   = 'javascript, php, ruby'
 let g:neocomplete#same_filetypes.haml   = 'javascript, ruby'
+let g:neocomplete#same_filetypes.slim   = 'javascript, ruby'
 " let g:neocomplete#same_filetypes.php    = 'html, javascript'
 let g:neocomplete#same_filetypes.scss   = 'css'
 let g:neocomplete#same_filetypes.sass   = 'css'
@@ -943,7 +943,7 @@ augroup enable_omni_completion
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   " autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  " autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 augroup END
 
 let g:neocomplete#force_overwrite_completefunc = 1
@@ -958,7 +958,7 @@ if !exists('g:neocomplete#force_omni_input_patterns')
 endif
 let g:neocomplete#enable_auto_close_preview = 1
 
-" let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 
 " For smart TAB completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
@@ -1079,10 +1079,10 @@ vmap <C-v> <Plug>(expand_region_shrink)
 let g:syntastic_auto_loc_list          = 1
 let g:syntastic_javascript_checkers    = ['jshint']
 let g:syntastic_coffee_checkers        = ['coffeelint']
-let g:syntastic_mode_map               = { 'mode': 'active',
-                                          \ 'active_filetypes': [],
+let g:syntastic_mode_map               = { 'mode': 'passive',
+                                          \ 'active_filetypes': ['ruby', 'js', 'coffee'],
                                           \ 'passive_filetypes': ['html', 'css' ] }
-" let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_ruby_checkers = ['rubocop']
 
 "----------------------------------------------------------
 " lightline
@@ -1206,8 +1206,8 @@ nmap P <Plug>(yankround-P)
 nmap gp <Plug>(yankround-gp)
 xmap gp <Plug>(yankround-gp)
 nmap gP <Plug>(yankround-gP)
-" nmap <C-p> <Plug>(yankround-prev)
-" nmap <C-n> <Plug>(yankround-next)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
 
 "----------------------------------------------------------
 " Quickrun
@@ -1345,9 +1345,9 @@ map R <Plug>(operator-replace)
 "----------------------------------------------------------
 " osyo-manga/vim-operator-blockwise
 "----------------------------------------------------------
-nmap YY <Plug>(operator-blockwise-yank-head)
-nmap DD <Plug>(operator-blockwise-delete-head)
-nmap CC <Plug>(operator-blockwise-change-head)
+" nmap YY <Plug>(operator-blockwise-yank-head)
+" nmap DD <Plug>(operator-blockwise-delete-head)
+" nmap CC <Plug>(operator-blockwise-change-head)
 
 
 "----------------------------------------------------------
