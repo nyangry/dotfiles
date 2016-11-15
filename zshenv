@@ -8,7 +8,7 @@ setopt no_global_rcs
 # if [ -z $TMUX ]; then
   export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
   export PATH=/usr/local/bin:$PATH
-  export PATH=/usr/local/Cellar/git/HEAD/share/git-core/contrib/diff-highlight:$PATH
+  export PATH=/usr/local/share/git-core/contrib/diff-highlight:$PATH
   export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig
 # fi
 
