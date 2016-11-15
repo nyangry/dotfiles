@@ -758,7 +758,6 @@ if executable('ag')
   \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr''' .
   \ '''.hg'' --ignore ''vendor'' --ignore ''app/assets/images'''
   let g:unite_source_grep_recursive_opt = ''
-  " let g:unite_source_grep_max_candidates = 100
 endif
 
 let g:unite_source_rec_async_command =
@@ -772,18 +771,16 @@ call unite#custom#profile('default', 'context', {
 \   'context.smartcase': 1
 \ })
 
-call unite#custom#source('file,file/new,buffer,file_rec,file_rec/async',
-  \ 'ignore_pattern', join([
-  \ '\(\.DS_Store\|\.keep\)',
-  \ '\.git/',
-  \ '\.bundle/',
-  \ 'vendor/',
-  \ 'app/assets/images/',
-  \ 'node_modules/',
-  \ ], '\|'))
-
-call unite#custom#source('file,file/new,buffer,file_rec,file_rec/async',
-  \ 'sorters', 'sorter_ftime')
+call unite#custom#source('find,file,file/new,buffer,file_rec,file_rec/async,file_rec/git',
+  \ 'ignore_globs',  [
+  \         '*~', '*.o', '*.exe', '*.bak', '.keep',
+  \         'DS_Store', '*.pyc', '*.sw[po]', '*.class',
+  \         '.hg/**', '.git/**', '.bzr/**', '.svn/**',
+  \         'tags', 'tags-*',
+  \         'images/**',
+  \         'vendor/**', '.bundle/**', 'node_modules/**'
+  \ ]
+  \ )
 
 call unite#custom#alias('file', 'delete', 'vimfiler__delete')
 call unite#custom#alias('file', 'move', 'vimfiler__move')
@@ -791,28 +788,32 @@ call unite#custom#alias('file', 'move', 'vimfiler__move')
 " git ディレクトリかどうかで、処理を切り替える
 " http://qiita.com/yuku_t/items/9263e6d9105ba972aea8
 " file_rec/git は画像が大量にあるような場合にキツイ ls-files --exclude-standard した後に、画像や不要ファイルをフィルタする処理があれば使えそう
-" function! DispatchUniteFileRecAsyncOrGit()
-"   if isdirectory(getcwd()."/.git")
-"     Unite file_rec/git:-c:-o:--exclude-standard
-"   else
-"     Unite file_rec/async
-"   endif
-" endfunction
-
-" nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
+function! DispatchUniteFileRecAsyncOrGit()
+  if isdirectory(getcwd()."/.git")
+    Unite file_rec/git:-c:-o:--exclude-standard -buffer-name=file_rec/git
+  else
+    Unite file_rec/async -buffer-name=file_rec/async
+  endif
+endfunction
 
 nnoremap    [unite]   <Nop>
 nmap      , [unite]
-nnoremap <silent> [unite]t :<C-u>Unite tab<CR>
+
+nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
+nnoremap <silent> <expr> [unite]fw :<C-u>Unite -buffer-name=file_rec/async/workspace file_rec:~/workspace
 nnoremap <silent> [unite]gg :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
+
 " nnoremap <silent> [unite]gg :<C-u>Unite giti/grep:.<CR>
 nnoremap <silent> [unite]gr :<C-u>Unite giti/remote<CR>
 nnoremap <silent> [unite]gb :<C-u>Unite giti/branch<CR>
 nnoremap <silent> [unite]gs :<C-u>Unite giti/status<CR>
 
-nnoremap <silent> [unite]g :<C-u>Unite buffer<CR>
+nnoremap <silent> [unite]t :<C-u>Unite tab<CR>
+nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
 nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
-nnoremap <silent> <C-f> :<C-u>Unite file_rec/async<CR>
+
+nnoremap <silent> [unite]bk :<C-u>Unite bookmark<CR>
+nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
 
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
@@ -830,12 +831,7 @@ function! s:unite_my_settings()"{{{
 
   nnoremap <silent><buffer><expr> r unite#do_action('rename')
   nnoremap <silent><buffer><expr> m unite#do_action('move')
-
-  nnoremap <buffer><expr> S      unite#mappings#set_current_sorters(
-            \ empty(unite#mappings#get_current_sorters()) ?
-            \ ['sorter_ftime'] : [])
 endfunction"}}}
-
 
 "----------------------------------------------------------
 " Neocomplete
