@@ -102,7 +102,7 @@ export SAVEHIST=1000000
 #color
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
-export LESS='-R'
+export LESS='-g -i -M -R -S -W -z-4 -x4'
 export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 
 
@@ -239,7 +239,6 @@ alias ls="ls -GF"
 alias la='ls -GFa'
 alias ll='ls -GFl'
 alias lla='ls -aGFl'
-alias less="less -R"
 alias hosts='sudo vi /etc/hosts'
 alias updatedb='sudo /usr/libexec/locate.updatedb'
 if [[ -x `which colordiff` ]]; then
