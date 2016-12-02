@@ -253,10 +253,10 @@ alias ag='ag -S'
 alias rsp='rails s -p'
 alias rc='rails c'
 alias rakedbm='rake db:migrate'
-alias rakedbr='rake db:rollback'
-alias rakera='rake ridgepoll:apply'
 alias rakedbmt='RAILS_ENV=test rake db:migrate'
+alias rakedbr='rake db:rollback'
 alias rakedbrt='RAILS_ENV=test rake db:rollback'
+alias rakera='rake ridgepole:apply'
 alias rakerat='RAILS_ENV=test rake ridgepole:apply'
 
 
