@@ -12,6 +12,8 @@ setopt no_global_rcs
   export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig
 # fi
 
+export XDG_CONFIG_HOME=$HOME/.config
+
 #=============================
 # rbenv
 #=============================
