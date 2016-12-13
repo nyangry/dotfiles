@@ -23,8 +23,8 @@ zplug "zsh-users/zsh-completions"
 zplug "unixorn/rake-completion.zshplugin"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "Tarrasch/zsh-functional"
-zplug "zsh-users/zsh-syntax-highlighting", nice:10
-zplug "zsh-users/zaw", nice:10
+zplug "zsh-users/zsh-syntax-highlighting", defer:10
+zplug "zsh-users/zaw", defer:10
 zplug "djui/alias-tips"
 zplug "stedolan/jq", \
     from:gh-r, \
