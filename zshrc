@@ -5,7 +5,7 @@ export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
-autoload colors && colors
+autoload -Uz colors && colors
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
 autoload -Uz compinit && compinit -C
@@ -22,17 +22,17 @@ zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
 zplug "unixorn/rake-completion.zshplugin"
 zplug "zsh-users/zsh-history-substring-search"
-zplug "Tarrasch/zsh-functional"
-zplug "zsh-users/zsh-syntax-highlighting", defer:10
-zplug "zsh-users/zaw", defer:10
+# zplug "Tarrasch/zsh-functional"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+# zplug "zsh-users/zaw", defer:2
 zplug "djui/alias-tips"
 zplug "stedolan/jq", \
     from:gh-r, \
     as:command, \
     rename-to:jq
-zplug "b4b4r07/emoji-cli", \
-    on:"stedolan/jq"
-zplug "mrowa44/emojify", as:command, use:emojify
+# zplug "b4b4r07/emoji-cli", \
+#     on:"stedolan/jq"
+# zplug "mrowa44/emojify", as:command, use:emojify
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -45,7 +45,6 @@ fi
 zplug load --verbose
 
 #=======================================================
-
 
 #=======================================================
 # zsh config
