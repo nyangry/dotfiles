@@ -1,2 +1,0 @@
-export PATH="/Users/admin/.rbenv/shims:/Users/admin/.rbenv/bin:$PATH"
-export POW_WORKERS=1
