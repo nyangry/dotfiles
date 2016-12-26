@@ -5,7 +5,7 @@ export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
-autoload -Uz colors && colors
+autoload colors && colors
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
 autoload -Uz compinit && compinit -C
@@ -45,6 +45,7 @@ fi
 zplug load --verbose
 
 #=======================================================
+
 
 #=======================================================
 # zsh config
