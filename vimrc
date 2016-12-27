@@ -108,10 +108,12 @@ call dein#add('powerman/vim-plugin-AnsiEsc')
 "----------------------------------------------------------
 " JavaScript
 "----------------------------------------------------------
-call dein#add('marijnh/tern_for_vim')
+call dein#add('pangloss/vim-javascript')
+call dein#add('marijnh/tern_for_vim', {'build': 'npm install'})
 call dein#add('othree/yajs.vim')
 call dein#add('othree/es.next.syntax.vim')
 call dein#add('MaxMEllon/vim-jsx-pretty')
+call dein#add('jiangmiao/simple-javascript-indenter')
 
 "----------------------------------------------------------
 " CSV
@@ -143,7 +145,6 @@ call dein#add('glidenote/memolist.vim')
 " call dein#add('kannokanno/previm')
 " call dein#add('tyru/open-browser.vim')
 call dein#add('itchyny/lightline.vim')
-call dein#add('jiangmiao/simple-javascript-indenter')
 call dein#add('osyo-manga/vim-over')
 call dein#add('jimsei/winresizer')
 call dein#add('nathanaelkane/vim-indent-guides')
@@ -941,7 +942,8 @@ augroup enable_omni_completion
   autocmd!
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
   " autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 augroup END
