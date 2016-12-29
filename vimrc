@@ -878,10 +878,10 @@ let g:neocomplete#sources._ = ['buffer', 'member', 'dictionary', 'syntax', 'omni
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-  \ 'default'    : '',
-  \ 'coffee'     : $HOME . '/.vim/dict/javascript.dict',
-  \ 'javascript' : $HOME . '/.vim/dict/jquery.dict',
-  \ 'ruby'       : $HOME . '/.vim/dict/ruby.dict'
+  \ 'default' : '',
+  \ 'coffee'  : $HOME . '/.vim/dict/jquery.dict',
+  \ 'ruby'    : $HOME . '/.vim/dict/ruby.dict',
+  \ 'slim'    : $HOME . '/.vim/dict/ruby.dict'
 \ }
 
 " Define same filetypes
