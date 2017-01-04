@@ -30,10 +30,16 @@ call dein#add('Shougo/dein.vim')
 " Shougo san
 "----------------------------------------------------------
 call dein#add('Shougo/vimproc.vim', {'build': 'make'})
-call dein#add('Shougo/unite.vim')
+if has('nvim')
+  call dein#add('Shougo/denite.nvim', { 'rev': 'master' })
+  call dein#add('Shougo/deoplete.nvim')
+else
+  call dein#add('Shougo/unite.vim')
+  call dein#add('Shougo/neocomplete')
+  call dein#add('Shougo/tabpagebuffer.vim')
+endif
 call dein#add('Shougo/vimfiler.vim')
 call dein#add('Shougo/neomru.vim')
-call dein#add('Shougo/neocomplete')
 call dein#add('Shougo/context_filetype.vim')
 call dein#add('Shougo/neoinclude.vim')
 call dein#add('Shougo/neco-vim')
@@ -186,6 +192,16 @@ let g:loaded_matchparen = 1
 call dein#add('itchyny/vim-parenmatch')
 call dein#add('itchyny/vim-cursorword')
 
+" CtrlP 向けの拡張だけど、denite からも matcher 用に使える
+"
+" matcher_cpsm
+"     A matcher which filters the candidates using cpsm.
+"     Note: cpsm plugin build/install is needed in 'runtimepath'.
+"     https://github.com/nixprime/cpsm
+"     Note: You must use Python3 support enabled cpsm. >
+"       $ PY3=ON ./install.sh
+call dein#add('nixprime/cpsm')
+
 " Required:
 call dein#end()
 
@@ -212,6 +228,10 @@ command! -nargs=0 DeinUpdate call dein#update()
 "====================================================================================
 " 基本設定
 "====================================================================================
+if has('nvim')
+  let g:python3_host_prog = '/usr/local/bin/python3'
+endif
+
 map \ <leader>
 set fileencodings=utf-8,sjis
 set scrolloff=5                 " スクロール時の余白確保
@@ -248,7 +268,9 @@ augroup END
 
 set lazyredraw
 set ttyfast
-set ttymouse=xterm2
+if !has('nvim')
+  set ttymouse=xterm2
+endif
 set laststatus=2 " 常にステータスラインを表示
 set ruler " カーソルが何行目の何列目に置かれているかを表示する
 set number " 行番号を表示する
@@ -749,89 +771,138 @@ augroup END
 "----------------------------------------------------------
 
 "----------------------------------------------------------
-" Unite
+" denite / unite
 "----------------------------------------------------------
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts =
-  \ '-i --vimgrep --hidden --ignore ' .
-  \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr''' .
-  \ '''.hg'' --ignore ''vendor'' --ignore ''app/assets/images'''
-  let g:unite_source_grep_recursive_opt = ''
-endif
+if has('nvim')
+  " Change file_rec command.
+  call denite#custom#var('file_rec', 'command',
+  \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', '--hidden', ''])
 
-let g:unite_source_rec_async_command =
-  \ ['ag', '--follow', '--nocolor', '--nogroup',
-  \  '--hidden', '-g', '']
+  " Change mappings.
+  call denite#custom#map('insert' , '<Down>' , '<denite:move_to_next_line>'     , 'noremap')
+  call denite#custom#map('insert' , '<Up>'   , '<denite:move_to_previous_line>' , 'noremap')
 
-call unite#custom#profile('default', 'context', {
-\   'direction': 'botright',
-\   'start_insert': 1,
-\   'context.ignorecase': 1,
-\   'context.smartcase': 1
-\ })
+  call denite#custom#map('insert', '<C-A>', '<C-B>')
 
-call unite#custom#source('find,file,file/new,buffer,file_rec,file_rec/async,file_rec/git',
-  \ 'ignore_globs',  [
-  \         '*~', '*.o', '*.exe', '*.bak', '.keep',
-  \         'DS_Store', '*.pyc', '*.sw[po]', '*.class',
-  \         '.hg/**', '.git/**', '.bzr/**', '.svn/**',
-  \         'tags', 'tags-*',
-  \         'images/**',
-  \         'vendor/**', '.bundle/**', 'node_modules/**'
-  \ ]
-  \ )
+  call denite#custom#map('normal' , '<Down>' , 'j')
+  call denite#custom#map('normal' , '<Up>'   , 'k')
+  call denite#custom#map('normal' , '<Tab>'  , 't')
 
-call unite#custom#alias('file', 'delete', 'vimfiler__delete')
-call unite#custom#alias('file', 'move', 'vimfiler__move')
+  " Change matchers.
+  call denite#custom#source(
+  \ 'file_mru', 'matchers', ['matcher_project_files', 'matcher_cpsm'])
+  call denite#custom#source(
+  \ 'file_rec', 'matchers', ['matcher_project_files', 'matcher_ignore_globs', 'matcher_cpsm'])
+  call denite#custom#source(
+  \ 'file_rec/git', 'matchers', ['matcher_project_files', 'matcher_ignore_globs', 'matcher_cpsm'])
 
-" git ディレクトリかどうかで、処理を切り替える
-" http://qiita.com/yuku_t/items/9263e6d9105ba972aea8
-" file_rec/git は画像が大量にあるような場合にキツイ ls-files --exclude-standard した後に、画像や不要ファイルをフィルタする処理があれば使えそう
-function! DispatchUniteFileRecAsyncOrGit()
-  if isdirectory(getcwd()."/.git")
-    Unite file_rec/git:-c:-o:--exclude-standard -buffer-name=file_rec/git
-  else
-    Unite file_rec/async -buffer-name=file_rec/async
+  " Change sorters.
+  call denite#custom#source(
+  \ 'file_rec', 'sorters', ['sorter_sublime'])
+
+  call denite#custom#source('file_mru', 'converters',
+        \ ['converter_relative_word'])
+
+  " Define alias
+  call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+  call denite#custom#var('file_rec/git', 'command',
+  \ ['git', 'ls-files', '-co', '--exclude-standard'])
+  nnoremap <silent> <C-f> :<C-u>Denite
+  \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+
+  " Change default prompt
+  call denite#custom#option('default', 'prompt', '>')
+
+  " Change ignore_globs
+  call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+        \ [ 'tags', 'tags-*',
+        \   'app/assets/images/',
+        \   'vendor/', '.bundle/', 'node_modules/'
+        \ ])
+else
+  if executable('ag')
+    let g:unite_source_grep_command = 'ag'
+    let g:unite_source_grep_default_opts =
+    \ '-i --vimgrep --hidden --ignore ' .
+    \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr''' .
+    \ '''.hg'' --ignore ''vendor'' --ignore ''app/assets/images'''
+    let g:unite_source_grep_recursive_opt = ''
   endif
-endfunction
 
-nnoremap    [unite]   <Nop>
-nmap      , [unite]
+  let g:unite_source_rec_async_command =
+    \ ['ag', '--follow', '--nocolor', '--nogroup',
+    \  '--hidden', '-g', '']
 
-nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
-nnoremap <silent> <expr> [unite]fw :<C-u>Unite -buffer-name=file_rec/async/workspace file_rec:~/workspace
-nnoremap <silent> [unite]gg :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
+  call unite#custom#profile('default', 'context', {
+  \   'direction': 'botright',
+  \   'start_insert': 1,
+  \   'context.ignorecase': 1,
+  \   'context.smartcase': 1
+  \ })
 
-" nnoremap <silent> [unite]gg :<C-u>Unite giti/grep:.<CR>
-nnoremap <silent> [unite]gr :<C-u>Unite giti/remote<CR>
-nnoremap <silent> [unite]gb :<C-u>Unite giti/branch<CR>
-nnoremap <silent> [unite]gs :<C-u>Unite giti/status<CR>
+  call unite#custom#source('find,file,file/new,buffer,file_rec,file_rec/async,file_rec/git',
+    \ 'ignore_globs',  [
+    \         '*~', '*.o', '*.exe', '*.bak', '.keep',
+    \         'DS_Store', '*.pyc', '*.sw[po]', '*.class',
+    \         '.hg/**', '.git/**', '.bzr/**', '.svn/**',
+    \         'tags', 'tags-*',
+    \         'images/**',
+    \         'vendor/**', '.bundle/**', 'node_modules/**'
+    \ ]
+    \ )
 
-nnoremap <silent> [unite]t :<C-u>Unite tab<CR>
-nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
-nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
+  call unite#custom#alias('file', 'delete', 'vimfiler__delete')
+  call unite#custom#alias('file', 'move', 'vimfiler__move')
 
-nnoremap <silent> [unite]bk :<C-u>Unite bookmark<CR>
-nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
+  " git ディレクトリかどうかで、処理を切り替える
+  " http://qiita.com/yuku_t/items/9263e6d9105ba972aea8
+  " file_rec/git は画像が大量にあるような場合にキツイ ls-files --exclude-standard した後に、画像や不要ファイルをフィルタする処理があれば使えそう
+  function! DispatchUniteFileRecAsyncOrGit()
+    if isdirectory(getcwd()."/.git")
+      Unite file_rec/git:-c:-o:--exclude-standard -buffer-name=file_rec/git
+    else
+      Unite file_rec/async -buffer-name=file_rec/async
+    endif
+  endfunction
 
-autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()"{{{
-  nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-  inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-  " ウィンドウを縦に分割して開く
-  nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-  inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-  " 新しいウィンドウで開く
-  nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-  " inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-  " ESCキーを2回押すと終了する
-  nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
-  inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
+  nnoremap    [unite]   <Nop>
+  nmap      , [unite]
 
-  nnoremap <silent><buffer><expr> r unite#do_action('rename')
-  nnoremap <silent><buffer><expr> m unite#do_action('move')
-endfunction"}}}
+  nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
+  nnoremap <silent> <expr> [unite]fw :<C-u>Unite -buffer-name=file_rec/async/workspace file_rec:~/workspace
+  nnoremap <silent> [unite]gg :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
+
+  " nnoremap <silent> [unite]gg :<C-u>Unite giti/grep:.<CR>
+  nnoremap <silent> [unite]gr :<C-u>Unite giti/remote<CR>
+  nnoremap <silent> [unite]gb :<C-u>Unite giti/branch<CR>
+  nnoremap <silent> [unite]gs :<C-u>Unite giti/status<CR>
+
+  nnoremap <silent> [unite]t :<C-u>Unite tab<CR>
+  nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
+  nnoremap <silent> [unite]bt :<C-u>Unite buffer_tab<CR>
+  nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
+
+  nnoremap <silent> [unite]bk :<C-u>Unite bookmark<CR>
+  nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
+
+  autocmd FileType unite call s:unite_my_settings()
+  function! s:unite_my_settings()"{{{
+    nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+    inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+    " ウィンドウを縦に分割して開く
+    nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
+    inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
+    " 新しいウィンドウで開く
+    nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+    " inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+    " ESCキーを2回押すと終了する
+    nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
+    inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
+
+    nnoremap <silent><buffer><expr> r unite#do_action('rename')
+    nnoremap <silent><buffer><expr> m unite#do_action('move')
+  endfunction"}}}
+endif
 
 "----------------------------------------------------------
 " Neocomplete
@@ -1370,3 +1441,12 @@ augroup END
 " tyru/operator-camelize.vim
 "----------------------------------------------------------
 map <leader>c <plug>(operator-camelize-toggle)
+
+
+"----------------------------------------------------------
+" nixprime/cpsm
+"----------------------------------------------------------
+let g:cpsm_query_inverting_delimiter = ' '
+let g:cpsm_highlight_mode = 'none'
+
+set runtimepath+=~/.cache/dein/repos/github.com/nixprime/cpsm
