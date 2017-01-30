@@ -251,6 +251,7 @@ set ambiwidth=double
 set display=lastline
 set pumheight=10
 set breakindent
+set t_BE=
 
 augroup set_fo
   " t textwidthを使ってテキストを自動折返しする。
