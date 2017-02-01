@@ -870,7 +870,7 @@ else
   nmap      , [unite]
 
   nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
-  nnoremap <silent> <expr> [unite]fw :<C-u>Unite -buffer-name=file_rec/async/workspace file_rec:~/workspace
+  nnoremap <silent> [unite]gc :<C-u>Unite grep:. -buffer-name=grep-cursor-buffer<CR><C-R><C-W><CR>
   nnoremap <silent> [unite]gg :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
 
   " nnoremap <silent> [unite]gg :<C-u>Unite giti/grep:.<CR>
