@@ -793,9 +793,9 @@ if has('nvim')
   call denite#custom#source(
   \ 'file_mru', 'matchers', ['matcher_project_files', 'matcher_cpsm'])
   call denite#custom#source(
-  \ 'file_rec', 'matchers', ['matcher_project_files', 'matcher_ignore_globs', 'matcher_cpsm'])
+  \ 'file_rec', 'matchers', ['matcher_cpsm', 'matcher_project_files', 'matcher_ignore_globs'])
   call denite#custom#source(
-  \ 'file_rec/git', 'matchers', ['matcher_project_files', 'matcher_ignore_globs', 'matcher_cpsm'])
+  \ 'file_rec/git', 'matchers', ['matcher_cpsm', 'matcher_project_files', 'matcher_ignore_globs'])
 
   " Change sorters.
   call denite#custom#source(
