@@ -820,13 +820,26 @@ if has('nvim')
         \   'app/assets/images/',
         \   'vendor/', '.bundle/', 'node_modules/'
         \ ])
+
+  nnoremap    [denite]   <Nop>
+  nmap      , [denite]
+  nnoremap <silent> [denite]gc :<C-u>Denite grep:. -buffer-name=grep-cursor-buffer<CR><C-R><C-W><CR>
+  nnoremap <silent> [denite]gg :<C-u>Denite grep:. -buffer-name=grep-buffer<CR>
+
+  " nnoremap <silent> [denite]gg :<C-u>Denite giti/grep:.<CR>
+  nnoremap <silent> [denite]gr :<C-u>Denite giti/remote<CR>
+  nnoremap <silent> [denite]gb :<C-u>Denite giti/branch<CR>
+  nnoremap <silent> [denite]gs :<C-u>Denite giti/status<CR>
+
+  nnoremap <silent> [denite]t :<C-u>Denite tab<CR>
+  nnoremap <silent> [denite]b :<C-u>Denite buffer<CR>
+  nnoremap <silent> [denite]m :<C-u>Denite file_mru<CR>
 else
   if executable('ag')
     let g:unite_source_grep_command = 'ag'
     let g:unite_source_grep_default_opts =
-    \ '-i --vimgrep --hidden --ignore ' .
-    \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr''' .
-    \ '''.hg'' --ignore ''vendor'' --ignore ''app/assets/images'''
+    \ '-i --vimgrep --hidden ' .
+    \ '--ignore ''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
     let g:unite_source_grep_recursive_opt = ''
   endif
 
