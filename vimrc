@@ -854,16 +854,16 @@ else
   \   'context.smartcase': 1
   \ })
 
-  call unite#custom#source('find,file,file/new,buffer,file_rec,file_rec/async,file_rec/git',
-    \ 'ignore_globs',  [
-    \         '*~', '*.o', '*.exe', '*.bak', '.keep',
-    \         'DS_Store', '*.pyc', '*.sw[po]', '*.class',
-    \         '.hg/**', '.git/**', '.bzr/**', '.svn/**',
-    \         'tags', 'tags-*',
-    \         'images/**',
-    \         'vendor/**', '.bundle/**', 'node_modules/**'
-    \ ]
-    \ )
+  " call unite#custom#source('find,file,file/new,buffer,file_rec,file_rec/async,file_rec/git',
+  "   \ 'ignore_globs',  [
+  "   \         '*~', '*.o', '*.exe', '*.bak', '.keep',
+  "   \         'DS_Store', '*.pyc', '*.sw[po]', '*.class',
+  "   \         '.hg/**', '.git/**', '.bzr/**', '.svn/**',
+  "   \         'tags', 'tags-*',
+  "   \         'images/**',
+  "   \         'vendor/**', '.bundle/**', 'node_modules/**'
+  "   \ ]
+  "   \ )
 
   call unite#custom#alias('file', 'delete', 'vimfiler__delete')
   call unite#custom#alias('file', 'move', 'vimfiler__move')
