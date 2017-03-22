@@ -1460,7 +1460,7 @@ map <leader>c <plug>(operator-camelize-toggle)
 "----------------------------------------------------------
 " nixprime/cpsm
 "----------------------------------------------------------
-let g:cpsm_query_inverting_delimiter = ' '
-let g:cpsm_highlight_mode = 'none'
+" let g:cpsm_query_inverting_delimiter = ' '
+" let g:cpsm_highlight_mode = 'basic'
 
 set runtimepath+=~/.cache/dein/repos/github.com/nixprime/cpsm
