@@ -9,6 +9,7 @@ setopt no_global_rcs
   export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
   export PATH=/usr/local/bin:$PATH
   export PATH=/usr/local/share/git-core/contrib/diff-highlight:$PATH
+  export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
   export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig
 # fi
 
