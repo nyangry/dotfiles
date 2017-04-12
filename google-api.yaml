@@ -1,7 +1,0 @@
----
-mechanism: oauth_2
-scope: https://www.googleapis.com/auth/analytics.readonly
-client_id: 461568780808.apps.googleusercontent.com
-client_secret: Q7pPB7w15xFxYiIuXQ2lbjCn
-access_token: ya29.AHES6ZTySRMCW2jquyVJbbjnEzcZS9whlO2QZDUihpDUVR9GHxYX
-refresh_token: 1/pjuOYg2S5pHgzrkW0vANVQ6_8FMVTx6631YaJ2c1lJw
