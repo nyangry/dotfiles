@@ -956,6 +956,7 @@ finally
 endtry
 let g:neocomplete#enable_auto_select = 0
 let g:neocomplete#enable_refresh_always = 0
+" let g:neocomplete#enable_auto_close_preview = 1
 
 if !exists('g:neocomplete#sources')
   let g:neocomplete#sources = {}
@@ -1034,19 +1035,18 @@ augroup enable_omni_completion
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 augroup END
 
-let g:neocomplete#force_overwrite_completefunc = 1
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-if !exists('g:neocomplete#sources#omni#functions')
-  let g:neocomplete#sources#omni#functions = {}
-endif
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#enable_auto_close_preview = 1
-
-let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+" Enable heavy omni completion.
+" if !exists('g:neocomplete#sources#omni#input_patterns')
+"   let g:neocomplete#sources#omni#input_patterns = {}
+" endif
+" if !exists('g:neocomplete#sources#omni#functions')
+"   let g:neocomplete#sources#omni#functions = {}
+" endif
+" if !exists('g:neocomplete#force_omni_input_patterns')
+"   let g:neocomplete#force_omni_input_patterns = {}
+" endif
+"
+" let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 
 " For smart TAB completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
