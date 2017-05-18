@@ -303,8 +303,8 @@ alias gld='git log --pretty=format:"%h %ad %s" --date=short'
 alias gm='git merge --no-ff'
 # alias gp='git pull'
 alias gps='git push'
-alias gpsfo='git push --force'
-alias gpsuo='git push -u origin `git rev-parse --abbrev-ref HEAD`'
+alias gpsf='git push --force'
+alias gpso='git push -u origin `git rev-parse --abbrev-ref HEAD`'
 alias grb='git rebase'
 alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
@@ -339,16 +339,16 @@ zshaddhistory() {
 
   # 以下の条件をすべて満たすものだけをヒストリに追加する
   [[ ${#line} -ge 10
-      && ${cmd} != (l|l[sal])
-      && ${cmd} != (c|cd)
-      && ${cmd} != (m|man)
-      && ${cmd} != (r[mr])
-      && ${cmd} != (kill)
-      && ${cmd} != (tmux)
-      && ${cmd} != (vim)
-      && ${cmd} != (bundle)
-      && ${cmd} != (rails)
-      && ${cmd} != (gfu|grb|gco|gcob|ga|gclf|gps|gpsuo)
+      # && ${cmd} != (l|l[sal])
+      # && ${cmd} != (c|cd)
+      # && ${cmd} != (m|man)
+      # && ${cmd} != (r[mr])
+      # && ${cmd} != (kill)
+      # && ${cmd} != (tmux)
+      # && ${cmd} != (vim)
+      # && ${cmd} != (bundle)
+      # && ${cmd} != (rails)
+      # && ${cmd} != (gfu|grb|gco|gcob|ga|gclf|gps|gpsuo)
   ]]
 }
 
