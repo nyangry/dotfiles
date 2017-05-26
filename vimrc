@@ -209,12 +209,6 @@ call dein#end()
 " Required:
 filetype plugin indent on
 
-" vimprocだけは最初にインストールしてほしい
-if dein#check_install(['vimproc'])
-  call dein#install(['vimproc'])
-endif
-
-" その他インストールしていないものはこちらに入れる
 if dein#check_install()
   call dein#install()
 endif
