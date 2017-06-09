@@ -36,6 +36,7 @@ if has('nvim')
 else
   call dein#add('Shougo/unite.vim')
   call dein#add('Shougo/neocomplete')
+  call dein#add('Shougo/context_filetype.vim')
   call dein#add('Shougo/tabpagebuffer.vim')
 endif
 call dein#add('Shougo/vimfiler.vim')
@@ -965,20 +966,6 @@ let g:neocomplete#sources#dictionary#dictionaries = {
   \ 'slim'    : $HOME . '/.vim/dict/ruby.dict'
 \ }
 
-" Define same filetypes
-if !exists('g:neocomplete#same_filetypes')
-  let g:neocomplete#same_filetypes = {}
-endif
-let g:neocomplete#same_filetypes.html   = 'javascript, php, ruby'
-let g:neocomplete#same_filetypes.haml   = 'javascript, ruby'
-let g:neocomplete#same_filetypes.slim   = 'javascript, ruby'
-" let g:neocomplete#same_filetypes.php    = 'html, javascript'
-let g:neocomplete#same_filetypes.scss   = 'css'
-let g:neocomplete#same_filetypes.sass   = 'css'
-" let g:neocomplete#same_filetypes.js     = 'html, haml'
-let g:neocomplete#same_filetypes.coffee = 'javascript'
-let g:neocomplete#same_filetypes.ruby   = 'haml, rails'
-
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
   let g:neocomplete#keyword_patterns = {}
@@ -1050,6 +1037,45 @@ function! s:check_back_space() "{{{
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
+
+"----------------------------------------------------------
+" context_filetype.vim
+"
+" https://github.com/Shougo/context_filetype.vim/blob/master/doc/context_filetype.jax
+"----------------------------------------------------------
+if !exists('g:context_filetype#same_filetypes')
+  let g:context_filetype#same_filetypes = {}
+endif
+let g:context_filetype#same_filetypes.html   = 'javascript, php, ruby'
+let g:context_filetype#same_filetypes.haml   = 'javascript, ruby'
+let g:context_filetype#same_filetypes.slim   = 'javascript, ruby'
+" let g:context_filetype#same_filetypes.php    = 'html, javascript'
+let g:context_filetype#same_filetypes.scss   = 'css'
+let g:context_filetype#same_filetypes.sass   = 'css'
+" let g:context_filetype#same_filetypes.js     = 'html, haml'
+let g:context_filetype#same_filetypes.coffee = 'javascript'
+let g:context_filetype#same_filetypes.ruby   = 'haml, rails'
+" In gitconfig buffers, completes from all buffers.
+let g:context_filetype#same_filetypes.gitconfig = '_'
+" In default, completes from all buffers.
+let g:context_filetype#same_filetypes._ = '_'
+
+let g:context_filetype#filetypes = {
+\ 'slim' : [
+\   {
+\    'start' : '^\s*-',
+\    'end' : '$', 'filetype' : 'ruby',
+\   },
+\   {
+\    'start' : '^\s*\w*=',
+\    'end' : '$', 'filetype' : 'ruby',
+\   },
+\   {
+\    'start' : '^\s*ruby:',
+\    'end' : '^\S', 'filetype' : 'ruby',
+\   },
+\ ]
+\}
 
 
 "----------------------------------------------------------
