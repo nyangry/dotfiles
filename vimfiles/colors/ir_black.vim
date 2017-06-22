@@ -7,12 +7,12 @@
 " Note, x:x:x are RGB values
 "
 "  normal: #f6f3e8
-" 
-"  string: #A8FF60  168:255:96                   
+"
+"  string: #A8FF60  168:255:96
 "    string inner (punc, code, etc): #00A0A0  0:160:160
-"  number: #FF73FD  255:115:253                 
+"  number: #FF73FD  255:115:253
 "  comments: #7C7C7C  124:124:124
-"  keywords: #96CBFE  150:203:254             
+"  keywords: #96CBFE  150:203:254
 "  operators: white
 "  class: #FFFFB6  255:255:182
 "  method declaration name: #FFD2A7  255:210:167
@@ -20,20 +20,20 @@
 "    regexp alternate: #FF8000  255:128:0
 "    regexp alternate 2: #B18A3D  177:138:61
 "  variable: #C6C5FE  198:197:254
-"  
+"
 " Misc colors:
-"  red color (used for whatever): #FF6C60   255:108:96 
+"  red color (used for whatever): #FF6C60   255:108:96
 "     light red: #FFB6B0   255:182:176
 "
 "  brown: #E18964  good for special
 "
 "  lightpurpleish: #FFCCFF
-" 
+"
 " Interface colors:
 "  background color: black
 "  cursor (where underscore is used): #FFA560  255:165:96
 "  cursor (where block is used): white
-"  visual selection: #1D1E2C  
+"  visual selection: #1D1E2C
 "  current line: #151515  21:21:21
 "  search selection: #07281C  7:40:28
 "  line number: #3D3D3D  61:61:61
@@ -74,7 +74,7 @@ hi LineNr           guifg=#3D3D3D     guibg=black       gui=NONE      ctermfg=da
 
 hi VertSplit        guifg=#202020     guibg=#202020     gui=NONE      ctermfg=darkgray    ctermbg=darkgray    cterm=NONE
 hi StatusLine       guifg=#CCCCCC     guibg=#202020     gui=italic    ctermfg=white       ctermbg=darkgray    cterm=NONE
-hi StatusLineNC     guifg=black       guibg=#202020     gui=NONE      ctermfg=blue        ctermbg=darkgray    cterm=NONE  
+hi StatusLineNC     guifg=black       guibg=#202020     gui=NONE      ctermfg=blue        ctermbg=darkgray    cterm=NONE
 
 hi Folded           guifg=#a0a8b0     guibg=#384048     gui=NONE      ctermfg=NONE        ctermbg=NONE        cterm=NONE
 hi Title            guifg=#f6f3e8     guibg=NONE        gui=bold      ctermfg=NONE        ctermbg=NONE        cterm=NONE
@@ -161,24 +161,24 @@ hi rubyStringDelimiter         guifg=#336633      guibg=NONE      gui=NONE      
 "hi link rubyArrayDelimiter    Special  " [ , , ]
 "rubyCurlyBlock  { , , }
 
-hi link rubyClass             Keyword 
-hi link rubyModule            Keyword 
-hi link rubyKeyword           Keyword 
+hi link rubyClass             Keyword
+hi link rubyModule            Keyword
+hi link rubyKeyword           Keyword
 hi link rubyOperator          Operator
 hi link rubyIdentifier        Identifier
 hi link rubyInstanceVariable  Identifier
 hi link rubyGlobalVariable    Identifier
 hi link rubyClassVariable     Identifier
-hi link rubyConstant          Type  
+hi link rubyConstant          Type
 
 
 " Special for Java
 " hi link javaClassDecl    Type
-hi link javaScopeDecl         Identifier 
-hi link javaCommentTitle      javaDocSeeTag 
-hi link javaDocTags           javaDocSeeTag 
-hi link javaDocParam          javaDocSeeTag 
-hi link javaDocSeeTagParam    javaDocSeeTag 
+hi link javaScopeDecl         Identifier
+hi link javaCommentTitle      javaDocSeeTag
+hi link javaDocTags           javaDocSeeTag
+hi link javaDocParam          javaDocSeeTag
+hi link javaDocSeeTagParam    javaDocSeeTag
 
 hi javaDocSeeTag              guifg=#CCCCCC     guibg=NONE        gui=NONE      ctermfg=darkgray    ctermbg=NONE        cterm=NONE
 hi javaDocSeeTag              guifg=#CCCCCC     guibg=NONE        gui=NONE      ctermfg=darkgray    ctermbg=NONE        cterm=NONE
@@ -186,24 +186,115 @@ hi javaDocSeeTag              guifg=#CCCCCC     guibg=NONE        gui=NONE      
 
 
 " Special for XML
-hi link xmlTag          Keyword 
-hi link xmlTagName      Conditional 
-hi link xmlEndTag       Identifier 
+hi link xmlTag          Keyword
+hi link xmlTagName      Conditional
+hi link xmlEndTag       Identifier
 
 
 " Special for HTML
-hi link htmlTag         Keyword 
-hi link htmlTagName     Conditional 
-hi link htmlEndTag      Identifier 
+hi link htmlTag         Keyword
+hi link htmlTagName     Conditional
+hi link htmlEndTag      Identifier
 
 
 " Special for Javascript
-hi link javaScriptNumber      Number 
+hi link javaScriptNumber      Number
 hi link javaScriptIdentifier  Keyword
 
 " Special for Python
-"hi  link pythonEscape         Keyword      
+"hi  link pythonEscape         Keyword
 
 
 " Special for CSharp
-hi  link csXmlTag             Keyword      
+hi  link csXmlTag             Keyword
+
+
+" original
+set t_Co=256
+
+" hi Normal ctermbg=black
+
+hi matchParen ctermbg=black ctermfg=green
+hi Visual ctermbg=070 ctermfg=white
+hi Search ctermbg=blue ctermfg=white term=none cterm=none
+hi Comment ctermfg=245
+
+
+hi Todo ctermbg=darkred ctermfg=white
+hi Error ctermbg=darkred ctermfg=white
+hi ErrorMsg ctermbg=darkred ctermfg=white
+hi WarningMsg ctermbg=darkred ctermfg=white
+hi ModeMsg ctermbg=darkred ctermfg=white
+hi NonText ctermfg=white
+
+hi Pmenu ctermbg=black ctermfg=lightcyan
+hi PmenuSel ctermbg=lightcyan ctermfg=black
+hi PMenuSbar ctermbg=black
+
+hi CursorLine ctermbg=235 ctermfg=none
+
+hi diffAdded ctermfg=green
+hi diffRemoved ctermfg=darkred
+
+hi uniteCandidateIcon ctermfg=darkred
+hi uniteCandidateInputKeyword ctermfg=darkred
+hi uniteStatusLineNR ctermfg=yellow
+hi uniteMarkedLine ctermfg=yellow
+
+hi uniteSource__Grep ctermfg=gray
+" hi uniteSource__GrepFile ctermfg=cyan
+hi uniteSource__GrepSeparator ctermfg=green
+hi uniteSource__GrepPattern ctermfg=darkred
+hi uniteSource__GrepLineNR ctermfg=blue
+hi uniteSource__FileRecGit ctermfg=255
+hi uniteSource__FileRecAsync ctermfg=195
+hi uniteSource__FileMru ctermfg=45
+" hi uniteSourceLine__uniteSource__Grep ctermfg=magenta
+" hi uniteSourceLine__uniteSource__FileRecGit ctermfg=darkyellow
+
+hi Function ctermfg=yellow
+hi vimFuncName ctermbg=none ctermfg=darkred
+
+" hi rubyFunction ctermfg=darkred
+" hi rubyMethodBlock ctermfg=darkred
+hi rubyAccess ctermfg=blue
+hi rubyBoolean ctermfg=red
+hi rubyConstant ctermfg=darkred
+hi rubyRegexp ctermfg=darkgreen
+hi rubyRegexpDelimiter ctermfg=darkgreen
+" hi rubyRailsMethod ctermfg=darkred
+hi rubyRailsFilterMethod ctermfg=red
+hi rubyInstanceVariable ctermfg=red
+" hi rubyCurlyBlock ctermfg=red
+
+hi coffeeBoolean ctermfg=red
+hi coffeeObject ctermfg=darkred
+hi coffeeObjAssign ctermfg=yellow
+hi coffeeComment ctermfg=245
+
+hi hamlTag ctermfg=yellow
+hi hamlId ctermfg=blue
+hi hamlIdChar ctermfg=blue
+hi hamlClass ctermfg=cyan
+hi hamlClassChar ctermfg=cyan
+hi htmlTagName ctermfg=yellow
+" hi hamlRuby
+" hi hamlRubyChar
+" hi hamlRubyOutputChar
+
+" Agit.vim
+hi agitStatAdded ctermfg=green
+hi agitStatRemoved ctermfg=red
+hi agitDiffAdd ctermfg=green
+hi agitDiffRemove ctermfg=red
+
+" hi def link agitDiffAdd Identifier
+" hi def link agitDiffAddMerge Identifier
+" hi def link agitDiffRemove Special
+" hi def link agitDiffRemoveMerge Special
+" hi def link agitDiffHeader Type
+" hi def link agitHeaderLabel Label
+" hi def link agitDiffFileName Comment
+" hi def link agitDiffIndex Comment
+" hi def link agitDiffLine Comment
+" hi def link agitDiffSubname PreProc
