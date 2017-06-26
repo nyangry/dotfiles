@@ -33,18 +33,28 @@ call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 if has('nvim')
   call dein#add('Shougo/denite.nvim', { 'rev': 'master' })
   call dein#add('Shougo/deoplete.nvim')
+  " CtrlP 向けの拡張だけど、denite からも matcher 用に使える
+  "
+  " matcher_cpsm
+  "     A matcher which filters the candidates using cpsm.
+  "     Note: cpsm plugin build/install is needed in 'runtimepath'.
+  "     https://github.com/nixprime/cpsm
+  "     Note: You must use Python3 support enabled cpsm. >
+  "       $ PY3=ON ./install.sh
+  call dein#add('nixprime/cpsm')
 else
   call dein#add('Shougo/unite.vim')
   call dein#add('Shougo/neocomplete')
   call dein#add('Shougo/context_filetype.vim')
   call dein#add('Shougo/tabpagebuffer.vim')
 endif
+call dein#add('Shougo/neco-syntax')
 call dein#add('Shougo/vimfiler.vim')
 call dein#add('Shougo/neomru.vim')
 call dein#add('Shougo/context_filetype.vim')
 call dein#add('Shougo/neoinclude.vim')
-call dein#add('Shougo/neco-vim')
-call dein#add('Shougo/neco-syntax')
+" candidates from look command
+call dein#add('ujihisa/neco-look')
 call dein#add('Shougo/neosnippet')
 call dein#add('Shougo/neosnippet-snippets')
 
@@ -54,9 +64,9 @@ call dein#add('Shougo/neosnippet-snippets')
 call dein#add('kana/vim-textobj-user')
 call dein#add('kana/vim-textobj-line')
 call dein#add('lucapette/vim-textobj-underscore')
-" call dein#add('kana/vim-textobj-entire')
-" call dein#add('rhysd/vim-textobj-ruby')
-" call dein#add('coderifous/textobj-word-column.vim')
+call dein#add('kana/vim-textobj-entire')
+call dein#add('rhysd/vim-textobj-ruby')
+call dein#add('rhysd/textobj-word-column.vim')
 " call dein#add('terryma/vim-expand-region')
 
 "----------------------------------------------------------
@@ -115,12 +125,11 @@ call dein#add('powerman/vim-plugin-AnsiEsc')
 "----------------------------------------------------------
 " JavaScript
 "----------------------------------------------------------
-call dein#add('pangloss/vim-javascript')
 call dein#add('marijnh/tern_for_vim', {'build': 'npm install'})
 call dein#add('othree/yajs.vim')
 call dein#add('othree/es.next.syntax.vim')
+call dein#add('gavocanov/vim-js-indent')
 call dein#add('MaxMEllon/vim-jsx-pretty')
-call dein#add('jiangmiao/simple-javascript-indenter')
 
 "----------------------------------------------------------
 " CSV
@@ -131,13 +140,10 @@ call dein#add('vim-scripts/csv.vim')
 "----------------------------------------------------------
 " Syntax
 "----------------------------------------------------------
-call dein#add('tpope/vim-haml')
 call dein#add('slim-template/vim-slim')
-call dein#add('othree/html5.vim')
 call dein#add('hail2u/vim-css3-syntax')
 call dein#add('cakebaker/scss-syntax.vim')
 call dein#add('kchmck/vim-coffee-script')
-" call dein#add('tpope/vim-markdown')
 call dein#add('neomake/neomake')
 
 "----------------------------------------------------------
@@ -183,26 +189,17 @@ call dein#add('godlygeek/tabular')
 call dein#add('airblade/vim-rooter')
 
 call dein#add('AndrewRadev/switch.vim')
-call dein#add('AndrewRadev/linediff.vim')
-
+" call dein#add('AndrewRadev/linediff.vim')
+"
 call dein#add('osyo-manga/vim-anzu')
 
-call dein#add('zerowidth/vim-copy-as-rtf')
+" fast html and css coding
+call dein#add('mattn/emmet-vim')
 
 " [Vimの標準プラグインmatchparenが遅かったので8倍くらい速いプラグインを作りました - プログラムモグモグ](http://itchyny.hatenablog.com/entry/2016/03/30/210000)
 let g:loaded_matchparen = 1
 call dein#add('itchyny/vim-parenmatch')
 call dein#add('itchyny/vim-cursorword')
-
-" CtrlP 向けの拡張だけど、denite からも matcher 用に使える
-"
-" matcher_cpsm
-"     A matcher which filters the candidates using cpsm.
-"     Note: cpsm plugin build/install is needed in 'runtimepath'.
-"     https://github.com/nixprime/cpsm
-"     Note: You must use Python3 support enabled cpsm. >
-"       $ PY3=ON ./install.sh
-call dein#add('nixprime/cpsm')
 
 " Required:
 call dein#end()
@@ -271,7 +268,7 @@ endif
 set laststatus=2 " 常にステータスラインを表示
 set ruler " カーソルが何行目の何列目に置かれているかを表示する
 set number " 行番号を表示する
-" set noequalalways " ウインドウ幅の自動調整を行わない
+set noequalalways " ウインドウ幅の自動調整を行わない
 syntax enable
 
 "====================================================================================
@@ -283,12 +280,13 @@ command! -nargs=0 Wq wq
 "====================================================================================
 " インデント調整
 "====================================================================================
-setlocal indentkeys=!^F,o,O
-setlocal expandtab
-setlocal tabstop<
-setlocal softtabstop=2
-setlocal shiftwidth=2
-setlocal autoindent
+set indentkeys=!^F,o,O
+set expandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set autoindent
+set smartindent
 " ハイフン区切りのワードを選択しやすくする
 " http://qiita.com/ponko2/items/0a14d0649f918f5e3ce7
 setlocal iskeyword& iskeyword+=-
@@ -339,98 +337,9 @@ endif
 "====================================================================================
 " View
 "====================================================================================
-" Ref: https://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
+" Ref: https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
 set t_Co=256
-set background=dark
-colorscheme ir_black
-
-" hi Normal ctermbg=black
-
-hi matchParen ctermbg=black ctermfg=green
-hi Visual ctermbg=070 ctermfg=white
-hi Search ctermbg=blue ctermfg=white term=none cterm=none
-hi Comment ctermfg=245
-
-
-hi Todo ctermbg=darkred ctermfg=white
-hi Error ctermbg=darkred ctermfg=white
-hi ErrorMsg ctermbg=darkred ctermfg=white
-hi WarningMsg ctermbg=darkred ctermfg=white
-hi ModeMsg ctermbg=darkred ctermfg=white
-hi NonText ctermfg=white
-
-hi Pmenu ctermbg=black ctermfg=lightcyan
-hi PmenuSel ctermbg=lightcyan ctermfg=black
-hi PMenuSbar ctermbg=black
-
-hi CursorLine ctermbg=235 ctermfg=none
-
-hi diffAdded ctermfg=green
-hi diffRemoved ctermfg=darkred
-
-hi uniteCandidateIcon ctermfg=darkred
-hi uniteCandidateInputKeyword ctermfg=darkred
-hi uniteStatusLineNR ctermfg=yellow
-hi uniteMarkedLine ctermfg=yellow
-
-hi uniteSource__Grep ctermfg=gray
-" hi uniteSource__GrepFile ctermfg=cyan
-hi uniteSource__GrepSeparator ctermfg=green
-hi uniteSource__GrepPattern ctermfg=darkred
-hi uniteSource__GrepLineNR ctermfg=blue
-hi uniteSource__FileRecGit ctermfg=255
-hi uniteSource__FileRecAsync ctermfg=195
-hi uniteSource__FileMru ctermfg=45
-" hi uniteSourceLine__uniteSource__Grep ctermfg=magenta
-" hi uniteSourceLine__uniteSource__FileRecGit ctermfg=darkyellow
-
-hi Function ctermfg=yellow
-hi vimFuncName ctermbg=none ctermfg=darkred
-
-" hi rubyFunction ctermfg=darkred
-" hi rubyMethodBlock ctermfg=darkred
-hi rubyAccess ctermfg=blue
-hi rubyBoolean ctermfg=red
-hi rubyConstant ctermfg=darkred
-hi rubyRegexp ctermfg=darkgreen
-hi rubyRegexpDelimiter ctermfg=darkgreen
-" hi rubyRailsMethod ctermfg=darkred
-hi rubyRailsFilterMethod ctermfg=red
-hi rubyInstanceVariable ctermfg=red
-" hi rubyCurlyBlock ctermfg=red
-
-hi coffeeBoolean ctermfg=red
-hi coffeeObject ctermfg=darkred
-hi coffeeObjAssign ctermfg=yellow
-hi coffeeComment ctermfg=245
-
-hi hamlTag ctermfg=yellow
-hi hamlId ctermfg=blue
-hi hamlIdChar ctermfg=blue
-hi hamlClass ctermfg=cyan
-hi hamlClassChar ctermfg=cyan
-hi htmlTagName ctermfg=yellow
-" hi hamlRuby
-" hi hamlRubyChar
-" hi hamlRubyOutputChar
-
-" Agit.vim
-hi agitStatAdded ctermfg=green
-hi agitStatRemoved ctermfg=red
-hi agitDiffAdd ctermfg=green
-hi agitDiffRemove ctermfg=red
-
-" hi def link agitDiffAdd Identifier
-" hi def link agitDiffAddMerge Identifier
-" hi def link agitDiffRemove Special
-" hi def link agitDiffRemoveMerge Special
-" hi def link agitDiffHeader Type
-" hi def link agitHeaderLabel Label
-" hi def link agitDiffFileName Comment
-" hi def link agitDiffIndex Comment
-" hi def link agitDiffLine Comment
-" hi def link agitDiffSubname PreProc
-
+colorscheme nyangry_dark
 
 "====================================================================================
 " Complete
@@ -450,10 +359,15 @@ set shiftwidth=2
 set nowrapscan " 検索をファイルの先頭へループしない
 " コマンドライン補完するときに補完候補を表示する(tabで補完)
 set wildmenu
+set wildignore=*.jpg,*.png,*.gif,*.pdf,*.svg,*.ico,*.keep
 
 " for performance
-set synmaxcol=200
-syntax sync minlines=500 maxlines=1000
+set re=1
+set nocursorline
+set norelativenumber
+set nocursorcolumn
+set synmaxcol=180
+syntax sync minlines=100 maxlines=500
 
 " タブ幅をリセット
 augroup set_tab_stop
@@ -864,6 +778,9 @@ else
   call unite#custom#alias('file', 'delete', 'vimfiler__delete')
   call unite#custom#alias('file', 'move', 'vimfiler__move')
 
+  call unite#custom#source('file_rec/git', 'ignore_globs',
+      \ split(&wildignore, ','))
+
   " git ディレクトリかどうかで、処理を切り替える
   " http://qiita.com/yuku_t/items/9263e6d9105ba972aea8
   " file_rec/git は画像が大量にあるような場合にキツイ ls-files --exclude-standard した後に、画像や不要ファイルをフィルタする処理があれば使えそう
@@ -956,15 +873,14 @@ let g:neocomplete#enable_refresh_always = 0
 if !exists('g:neocomplete#sources')
   let g:neocomplete#sources = {}
 endif
-let g:neocomplete#sources._ = ['buffer', 'member', 'dictionary', 'syntax', 'omni']
+let g:neocomplete#sources._ = ['buffer', 'member', 'dictionary', 'syntax']
 
 " Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-  \ 'default' : '',
-  \ 'coffee'  : $HOME . '/.vim/dict/jquery.dict',
-  \ 'ruby'    : $HOME . '/.vim/dict/ruby.dict',
-  \ 'slim'    : $HOME . '/.vim/dict/ruby.dict'
-\ }
+" let g:neocomplete#sources#dictionary#dictionaries = {
+"   \ 'default' : '',
+"   \ 'coffee'  : $HOME . '/.vim/dict/jquery.dict',
+"   \ 'ruby'    : $HOME . '/.vim/dict/ruby.dict'
+" \ }
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
@@ -1046,7 +962,7 @@ endfunction"}}}
 if !exists('g:context_filetype#same_filetypes')
   let g:context_filetype#same_filetypes = {}
 endif
-let g:context_filetype#same_filetypes.html   = 'javascript, ruby'
+" let g:context_filetype#same_filetypes.html   = 'javascript, ruby'
 " let g:context_filetype#same_filetypes.haml   = 'javascript, ruby'
 let g:context_filetype#same_filetypes.slim   = 'javascript, ruby'
 let g:context_filetype#same_filetypes.yaml   = 'ruby'
@@ -1054,6 +970,7 @@ let g:context_filetype#same_filetypes.yaml   = 'ruby'
 let g:context_filetype#same_filetypes.scss   = 'css, slim, coffee, ruby'
 let g:context_filetype#same_filetypes.sass   = 'css, slim, coffee, ruby'
 " let g:context_filetype#same_filetypes.js     = 'html, haml'
+let g:context_filetype#same_filetypes.es6   = 'javascript'
 let g:context_filetype#same_filetypes.coffee = 'javascript, ruby'
 " let g:context_filetype#same_filetypes.ruby   = 'slim'
 " In gitconfig buffers, completes from all buffers.
@@ -1093,7 +1010,10 @@ let g:context_filetype#filetypes = {
 " au FileType vimfiler nnoremap <silent> <buffer> gf <Plug>(vimfiler_find)
 
 let g:vimfiler_as_default_explorer = 1
-" let g:vimfiler_safe_mode_by_default = 0
+call vimfiler#custom#profile('default', 'context', {
+     \ 'safe' : 0,
+     \ 'edit_action' : 'tabopen',
+     \ })
 
 " nnoremap <silent> <Leader>f :<C-u>VimFiler
 nnoremap <silent> <Leader>f :<C-u>VimFilerExplorer -find
@@ -1315,6 +1235,7 @@ nmap gP <Plug>(yankround-gP)
 nmap <C-p> <Plug>(yankround-prev)
 nmap <C-n> <Plug>(yankround-next)
 
+
 "----------------------------------------------------------
 " Quickrun
 " Color ref: http://goo.gl/sQDiY
@@ -1370,12 +1291,6 @@ augroup Quickrun
   autocmd BufReadPost *_test.rb call MinitestQuickrun()
   autocmd BufReadPost *_spec.rb call RSpecQuickrun()
 augroup END
-
-
-"----------------------------------------------------------
-" simple-javascript-indenter
-"----------------------------------------------------------
-let g:SimpleJsIndenter_BriefMode = 1
 
 
 "----------------------------------------------------------
