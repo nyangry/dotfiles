@@ -12,6 +12,8 @@ let colors_name = "nyangry_dark"
 hi Normal                                             ctermfg=NONE        ctermbg=NONE                cterm=NONE
 hi NonText                                            ctermfg=black       ctermbg=NONE                cterm=NONE
 
+hi ZenkakuSpace                                       ctermfg=193 ctermbg=NONE cterm=underline
+
 hi Cursor                                             ctermfg=black       ctermbg=white               cterm=reverse
 hi LineNr                                             ctermfg=darkgray    ctermbg=NONE                cterm=NONE
 
@@ -44,19 +46,19 @@ hi Search                                             ctermfg=NONE        ctermb
 
 hi Comment                                            ctermfg=darkgray    ctermbg=NONE                cterm=NONE
 hi String                                             ctermfg=193       ctermbg=NONE                cterm=NONE
-hi Number                                             ctermfg=magenta     ctermbg=NONE                cterm=NONE
+hi Number                                             ctermfg=001     ctermbg=NONE                cterm=NONE
 
-hi Keyword                                            ctermfg=blue        ctermbg=NONE                cterm=NONE
-hi PreProc                                            ctermfg=039        ctermbg=NONE                cterm=NONE
+hi Keyword                                            ctermfg=025        ctermbg=NONE                cterm=BOLD
+hi PreProc                                            ctermfg=025        ctermbg=NONE                cterm=NONE
 hi Conditional                                        ctermfg=blue        ctermbg=NONE                cterm=NONE      " if else end
 
 hi Todo                                               ctermfg=red         ctermbg=NONE                cterm=NONE
 hi Constant                                           ctermfg=cyan        ctermbg=NONE                cterm=NONE
 
-hi Identifier                                         ctermfg=045        ctermbg=NONE                cterm=NONE
-hi Function                                           ctermfg=brown       ctermbg=NONE                cterm=NONE
+hi Identifier                                         ctermfg=039        ctermbg=NONE                cterm=NONE
+hi Function                                           ctermfg=221       ctermbg=NONE                cterm=NONE
 hi Type                                               ctermfg=yellow      ctermbg=NONE                cterm=NONE
-hi Statement                                          ctermfg=039   ctermbg=NONE                cterm=NONE
+hi Statement                                          ctermfg=025   ctermbg=NONE                cterm=NONE
 
 hi Special                                            ctermfg=white       ctermbg=NONE                cterm=NONE
 hi Delimiter                                          ctermfg=193        ctermbg=NONE                cterm=NONE
@@ -112,12 +114,11 @@ hi uniteSource__GrepSeparator                         ctermfg=green
 hi uniteSource__GrepPattern                           ctermfg=darkred
 hi uniteSource__GrepLineNR                            ctermfg=blue
 hi uniteSource__FileRecGit                            ctermfg=255
-hi uniteSource__FileRecAsync                          ctermfg=195
+hi uniteSource__FileRecAsync                          ctermfg=193
 hi uniteSource__FileMru                               ctermfg=45
-" hi uniteSourceLine__uniteSource__Grep               ctermfg=magenta
+" hi uniteSourceLine__uniteSource__Grep               ctermfg=225
 " hi uniteSourceLine__uniteSource__FileRecGit         ctermfg=darkyellow
 
-hi Function                                           ctermfg=yellow
 hi vimFuncName                                        ctermbg=none        ctermfg=darkred
 
 hi coffeeBoolean                                      ctermfg=red
@@ -125,26 +126,13 @@ hi coffeeObject                                       ctermfg=darkred
 hi coffeeObjAssign                                    ctermfg=yellow
 hi coffeeComment                                      ctermfg=245
 
-hi hamlTag                                            ctermfg=yellow
-hi hamlId                                             ctermfg=blue
-hi hamlIdChar                                         ctermfg=blue
-hi hamlClass                                          ctermfg=cyan
-hi hamlClassChar                                      ctermfg=cyan
-hi htmlTagName                                        ctermfg=yellow
-" hi hamlRuby
-" hi hamlRubyChar
-" hi hamlRubyOutputChar
-
-
 " Special for Ruby
 hi rubyRegexp                                         ctermfg=darkgreen       ctermbg=NONE                cterm=NONE
 hi rubyRegexpDelimiter                                ctermfg=darkgreen       ctermbg=NONE                cterm=NONE
 " hi rubyEscape                                         ctermfg=cyan        ctermbg=NONE                cterm=NONE
 " hi rubyInterpolationDelimiter                         ctermfg=blue        ctermbg=NONE                cterm=NONE
-" hi rubyControl                                        ctermfg=blue        ctermbg=NONE                cterm=NONE      "and break, etc
 " hi rubyGlobalVariable                                ctermfg=lightblue   ctermbg=NONE                cterm=NONE      "yield
 " hi rubyStringDelimiter                                ctermfg=lightgreen  ctermbg=NONE                cterm=NONE
-" hi rubyBoolean                                        ctermfg=red
 " hi rubyInclude
 " hi rubySharpBang
 " hi rubyPredefinedVariable
@@ -154,9 +142,16 @@ hi rubyRegexpDelimiter                                ctermfg=darkgreen       ct
 " hi rubyArrayDelimiter " [ , , ]
 " hi rubyCurlyBlock " { , , }
 " hi rubyInstanceVariable                               ctermfg=red
-" hi rubyClass Keyword
-" hi rubyModule Keyword
-hi rubyConstant                                       ctermfg=231 ctermbg=NONE cterm=NONE
+hi rubyConditionalModifier                                         ctermfg=white ctermbg=001 cterm=BOLD
+hi rubyConditional                                         ctermfg=white ctermbg=001 cterm=BOLD
+hi rubyControl                                         ctermfg=white ctermbg=001 cterm=BOLD
+hi rubyBoolean                                             ctermfg=001     ctermbg=NONE                cterm=NONE
+hi rubyPseudoVariable                                             ctermfg=001     ctermbg=NONE                cterm=NONE
+hi link rubyClass Keyword
+hi link rubyModule Keyword
+hi link rubyDefine Keyword
+hi rubyConstant                                       ctermfg=001 ctermbg=NONE cterm=NONE
+hi rubySymbol                                         ctermfg=039 ctermbg=NONE cterm=BOLD
 " hi link rubyKeyword Keyword
 " hi link rubyOperator Operator
 " hi link rubyIdentifier Identifier
@@ -166,6 +161,13 @@ hi rubyConstant                                       ctermfg=231 ctermbg=NONE c
 " hi rubyAccess                                         ctermfg=blue
 " hi rubyRailsMethod                                  ctermfg=darkred
 " hi rubyRailsFilterMethod                              ctermfg=red
+
+" html
+hi link htmlTagName slimClass
+
+" slim
+hi slimClass ctermfg=white ctermbg=NONE cterm=BOLD
+hi link slimRuby rubyFunction
 
 " Agit.vim
 hi agitStatAdded                                      ctermfg=green
