@@ -5,11 +5,6 @@ export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
-autoload colors && colors
-autoload -Uz vcs_info
-autoload -Uz add-zsh-hook
-autoload -Uz compinit && compinit -C
-
 #=======================================================
 # zplug
 #=======================================================
@@ -44,13 +39,26 @@ fi
 
 zplug load --verbose
 
-#=======================================================
-
 
 #=======================================================
 # zsh config
 #=======================================================
+autoload colors && colors
+autoload -Uz vcs_info
+autoload -Uz add-zsh-hook
+autoload -Uz compinit && compinit -C
+
 setopt no_flow_control
+
+# タイポしているコマンドを指摘
+setopt correct
+
+#cd
+setopt auto_cd
+
+setopt auto_pushd
+
+setopt prompt_subst
 
 # historyの共有
 setopt share_history
@@ -82,13 +90,8 @@ setopt inc_append_history
 # 開始と終了を記録
 setopt EXTENDED_HISTORY
 
-# タイポしているコマンドを指摘
-setopt correct
 
-#cd
-setopt auto_cd
-
-setopt prompt_subst
+setopt interactive_comments
 
 # 履歴ファイルの保存先
 export HISTFILE=${HOME}/.zsh_history
@@ -415,14 +418,14 @@ function agvim () {
   vim $(ag $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
 }
 
-function repos() {
-  BUFFER="cd $(find ~/workspace -name '*' -type d -follow -maxdepth 5 | egrep -v '\.|app/|/app$|bin|bundle_bin|bower_components|node_modules|config|data|db|doc|dummy|features|lib|log|public|script|spec|sys|test|tmp|vendor' | peco)"
-  zle accept-line
-  # zle reset-prompt
-  zle clear-screen
-}
-zle -N repos
-bindkey '^f' repos
+# function repos() {
+#   BUFFER="cd $(find ~/workspace -name '*' -type d -follow -maxdepth 5 | egrep -v '\.|app/|/app$|bin|bundle_bin|bower_components|node_modules|config|data|db|doc|dummy|features|lib|log|public|script|spec|sys|test|tmp|vendor' | peco)"
+#   zle accept-line
+#   # zle reset-prompt
+#   zle clear-screen
+# }
+# zle -N repos
+# bindkey '^f' repos
 
 function peco_select_branch() {
   BUFFER+=$(gba | sed 's/^\*/ /' | awk '{ print $1 }' | peco)

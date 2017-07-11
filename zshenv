@@ -15,10 +15,15 @@ setopt no_global_rcs
 
 export XDG_CONFIG_HOME=$HOME/.config
 
-#=============================
 # rbenv
-#=============================
 if [ -d ${HOME}/.rbenv  ] ; then
   export PATH=${HOME}/.rbenv/bin:${HOME}/.rbenv/shims:${PATH}
   eval "$(rbenv init - --no-rehash)"
 fi
+
+# for auto_cd
+cdpath=(
+  $HOME/workspace/
+  $HOME/workspace/mf/
+  $cdpath
+)
