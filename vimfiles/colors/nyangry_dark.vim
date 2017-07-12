@@ -1,3 +1,7 @@
+" Ref:
+"   - https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
+"   - http://vimdoc.sourceforge.net/htmldoc/syntax.html#%3ahighlight
+
 set background=dark
 hi clear
 
@@ -5,183 +9,100 @@ if exists("syntax_on")
   syntax reset
 endif
 
-
 let colors_name = "nyangry_dark"
 
+" black
+" 016 #000000
 
-hi Normal                                             ctermfg=NONE        ctermbg=NONE                cterm=NONE
-hi NonText                                            ctermfg=black       ctermbg=NONE                cterm=NONE
+" hi TabLine        ctermfg=240   ctermbg=016  cterm=NONE
+" hi TabLineFill    ctermfg=016  ctermbg=016  cterm=NONE
+" hi TabLineSel     ctermfg=255   ctermbg=016  cterm=BOLD
 
-hi ZenkakuSpace                                       ctermfg=193 ctermbg=NONE cterm=underline
+hi Todo           ctermfg=red   ctermbg=NONE cterm=NONE
+hi PreProc        ctermfg=white ctermbg=NONE cterm=BOLD
+hi Identifier     ctermfg=white ctermbg=NONE cterm=NONE
+hi Type           ctermfg=white ctermbg=NONE cterm=NONE
+hi Keyword        ctermfg=white ctermbg=NONE cterm=BOLD
+hi Statement      ctermfg=white ctermbg=NONE cterm=BOLD
 
-hi Cursor                                             ctermfg=black       ctermbg=white               cterm=reverse
-hi LineNr                                             ctermfg=darkgray    ctermbg=NONE                cterm=NONE
+hi Normal         ctermfg=255   ctermbg=NONE cterm=NONE
+hi NonText        ctermfg=black ctermbg=NONE cterm=NONE
+hi Comment        ctermfg=240   ctermbg=NONE cterm=NONE
 
-hi VertSplit                                          ctermfg=darkgray    ctermbg=darkgray            cterm=NONE
-hi StatusLine                                         ctermfg=white       ctermbg=darkgray            cterm=NONE
-hi StatusLineNC                                       ctermfg=blue        ctermbg=darkgray            cterm=NONE
+hi LineNr         ctermfg=240   ctermbg=016  cterm=NONE
+hi VertSplit      ctermfg=240   ctermbg=016  cterm=NONE
 
-hi Folded                                             ctermfg=NONE        ctermbg=NONE                cterm=NONE
-hi Title                                              ctermfg=NONE        ctermbg=NONE                cterm=NONE
-hi Visual                                             ctermfg=NONE        ctermbg=darkgray            cterm=NONE
+hi Search         ctermfg=black ctermbg=228  cterm=none
+hi IncSearch      ctermfg=black ctermbg=228  cterm=none
+hi ParenMatch     ctermfg=black ctermbg=228  cterm=none
+hi matchParen     ctermfg=black ctermbg=228  cterm=none
 
-hi SpecialKey                                         ctermfg=NONE        ctermbg=NONE                cterm=NONE
+" blue
+" 017 darkblue
+" 018 blue
+" 075 lightblue
+" hi Function     ctermfg=white ctermbg=017  cterm=NONE
+" hi Pmenu        ctermfg=white ctermbg=017  cterm=BOLD
+" hi Number       ctermfg=white ctermbg=018  cterm=BOLD
+" hi Constant     ctermfg=white ctermbg=018  cterm=BOLD
+" hi PmenuSel     ctermfg=white ctermbg=075  cterm=BOLD
+" hi Visual       ctermfg=white ctermbg=075  cterm=NONE
+" hi String       ctermfg=075   ctermbg=NONE cterm=NONE
+" hi Delimiter    ctermfg=075   ctermbg=NONE cterm=NONE
+" hi ZenkakuSpace ctermfg=075   ctermbg=NONE cterm=underline
+" hi Special      ctermfg=075   ctermbg=NONE cterm=BOLD
 
-hi WildMenu                                           ctermfg=black       ctermbg=yellow              cterm=NONE
-hi PmenuSbar                                          ctermfg=black       ctermbg=white               cterm=NONE
+" green
+" 022 darkgreen
+" 028 green
+" 034 lightgreen
+hi Function     ctermfg=white ctermbg=022  cterm=NONE
+hi Pmenu        ctermfg=white ctermbg=022  cterm=BOLD
+hi Number       ctermfg=white ctermbg=028  cterm=BOLD
+hi Constant     ctermfg=white ctermbg=028  cterm=BOLD
+hi PmenuSel     ctermfg=white ctermbg=034  cterm=BOLD
+hi Visual       ctermfg=white ctermbg=034  cterm=NONE
+hi String       ctermfg=034   ctermbg=NONE cterm=NONE
+hi Delimiter    ctermfg=034   ctermbg=NONE cterm=NONE
+hi ZenkakuSpace ctermfg=034   ctermbg=NONE cterm=underline
+hi Special      ctermfg=034   ctermbg=NONE cterm=BOLD
 
-hi Error                                              ctermbg=darkred     ctermfg=white
-hi ErrorMsg                                           ctermbg=darkred     ctermfg=white
-hi WarningMsg                                         ctermfg=white       ctermbg=red                 cterm=NONE
+" unite
+hi link uniteMarkedLine Search
 
-" Message displayed in lower left, such as --INSERT--
-hi ModeMsg                                            ctermfg=black       ctermbg=cyan                cterm=NONE
-
-hi CursorLine                                         ctermfg=NONE        ctermbg=NONE                cterm=NONE
-hi CursorColumn                                       ctermfg=NONE        ctermbg=NONE                cterm=NONE
-hi MatchParen                                         ctermfg=white       ctermbg=darkgray            cterm=NONE
-hi Pmenu                                              ctermfg=NONE        ctermbg=NONE                cterm=NONE
-hi PmenuSel                                           ctermfg=NONE        ctermbg=NONE                cterm=NONE
-hi Search                                             ctermfg=NONE        ctermbg=NONE                cterm=underline
-
-hi Comment                                            ctermfg=darkgray    ctermbg=NONE                cterm=NONE
-hi String                                             ctermfg=193       ctermbg=NONE                cterm=NONE
-hi Number                                             ctermfg=001     ctermbg=NONE                cterm=NONE
-
-hi Keyword                                            ctermfg=025        ctermbg=NONE                cterm=BOLD
-hi PreProc                                            ctermfg=025        ctermbg=NONE                cterm=NONE
-hi Conditional                                        ctermfg=blue        ctermbg=NONE                cterm=NONE      " if else end
-
-hi Todo                                               ctermfg=red         ctermbg=NONE                cterm=NONE
-hi Constant                                           ctermfg=cyan        ctermbg=NONE                cterm=NONE
-
-hi Identifier                                         ctermfg=039        ctermbg=NONE                cterm=NONE
-hi Function                                           ctermfg=221       ctermbg=NONE                cterm=NONE
-hi Type                                               ctermfg=yellow      ctermbg=NONE                cterm=NONE
-hi Statement                                          ctermfg=025   ctermbg=NONE                cterm=NONE
-
-hi Special                                            ctermfg=white       ctermbg=NONE                cterm=NONE
-hi Delimiter                                          ctermfg=193        ctermbg=NONE                cterm=NONE
-hi Operator                                           ctermfg=white       ctermbg=NONE                cterm=NONE
-
-hi link Character Constant
-hi link Boolean Constant
-hi link Float Number
-hi link Repeat Statement
-hi link Label Statement
-hi link Exception Statement
-hi link Include PreProc
-hi link Define PreProc
-hi link Macro PreProc
-hi link PreCondit PreProc
-hi link StorageClass Type
-hi link Structure Type
-hi link Typedef Type
-hi link Tag Special
-hi link SpecialChar Special
-hi link SpecialComment  Special
-hi link Debug Special
-
-
-hi matchParen                                         ctermbg=black       ctermfg=green
-hi Visual                                             ctermbg=070         ctermfg=white
-hi Search                                             ctermbg=blue        ctermfg=white     term=none cterm=none
-hi Comment                                            ctermfg=245
-
-
-hi Todo                                               ctermbg=darkred     ctermfg=white
-hi WarningMsg                                         ctermbg=darkred     ctermfg=white
-hi ModeMsg                                            ctermbg=darkred     ctermfg=white
-hi NonText                                            ctermfg=white
-
-hi Pmenu                                              ctermbg=black       ctermfg=lightcyan
-hi PmenuSel                                           ctermbg=lightcyan   ctermfg=black
-hi PMenuSbar                                          ctermbg=black
-
-hi CursorLine                                         ctermbg=235         ctermfg=none
-
-hi diffAdded                                          ctermfg=green
-hi diffRemoved                                        ctermfg=darkred
-
-hi uniteCandidateIcon                                 ctermfg=darkred
-hi uniteCandidateInputKeyword                         ctermfg=darkred
-hi uniteStatusLineNR                                  ctermfg=yellow
-hi uniteMarkedLine                                    ctermfg=yellow
-
-hi uniteSource__Grep                                  ctermfg=gray
-" hi uniteSource__GrepFile                            ctermfg=cyan
-hi uniteSource__GrepSeparator                         ctermfg=green
-hi uniteSource__GrepPattern                           ctermfg=darkred
-hi uniteSource__GrepLineNR                            ctermfg=blue
-hi uniteSource__FileRecGit                            ctermfg=255
-hi uniteSource__FileRecAsync                          ctermfg=193
-hi uniteSource__FileMru                               ctermfg=45
-" hi uniteSourceLine__uniteSource__Grep               ctermfg=225
-" hi uniteSourceLine__uniteSource__FileRecGit         ctermfg=darkyellow
-
-hi vimFuncName                                        ctermbg=none        ctermfg=darkred
-
-hi coffeeBoolean                                      ctermfg=red
-hi coffeeObject                                       ctermfg=darkred
-hi coffeeObjAssign                                    ctermfg=yellow
-hi coffeeComment                                      ctermfg=245
-
-" Special for Ruby
-hi rubyRegexp                                         ctermfg=darkgreen       ctermbg=NONE                cterm=NONE
-hi rubyRegexpDelimiter                                ctermfg=darkgreen       ctermbg=NONE                cterm=NONE
-" hi rubyEscape                                         ctermfg=cyan        ctermbg=NONE                cterm=NONE
-" hi rubyInterpolationDelimiter                         ctermfg=blue        ctermbg=NONE                cterm=NONE
-" hi rubyGlobalVariable                                ctermfg=lightblue   ctermbg=NONE                cterm=NONE      "yield
-" hi rubyStringDelimiter                                ctermfg=lightgreen  ctermbg=NONE                cterm=NONE
-" hi rubyInclude
-" hi rubySharpBang
-" hi rubyPredefinedVariable
-" hi rubyClassVariable
-" hi rubyBeginEnd
-" hi rubyRepeatModifier
-" hi rubyArrayDelimiter " [ , , ]
-" hi rubyCurlyBlock " { , , }
-" hi rubyInstanceVariable                               ctermfg=red
-hi rubyConditionalModifier                                         ctermfg=white ctermbg=001 cterm=BOLD
-hi rubyConditional                                         ctermfg=white ctermbg=001 cterm=BOLD
-hi rubyControl                                         ctermfg=white ctermbg=001 cterm=BOLD
-hi rubyBoolean                                             ctermfg=001     ctermbg=NONE                cterm=NONE
-hi rubyPseudoVariable                                             ctermfg=001     ctermbg=NONE                cterm=NONE
-hi link rubyClass Keyword
-hi link rubyModule Keyword
-hi link rubyDefine Keyword
-hi rubyConstant                                       ctermfg=001 ctermbg=NONE cterm=NONE
-hi rubySymbol                                         ctermfg=039 ctermbg=NONE cterm=BOLD
-" hi link rubyKeyword Keyword
-" hi link rubyOperator Operator
-" hi link rubyIdentifier Identifier
-" hi rubyFunction                                     ctermfg=darkred
-
-" hi rubyMethodBlock                                  ctermfg=darkred
-" hi rubyAccess                                         ctermfg=blue
-" hi rubyRailsMethod                                  ctermfg=darkred
-" hi rubyRailsFilterMethod                              ctermfg=red
+" ruby
+hi link rubyConstant Number
+hi link rubyClass Normal
+hi link rubyInclude Normal
+hi link rubyStatement Normal
+hi link rubyModule Normal
+hi link rubyDefine Normal
+hi link rubyMacro Normal
+hi link rubyAttribute Normal
+hi link rubyAccess Normal
+hi link rubySymbol Special
+hi link rubyBoolean Keyword
+hi link rubyPseudoVariable Keyword
+hi link rubyControl Keyword
+hi link rubyKeyword Keyword
+hi link rubyConditional Keyword
+hi link rubyConditionalModifier Keyword
 
 " html
-hi link htmlTagName slimClass
+hi link htmlTag Keyword
+hi link htmlTagName Keyword
+hi link htmlSpecialTagName Keyword
 
 " slim
-hi slimClass ctermfg=white ctermbg=NONE cterm=BOLD
-hi link slimRuby rubyFunction
+hi link slimTag Keyword
+hi link slimRuby Normal
 
-" Agit.vim
-hi agitStatAdded                                      ctermfg=green
-hi agitStatRemoved                                    ctermfg=red
-hi agitDiffAdd                                        ctermfg=green
-hi agitDiffRemove                                     ctermfg=red
+" coffee
+hi link coffeeGlobal Number
+hi link coffeeObject Number
+hi link coffeeObjAssign Function
+hi link coffeeExtendedOp String
 
-" hi def link agitDiffAdd Identifier
-" hi def link agitDiffAddMerge Identifier
-" hi def link agitDiffRemove Special
-" hi def link agitDiffRemoveMerge Special
-" hi def link agitDiffHeader Type
-" hi def link agitHeaderLabel Label
-" hi def link agitDiffFileName Comment
-" hi def link agitDiffIndex Comment
-" hi def link agitDiffLine Comment
-" hi def link agitDiffSubname PreProc
+" javascript
+hi link javascriptGlobal Number
+hi link javascriptBOMWindowProp Number
