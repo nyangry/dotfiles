@@ -108,9 +108,7 @@ call dein#add('kmnk/vim-unite-giti.git')
 "----------------------------------------------------------
 call dein#add('rhysd/unite-ruby-require.vim')
 call dein#add('vim-scripts/ruby-matchit')
-call dein#add('vim-ruby/vim-ruby')
 " call dein#add('todesking/ruby_hl_lvar.vim')
-" call dein#add('marcus/rsense')
 
 "----------------------------------------------------------
 " Rais
@@ -126,30 +124,33 @@ call dein#add('powerman/vim-plugin-AnsiEsc')
 " JavaScript
 "----------------------------------------------------------
 call dein#add('marijnh/tern_for_vim', {'build': 'npm install'})
-call dein#add('othree/yajs.vim')
-call dein#add('othree/es.next.syntax.vim')
 call dein#add('gavocanov/vim-js-indent')
-call dein#add('MaxMEllon/vim-jsx-pretty')
 
 "----------------------------------------------------------
 " CSV
 "----------------------------------------------------------
-let g:csv_delim=','
-call dein#add('vim-scripts/csv.vim')
+" call dein#add('chrisbra/csv.vim')
 
 "----------------------------------------------------------
 " Syntax
 "----------------------------------------------------------
+call dein#add('vim-ruby/vim-ruby')
+call dein#add('othree/yajs.vim')
+call dein#add('othree/es.next.syntax.vim')
+call dein#add('MaxMEllon/vim-jsx-pretty')
 call dein#add('slim-template/vim-slim')
 call dein#add('hail2u/vim-css3-syntax')
 call dein#add('cakebaker/scss-syntax.vim')
 call dein#add('kchmck/vim-coffee-script')
-call dein#add('neomake/neomake')
 
 "----------------------------------------------------------
 " Others
 "----------------------------------------------------------
+call dein#add('neomake/neomake')
+
 call dein#add('mhinz/vim-startify')
+
+call dein#add('lilydjwg/colorizer')
 
 call dein#add('glidenote/memolist.vim')
 
