@@ -270,7 +270,6 @@ set laststatus=2 " 常にステータスラインを表示
 set ruler " カーソルが何行目の何列目に置かれているかを表示する
 set number " 行番号を表示する
 set noequalalways " ウインドウ幅の自動調整を行わない
-syntax enable
 
 "====================================================================================
 " 英字キーボードでVimを使っている時に、:wqを高速で入力してエラーが出てウオアア
@@ -339,6 +338,7 @@ endif
 " View
 "====================================================================================
 " Ref: https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
+syntax enable
 set t_Co=256
 colorscheme nyangry_dark
 
@@ -368,7 +368,7 @@ set nocursorline
 set norelativenumber
 set nocursorcolumn
 set synmaxcol=180
-syntax sync minlines=100 maxlines=500
+syntax sync minlines=100 maxlines=1000
 
 " タブ幅をリセット
 augroup set_tab_stop
