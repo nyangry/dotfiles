@@ -33,7 +33,7 @@ hi LineNr         ctermfg=240   ctermbg=016  cterm=NONE
 hi VertSplit      ctermfg=240   ctermbg=016  cterm=NONE
 
 hi Search         ctermfg=black ctermbg=228  cterm=none
-hi IncSearch      ctermfg=black ctermbg=228  cterm=none
+hi IncSearch      ctermfg=white ctermbg=018  cterm=none
 hi ParenMatch     ctermfg=black ctermbg=228  cterm=none
 hi matchParen     ctermfg=black ctermbg=228  cterm=none
 

@@ -361,6 +361,7 @@ set nowrapscan " 検索をファイルの先頭へループしない
 " コマンドライン補完するときに補完候補を表示する(tabで補完)
 set wildmenu
 set wildignore=*.jpg,*.png,*.gif,*.pdf,*.svg,*.ico,*.keep
+" set wildignore+=node_modules/**,images/**,vendor/**
 
 " for performance
 set re=1
