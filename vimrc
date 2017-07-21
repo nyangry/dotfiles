@@ -689,32 +689,36 @@ augroup END
 if has('nvim')
   " Change file_rec command.
   call denite#custom#var('file_rec', 'command',
-  \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', '--hidden', ''])
+  \ ['rg', '--files', '--glob', '!.git'])
+  " \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', '--hidden', ''])
+
+  " Ag command on grep source
+  call denite#custom#var('grep', 'command', ['ag'])
+  call denite#custom#var('grep', 'default_opts',
+      \ ['-i', '--vimgrep'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', [])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'final_opts', [])
+
+  " Ripgrep command on grep source
+  call denite#custom#var('grep', 'command', ['rg'])
+  call denite#custom#var('grep', 'default_opts',
+      \ ['--vimgrep', '--no-heading'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'final_opts', [])
 
   " Change mappings.
-  call denite#custom#map('insert' , '<Down>' , '<denite:move_to_next_line>'     , 'noremap')
-  call denite#custom#map('insert' , '<Up>'   , '<denite:move_to_previous_line>' , 'noremap')
-
-  call denite#custom#map('insert', '<C-A>', '<C-B>')
-
-  call denite#custom#map('normal' , '<Down>' , 'j')
-  call denite#custom#map('normal' , '<Up>'   , 'k')
-  call denite#custom#map('normal' , '<Tab>'  , 't')
+  call denite#custom#map('insert' , '<Down>'     , '<denite:move_to_next_line>'     , 'noremap')
+  call denite#custom#map('insert' , '<Up>'       , '<denite:move_to_previous_line>' , 'noremap')
 
   " Change matchers.
   call denite#custom#source(
-  \ 'file_mru', 'matchers', ['matcher_project_files', 'matcher_cpsm'])
+  \ 'file_mru', 'matchers', ['matcher_cpsm', 'matcher_project_files'])
   call denite#custom#source(
-  \ 'file_rec', 'matchers', ['matcher_cpsm', 'matcher_project_files', 'matcher_ignore_globs'])
-  call denite#custom#source(
-  \ 'file_rec/git', 'matchers', ['matcher_cpsm', 'matcher_project_files', 'matcher_ignore_globs'])
-
-  " Change sorters.
-  call denite#custom#source(
-  \ 'file_rec', 'sorters', ['sorter_sublime'])
-
-  call denite#custom#source('file_mru', 'converters',
-        \ ['converter_relative_word'])
+  \ 'file_rec/git', 'matchers', ['matcher_cpsm', 'matcher_ignore_globs', 'matcher_project_files'])
 
   " Define alias
   call denite#custom#alias('source', 'file_rec/git', 'file_rec')
@@ -728,10 +732,7 @@ if has('nvim')
 
   " Change ignore_globs
   call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-        \ [ 'tags', 'tags-*',
-        \   'app/assets/images/',
-        \   'vendor/', '.bundle/', 'node_modules/'
-        \ ])
+    \ split(&wildignore, ','))
 
   nnoremap    [denite]   <Nop>
   nmap      , [denite]
