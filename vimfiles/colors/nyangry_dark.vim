@@ -41,31 +41,31 @@ hi matchParen     ctermfg=black ctermbg=228  cterm=none
 " 017 darkblue
 " 018 blue
 " 075 lightblue
-" hi Function     ctermfg=white ctermbg=017  cterm=NONE
-" hi Pmenu        ctermfg=white ctermbg=017  cterm=BOLD
-" hi Number       ctermfg=white ctermbg=018  cterm=BOLD
-" hi Constant     ctermfg=white ctermbg=018  cterm=BOLD
-" hi PmenuSel     ctermfg=white ctermbg=075  cterm=BOLD
-" hi Visual       ctermfg=white ctermbg=075  cterm=NONE
-" hi String       ctermfg=075   ctermbg=NONE cterm=NONE
-" hi Delimiter    ctermfg=075   ctermbg=NONE cterm=NONE
-" hi ZenkakuSpace ctermfg=075   ctermbg=NONE cterm=underline
-" hi Special      ctermfg=075   ctermbg=NONE cterm=BOLD
+hi Function     ctermfg=white ctermbg=017  cterm=NONE
+hi Pmenu        ctermfg=white ctermbg=017  cterm=BOLD
+hi Number       ctermfg=white ctermbg=018  cterm=BOLD
+hi Constant     ctermfg=white ctermbg=018  cterm=BOLD
+hi PmenuSel     ctermfg=white ctermbg=075  cterm=BOLD
+hi Visual       ctermfg=white ctermbg=075  cterm=NONE
+hi String       ctermfg=075   ctermbg=NONE cterm=NONE
+hi Delimiter    ctermfg=075   ctermbg=NONE cterm=NONE
+hi ZenkakuSpace ctermfg=075   ctermbg=NONE cterm=underline
+hi Special      ctermfg=075   ctermbg=NONE cterm=BOLD
 
 " green
 " 022 darkgreen
 " 028 green
 " 034 lightgreen
-hi Function     ctermfg=white ctermbg=022  cterm=NONE
-hi Pmenu        ctermfg=white ctermbg=022  cterm=BOLD
-hi Number       ctermfg=white ctermbg=028  cterm=BOLD
-hi Constant     ctermfg=white ctermbg=028  cterm=BOLD
-hi PmenuSel     ctermfg=white ctermbg=034  cterm=BOLD
-hi Visual       ctermfg=white ctermbg=034  cterm=NONE
-hi String       ctermfg=034   ctermbg=NONE cterm=NONE
-hi Delimiter    ctermfg=034   ctermbg=NONE cterm=NONE
-hi ZenkakuSpace ctermfg=034   ctermbg=NONE cterm=underline
-hi Special      ctermfg=034   ctermbg=NONE cterm=BOLD
+" hi Function     ctermfg=white ctermbg=022  cterm=NONE
+" hi Pmenu        ctermfg=white ctermbg=022  cterm=BOLD
+" hi Number       ctermfg=white ctermbg=028  cterm=BOLD
+" hi Constant     ctermfg=white ctermbg=028  cterm=BOLD
+" hi PmenuSel     ctermfg=white ctermbg=034  cterm=BOLD
+" hi Visual       ctermfg=white ctermbg=034  cterm=NONE
+" hi String       ctermfg=034   ctermbg=NONE cterm=NONE
+" hi Delimiter    ctermfg=034   ctermbg=NONE cterm=NONE
+" hi ZenkakuSpace ctermfg=034   ctermbg=NONE cterm=underline
+" hi Special      ctermfg=034   ctermbg=NONE cterm=BOLD
 
 " unite
 hi link uniteMarkedLine Search
