@@ -822,9 +822,8 @@ else
     " ウィンドウを縦に分割して開く
     nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
     inoremap <silent> <buffer> <expr> <C-i> unite#do_action('vsplit')
-    " 新しいウィンドウで開く
-    nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
-    " inoremap <silent> <buffer> <expr> <C-l> unite#do_action('tabopen')
+    " 新しいウィンドウで分割して開く
+    nnoremap <silent> <buffer> <expr> t unite#do_action('tabsplit')
     " ESCキーを2回押すと終了する
     nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
     inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
@@ -1013,10 +1012,10 @@ let g:context_filetype#filetypes = {
 " au FileType vimfiler nnoremap <silent> <buffer> gf <Plug>(vimfiler_find)
 
 let g:vimfiler_as_default_explorer = 1
-call vimfiler#custom#profile('default', 'context', {
-     \ 'safe' : 0,
-     \ 'edit_action' : 'tabopen',
-     \ })
+" call vimfiler#custom#profile('default', 'context', {
+"      \ 'safe' : 0,
+"      \ 'edit_action' : 'tabopen',
+"      \ })
 
 " nnoremap <silent> <Leader>f :<C-u>VimFiler
 nnoremap <silent> <Leader>f :<C-u>VimFilerExplorer -find
