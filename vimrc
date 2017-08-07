@@ -1122,7 +1122,6 @@ let g:lightline = {
         \           [ 'fugitive', 'readonly', 'filename', 'modified', 'anzu'] ],
         \ 'right': [ [ 'lineinfo' ],
         \            [ 'percent' ],
-        \            [ 'tabnum' ],
         \            [ 'fileformat', 'fileencoding', 'filetype' ] ]
         \ },
         \ 'component_function': {
@@ -1135,47 +1134,8 @@ let g:lightline = {
         \   'fileencoding': 'MyFileencoding',
         \   'mode': 'MyMode',
         \   'anzu': 'anzu#search_status',
-        \   'tabnum': 'TabNum',
         \ }
         \ }
-
-" http://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
-let s:base03 = [ '#151513', 233 ]
-let s:base02 = [ '#30302c ', 236 ]
-let s:base01 = [ '#4e4e43', 239 ]
-let s:base00 = [ '#666656', 242  ]
-let s:base0 = [ '#808070', 244 ]
-let s:base1 = [ '#949484', 246 ]
-let s:base2 = [ '#a8a897', 248 ]
-let s:base3 = [ '#e8e8d3', 253 ]
-let s:white = [ '#ffffff', 231 ]
-let s:red = [ '#cf6a4c', 88 ]
-let s:green = [ '#99ad6a', 70 ]
-let s:blue = [ '#8197bf', 75 ]
-let s:yellow = [ '#ffb964', 215 ]
-let s:orange = [ '#fad07a', 222 ]
-let s:magenta = [ '#f0a0c0', 217 ]
-let s:cyan = [ '#8fbfdc', 88 ]
-
-let g:lightline.colorscheme = 'custom_lightline'
-let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
-let s:p.normal.left = [ [ s:white, s:blue ], [ s:base3, s:base01 ] ]
-let s:p.normal.right = [ [ s:base02, s:base1 ], [ s:base2, s:base01 ] ]
-let s:p.inactive.right = [ [ s:base02, s:base00 ], [ s:base0, s:base02 ] ]
-let s:p.inactive.left =  [ [ s:base0, s:base02 ], [ s:base00, s:base02 ] ]
-let s:p.insert.left = [ [ s:white, s:red ], [ s:base3, s:base01 ] ]
-let s:p.replace.left = [ [ s:base02, s:red ], [ s:base3, s:base01 ] ]
-let s:p.visual.left = [ [ s:white, s:green ], [ s:base3, s:base01 ] ]
-let s:p.normal.middle = [ [ s:base0, s:base02 ] ]
-let s:p.inactive.middle = [ [ s:base00, s:base02 ] ]
-let s:p.tabline.left = [ [ s:base3, s:base00 ] ]
-let s:p.tabline.tabsel = [ [ s:base3, s:base02 ] ]
-let s:p.tabline.middle = [ [ s:base01, s:base1 ] ]
-let s:p.tabline.right = copy(s:p.normal.right)
-let s:p.normal.error = [ [ s:red, s:base02 ] ]
-let s:p.normal.warning = [ [ s:yellow, s:base01 ] ]
-let g:lightline#colorscheme#custom_lightline#palette = lightline#colorscheme#flatten(s:p)
-unlet s:p
 
 function! MyModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
@@ -1218,10 +1178,6 @@ endfunction
 
 function! MyMode()
   return winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-function! TalNum(n)
-  return lightline#tab#tabnum(a:n)
 endfunction
 
 
