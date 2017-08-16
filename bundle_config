@@ -1,4 +1,5 @@
 ---
-BUNDLE_PATH: vendor/bundle
-BUNDLE_BIN: vendor/bundle_bin
-BUNDLE_JOBS: '32'
+BUNDLE_PATH: "vendor/bundle"
+BUNDLE_BIN: "vendor/bundle_bin"
+BUNDLE_JOBS: "32"
+BUNDLE_GITHUB__HTTPS: "true"
