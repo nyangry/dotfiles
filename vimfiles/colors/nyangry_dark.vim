@@ -106,3 +106,7 @@ hi link coffeeExtendedOp String
 " javascript
 hi link javascriptGlobal Number
 hi link javascriptBOMWindowProp Number
+
+" Diff
+hi diffRemoved ctermfg=160 ctermbg=NONE cterm=NONE
+hi diffAdded ctermfg=034   ctermbg=NONE cterm=NONE
