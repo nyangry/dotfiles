@@ -369,8 +369,8 @@ set re=1
 set nocursorline
 set norelativenumber
 set nocursorcolumn
-set synmaxcol=180
-syntax sync minlines=100 maxlines=1000
+" set synmaxcol=180
+" syntax sync minlines=100 maxlines=1000
 
 " タブ幅をリセット
 augroup set_tab_stop
