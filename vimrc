@@ -974,7 +974,7 @@ let g:context_filetype#same_filetypes.scss   = 'css, slim, coffee, ruby'
 let g:context_filetype#same_filetypes.sass   = 'css, slim, coffee, ruby'
 " let g:context_filetype#same_filetypes.js     = 'html, haml'
 let g:context_filetype#same_filetypes.es6   = 'javascript'
-let g:context_filetype#same_filetypes.coffee = 'javascript, ruby'
+let g:context_filetype#same_filetypes.coffee = 'ruby'
 " let g:context_filetype#same_filetypes.ruby   = 'slim'
 " In gitconfig buffers, completes from all buffers.
 let g:context_filetype#same_filetypes.gitconfig = '_'
