@@ -96,9 +96,7 @@ call dein#add('jwhitley/vim-matchit')
 call dein#add('tpope/vim-fugitive')
 call dein#add('cohama/agit.vim')
 call dein#add('rhysd/committia.vim')
-call dein#add('lambdalisue/vim-gita', {
-      \ 'on_cmd': 'Gita',
-      \})
+call dein#add('lambdalisue/gina.vim')
 " call dein#add('idanarye/vim-merginal')
 call dein#add('kmnk/vim-unite-giti.git')
 " call dein#add('AndrewRadev/gapply.vim')
