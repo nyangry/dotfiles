@@ -146,7 +146,7 @@ call dein#add('kchmck/vim-coffee-script')
 "----------------------------------------------------------
 call dein#add('neomake/neomake')
 
-call dein#add('mhinz/vim-startify')
+" call dein#add('mhinz/vim-startify')
 
 call dein#add('lilydjwg/colorizer')
 
