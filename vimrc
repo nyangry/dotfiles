@@ -128,6 +128,7 @@ call dein#add('gavocanov/vim-js-indent')
 " CSV
 "----------------------------------------------------------
 " call dein#add('chrisbra/csv.vim')
+call dein#add('mechatroner/rainbow_csv')
 
 "----------------------------------------------------------
 " Syntax
