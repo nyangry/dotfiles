@@ -50,9 +50,6 @@ autoload -Uz compinit && compinit -C
 
 setopt no_flow_control
 
-# タイポしているコマンドを指摘
-setopt correct
-
 #cd
 setopt auto_cd
 
