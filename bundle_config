@@ -1,5 +1,4 @@
 ---
-BUNDLE_PATH: "vendor/bundle"
-BUNDLE_BIN: "vendor/bundle_bin"
+BUNDLE_PATH: ".bundle"
 BUNDLE_JOBS: "32"
 BUNDLE_GITHUB__HTTPS: "true"
