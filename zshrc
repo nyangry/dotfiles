@@ -392,17 +392,17 @@ precmd() {
 #=============================
 # custom PATH for Rails
 #=============================
-add-zsh-hook precmd is_rails_dir
+# add-zsh-hook precmd is_rails_dir
 
-function is_rails_dir () {
-  if [ -e './config/environment.rb' ]; then
-    add_rails_bin_path_for_binstubs
-  fi
-}
-
-function add_rails_bin_path_for_binstubs () {
-  export PATH=./bin:$PATH
-}
+# function is_rails_dir () {
+#   if [ -e './config/environment.rb' ]; then
+#     add_rails_bin_path_for_binstubs
+#   fi
+# }
+#
+# function add_rails_bin_path_for_binstubs () {
+#   export PATH=./bin:$PATH
+# }
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"

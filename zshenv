@@ -17,7 +17,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 
 # rbenv
 if [ -d ${HOME}/.rbenv  ] ; then
-  export PATH=${HOME}/.rbenv/bin:${HOME}/.rbenv/shims:${PATH}
+  # export PATH=${HOME}/.rbenv/bin:${HOME}/.rbenv/shims:${PATH}
   eval "$(rbenv init - --no-rehash)"
 fi
 
