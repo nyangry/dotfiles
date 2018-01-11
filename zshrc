@@ -250,14 +250,14 @@ fi
 # http://orangeclover.hatenablog.com/entry/20110201/1296511181
 alias clear2="echo -e '\026\033c'"
 alias ag='ag -S'
-alias rsp='rails s -p'
-alias rc='rails c'
-alias rakedbm='rake db:migrate'
-alias rakedbmt='RAILS_ENV=test rake db:migrate'
-alias rakedbr='rake db:rollback'
-alias rakedbrt='RAILS_ENV=test rake db:rollback'
-alias rakera='rake ridgepole:apply'
-alias rakerat='RAILS_ENV=test rake ridgepole:apply'
+alias rsp='bin/rails s -p'
+alias rc='bin/rails c'
+alias rakedbm='bin/rake db:migrate'
+alias rakedbmt='RAILS_ENV=test bin/rake db:migrate'
+alias rakedbr='bin/rake db:rollback'
+alias rakedbrt='RAILS_ENV=test bin/rake db:rollback'
+alias rakera='bin/rake ridgepole:apply'
+alias rakerat='RAILS_ENV=test bin/rake ridgepole:apply'
 
 
 # ----------------------
