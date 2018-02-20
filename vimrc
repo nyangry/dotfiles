@@ -244,6 +244,7 @@ set ambiwidth=double
 
 set display=lastline
 set pumheight=10
+set tabpagemax=1000
 set breakindent
 set t_BE=
 
@@ -340,7 +341,7 @@ endif
 " Ref: https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
 syntax enable
 set t_Co=256
-colorscheme nyangry_dark
+colorscheme dracula
 
 "====================================================================================
 " Complete
