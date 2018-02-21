@@ -128,7 +128,7 @@ call dein#add('gavocanov/vim-js-indent')
 " CSV
 "----------------------------------------------------------
 " call dein#add('chrisbra/csv.vim')
-call dein#add('mechatroner/rainbow_csv')
+" call dein#add('mechatroner/rainbow_csv')
 
 "----------------------------------------------------------
 " Syntax
@@ -341,6 +341,10 @@ endif
 " Ref: https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
 syntax enable
 set t_Co=256
+set termguicolors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set background=dark
 colorscheme iceberg
 
 "====================================================================================
