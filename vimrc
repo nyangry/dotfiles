@@ -202,6 +202,8 @@ let g:loaded_matchparen = 1
 call dein#add('itchyny/vim-parenmatch')
 call dein#add('itchyny/vim-cursorword')
 
+call dein#add('cocopon/svss.vim')
+
 " Required:
 call dein#end()
 
