@@ -143,6 +143,10 @@ call dein#add('cakebaker/scss-syntax.vim')
 call dein#add('kchmck/vim-coffee-script')
 
 "----------------------------------------------------------
+" scheme
+"----------------------------------------------------------
+
+"----------------------------------------------------------
 " Others
 "----------------------------------------------------------
 call dein#add('neomake/neomake')
@@ -1123,6 +1127,7 @@ let g:neomake_ruby_enabled_makers = ['rubocop']
 " lightline
 "----------------------------------------------------------
 let g:lightline = {
+        \ 'colorscheme': 'iceberg',
         \ 'mode_map': {'c': 'NORMAL'},
         \ 'active': {
         \ 'left': [ [ 'mode', 'paste' ],
