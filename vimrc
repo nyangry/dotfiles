@@ -91,6 +91,11 @@ call dein#add('jwhitley/vim-matchit')
 " call dein#add('vim-scripts/taglist.vim')
 
 "----------------------------------------------------------
+" markdown
+"----------------------------------------------------------
+call dein#add('tpope/vim-markdown')
+
+"----------------------------------------------------------
 " Git
 "----------------------------------------------------------
 call dein#add('tpope/vim-fugitive')
