@@ -124,10 +124,16 @@ call dein#add('tpope/vim-rails')
 call dein#add('powerman/vim-plugin-AnsiEsc')
 
 "----------------------------------------------------------
+" graphql
+"----------------------------------------------------------
+call dein#add('jparise/vim-graphql')
+
+"----------------------------------------------------------
 " JavaScript
 "----------------------------------------------------------
-call dein#add('marijnh/tern_for_vim', {'build': 'npm install'})
-call dein#add('gavocanov/vim-js-indent')
+" call dein#add('marijnh/tern_for_vim', {'build': 'npm install'})
+" call dein#add('gavocanov/vim-js-indent')
+call dein#add('pangloss/vim-javascript')
 
 "----------------------------------------------------------
 " CSV
@@ -1235,13 +1241,13 @@ let g:quickrun_config['ruby.minitest_line'] = {
   \}
 
 let g:quickrun_config['ruby.rspec'] = {
-  \ 'command': 'rspec',
+  \ 'command': 'bin/rspec',
   \ 'cmdopt': '--color --tty',
   \ 'exec': '%c %o %s'
   \}
 
 let g:quickrun_config['ruby.rspec_line'] = {
-  \ 'command': 'rspec',
+  \ 'command': 'bin/rspec',
   \ 'cmdopt': '--color --tty',
   \ 'exec': "%c %s:%{line('.')} %o"
   \}
