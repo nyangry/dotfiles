@@ -258,6 +258,8 @@ alias rakedbr='bin/rake db:rollback'
 alias rakedbrt='RAILS_ENV=test bin/rake db:rollback'
 alias rakera='bin/rake ridgepole:apply'
 alias rakerat='RAILS_ENV=test bin/rake ridgepole:apply'
+alias fs='bin/fast_seed'
+alias fst='RAILS_ENV=test bin/fast_seed'
 
 
 # ----------------------
