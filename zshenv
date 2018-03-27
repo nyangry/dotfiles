@@ -21,6 +21,12 @@ if [ -d ${HOME}/.rbenv  ] ; then
   eval "$(rbenv init - --no-rehash)"
 fi
 
+# pyenv
+if [ -d ${HOME}/.pyenv  ] ; then
+  # export PATH=${HOME}/.pyenv/bin:${HOME}/.pyenv/shims:${PATH}
+  eval "$(pyenv init -)"
+fi
+
 # for auto_cd
 cdpath=(
   $HOME/workspace/
