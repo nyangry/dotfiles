@@ -264,6 +264,7 @@ set pumheight=10
 set tabpagemax=1000
 set breakindent
 set t_BE=
+set nf=""
 
 augroup set_fo
   " t textwidthを使ってテキストを自動折返しする。
