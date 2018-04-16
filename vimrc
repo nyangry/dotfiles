@@ -51,10 +51,11 @@ endif
 call dein#add('Shougo/neco-syntax')
 call dein#add('Shougo/vimfiler.vim')
 call dein#add('Shougo/neomru.vim')
+call dein#add('Shougo/neoyank.vim')
 call dein#add('Shougo/context_filetype.vim')
 call dein#add('Shougo/neoinclude.vim')
 " candidates from look command
-call dein#add('ujihisa/neco-look')
+" call dein#add('ujihisa/neco-look')
 call dein#add('Shougo/neosnippet')
 call dein#add('Shougo/neosnippet-snippets')
 
@@ -834,6 +835,7 @@ else
   nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
   nnoremap <silent> [unite]bt :<C-u>Unite buffer_tab<CR>
   nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
+  nnoremap <silent> [unite]h :<C-u>Unite history/yank<CR>
 
   nnoremap <silent> [unite]bk :<C-u>Unite bookmark<CR>
   nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
