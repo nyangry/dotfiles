@@ -132,9 +132,15 @@ call dein#add('jparise/vim-graphql')
 "----------------------------------------------------------
 " JavaScript
 "----------------------------------------------------------
-" call dein#add('marijnh/tern_for_vim', {'build': 'npm install'})
+call dein#add('ternjs/tern_for_vim', {'build': 'npm install'})
 " call dein#add('gavocanov/vim-js-indent')
+" for indent
 call dein#add('pangloss/vim-javascript')
+
+"----------------------------------------------------------
+" HTML
+"----------------------------------------------------------
+call dein#add('othree/html5.vim')
 
 "----------------------------------------------------------
 " CSV
@@ -145,14 +151,22 @@ call dein#add('pangloss/vim-javascript')
 "----------------------------------------------------------
 " Syntax
 "----------------------------------------------------------
-call dein#add('vim-ruby/vim-ruby')
+call dein#add('vim-scripts/SyntaxComplete')
+
 call dein#add('othree/yajs.vim')
 call dein#add('othree/es.next.syntax.vim')
+call dein#add('othree/javascript-libraries-syntax.vim')
 call dein#add('MaxMEllon/vim-jsx-pretty')
+
+call dein#add('vim-ruby/vim-ruby')
+
 call dein#add('slim-template/vim-slim')
+
 call dein#add('hail2u/vim-css3-syntax')
 call dein#add('cakebaker/scss-syntax.vim')
 call dein#add('kchmck/vim-coffee-script')
+
+
 
 "----------------------------------------------------------
 " scheme
@@ -1385,3 +1399,9 @@ map <leader>c <plug>(operator-camelize-toggle)
 " let g:cpsm_highlight_mode = 'basic'
 
 set runtimepath+=~/.cache/dein/repos/github.com/nixprime/cpsm
+
+
+"----------------------------------------------------------
+" othree/javascript-libraries-syntax.vim
+"----------------------------------------------------------
+let g:used_javascript_libs = 'jquery,underscore,react,flux'
