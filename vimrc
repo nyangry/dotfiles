@@ -135,7 +135,9 @@ call dein#add('jparise/vim-graphql')
 call dein#add('ternjs/tern_for_vim', {'build': 'npm install'})
 " call dein#add('gavocanov/vim-js-indent')
 " for indent
-call dein#add('pangloss/vim-javascript')
+" call dein#add('pangloss/vim-javascript')
+" for snippets
+call dein#add('isRuslan/vim-es6')
 
 "----------------------------------------------------------
 " HTML
@@ -147,6 +149,11 @@ call dein#add('othree/html5.vim')
 "----------------------------------------------------------
 " call dein#add('chrisbra/csv.vim')
 " call dein#add('mechatroner/rainbow_csv')
+
+"----------------------------------------------------------
+" JSON
+"----------------------------------------------------------
+call dein#add('leshill/vim-json')
 
 "----------------------------------------------------------
 " Syntax
@@ -958,6 +965,8 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+
+let g:neosnippet#enable_snipmate_compatibility = 1
 
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.vim/snippets'
