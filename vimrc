@@ -182,7 +182,9 @@ call dein#add('kchmck/vim-coffee-script')
 "----------------------------------------------------------
 " Others
 "----------------------------------------------------------
-call dein#add('neomake/neomake')
+call dein#add('w0rp/ale')
+
+call dein#add('prettier/vim-prettier', { 'build': 'yarn install'})
 
 " call dein#add('mhinz/vim-startify')
 
@@ -924,11 +926,10 @@ endif
 let g:neocomplete#sources._ = ['buffer', 'member', 'dictionary', 'syntax']
 
 " Define dictionary.
-" let g:neocomplete#sources#dictionary#dictionaries = {
-"   \ 'default' : '',
-"   \ 'coffee'  : $HOME . '/.vim/dict/jquery.dict',
-"   \ 'ruby'    : $HOME . '/.vim/dict/ruby.dict'
-" \ }
+let g:neocomplete#sources#dictionary#dictionaries = {
+  \ 'default' : '',
+  \ 'ruby'    : $HOME . '/.vim/dict/rails.dict'
+\ }
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
@@ -1146,19 +1147,13 @@ vmap <C-v> <Plug>(expand_region_shrink)
 "
 " let g:tlist_coffee_settings = 'coffee;c:class;f:function;v:variable'
 
-"----------------------------------------------------------
-" rsense
-"----------------------------------------------------------
-" let g:rsenseHome = '/usr/local/Cellar/rsense/0.3'
-" let g:rsenseUseOmniFunc = 1
 
 "----------------------------------------------------------
-" Neomake
+" ale
 "----------------------------------------------------------
-autocmd! BufWritePost * Neomake
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_coffeelint_enabled_makers = ['coffeelint']
-let g:neomake_ruby_enabled_makers = ['rubocop']
+let g:prettier#config#print_width = 140
+let g:prettier#config#arrow_parens = 'always'
+
 
 "----------------------------------------------------------
 " lightline
