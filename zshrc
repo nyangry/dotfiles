@@ -15,7 +15,7 @@ source $ZPLUG_HOME/init.zsh
 zplug "zplug/zplug"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
-zplug "unixorn/rake-completion.zshplugin"
+# zplug "unixorn/rake-completion.zshplugin"
 zplug "zsh-users/zsh-history-substring-search"
 # zplug "Tarrasch/zsh-functional"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
@@ -252,6 +252,7 @@ alias clear2="echo -e '\026\033c'"
 alias ag='ag -S'
 alias rsp='bin/rails s -p'
 alias rc='bin/rails c'
+alias rake='bin/rake'
 alias rakedbm='bin/rake db:migrate'
 alias rakedbmt='RAILS_ENV=test bin/rake db:migrate'
 alias rakedbr='bin/rake db:rollback'
@@ -395,7 +396,7 @@ precmd() {
 # custom PATH for Rails
 #=============================
 # add-zsh-hook precmd is_rails_dir
-
+#
 # function is_rails_dir () {
 #   if [ -e './config/environment.rb' ]; then
 #     add_rails_bin_path_for_binstubs
@@ -404,10 +405,45 @@ precmd() {
 #
 # function add_rails_bin_path_for_binstubs () {
 #   export PATH=./bin:$PATH
+#   export PATH=./.bundle/bin:$PATH
 # }
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+
+#=============================
+# cache rake tasks
+#=============================
+_cachefile_updated_at() {
+  echo $(stat -f%m .rake_tasks)
+}
+
+_rakefile_updated_at() {
+  echo $(stat -f%m Rakefile)
+}
+
+_gemfile_updated_at() {
+  echo $(stat -f%m Gemfile)
+}
+
+_generate_cachefile() {
+  rake --silent --tasks 2> /dev/null | cut  -f 2 -d " " > .rake_tasks
+}
+
+_rake() {
+  if [ -f Rakefile ]; then
+    if [ ! -f .rake_tasks ] || \
+       [ "`cat .rake_tasks | wc -l`" = "0" ] || \
+       [ `_cachefile_updated_at` -lt `_rakefile_updated_at` ] || \
+       [ -f Gemfile -a `_cachefile_updated_at` -lt `_gemfile_updated_at` ]; then
+      _generate_cachefile
+    fi
+    compadd `cat .rake_tasks`
+  fi
+}
+
+compdef _rake rake
 
 
 #=======================================================
