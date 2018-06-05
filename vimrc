@@ -100,6 +100,7 @@ call dein#add('tpope/vim-markdown')
 " Git
 "----------------------------------------------------------
 call dein#add('tpope/vim-fugitive')
+call dein#add('tpope/vim-rhubarb')
 call dein#add('cohama/agit.vim')
 call dein#add('rhysd/committia.vim')
 call dein#add('lambdalisue/gina.vim')
@@ -242,6 +243,8 @@ call dein#add('itchyny/vim-parenmatch')
 call dein#add('itchyny/vim-cursorword')
 
 call dein#add('cocopon/svss.vim')
+
+call dein#add('vim-scripts/visSum.vim')
 
 " Required:
 call dein#end()
@@ -724,8 +727,6 @@ augroup vimrc-auto-cursorline
 augroup END
 
 
-
-
 "----------------------------------------------------------
 " プラギン設定
 "----------------------------------------------------------
@@ -1160,13 +1161,13 @@ let g:prettier#config#arrow_parens = 'always'
 "----------------------------------------------------------
 let g:lightline = {
         \ 'colorscheme': 'iceberg',
-        \ 'mode_map': {'c': 'NORMAL'},
         \ 'active': {
         \ 'left': [ [ 'mode', 'paste' ],
         \           [ 'fugitive', 'readonly', 'filename', 'modified', 'anzu'] ],
         \ 'right': [ [ 'lineinfo' ],
         \            [ 'percent' ],
-        \            [ 'fileformat', 'fileencoding', 'filetype' ] ]
+        \            [ 'fileformat', 'fileencoding', 'filetype' ],
+        \            [ 'count' ] ]
         \ },
         \ 'component_function': {
         \   'modified': 'MyModified',
@@ -1178,8 +1179,9 @@ let g:lightline = {
         \   'fileencoding': 'MyFileencoding',
         \   'mode': 'MyMode',
         \   'anzu': 'anzu#search_status',
+        \   'count': 'VisSum'
         \ }
-        \ }
+\ }
 
 function! MyModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
