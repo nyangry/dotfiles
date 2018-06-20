@@ -1,8 +1,0 @@
-set nocompatible
-
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/unite.vim/
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/vimproc.vim/
-
-filetype plugin indent on
-
-nnoremap <C-f> :<C-u>Unite -start-insert file_rec/async:!<CR>
