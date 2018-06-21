@@ -145,6 +145,9 @@ call dein#add('isRuslan/vim-es6')
 "----------------------------------------------------------
 call dein#add('othree/html5.vim')
 
+" fast html and css coding
+call dein#add('mattn/emmet-vim')
+
 "----------------------------------------------------------
 " CSV
 "----------------------------------------------------------
@@ -233,9 +236,6 @@ call dein#add('AndrewRadev/switch.vim')
 " call dein#add('AndrewRadev/linediff.vim')
 "
 call dein#add('osyo-manga/vim-anzu')
-
-" fast html and css coding
-call dein#add('mattn/emmet-vim')
 
 " [Vimの標準プラグインmatchparenが遅かったので8倍くらい速いプラグインを作りました - プログラムモグモグ](http://itchyny.hatenablog.com/entry/2016/03/30/210000)
 let g:loaded_matchparen = 1
