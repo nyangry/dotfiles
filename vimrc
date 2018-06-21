@@ -978,9 +978,7 @@ augroup enable_omni_completion
   autocmd!
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd FileType javascript setlocal omnifunc=tern#Complete
-  " autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 augroup END
 
@@ -1154,7 +1152,12 @@ vmap <C-v> <Plug>(expand_region_shrink)
 "----------------------------------------------------------
 let g:prettier#config#print_width = 140
 let g:prettier#config#arrow_parens = 'always'
-
+let g:ale_completion_enabled = 1
+let g:ale_linters = {
+      \ 'html': ['htmlhint'],
+      \ 'css': ['stylelint'],
+      \ 'javascript': ['eslint']
+      \ }
 
 "----------------------------------------------------------
 " lightline
