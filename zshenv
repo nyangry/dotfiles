@@ -22,8 +22,9 @@ fi
 
 # pyenv
 if [ -d ${HOME}/.pyenv  ] ; then
-  # export PATH=${HOME}/.pyenv/bin:${HOME}/.pyenv/shims:${PATH}
-  eval "$(pyenv init -)"
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/shims:$PATH"
+  if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 fi
 
 # for auto_cd
