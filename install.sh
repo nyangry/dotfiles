@@ -49,11 +49,22 @@ symlink_files()
   #ln -s $HOME/dotfiles/gitconfig ~/.gitconfig
 }
 
+install_neovim()
+{
+  echo "install neovim"
+  # for denite.vim
+  pip3 install neovim
+
+  mkdir -p $HOME/.config/nvim
+  ln -s $HOME/dotfiles/init.vim $HOME/.config/nvim/init.vim
+}
+
 #
 # Main Start
 #
 delete_old_files 1
 symlink_files 1
+install_neovim
 
 echo "[DONE]  All done."
 
