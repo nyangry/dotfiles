@@ -341,10 +341,10 @@ setlocal iskeyword& iskeyword+=-
 set completeopt=menuone
 
 " html インデントの解除
-augroup stop_html_indent
-  autocmd!
-  autocmd FileType html :setlocal indentexpr=""
-augroup END
+" augroup stop_html_indent
+"   autocmd!
+"   autocmd FileType html :setlocal indentexpr=""
+" augroup END
 
 "====================================================================================
 " Rename
