@@ -8,26 +8,19 @@ export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 #=======================================================
 # zplug
 #=======================================================
-
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
 zplug "zplug/zplug"
 zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-completions"
-# zplug "unixorn/rake-completion.zshplugin"
-zplug "zsh-users/zsh-history-substring-search"
-# zplug "Tarrasch/zsh-functional"
+# zplug "zsh-users/zsh-completions"
+# zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-# zplug "zsh-users/zaw", defer:2
-zplug "djui/alias-tips"
+# zplug "djui/alias-tips"
 zplug "stedolan/jq", \
     from:gh-r, \
     as:command, \
     rename-to:jq
-# zplug "b4b4r07/emoji-cli", \
-#     on:"stedolan/jq"
-# zplug "mrowa44/emojify", as:command, use:emojify
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
