@@ -17,7 +17,6 @@ delete_old_files()
   rm -f $HOME/.ctags
   rm -f $HOME/.rspec
   rm -f $HOME/.railsrc
-  rm -f $HOME/coffeelint.json
   rm -f $HOME/.peco
   rm -f $HOME/.my.cnf
   rm -f $HOME/.bundle/config
@@ -42,7 +41,6 @@ symlink_files()
   ln -s $HOME/dotfiles/ctags $HOME/.ctags
   ln -s $HOME/dotfiles/rspec $HOME/.rspec
   ln -s $HOME/dotfiles/railsrc $HOME/.railsrc
-  ln -s $HOME/dotfiles/coffeelint.json $HOME/coffeelint.json
   ln -s $HOME/dotfiles/peco $HOME/.peco
   ln -s $HOME/dotfiles/app_config/my.cnf $HOME/.my.cnf
   ln -s $HOME/dotfiles/bundle_config $HOME/.bundle/config
