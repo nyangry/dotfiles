@@ -47,6 +47,12 @@ symlink_files()
   #ln -s $HOME/dotfiles/gitconfig ~/.gitconfig
 }
 
+add_zsh_completions()
+{
+  mkdir ~/.zsh
+  ln -s ~/dotfiles/zsh_completions ~/.zsh/completions
+}
+
 install_neovim()
 {
   echo "install neovim"
@@ -62,7 +68,8 @@ install_neovim()
 #
 delete_old_files 1
 symlink_files 1
-install_neovim
+add_zsh_completions 1
+install_neovim 1
 
 echo "[DONE]  All done."
 

@@ -43,10 +43,13 @@ zplug load --verbose
 #=======================================================
 # zsh config
 #=======================================================
+# completions
+fpath=(~/.zsh/completions $fpath)
+autoload -U compinit && compinit -C
+
 autoload colors && colors
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
-autoload -Uz compinit && compinit -C
 
 setopt no_flow_control
 
@@ -541,6 +544,7 @@ eval "$(direnv hook zsh)"
 
 # hub
 eval "$(hub alias -s)"
+
 
 ###-begin-npm-completion-###
 #
