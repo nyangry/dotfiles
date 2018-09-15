@@ -347,15 +347,9 @@ set completeopt=menuone
 " augroup END
 
 "====================================================================================
-" Rename
-"====================================================================================
-command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
-
-"====================================================================================
 " Delete
 "====================================================================================
 nnoremap <Leader>fd :call delete(expand('%'))<CR>
-
 
 "====================================================================================
 " 全角スペースを表示
@@ -826,8 +820,8 @@ else
   "   \ ]
   "   \ )
 
-  call unite#custom#alias('file', 'delete', 'vimfiler__delete')
-  call unite#custom#alias('file', 'move', 'vimfiler__move')
+  " call unite#custom#alias('file', 'delete', 'vimfiler__delete')
+  " call unite#custom#alias('file', 'move', 'vimfiler__move')
 
   call unite#custom#source('file_rec/git', 'ignore_globs',
       \ split(&wildignore, ','))
