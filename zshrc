@@ -6,34 +6,6 @@ export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
 #=======================================================
-# zplug
-#=======================================================
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
-
-zplug "zplug/zplug"
-zplug "zsh-users/zsh-autosuggestions"
-# zplug "zsh-users/zsh-completions"
-# zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-# zplug "djui/alias-tips"
-zplug "stedolan/jq", \
-    from:gh-r, \
-    as:command, \
-    rename-to:jq
-
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-  printf "Install? [y/N]: "
-  if read -q; then
-    echo; zplug install
-  fi
-fi
-
-zplug load # --verbose
-
-
-#=======================================================
 # zsh config
 #=======================================================
 # completions
@@ -225,6 +197,9 @@ function current_dir() {
 
 # PROMPT='$(rbenv_version) %{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
 PROMPT='$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
+
+# hub
+eval "$(hub alias -s)"
 
 alias vimrc='vim ~/.vimrc'
 alias tmuxconf='vim ~/.tmux.conf'
@@ -535,9 +510,6 @@ export PATH="/usr/local/sbin:$PATH"
 export DIRENV_LOG_FORMAT=
 eval "$(direnv hook zsh)"
 
-# hub
-eval "$(hub alias -s)"
-
 
 ###-begin-npm-completion-###
 #
@@ -592,6 +564,35 @@ elif type compctl &>/dev/null; then
   compctl -K _npm_completion npm
 fi
 ###-end-npm-completion-###
+
+#=======================================================
+# zplug
+#=======================================================
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
+
+zplug "zplug/zplug"
+zplug "zsh-users/zsh-autosuggestions"
+# zplug "zsh-users/zsh-completions"
+# zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+# zplug "djui/alias-tips"
+zplug "stedolan/jq", \
+    from:gh-r, \
+    as:command, \
+    rename-to:jq
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
+fi
+
+zplug load # --verbose
+
+
 
 # Profiling
 # if (which zprof > /dev/null) ;then
