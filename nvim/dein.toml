@@ -1,26 +1,53 @@
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add = '''
+  call denite#custom#var('file/rec', 'command',
+  \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
+  " Ag command on grep source
+  call denite#custom#var('grep', 'command', ['ag'])
+  call denite#custom#var('grep', 'default_opts',
+      \ ['-i', '--vimgrep'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', [])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'final_opts', [])
+
+  " Change matchers.
+  " call denite#custom#source(
+  " \ 'file/rec', 'matchers', ['matcher/substring'])
+  "
+  " " Change sorters.
+  " call denite#custom#source(
+  " \ 'file/rec', 'sorters', ['sorter/reverse'])
+
+  " Define alias
+  call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+  call denite#custom#var('file/rec/git', 'command',
+        \ ['git', 'ls-files', '-co', '--exclude-standard'])
+  call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+  nnoremap <silent> <C-f> :<C-u>Denite
+  \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`<CR>
+
+  " Change default prompt
+  call denite#custom#option('default', 'prompt', '>')
+
+  " Change ignore_globs
+  call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
+        \ [ '.bundle/', 'images/', 'node_modules'])
+
   nnoremap    [denite]   <Nop>
   nmap      , [denite]
 
-  nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
-  nnoremap <silent> [denite]gc :<C-u>Unite grep:. -buffer-name=grep-cursor-buffer<CR><C-R><C-W><CR>
-  nnoremap <silent> [denite]gg :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
+  nnoremap <silent> [denite]gc :<C-u>Denite grep:. -buffer-name=grep-cursor-buffer<CR><C-R><C-W><CR>
+  nnoremap <silent> [denite]gg :<C-u>Denite grep:. -buffer-name=grep-buffer<CR>
 
-  " nnoremap <silent> [denite]gg :<C-u>Unite giti/grep:.<CR>
-  nnoremap <silent> [denite]gr :<C-u>Unite giti/remote<CR>
-  nnoremap <silent> [denite]gb :<C-u>Unite giti/branch<CR>
-  nnoremap <silent> [denite]gs :<C-u>Unite giti/status<CR>
+  nnoremap <silent> [denite]t :<C-u>Denite tab<CR>
+  nnoremap <silent> [denite]b :<C-u>Denite buffer<CR>
+  nnoremap <silent> [denite]m :<C-u>Denite file_mru<CR>
 
-  nnoremap <silent> [denite]t :<C-u>Unite tab<CR>
-  nnoremap <silent> [denite]b :<C-u>Unite buffer<CR>
-  nnoremap <silent> [denite]bt :<C-u>Unite buffer_tab<CR>
-  nnoremap <silent> [denite]m :<C-u>Unite file_mru<CR>
-  nnoremap <silent> [denite]h :<C-u>Unite history/yank<CR>
-
-  nnoremap <silent> [denite]bk :<C-u>Unite bookmark<CR>
-  nnoremap <silent> [denite]a :<C-u>UniteBookmarkAdd<CR>
+  nnoremap <silent> [denite]bk :<C-u>Denite bookmark<CR>
+  nnoremap <silent> [denite]a :<C-u>DeniteBookmarkAdd<CR>
 
   autocmd FileType denite call s:denite_my_settings()
   function! s:denite_my_settings()"{{{
@@ -115,6 +142,11 @@ repo = 'jwhitley/vim-matchit'
 repo = 'tpope/vim-surround'
 [[plugins]]
 repo = 'tpope/vim-endwise'
+[[plugins]]
+# let g:loaded_matchparen = 1
+repo = 'itchyny/vim-parenmatch'
+[[plugins]]
+repo = 'itchyny/vim-cursorword'
 
 
 [[plugins]]
@@ -140,7 +172,6 @@ hook_add = '''
   nmap * <Plug>(anzu-star)
   nmap # <Plug>(anzu-sharp)
 '''
-
 
 
 [[plugins]]
@@ -367,26 +398,10 @@ repo = 'tomtom/tcomment_vim'
 repo = 'bkad/CamelCaseMotion'
 
 
-[[plugins]]NN
+[[plugins]]
 repo = 'kana/vim-fakeclip'
 
 [[plugins]]
 repo = 'h1mesuke/vim-alignta'
 [[plugins]]
 repo = 'godlygeek/tabular'
-
-[[plugins]]
-repo = 'airblade/vim-rooter'
-
-[[plugins]]
-# let g:loaded_matchparen = 1
-repo = 'itchyny/vim-parenmatch'
-[[plugins]]
-repo = 'itchyny/vim-cursorword'
-
-[[plugins]]
-repo = 'cocopon/svss.vim'
-
-[[plugins]]
-repo = 'vim-scripts/visSum.vim'
-
