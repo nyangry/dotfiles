@@ -1,0 +1,395 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+hook_add = '''
+  nnoremap    [denite]   <Nop>
+  nmap      , [denite]
+
+  nnoremap <C-f> :<C-u>call DispatchUniteFileRecAsyncOrGit()<CR>
+  nnoremap <silent> [denite]gc :<C-u>Unite grep:. -buffer-name=grep-cursor-buffer<CR><C-R><C-W><CR>
+  nnoremap <silent> [denite]gg :<C-u>Unite grep:. -buffer-name=grep-buffer<CR>
+
+  " nnoremap <silent> [denite]gg :<C-u>Unite giti/grep:.<CR>
+  nnoremap <silent> [denite]gr :<C-u>Unite giti/remote<CR>
+  nnoremap <silent> [denite]gb :<C-u>Unite giti/branch<CR>
+  nnoremap <silent> [denite]gs :<C-u>Unite giti/status<CR>
+
+  nnoremap <silent> [denite]t :<C-u>Unite tab<CR>
+  nnoremap <silent> [denite]b :<C-u>Unite buffer<CR>
+  nnoremap <silent> [denite]bt :<C-u>Unite buffer_tab<CR>
+  nnoremap <silent> [denite]m :<C-u>Unite file_mru<CR>
+  nnoremap <silent> [denite]h :<C-u>Unite history/yank<CR>
+
+  nnoremap <silent> [denite]bk :<C-u>Unite bookmark<CR>
+  nnoremap <silent> [denite]a :<C-u>UniteBookmarkAdd<CR>
+
+  autocmd FileType denite call s:denite_my_settings()
+  function! s:denite_my_settings()"{{{
+    nnoremap <silent> <buffer> <expr> <C-j> denite#do_action('split')
+    inoremap <silent> <buffer> <expr> <C-j> denite#do_action('split')
+    " ウィンドウを縦に分割して開く
+    nnoremap <silent> <buffer> <expr> <C-i> denite#do_action('vsplit')
+    inoremap <silent> <buffer> <expr> <C-i> denite#do_action('vsplit')
+    " 新しいウィンドウで分割して開く
+    nnoremap <silent> <buffer> <expr> t denite#do_action('tabsplit')
+    " ESCキーを2回押すと終了する
+    nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
+    inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
+
+    nnoremap <silent><buffer><expr> r denite#do_action('rename')
+    nnoremap <silent><buffer><expr> m denite#do_action('move')
+  endfunction"}}}
+'''
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_source = ['denite.nvim']
+
+
+# for defx on Vim8
+#
+# pip3 install --user pynvim
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+hook_add = '''
+  if !exists('g:context_filetype#same_filetypes')
+    let g:context_filetype#same_filetypes = {}
+  endif
+  " let g:context_filetype#same_filetypes.html   = 'javascript, ruby'
+  " let g:context_filetype#same_filetypes.haml   = 'javascript, ruby'
+  let g:context_filetype#same_filetypes.slim   = 'javascript, ruby'
+  let g:context_filetype#same_filetypes.yaml   = 'ruby'
+  " let g:context_filetype#same_filetypes.php    = 'html, javascript'
+  let g:context_filetype#same_filetypes.scss   = 'css, slim, coffee, ruby'
+  let g:context_filetype#same_filetypes.sass   = 'css, slim, coffee, ruby'
+  " let g:context_filetype#same_filetypes.js     = 'html, haml'
+  let g:context_filetype#same_filetypes.es6   = 'javascript'
+  let g:context_filetype#same_filetypes.coffee = 'ruby'
+  " let g:context_filetype#same_filetypes.ruby   = 'slim'
+  " In gitconfig buffers, completes from all buffers.
+  let g:context_filetype#same_filetypes.gitconfig = '_'
+  " In default, completes from all buffers.
+  let g:context_filetype#same_filetypes._ = '_'
+
+  let g:context_filetype#filetypes = {
+  \ 'slim' : [
+  \   {
+  \    'start' : '^\s*-',
+  \    'end' : '$', 'filetype' : 'ruby',
+  \   },
+  \   {
+  \    'start' : '^\s*\w*=',
+  \    'end' : '$', 'filetype' : 'ruby',
+  \   },
+  \   {
+  \    'start' : '^\s*ruby:',
+  \    'end' : '^\S', 'filetype' : 'ruby',
+  \   },
+  \ ]
+  \}
+'''
+
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+[[plugins]]
+repo = 'kana/vim-textobj-line'
+[[plugins]]
+repo = 'lucapette/vim-textobj-underscore'
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+[[plugins]]
+repo = 'rhysd/vim-textobj-ruby'
+[[plugins]]
+repo = 'rhysd/textobj-word-column.vim'
+[[plugins]]
+repo = 'jwhitley/vim-matchit'
+[[plugins]]
+repo = 'tpope/vim-surround'
+[[plugins]]
+repo = 'tpope/vim-endwise'
+
+
+[[plugins]]
+repo = 'kana/vim-operator-user.git'
+
+[[plugins]]
+repo = 'kana/vim-operator-replace.git'
+hook_add = '''
+  map R <Plug>(operator-replace)
+'''
+
+[[plugins]]
+repo = 'tyru/operator-camelize.vim'
+hook_add = '''
+  map <leader>c <plug>(operator-camelize-toggle)
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-anzu'
+hook_add = '''
+  nmap n <Plug>(anzu-n-with-echo)
+  nmap N <Plug>(anzu-N-with-echo)
+  nmap * <Plug>(anzu-star)
+  nmap # <Plug>(anzu-sharp)
+'''
+
+
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+[[plugins]]
+repo = 'tpope/vim-rhubarb'
+[[plugins]]
+repo = 'cohama/agit.vim'
+hook_add = '''
+  let g:agit_preset_views = {
+  \ 'default': [
+  \   {'name': 'log'},
+  \   {'name': 'stat',
+  \    'layout': 'botright vnew'},
+  \   {'name': 'diff',
+  \    'layout': 'belowright {winheight(".") * 3 / 4}new'}
+  \ ],
+  \ 'file': [
+  \   {'name': 'filelog'},
+  \   {'name': 'stat',
+  \    'layout': 'botright vnew'},
+  \   {'name': 'diff',
+  \    'layout': 'belowright {winheight(".") * 3 / 4}new'}
+  \ ]}
+
+  nnoremap <silent> <leader>ga :<C-u>Agit<CR>
+  nnoremap <silent> <leader>g :<C-u>AgitFile<CR>
+'''
+
+[[plugins]]
+repo = 'rhysd/committia.vim'
+[[plugins]]
+repo = 'lambdalisue/gina.vim'
+[[plugins]]
+repo = 'kmnk/vim-unite-giti.git'
+
+[[plugins]]
+repo = 'rhysd/unite-ruby-require.vim'
+[[plugins]]
+repo = 'vim-scripts/ruby-matchit'
+[[plugins]]
+repo = 'tpope/vim-rails'
+[[plugins]]
+repo = 'powerman/vim-plugin-AnsiEsc'
+[[plugins]]
+repo = 'vim-ruby/vim-ruby'
+hook_add = '''
+  let g:rubycomplete_rails                = 1
+  let g:rubycomplete_buffer_loading       = 1
+  let g:rubycomplete_classes_in_global    = 1
+  let g:rubycomplete_include_object       = 1
+  let g:rubycomplete_include_object_space = 1
+'''
+
+[[plugins]]
+repo = 'slim-template/vim-slim'
+
+[[plugins]]
+repo = 'cakebaker/scss-syntax.vim'
+
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+  let g:prettier#config#print_width = 140
+  let g:prettier#config#arrow_parens = 'always'
+  let g:ale_completion_enabled = 1
+  let g:ale_linters = {
+        \ 'html': ['htmlhint'],
+        \ 'css': ['stylelint'],
+        \ 'javascript': ['eslint']
+        \ }
+'''
+
+[[plugins]]
+repo = 'prettier/vim-prettier'
+
+[[plugins]]
+repo = 'lilydjwg/colorizer'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  let g:lightline = {
+          \ 'colorscheme': 'iceberg',
+          \ 'active': {
+          \ 'left': [ [ 'mode', 'paste' ],
+          \           [ 'fugitive', 'readonly', 'filename', 'modified', 'anzu'] ],
+          \ 'right': [ [ 'lineinfo' ],
+          \            [ 'percent' ],
+          \            [ 'fileformat', 'fileencoding', 'filetype' ],
+          \            [ 'count' ] ]
+          \ },
+          \ 'component_function': {
+          \   'modified': 'MyModified',
+          \   'readonly': 'MyReadonly',
+          \   'fugitive': 'MyFugitive',
+          \   'filename': 'MyFilename',
+          \   'fileformat': 'MyFileformat',
+          \   'filetype': 'MyFiletype',
+          \   'fileencoding': 'MyFileencoding',
+          \   'mode': 'MyMode',
+          \   'anzu': 'anzu#search_status',
+          \   'count': 'VisSum'
+          \ }
+  \ }
+
+  function! MyModified()
+    return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  endfunction
+
+  function! MyReadonly()
+    return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+  endfunction
+
+  function! MyFilename()
+    return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+          \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+          \  &ft == 'unite' ? unite#get_status_string() :
+          \  &ft == 'vimshell' ? vimshell#get_status_string() :
+          \ '' != expand('%') ? expand('%') : '[No Name]') .
+          \ ('' != MyModified() ? ' ' . MyModified() : '')
+  endfunction
+
+  function! MyFugitive()
+    try
+      if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+        return fugitive#head()
+      endif
+    catch
+    endtry
+    return ''
+  endfunction
+
+  function! MyFileformat()
+    return winwidth(0) > 70 ? &fileformat : ''
+  endfunction
+
+  function! MyFiletype()
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+  endfunction
+
+  function! MyFileencoding()
+    return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+  endfunction
+
+  function! MyMode()
+    return winwidth(0) > 60 ? lightline#mode() : ''
+  endfunction
+'''
+[[plugins]]
+repo = 'jimsei/winresizer'
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+[[plugins]]
+repo = 'LeafCage/yankround.vim'
+hook_add = '''
+  nmap p <Plug>(yankround-p)
+  xmap p <Plug>(yankround-p)
+  nmap P <Plug>(yankround-P)
+  nmap gp <Plug>(yankround-gp)
+  xmap gp <Plug>(yankround-gp)
+  nmap gP <Plug>(yankround-gP)
+  nmap <C-p> <Plug>(yankround-prev)
+  nmap <C-n> <Plug>(yankround-next)
+'''
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+hook_add = '''
+  let g:quickrun_config = {}
+  let g:quickrun_config._ = {'runner' : 'vimproc'}
+
+  " %cはcommandに設定した値に置換される
+  " %oはcmdoptに設定した値に置換される
+  " %sはソースファイル名に置換される
+  " ref: [cmdline - Vim日本語ドキュメント](http://vim-jp.org/vimdoc-ja/cmdline.html)
+
+  let g:quickrun_config['ruby.minitest'] = {
+    \ 'exec': 'm %s:.'
+    \}
+
+  let g:quickrun_config['ruby.minitest_line'] = {
+    \ 'exec': "m %s:.:%{line('.')}",
+    \ 'cmdopt': ":%{line('.')}"
+    \}
+
+  let g:quickrun_config['ruby.rspec'] = {
+    \ 'command': 'bin/rspec',
+    \ 'cmdopt': '--color --tty',
+    \ 'exec': '%c %o %s'
+    \}
+
+  let g:quickrun_config['ruby.rspec_line'] = {
+    \ 'command': 'bin/rspec',
+    \ 'cmdopt': '--color --tty',
+    \ 'exec': "%c %s:%{line('.')} %o"
+    \}
+
+  function! MinitestQuickrun()
+    let b:quickrun_config = {'type' : 'ruby.minitest'}
+
+    nnoremap <silent><buffer> <Leader>lr :<C-u>QuickRun ruby.minitest_line<CR>
+  endfunction
+
+  function! RSpecQuickrun()
+    let b:quickrun_config = {'type' : 'ruby.rspec'}
+
+    nnoremap <silent><buffer> <Leader>lr :<C-u>QuickRun ruby.rspec_line<CR>
+  endfunction
+
+  augroup Quickrun
+    autocmd!
+    autocmd FileType quickrun AnsiEsc
+    autocmd BufNewFile,BufRead *_test.rb set filetype=ruby.minitest
+    autocmd BufNewFile,BufRead *_spec.rb set filetype=ruby.rspec
+    autocmd BufReadPost *_test.rb call MinitestQuickrun()
+    autocmd BufReadPost *_spec.rb call RSpecQuickrun()
+  augroup END
+'''
+
+[[plugins]]
+repo = 'tomtom/tcomment_vim'
+[[plugins]]
+repo = 'bkad/CamelCaseMotion'
+
+
+[[plugins]]NN
+repo = 'kana/vim-fakeclip'
+
+[[plugins]]
+repo = 'h1mesuke/vim-alignta'
+[[plugins]]
+repo = 'godlygeek/tabular'
+
+[[plugins]]
+repo = 'airblade/vim-rooter'
+
+[[plugins]]
+# let g:loaded_matchparen = 1
+repo = 'itchyny/vim-parenmatch'
+[[plugins]]
+repo = 'itchyny/vim-cursorword'
+
+[[plugins]]
+repo = 'cocopon/svss.vim'
+
+[[plugins]]
+repo = 'vim-scripts/visSum.vim'
+
