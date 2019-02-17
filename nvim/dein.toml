@@ -1,6 +1,17 @@
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add = '''
+  " Change default options
+  call denite#custom#option('default', {
+        \ 'prompt': '>',
+        \ 'highlight_mode_insert': 'Function',
+        \ 'highlight_matched_char': 'Include',
+        \ 'highlight_matched_range': 'PmenuSbar'
+        \ })
+
+  " Change color
+  hi! link deniteSelectedLine Constant
+
   call denite#custom#var('file/rec', 'command',
   \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
 
@@ -28,15 +39,18 @@ hook_add = '''
   call denite#custom#map('normal', '<Tab>',
         \ '<denite:do_action:vsplit>', 'noremap')
 
+  call denite#custom#map('insert', '<Tab>',
+        \ '<denite:do_action:vsplit>', 'noremap')
+
   call denite#custom#map(
         \ 'insert',
-        \ '<C-j>',
+        \ '<Down>',
         \ '<denite:move_to_next_line>',
         \ 'noremap'
         \)
   call denite#custom#map(
         \ 'insert',
-        \ '<C-k>',
+        \ '<Up>',
         \ '<denite:move_to_previous_line>',
         \ 'noremap'
         \)
@@ -48,8 +62,12 @@ hook_add = '''
   " \ 'file/rec/git', 'matchers', ['matcher/unite_style'])
 
   " " Change sorters.
-  call denite#custom#source(
-  \ 'file/rec', 'sorters', ['sorter/reverse'])
+  " call denite#custom#source(
+  " \ 'file/rec', 'sorters', ['sorter/word'])
+
+  " Change converters
+  call denite#custom#source('grep',
+  \ 'converters', ['converter/abbr_word'])
 
   " Define alias
   call denite#custom#alias('source', 'file/rec/git', 'file/rec')
@@ -58,9 +76,6 @@ hook_add = '''
   call denite#custom#alias('source', 'file/rec/git', 'file/rec')
   nnoremap <silent> <C-f> :<C-u>Denite
   \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`<CR>
-
-  " Change default prompt
-  call denite#custom#option('default', 'prompt', '>')
 
   " Change ignore_globs
   call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
