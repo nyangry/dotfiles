@@ -119,6 +119,12 @@ hook_add = '''
   \    'start' : '^\s*ruby:',
   \    'end' : '^\S', 'filetype' : 'ruby',
   \   },
+  \ ],
+  \ 'toml' : [
+  \   {
+  \    'start' : '^hook_add = ',
+  \    'end' : '$', 'filetype' : 'vim',
+  \   },
   \ ]
   \}
 '''

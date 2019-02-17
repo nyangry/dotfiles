@@ -14,3 +14,7 @@ on_source = ['deoplete.nvim']
 [[plugins]]
 repo = 'Shougo/neco-syntax'
 on_source = ['deoplete.nvim']
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
