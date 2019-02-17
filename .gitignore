@@ -5,4 +5,5 @@
 /vimfiles/.netrwhist
 tmuxfiles
 
-.pyc
+__pycache__/
+*.py[cod]
