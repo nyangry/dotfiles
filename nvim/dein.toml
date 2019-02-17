@@ -13,13 +13,43 @@ hook_add = '''
   call denite#custom#var('grep', 'separator', ['--'])
   call denite#custom#var('grep', 'final_opts', [])
 
+  nnoremap    [denite]   <Nop>
+  nmap      , [denite]
+
+  nnoremap <silent> [denite]gc :<C-u>DeniteCursorWord grep<CR>
+  nnoremap <silent> [denite]gg :<C-u>DeniteProjectDir grep<CR>
+
+  nnoremap <silent> [denite]b :<C-u>Denite buffer<CR>
+  nnoremap <silent> [denite]m :<C-u>Denite file_mru<CR>
+
+  call denite#custom#map('normal', '<C-j>',
+        \ '<denite:do_action:split>', 'noremap')
+
+  call denite#custom#map('normal', '<Tab>',
+        \ '<denite:do_action:vsplit>', 'noremap')
+
+  call denite#custom#map(
+        \ 'insert',
+        \ '<C-j>',
+        \ '<denite:move_to_next_line>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<C-k>',
+        \ '<denite:move_to_previous_line>',
+        \ 'noremap'
+        \)
+
   " Change matchers.
   " call denite#custom#source(
-  " \ 'file/rec', 'matchers', ['matcher/substring'])
-  "
-  " " Change sorters.
+  " \ 'file/rec', 'matchers', ['matcher/unite_style'])
   " call denite#custom#source(
-  " \ 'file/rec', 'sorters', ['sorter/reverse'])
+  " \ 'file/rec/git', 'matchers', ['matcher/unite_style'])
+
+  " " Change sorters.
+  call denite#custom#source(
+  \ 'file/rec', 'sorters', ['sorter/reverse'])
 
   " Define alias
   call denite#custom#alias('source', 'file/rec/git', 'file/rec')
@@ -35,36 +65,6 @@ hook_add = '''
   " Change ignore_globs
   call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
         \ [ '.bundle/', 'images/', 'node_modules'])
-
-  nnoremap    [denite]   <Nop>
-  nmap      , [denite]
-
-  nnoremap <silent> [denite]gc :<C-u>Denite grep:. -buffer-name=grep-cursor-buffer<CR><C-R><C-W><CR>
-  nnoremap <silent> [denite]gg :<C-u>Denite grep:. -buffer-name=grep-buffer<CR>
-
-  nnoremap <silent> [denite]t :<C-u>Denite tab<CR>
-  nnoremap <silent> [denite]b :<C-u>Denite buffer<CR>
-  nnoremap <silent> [denite]m :<C-u>Denite file_mru<CR>
-
-  nnoremap <silent> [denite]bk :<C-u>Denite bookmark<CR>
-  nnoremap <silent> [denite]a :<C-u>DeniteBookmarkAdd<CR>
-
-  autocmd FileType denite call s:denite_my_settings()
-  function! s:denite_my_settings()"{{{
-    nnoremap <silent> <buffer> <expr> <C-j> denite#do_action('split')
-    inoremap <silent> <buffer> <expr> <C-j> denite#do_action('split')
-    " ウィンドウを縦に分割して開く
-    nnoremap <silent> <buffer> <expr> <C-i> denite#do_action('vsplit')
-    inoremap <silent> <buffer> <expr> <C-i> denite#do_action('vsplit')
-    " 新しいウィンドウで分割して開く
-    nnoremap <silent> <buffer> <expr> t denite#do_action('tabsplit')
-    " ESCキーを2回押すと終了する
-    nnoremap <silent> <buffer> <ESC><ESC> :q<CR><C-W>p
-    inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR><C-W>p
-
-    nnoremap <silent><buffer><expr> r denite#do_action('rename')
-    nnoremap <silent><buffer><expr> m denite#do_action('move')
-  endfunction"}}}
 '''
 
 [[plugins]]
