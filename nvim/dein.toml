@@ -87,14 +87,8 @@ repo = 'Shougo/neomru.vim'
 on_source = ['denite.nvim']
 
 
-# for defx on Vim8
-#
+[[plugins]]
 # pip3 install --user pynvim
-[[plugins]]
-repo = 'roxma/nvim-yarp'
-[[plugins]]
-repo = 'roxma/vim-hug-neovim-rpc'
-[[plugins]]
 repo = 'Shougo/defx.nvim'
 
 
