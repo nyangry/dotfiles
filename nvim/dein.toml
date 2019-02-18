@@ -99,54 +99,71 @@ on_source = ['denite.nvim']
 [[plugins]]
 # pip3 install --user pynvim
 repo = 'Shougo/defx.nvim'
-
-
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
 hook_add = '''
-  if !exists('g:context_filetype#same_filetypes')
-    let g:context_filetype#same_filetypes = {}
-  endif
-  " let g:context_filetype#same_filetypes.html   = 'javascript, ruby'
-  " let g:context_filetype#same_filetypes.haml   = 'javascript, ruby'
-  let g:context_filetype#same_filetypes.slim   = 'javascript, ruby'
-  let g:context_filetype#same_filetypes.yaml   = 'ruby'
-  " let g:context_filetype#same_filetypes.php    = 'html, javascript'
-  let g:context_filetype#same_filetypes.scss   = 'css, slim, coffee, ruby'
-  let g:context_filetype#same_filetypes.sass   = 'css, slim, coffee, ruby'
-  " let g:context_filetype#same_filetypes.js     = 'html, haml'
-  let g:context_filetype#same_filetypes.es6   = 'javascript'
-  let g:context_filetype#same_filetypes.coffee = 'ruby'
-  " let g:context_filetype#same_filetypes.ruby   = 'slim'
-  " In gitconfig buffers, completes from all buffers.
-  let g:context_filetype#same_filetypes.gitconfig = '_'
-  " In default, completes from all buffers.
-  let g:context_filetype#same_filetypes._ = '_'
-
-  let g:context_filetype#filetypes = {
-  \ 'slim' : [
-  \   {
-  \    'start' : '^\s*-',
-  \    'end' : '$', 'filetype' : 'ruby',
-  \   },
-  \   {
-  \    'start' : '^\s*\w*=',
-  \    'end' : '$', 'filetype' : 'ruby',
-  \   },
-  \   {
-  \    'start' : '^\s*ruby:',
-  \    'end' : '^\S', 'filetype' : 'ruby',
-  \   },
-  \ ],
-  \ 'toml' : [
-  \   {
-  \    'start' : '^hook_add = ',
-  \    'end' : '$', 'filetype' : 'vim',
-  \   },
-  \ ]
-  \}
+nnoremap <silent>   <leader>f
+\ :<C-u>Defx -direction=topleft -split=vertical -winwidth=50 -toggle -buffer-name=tab`tabpagenr()`<CR>
 '''
 
+[plugins.ftplugin]
+defx = '''
+" Define mappings
+nnoremap <silent><buffer><expr> <CR>
+\ defx#async_action('drop')
+nnoremap <silent><buffer><expr> c
+\ defx#do_action('copy')
+nnoremap <silent><buffer><expr> !
+\ defx#do_action('execute_command')
+nnoremap <silent><buffer><expr> m
+\ defx#do_action('move')
+nnoremap <silent><buffer><expr> p
+\ defx#do_action('paste')
+nnoremap <silent><buffer><expr> l
+\ defx#async_action('open')
+nnoremap <silent><buffer><expr> E
+\ defx#do_action('open', 'vsplit')
+nnoremap <silent><buffer><expr> P
+\ defx#do_action('open', 'pedit')
+nnoremap <silent><buffer><expr> K
+\ defx#do_action('new_directory')
+nnoremap <silent><buffer><expr> N
+\ defx#do_action('new_file')
+nnoremap <silent><buffer><expr> M
+\ defx#do_action('new_multiple_files')
+nnoremap <silent><buffer><expr> C
+\ defx#do_action('toggle_columns', 'mark:filename:type:size:time')
+nnoremap <silent><buffer><expr> S
+\ defx#do_action('toggle_sort', 'Time')
+nnoremap <silent><buffer><expr> d
+\ defx#do_action('remove_trash')
+nnoremap <silent><buffer><expr> r
+\ defx#do_action('rename')
+nnoremap <silent><buffer><expr> x
+\ defx#do_action('execute_system')
+nnoremap <silent><buffer><expr> >
+\ defx#do_action('toggle_ignored_files')
+nnoremap <silent><buffer><expr> .
+\ defx#do_action('repeat')
+nnoremap <silent><buffer><expr> yy
+\ defx#do_action('yank_path')
+nnoremap <silent><buffer><expr> h
+\ defx#do_action('cd', ['..'])
+nnoremap <silent><buffer><expr> ~
+\ defx#do_action('cd')
+nnoremap <silent><buffer><expr> \
+\ defx#do_action('cd', getcwd())
+nnoremap <silent><buffer><expr> q
+\ defx#do_action('quit')
+nnoremap <silent><buffer><expr> <Space>
+\ defx#do_action('toggle_select') . 'j'
+nnoremap <silent><buffer><expr> *
+\ defx#do_action('toggle_select_all')
+nnoremap <silent><buffer><expr> j
+\ line('.') == line('$') ? 'gg' : 'j'
+nnoremap <silent><buffer><expr> k
+\ line('.') == 1 ? 'G' : 'k'
+nnoremap <silent><buffer><expr> <C-l>
+\ defx#do_action('redraw')
+'''
 
 [[plugins]]
 repo = 'kana/vim-textobj-user'

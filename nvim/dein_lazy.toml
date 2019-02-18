@@ -1,19 +1,141 @@
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-on_i = 1
+depends = 'context_filetype.vim'
+on_event = 'InsertEnter'
+hook_source = '''
+" <TAB>: completion.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ deoplete#manual_complete()
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+" <S-TAB>: completion back.
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+
+inoremap <expr><C-g>       deoplete#refresh()
+inoremap <expr><C-e>       deoplete#cancel_popup()
+inoremap <silent><expr><C-l>       deoplete#complete_common_string()
+
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function() abort
+  return pumvisible() ? deoplete#close_popup()."\<CR>" : "\<CR>"
+endfunction
+
+call deoplete#custom#source('_', 'matchers',
+      \ ['matcher_fuzzy', 'matcher_length'])
+
+call deoplete#custom#source('look', 'filetypes', ['help', 'gitcommit'])
+call deoplete#custom#option('ignore_sources',
+      \ {'_': ['around', 'buffer', 'tag', 'dictionary']})
+
+call deoplete#custom#source('_', 'converters', [
+      \ 'converter_remove_paren',
+      \ 'converter_remove_overlap',
+      \ 'matcher_length',
+      \ 'converter_truncate_abbr',
+      \ 'converter_truncate_menu',
+      \ 'converter_auto_delimiter',
+      \ ])
+
+call deoplete#custom#option('keyword_patterns', {
+      \ '_': '[a-zA-Z_]\k*\(?',
+      \ 'tex': '[^\w|\s][a-zA-Z_]\w*',
+      \ })
+
+call deoplete#custom#option({
+      \ 'auto_refresh_delay': 10,
+      \ 'camel_case': v:true,
+      \ 'skip_multibyte': v:true,
+      \ 'prev_completion_mode': 'length',
+      \ })
+
+call deoplete#custom#option('candidate_marks',
+      \ ['A', 'S', 'D', 'F', 'G'])
+inoremap <expr>A       deoplete#insert_candidate(0)
+inoremap <expr>S       deoplete#insert_candidate(1)
+inoremap <expr>D       deoplete#insert_candidate(2)
+inoremap <expr>F       deoplete#insert_candidate(3)
+inoremap <expr>G       deoplete#insert_candidate(4)
+
+call deoplete#enable()
+'''
 
 [[plugins]]
 repo = 'Shougo/neoinclude.vim'
 on_source = ['deoplete.nvim']
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
-on_source = ['deoplete.nvim']
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_event = 'InsertCharPre'
+on_ft = 'snippet'
+hook_source = '''
+  imap <silent>L     <Plug>(neosnippet_jump_or_expand)
+  smap <silent>L     <Plug>(neosnippet_jump_or_expand)
+  xmap <silent>L     <Plug>(neosnippet_expand_target)
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#enable_completed_snippet = 1
+  let g:neosnippet#expand_word_boundary = 1
+  let g:neosnippet#snippets_directory = '~/.vim/snippets'
+'''
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
-on_source = ['deoplete.nvim']
+
 [[plugins]]
 repo = 'Shougo/neco-syntax'
 on_source = ['deoplete.nvim']
+
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+hook_add = '''
+  if !exists('g:context_filetype#same_filetypes')
+    let g:context_filetype#same_filetypes = {}
+  endif
+  " let g:context_filetype#same_filetypes.html   = 'javascript, ruby'
+  " let g:context_filetype#same_filetypes.haml   = 'javascript, ruby'
+  let g:context_filetype#same_filetypes.slim   = 'javascript, ruby'
+  let g:context_filetype#same_filetypes.yaml   = 'ruby'
+  " let g:context_filetype#same_filetypes.php    = 'html, javascript'
+  let g:context_filetype#same_filetypes.scss   = 'css, slim, coffee, ruby'
+  let g:context_filetype#same_filetypes.sass   = 'css, slim, coffee, ruby'
+  " let g:context_filetype#same_filetypes.js     = 'html, haml'
+  let g:context_filetype#same_filetypes.es6   = 'javascript'
+  let g:context_filetype#same_filetypes.coffee = 'ruby'
+  " let g:context_filetype#same_filetypes.ruby   = 'slim'
+  " In gitconfig buffers, completes from all buffers.
+  let g:context_filetype#same_filetypes.gitconfig = '_'
+  " In default, completes from all buffers.
+  let g:context_filetype#same_filetypes._ = '_'
+
+  let g:context_filetype#filetypes = {
+  \ 'slim' : [
+  \   {
+  \    'start' : '^\s*-',
+  \    'end' : '$', 'filetype' : 'ruby',
+  \   },
+  \   {
+  \    'start' : '^\s*\w*=',
+  \    'end' : '$', 'filetype' : 'ruby',
+  \   },
+  \   {
+  \    'start' : '^\s*ruby:',
+  \    'end' : '^\S', 'filetype' : 'ruby',
+  \   },
+  \ ],
+  \ 'toml' : [
+  \   {
+  \    'start' : '^hook_add = ',
+  \    'end' : '$', 'filetype' : 'vim',
+  \   },
+  \ ]
+  \}
+'''
+
 
 [[plugins]]
 repo = 'cespare/vim-toml'
