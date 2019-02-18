@@ -83,6 +83,14 @@ hook_add = '''
         \ [ '.bundle/', 'images/', 'node_modules'])
 '''
 
+
+[[plugins]]
+repo = 'Shougo/junkfile.vim'
+on_source = 'denite.nvim'
+hook_add = '''
+  nnoremap <silent> <leader>e :<C-u>Denite junkfile:new junkfile<CR>
+'''
+
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 on_source = ['denite.nvim']
