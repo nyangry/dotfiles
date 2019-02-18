@@ -198,9 +198,10 @@ function current_dir() {
 # PROMPT='$(rbenv_version) %{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
 PROMPT='$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
 
-alias vimrc='vim ~/.vimrc'
-alias tmuxconf='vim ~/.tmux.conf'
-alias zshrc='vim ~/.zshrc'
+alias vimrc='nvim ~/.vimrc'
+alias dein='nvim ~/dotfiles/nvim/dein.toml'
+alias tmuxconf='nvim ~/.tmux.conf'
+alias zshrc='nvim ~/.zshrc'
 alias dotfiles='~/dotfiles'
 alias tailf='tail -f'
 alias ls="ls -GF"
