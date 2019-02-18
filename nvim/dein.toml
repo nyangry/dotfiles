@@ -5,9 +5,7 @@ hook_add = '''
   call denite#custom#option('default', {
         \ 'auto_accel': v:true,
         \ 'prompt': '>',
-        \ 'highlight_mode_insert': 'Function',
-        \ 'highlight_matched_char': 'Include',
-        \ 'highlight_matched_range': 'PmenuSbar'
+        \ 'highlight_matched_char': 'Title',
         \ })
 
   " Change color
