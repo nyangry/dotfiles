@@ -102,7 +102,7 @@ on_source = ['denite.nvim']
 repo = 'Shougo/defx.nvim'
 hook_add = '''
 nnoremap <silent>   <leader>f
-\ :<C-u>Defx -direction=topleft -split=vertical -winwidth=50 -toggle -buffer-name=tab`tabpagenr()`<CR>
+\ :<C-u>Defx `expand('%:p:h')` -search=`expand('%:p')` -direction=topleft -split=vertical -winwidth=50 -toggle -buffer-name=tab`tabpagenr()`<CR>
 '''
 
 [plugins.ftplugin]
