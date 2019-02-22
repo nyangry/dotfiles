@@ -68,8 +68,8 @@ hook_add = '''
   " \ 'file/rec', 'sorters', ['sorter/word'])
 
   " Change converters
-  call denite#custom#source('grep',
-  \ 'converters', ['converter/abbr_word'])
+  " call denite#custom#source('grep',
+  " \ 'converters', ['converter/abbr_word'])
 
   " Define alias
   call denite#custom#alias('source', 'file/rec/git', 'file/rec')
