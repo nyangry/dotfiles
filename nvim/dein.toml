@@ -38,6 +38,9 @@ hook_add = '''
   call denite#custom#map('normal', '<Tab>',
         \ '<denite:do_action:vsplit>', 'noremap')
 
+  call denite#custom#map('insert', '<C-j>',
+        \ '<denite:do_action:split>', 'noremap')
+
   call denite#custom#map('insert', '<Tab>',
         \ '<denite:do_action:vsplit>', 'noremap')
 
