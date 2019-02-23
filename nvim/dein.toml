@@ -218,6 +218,11 @@ hook_add = '''
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+hook_add = '''
+  nmap gs :Gstatus<CR>
+  nmap gb :Gblame<CR>
+  nmap gd :Gdiff<CR>
+'''
 [[plugins]]
 repo = 'tpope/vim-rhubarb'
 [[plugins]]
