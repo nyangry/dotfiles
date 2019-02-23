@@ -3,7 +3,7 @@ repo = 'Shougo/denite.nvim'
 hook_add = '''
   " Change default options
   call denite#custom#option('default', {
-        \ 'auto_accel': v:true,
+  "      \ 'auto_accel': v:true,
         \ 'prompt': '>',
         \ 'highlight_matched_char': 'Title',
         \ })
