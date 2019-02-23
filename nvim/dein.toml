@@ -177,8 +177,6 @@ repo = 'lucapette/vim-textobj-underscore'
 [[plugins]]
 repo = 'kana/vim-textobj-entire'
 [[plugins]]
-repo = 'rhysd/vim-textobj-ruby'
-[[plugins]]
 repo = 'rhysd/textobj-word-column.vim'
 [[plugins]]
 repo = 'jwhitley/vim-matchit'
@@ -253,28 +251,7 @@ repo = 'lambdalisue/gina.vim'
 repo = 'kmnk/vim-unite-giti.git'
 
 [[plugins]]
-repo = 'rhysd/unite-ruby-require.vim'
-[[plugins]]
-repo = 'vim-scripts/ruby-matchit'
-[[plugins]]
-repo = 'tpope/vim-rails'
-[[plugins]]
 repo = 'powerman/vim-plugin-AnsiEsc'
-[[plugins]]
-repo = 'vim-ruby/vim-ruby'
-hook_add = '''
-  let g:rubycomplete_rails                = 1
-  let g:rubycomplete_buffer_loading       = 1
-  let g:rubycomplete_classes_in_global    = 1
-  let g:rubycomplete_include_object       = 1
-  let g:rubycomplete_include_object_space = 1
-'''
-
-[[plugins]]
-repo = 'slim-template/vim-slim'
-
-[[plugins]]
-repo = 'cakebaker/scss-syntax.vim'
 
 [[plugins]]
 repo = 'w0rp/ale'
