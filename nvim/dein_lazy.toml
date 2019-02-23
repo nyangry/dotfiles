@@ -80,6 +80,15 @@ on_source = ['deoplete.nvim']
 [[plugins]]
 repo = 'ujihisa/neco-look'
 on_source = ['deoplete.nvim']
+[[plugins]]
+repo = 'fishbullet/deoplete-ruby'
+on_ft = 'ruby'
+on_source = ['deoplete.nvim']
+[[plugins]]
+repo = 'carlitux/deoplete-ternjs'
+on_ft = ['javascript', 'coffee', 'typescript']
+on_source = ['deoplete.nvim']
+build = 'npm install -g tern'
 
 
 [[plugins]]
@@ -97,7 +106,7 @@ hook_add = '''
   let g:context_filetype#same_filetypes.sass   = 'css, slim, coffee, ruby'
   " let g:context_filetype#same_filetypes.js     = 'html, haml'
   let g:context_filetype#same_filetypes.es6   = 'javascript'
-  let g:context_filetype#same_filetypes.coffee = 'ruby'
+  let g:context_filetype#same_filetypes.coffee = 'javascript'
   " let g:context_filetype#same_filetypes.ruby   = 'slim'
   " In gitconfig buffers, completes from all buffers.
   let g:context_filetype#same_filetypes.gitconfig = '_'
@@ -169,10 +178,38 @@ repo = 'cakebaker/scss-syntax.vim'
 on_ft = 'scss'
 
 
-[[plugins]]
-repo = 'pangloss/vim-javascript'
-on_ft = 'javascript'
+# This is a Vim plugin that provides Tern-based JavaScript editing support.
+# [[plugins]]
+# repo = 'ternjs/tern_for_vim'
+# on_ft = ['javascript', 'coffee', 'typescript']
 
+# Yet Another JavaScript Syntax for Vim
+[[plugins]]
+repo = 'othree/yajs.vim'
+on_ft = ['javascript', 'coffee', 'typescript']
+
+# Vim indenter for standalone and embedded JavaScript and TypeScript.
+[[plugins]]
+repo = 'jason0x43/vim-js-indent'
+on_ft = ['javascript', 'typescript']
+
+[[plugins]]
+repo = 'othree/es.next.syntax.vim'
+on_ft = ['javascript', 'coffee', 'typescript']
+
+# Yet Another TypeScript Syntax
+[[plugins]]
+repo = 'HerringtonDarkholme/yats.vim'
+on_ft = 'typescript'
+on_source = ['yats.vim']
+
+# Typescript tooling for Neovim
+[[plugins]]
+repo = 'mhartington/nvim-typescript'
+build = './install.sh'
+on_ft = 'typescript'
+
+# CoffeeScript support for vim
 [[plugins]]
 repo = 'kchmck/vim-coffee-script'
 on_ft = 'coffee'
@@ -180,3 +217,12 @@ on_ft = 'coffee'
 [[plugins]]
 repo = 'posva/vim-vue'
 on_ft = 'vue'
+
+# Syntax for JavaScript libraries
+[[plugins]]
+repo = 'othree/javascript-libraries-syntax.vim'
+on_ft = ['javascript', 'coffee', 'typescript']
+hook_add = '''
+  let b:javascript_lib_use_jquery = 1
+  let b:javascript_lib_use_underscore = 1
+'''
