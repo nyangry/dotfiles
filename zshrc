@@ -198,6 +198,8 @@ function current_dir() {
 # PROMPT='$(rbenv_version) %{${fg[green]}%}${USER}%{${reset_color}%}:$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
 PROMPT='$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
 
+alias b='bundle'
+alias bc='bundle clean'
 alias vim='nvim'
 alias vimrc='nvim ~/.vimrc'
 alias dein='nvim ~/dotfiles/nvim/dein.toml'
