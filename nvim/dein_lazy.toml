@@ -1,7 +1,7 @@
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 depends = 'context_filetype.vim'
-on_event = 'InsertEnter'
+on_i = 1
 hook_source = '''
 " <TAB>: completion.
 inoremap <silent><expr> <TAB>
@@ -71,8 +71,7 @@ on_source = ['deoplete.nvim']
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
 depends = ['neosnippet-snippets', 'context_filetype.vim']
-on_event = 'InsertCharPre'
-on_ft = 'snippet'
+on_i = 1
 hook_source = '''
   imap <silent>L     <Plug>(neosnippet_jump_or_expand)
   smap <silent>L     <Plug>(neosnippet_jump_or_expand)
