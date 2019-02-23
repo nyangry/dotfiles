@@ -59,9 +59,14 @@ hook_source = '''
 '''
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
-
+[[plugins]]
+repo = 'Shougo/neco-vim'
+on_source = ['deoplete.nvim']
 [[plugins]]
 repo = 'Shougo/neco-syntax'
+on_source = ['deoplete.nvim']
+[[plugins]]
+repo = 'ujihisa/neco-look'
 on_source = ['deoplete.nvim']
 
 
