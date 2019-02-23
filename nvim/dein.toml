@@ -66,6 +66,8 @@ hook_add = '''
   " Change sorters.
   call denite#custom#source(
   \ 'file/rec', 'sorters', ['sorter/word'])
+  call denite#custom#source(
+  \ 'grep', 'sorters', ['sorter/word'])
 
   " Change converters
   call denite#custom#source('grep',
