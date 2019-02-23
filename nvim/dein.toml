@@ -63,9 +63,9 @@ hook_add = '''
   " call denite#custom#source(
   " \ 'file/rec/git', 'matchers', ['matcher/unite_style'])
 
-  " " Change sorters.
-  " call denite#custom#source(
-  " \ 'file/rec', 'sorters', ['sorter/word'])
+  " Change sorters.
+  call denite#custom#source(
+  \ 'file/rec', 'sorters', ['sorter/word'])
 
   " Change converters
   call denite#custom#source('grep',
