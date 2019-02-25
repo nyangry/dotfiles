@@ -3,58 +3,53 @@ repo = 'Shougo/deoplete.nvim'
 depends = 'context_filetype.vim'
 on_i = 1
 hook_source = '''
- inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
- function! s:my_cr_function() abort
-   return deoplete#close_popup() . "\<CR>"
- endfunction
+  " <TAB>: completion.
+  " inoremap <silent><expr> <TAB>
+  "       \ pumvisible() ? "\<C-n>" :
+  "       \ <SID>check_back_space() ? "\<TAB>" :
+  "       \ deoplete#manual_complete()
+  " function! s:check_back_space() abort
+  "   let col = col('.') - 1
+  "   return !col || getline('.')[col - 1]  =~ '\s'
+  " endfunction
 
-" <TAB>: completion.
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ deoplete#manual_complete()
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~ '\s'
-" endfunction
+  " <S-TAB>: completion back.
+  " inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" <S-TAB>: completion back.
-" inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+  inoremap <expr><C-g>       deoplete#refresh()
+  inoremap <expr><C-e>       deoplete#cancel_popup()
+  inoremap <silent><expr><C-l>       deoplete#complete_common_string()
 
-inoremap <expr><C-g>       deoplete#refresh()
-inoremap <expr><C-e>       deoplete#cancel_popup()
-inoremap <silent><expr><C-l>       deoplete#complete_common_string()
+  call deoplete#custom#source('_', 'matchers',
+    \ ['matcher_fuzzy', 'matcher_length'])
 
-call deoplete#custom#source('_', 'matchers',
-  \ ['matcher_fuzzy', 'matcher_length'])
+  call deoplete#custom#option('keyword_patterns', {
+    \ '_': '[a-zA-Z_]\k*',
+    \ 'ruby': ['@*[a-zA-Z_]\w*[!?]?'],
+    \})
 
-call deoplete#custom#option('keyword_patterns', {
-  \ '_': '[a-zA-Z_]\k*',
-  \ 'ruby': ['@*[a-zA-Z_]\w*[!?]?'],
-  \})
+  call deoplete#custom#var('omni', 'input_patterns', {
+    \ 'ruby': ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::'],
+    \})
 
-call deoplete#custom#var('omni', 'input_patterns', {
-  \ 'ruby': ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::'],
-  \})
+  call deoplete#custom#source('_', 'converters', [
+    \ 'converter_remove_paren',
+    \ 'converter_remove_overlap',
+    \ 'matcher_length',
+    \ 'converter_truncate_abbr',
+    \ 'converter_truncate_menu',
+    \ 'converter_auto_delimiter',
+    \ 'converter_auto_paren',
+    \ ])
 
-call deoplete#custom#source('_', 'converters', [
-  \ 'converter_remove_paren',
-  \ 'converter_remove_overlap',
-  \ 'matcher_length',
-  \ 'converter_truncate_abbr',
-  \ 'converter_truncate_menu',
-  \ 'converter_auto_delimiter',
-  \ 'converter_auto_paren',
-  \ ])
+  call deoplete#custom#option({
+    \ 'auto_refresh_delay': 10,
+    \ 'camel_case': v:true,
+    \ 'skip_multibyte': v:true,
+    \ 'prev_completion_mode': 'length',
+    \ })
 
-call deoplete#custom#option({
-  \ 'auto_refresh_delay': 10,
-  \ 'camel_case': v:true,
-  \ 'skip_multibyte': v:true,
-  \ 'prev_completion_mode': 'length',
-  \ })
-
-call deoplete#enable()
+  call deoplete#enable()
 '''
 
 [[plugins]]
