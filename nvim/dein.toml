@@ -5,7 +5,8 @@ hook_add = '''
   call denite#custom#option('default', {
   "      \ 'auto_accel': v:true,
         \ 'prompt': '>',
-        \ 'highlight_matched_char': 'Title',
+        \ 'highlight_matched_char': 'Special',
+        \ 'highlight_matched_range': 'Structure',
         \ })
 
   " Change color
