@@ -230,3 +230,25 @@ hook_add = '''
   let b:javascript_lib_use_jquery = 1
   let b:javascript_lib_use_underscore = 1
 '''
+
+# quickly format javascript, html and css files
+[[plugins]]
+repo = 'maksimr/vim-jsbeautify'
+on_ft = ['javascript', 'css', 'html']
+hook_add = '''
+  " for JS
+  autocmd FileType javascript noremap <buffer>  <C-b> :call JsBeautify()<CR>
+  autocmd FileType javascript vnoremap <buffer>  <C-b> :call RangeJsBeautify()<CR>
+  " for json
+  autocmd FileType json noremap <buffer> <C-b> :call JsonBeautify()<CR>
+  autocmd FileType json vnoremap <buffer> <C-b> :call RangeJsonBeautify()<CR>
+  " for jsx
+  autocmd FileType jsx noremap <buffer> <C-b> :call JsxBeautify()<CR>
+  autocmd FileType jsx vnoremap <buffer> <C-b> :call RangeJsxBeautify()<CR>
+  " for html
+  autocmd FileType html noremap <buffer> <C-b> :call HtmlBeautify()<CR>
+  autocmd FileType html vnoremap <buffer> <C-b> :call RangeHtmlBeautify()<CR>
+  " for css or scss
+  autocmd FileType css noremap <buffer> <C-b> :call CSSBeautify()<CR>
+  autocmd FileType css vnoremap <buffer> <C-b> :call RangeCSSBeautify()<CR>
+'''
