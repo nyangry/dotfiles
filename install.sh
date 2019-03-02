@@ -16,6 +16,7 @@ delete_old_files()
   rm $HOME/.config/nvim
   rm $HOME/.vim
   rm $HOME/.vimrc
+  rm $HOME/.editorconfig
   rm $HOME/.gitattributes
   rm $HOME/.gitconfig
   rm $HOME/.gitignore
@@ -41,6 +42,7 @@ symlink_files()
   ln -s $HOME/dotfiles/nvim     $HOME/.config/nvim
   ln -s $HOME/dotfiles/vimfiles     $HOME/.vim
   ln -s $HOME/dotfiles/vimrc     $HOME/.vimrc
+  ln -s $HOME/dotfiles/editorconfig $HOME/.editorconfig
   ln -s $HOME/dotfiles/gitattributes $HOME/.gitattributes
   ln -s $HOME/dotfiles/gitconfig $HOME/.gitconfig
   ln -s $HOME/dotfiles/gitignore $HOME/.gitignore
