@@ -369,18 +369,22 @@
 	</dict>
 	<key>Default Bookmark Guid</key>
 	<string>E35DBE9C-CB36-4CC0-8F96-C1D125F96A1A</string>
+	<key>HotkeyMigratedFromSingleToMulti</key>
+	<true/>
 	<key>LoadPrefsFromCustomFolder</key>
 	<true/>
 	<key>MaxVertically</key>
-	<true/>
+	<false/>
+	<key>NSColorPanelMode</key>
+	<string>6</string>
+	<key>NSColorPickerSlidersDefaults</key>
+	<string>0</string>
+	<key>NSFontPanelAttributes</key>
+	<string>1, 0</string>
 	<key>NSNavLastRootDirectory</key>
 	<string>~/dotfiles/app_config/iterm</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{712, 448}</string>
-	<key>NSNavPanelExpandedSizeForSaveMode</key>
-	<string>{712, 448}</string>
-	<key>NSNavPanelExpandedStateForSaveMode</key>
-	<true/>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -396,7 +400,7 @@
 	gAKACoAN0xAJChEVGVdOUy5rZXlzoxITFIADgASABaMWFxiABoAHgAiACVpJZGVudGlm
 	aWVyVVdpZHRoVkhpZGRlblEwI0BowAAAAAAACNIhIiMkWiRjbGFzc25hbWVYJGNsYXNz
 	ZXNcTlNEaWN0aW9uYXJ5oiMlWE5TT2JqZWN00xAJCicrGaMSExSAA4AEgAWjLC0YgAuA
-	DIAIgAlRMSNAdCGdsi0OVtIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
+	DIAIgAlRMSNAdKAAAAAAANIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
 	TlNLZXllZEFyY2hpdmVy0Tg5VUFycmF5gAEACAARABoAIwAtADIANwBGAEwAUQBcAGMA
 	ZgBoAGoAbABzAHsAfwCBAIMAhQCJAIsAjQCPAJEAnACiAKkAqwC0ALUAugDFAM4A2wDe
 	AOcA7gDyAPQA9gD4APwA/gEAAQIBBAEGAQ8BFAEjAScBLwFBAUQBSgAAAAAAAAIBAAAA
@@ -417,14 +421,22 @@
 		<key>TB Is Shown</key>
 		<integer>1</integer>
 	</dict>
-	<key>NSWindow Frame SessionsPreferences</key>
-	<string>269 139 606 456 0 0 1920 1200 </string>
+	<key>NSWindow Frame NSColorPanel</key>
+	<string>427 410 214 309 0 0 1920 1178 </string>
+	<key>NSWindow Frame NSFontPanel</key>
+	<string>1409 110 445 183 0 0 1920 1177 </string>
+	<key>NSWindow Frame Preferences</key>
+	<string>267 697 606 456 0 0 1920 1177 </string>
+	<key>NSWindow Frame SUStatusFrame</key>
+	<string>758 786 400 129 0 0 1920 1177 </string>
+	<key>NSWindow Frame SUUpdateAlert</key>
+	<string>648 588 620 392 0 0 1920 1177 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>269 712 918 381 0 0 1920 1177 </string>
+	<string>269 659 796 486 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 7 1914 1170 0 0 1920 1177 </string>
+	<string>0 0 1916 1177 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>247 132 1410 877 0 0 1920 1177 </string>
+	<string>146 270 1410 877 0 0 1920 1177 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1144,7 +1156,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.12672892011834322</real>
+			<real>0.0</real>
 			<key>Unlimited Scrollback</key>
 			<true/>
 			<key>Use Bold Font</key>
@@ -1165,20 +1177,32 @@
 			<string>/Users/nyangry</string>
 		</dict>
 	</array>
-	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
+	<key>NoSyncConfirmBeta</key>
 	<true/>
+	<key>NoSyncDoNotWarnBeforeMultilinePaste</key>
+	<true/>
+	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
+	<integer>0</integer>
 	<key>NoSyncInstallationId</key>
-	<string>5C6FC282-27B2-4E93-A2A4-117146BA88E9</string>
-	<key>NoSyncNeverAskAboutSettingAlternateMouseScroll</key>
-	<true/>
+	<string>513F8529-FD3F-4673-B5F9-9E557F13E602</string>
+	<key>NoSyncLastTipTime</key>
+	<real>457982310.91942197</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>NoSyncPermissionToShowTip</key>
 	<false/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
-	<real>513742921.30224401</real>
+	<real>488043913.09259701</real>
+	<key>NoSyncTipsToNotShow</key>
+	<array>
+		<string>0000</string>
+		<string>0001</string>
+		<string>0002</string>
+		<string>0003</string>
+		<string>0004</string>
+	</array>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -1213,19 +1237,17 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/nyangry/dotfiles/app_config/iterm</string>
+	<string>/Users/admin/dotfiles/app_config/iterm</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/final.xml?shard=59</string>
+	<string>https://iterm2.com/appcasts/final.xml?shard=65</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-08-03T10:36:17Z</date>
-	<key>SUSendProfileInfo</key>
-	<false/>
+	<date>2019-03-02T05:04:28Z</date>
 	<key>ShowFullScreenTabBar</key>
 	<false/>
 	<key>UseLionStyleFullscreen</key>
@@ -1237,7 +1259,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.15</string>
+	<string>3.2.7</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
