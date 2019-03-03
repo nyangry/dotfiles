@@ -273,12 +273,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'prettier/vim-prettier'
-
-[[plugins]]
-repo = 'lilydjwg/colorizer'
-
-[[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
   let g:lightline = {

@@ -262,3 +262,8 @@ on_ft = ['html']
 [[plugins]]
 repo = 'hail2u/vim-css3-syntax'
 on_ft = ['css']
+
+# colorize all text in the form #rgb, #rgba, #rrggbb, #rrgbbaa, rgb(...), rgba(...)
+# [[plugins]]
+# repo = 'lilydjwg/colorizer'
+# on_ft = ['css', 'scss', 'vim']
