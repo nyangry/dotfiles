@@ -137,6 +137,12 @@ hook_add = '''
   \    'start' : '^hook_add = ',
   \    'end' : '$', 'filetype' : 'vim',
   \   },
+  \ ],
+  \ 'vue' : [
+  \   {
+  \    'start' : '^<script type=''ts''>',
+  \    'end' : '$', 'filetype' : 'typescript',
+  \   },
   \ ]
   \}
 '''
