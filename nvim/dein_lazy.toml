@@ -214,10 +214,10 @@ on_ft = 'typescript'
 on_source = ['yats.vim']
 
 # Typescript tooling for Neovim
-[[plugins]]
-repo = 'mhartington/nvim-typescript'
-build = './install.sh'
-on_ft = 'typescript'
+# [[plugins]]
+# repo = 'mhartington/nvim-typescript'
+# build = './install.sh'
+# on_ft = 'typescript'
 
 # CoffeeScript support for vim
 [[plugins]]
