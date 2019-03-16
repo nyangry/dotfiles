@@ -58,6 +58,19 @@ hook_add = '''
         \ 'noremap'
         \)
 
+  call denite#custom#map(
+        \ 'normal',
+        \ '<Down>',
+        \ '<denite:move_to_next_line>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'normal',
+        \ '<Up>',
+        \ '<denite:move_to_previous_line>',
+        \ 'noremap'
+        \)
+
   " Change matchers.
   " call denite#custom#source(
   " \ 'file/rec', 'matchers', ['matcher/unite_style'])
