@@ -207,11 +207,15 @@ on_ft = ['javascript', 'typescript']
 repo = 'othree/es.next.syntax.vim'
 on_ft = ['javascript', 'coffee', 'typescript']
 
-# Yet Another TypeScript Syntax
+# # Yet Another TypeScript Syntax
+# [[plugins]]
+# repo = 'HerringtonDarkholme/yats.vim'
+# on_ft = 'typescript'
+
+# Typescript syntax files for Vim
 [[plugins]]
-repo = 'HerringtonDarkholme/yats.vim'
+repo = 'leafgarland/typescript-vim'
 on_ft = 'typescript'
-on_source = ['yats.vim']
 
 # Typescript tooling for Neovim
 # [[plugins]]
