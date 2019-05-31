@@ -88,11 +88,11 @@ on_source = ['deoplete.nvim']
 # repo = 'uplus/deoplete-solargraph'
 # on_ft = 'ruby'
 # on_source = ['deoplete.nvim']
-[[plugins]]
-repo = 'carlitux/deoplete-ternjs'
-on_ft = ['javascript', 'coffee', 'typescript']
-on_source = ['deoplete.nvim']
-build = 'npm install -g tern'
+# [[plugins]]
+# repo = 'carlitux/deoplete-ternjs'
+# on_ft = ['javascript', 'coffee', 'typescript']
+# on_source = ['deoplete.nvim']
+# build = 'npm install -g tern'
 
 
 [[plugins]]
@@ -189,9 +189,9 @@ on_ft = 'scss'
 
 
 # This is a Vim plugin that provides Tern-based JavaScript editing support.
-# [[plugins]]
-# repo = 'ternjs/tern_for_vim'
-# on_ft = ['javascript', 'coffee', 'typescript']
+[[plugins]]
+repo = 'ternjs/tern_for_vim'
+on_ft = ['javascript', 'coffee', 'typescript']
 
 # Yet Another JavaScript Syntax for Vim
 [[plugins]]
