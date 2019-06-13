@@ -94,6 +94,10 @@ on_source = ['deoplete.nvim']
 # on_source = ['deoplete.nvim']
 # build = 'npm install -g tern'
 
+[[plugins]]
+repo = 'rhysd/git-messenger.vim'
+on_cmd = 'GitMessenger'
+on_map = '<Plug>(git-messenger'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
