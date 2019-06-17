@@ -3,23 +3,19 @@ repo = 'Shougo/deoplete.nvim'
 depends = 'context_filetype.vim'
 on_i = 1
 hook_source = '''
-  " <TAB>: completion.
-  inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ deoplete#manual_complete()
-  function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-  endfunction
+  call deoplete#custom#option('smart_case', v:true)
 
-  " <S-TAB>: completion back.
-  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+  " <CR>: close popup and save indent.
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  function! s:my_cr_function() abort
+    return deoplete#close_popup() . "\<CR>"
+  endfunction
 
   inoremap <expr><C-g>       deoplete#refresh()
   inoremap <expr><C-e>       deoplete#close_popup()
   inoremap <silent><expr><C-l>       deoplete#complete_common_string()
   inoremap <expr><C-m>       deoplete#manual_complete()
+
 
   call deoplete#custom#source('_', 'matchers',
     \ ['matcher_fuzzy', 'matcher_length'])
