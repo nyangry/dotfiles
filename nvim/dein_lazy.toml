@@ -16,7 +16,6 @@ hook_source = '''
   inoremap <silent><expr><C-l>       deoplete#complete_common_string()
   inoremap <expr><C-m>       deoplete#manual_complete()
 
-
   call deoplete#custom#source('_', 'matchers',
     \ ['matcher_fuzzy', 'matcher_length'])
 
