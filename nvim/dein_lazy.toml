@@ -3,8 +3,6 @@ repo = 'Shougo/deoplete.nvim'
 depends = 'context_filetype.vim'
 on_i = 1
 hook_source = '''
-  call deoplete#custom#option('smart_case', v:true)
-
   " <CR>: close popup and save indent.
   inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
   function! s:my_cr_function() abort
@@ -72,9 +70,6 @@ repo = 'Shougo/neco-vim'
 on_source = ['deoplete.nvim']
 [[plugins]]
 repo = 'Shougo/neco-syntax'
-on_source = ['deoplete.nvim']
-[[plugins]]
-repo = 'ujihisa/neco-look'
 on_source = ['deoplete.nvim']
 [[plugins]]
 repo = 'fishbullet/deoplete-ruby'
