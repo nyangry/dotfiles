@@ -1,27 +1,34 @@
 [[plugins]]
 repo = 'junegunn/fzf.vim'
 hook_add = '''
-  " This is the default extra key bindings
-  let g:fzf_action = {
-    \ 'ctrl-t': 'tab split',
-    \ 'ctrl-x': 'split',
-    \ 'ctrl-v': 'vsplit' }
-
-  " Default fzf layout
-  " - down / up / left / right
-  let g:fzf_layout = { 'down': '~40%' }
-
-  let g:fzf_commands_expect = 'alt-enter,ctrl-t,ctrl-x,ctrl-v'
-
   nnoremap    [fzf]   <Nop>
   nmap      , [fzf]
 
-  nnoremap <silent> <C-f> :<C-u>FZF<CR>
-  nnoremap <silent> [fzf]gc :<C-u>Agc<CR>
-  nnoremap <silent> [fzf]gg :<C-u>Ag<CR>
-
-  nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
+  nnoremap <silent> <C-f> :<C-u>CustomFZF<CR>
+  nnoremap <silent> [fzf]b :<C-u>FZFBuffers<CR>
   nnoremap <silent> [fzf]m :<C-u>FZFMru<CR>
+  nnoremap <silent> [fzf]gg :<C-u>Agg<CR>
+  nnoremap <silent> [fzf]gc :<C-u>Agc<CR>
+
+  command! -nargs=* CustomFZF call fzf#run({
+  \   'sink':    'tabe',
+  \   'options': '-m -x --reverse --expect=ctrl-t,ctrl-v,ctrl-x',
+  \   'down':    '50%'
+  \ })
+
+  command! FZFBuffers call fzf#run(fzf#wrap({
+  \   'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
+  \   'sink':    'tabe',
+  \   'options': '-m -x --reverse --expect=ctrl-t,ctrl-v,ctrl-x',
+  \   'down':    '50%'
+  \ }))
+
+  command! FZFMru call fzf#run({
+  \   'source':  v:oldfiles,
+  \   'sink':    'tabe',
+  \   'options': '-m -x --reverse --expect=ctrl-t,ctrl-v,ctrl-x',
+  \   'down':    '50%'
+  \ })
 
   function! s:ag_to_qf(line)
     let parts = split(a:line, ':')
@@ -32,9 +39,10 @@ hook_add = '''
   function! s:ag_handler(lines)
     if len(a:lines) < 2 | return | endif
 
-    let cmd = get({'ctrl-t': 'tab split',
+    let cmd = get({'ctrl-x': 'split',
                  \ 'ctrl-v': 'vertical split',
                  \ 'ctrl-t': 'tabe'}, a:lines[0], 'e')
+
     let list = map(a:lines[1:], 's:ag_to_qf(v:val)')
 
     let first = list[0]
@@ -49,27 +57,25 @@ hook_add = '''
     endif
   endfunction
 
-  command! FZF call fzf#run({
-  \  'source':  v:oldfiles,
-  \  'sink':    'e',
-  \  'options': '-m -x +s',
-  \  'down':    '40%'})
+  command! -nargs=* Agg call fzf#run({
+  \   'source':  printf('ag --column --color "%s"',
+  \                     escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
+  \   'sink*':    function('<sid>ag_handler'),
+  \   'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x '.
+  \              '-m -x --reverse '.
+  \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
+  \   'down':    '50%'
+  \ })
 
-  command! -nargs=* Ag
-  \ call fzf#vim#grep(
-  \   'ag --hidden --ignore .git -- '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-  command! -bang -nargs=* Agc
-    \ call fzf#vim#ag('<cword>', '--hidden --ignore .git', <bang>0)
-
-  command! FZFMru call fzf#run({
-  \  'source':  v:oldfiles,
-  \  'sink':    'e',
-  \  'options': '-m -x +s',
-  \  'down':    '40%'})
+  command! -nargs=* Agc call fzf#run({
+  \   'source':  printf('ag --column --color "%s"',
+  \                     escape(empty(<q-args>) ? expand('<cword>') : <q-args>, '"\')),
+  \   'sink*':    function('<sid>ag_handler'),
+  \   'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x '.
+  \              '-m -x --reverse '.
+  \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
+  \   'down':    '50%'
+  \ })
 '''
 
 [[plugins]]
