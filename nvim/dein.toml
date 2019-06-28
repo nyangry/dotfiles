@@ -10,23 +10,55 @@ hook_add = '''
   nnoremap <silent> [fzf]gg :<C-u>Agg<CR>
   nnoremap <silent> [fzf]gc :<C-u>Agc<CR>
 
+  function! s:common_handler(lines)
+    if len(a:lines) < 2 | return | endif
+
+    let cmd = get({'ctrl-x': 'split',
+                 \ 'ctrl-v': 'vertical split',
+                 \ 'ctrl-n': 'tabe'}, a:lines[0], 'e')
+
+    let list = map(a:lines[1:], '{"filename": v:val}')
+
+    let first = list[0]
+    execute cmd escape(first.filename, ' %#\')
+
+    if len(list) > 1
+      call setqflist(list)
+      copen
+      wincmd p
+    endif
+  endfunction
+
   command! -nargs=* CustomFZF call fzf#run({
-  \   'sink':    'tabe',
-  \   'options': '-m -x --reverse --expect=ctrl-t,ctrl-v,ctrl-x',
+  \   'sink*':    function('<sid>common_handler'),
+  \   'options': '-m -x --reverse --expect=enter,ctrl-x,ctrl-v,ctrl-n',
   \   'down':    '50%'
   \ })
 
   command! FZFBuffers call fzf#run(fzf#wrap({
   \   'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
-  \   'sink':    'tabe',
-  \   'options': '-m -x --reverse --expect=ctrl-t,ctrl-v,ctrl-x',
+  \   'sink*':    function('<sid>common_handler'),
+  \   'options': '-m -x --reverse --expect=enter,ctrl-x,ctrl-v,ctrl-n',
   \   'down':    '50%'
   \ }))
 
+  function! s:old_files_and_buffers()
+    return uniq(sort(map(
+    \   extend(
+    \     filter(
+    \       copy(v:oldfiles),
+    \       "v:val =~ '^'.getcwd()"
+    \     ),
+    \     map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)')
+    \   ),
+    \   'substitute(v:val, getcwd()."/", "", "g")'
+    \ )))
+  endfunction
+
   command! FZFMru call fzf#run({
-  \   'source':  v:oldfiles,
-  \   'sink':    'tabe',
-  \   'options': '-m -x --reverse --expect=ctrl-t,ctrl-v,ctrl-x',
+  \   'source':  s:old_files_and_buffers(),
+  \   'sink*':    function('<sid>common_handler'),
+  \   'options': '-m -x --reverse --expect=enter,ctrl-x,ctrl-v,ctrl-n',
   \   'down':    '50%'
   \ })
 
@@ -41,7 +73,7 @@ hook_add = '''
 
     let cmd = get({'ctrl-x': 'split',
                  \ 'ctrl-v': 'vertical split',
-                 \ 'ctrl-t': 'tabe'}, a:lines[0], 'e')
+                 \ 'ctrl-n': 'tabe'}, a:lines[0], 'e')
 
     let list = map(a:lines[1:], 's:ag_to_qf(v:val)')
 
@@ -61,7 +93,7 @@ hook_add = '''
   \   'source':  printf('ag --column --color "%s"',
   \                     escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
   \   'sink*':    function('<sid>ag_handler'),
-  \   'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x '.
+  \   'options': '--ansi --expect=ctrl-x,ctrl-v,ctrl-n '.
   \              '-m -x --reverse '.
   \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
   \   'down':    '50%'
@@ -71,7 +103,7 @@ hook_add = '''
   \   'source':  printf('ag --column --color "%s"',
   \                     escape(empty(<q-args>) ? expand('<cword>') : <q-args>, '"\')),
   \   'sink*':    function('<sid>ag_handler'),
-  \   'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x '.
+  \   'options': '--ansi --expect=ctrl-x,ctrl-v,ctrl-n '.
   \              '-m -x --reverse '.
   \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
   \   'down':    '50%'
