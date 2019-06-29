@@ -83,57 +83,8 @@
 repo = 'rhysd/git-messenger.vim'
 on_cmd = 'GitMessenger'
 on_map = '<Plug>(git-messenger'
-
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
 hook_add = '''
-  if !exists('g:context_filetype#same_filetypes')
-    let g:context_filetype#same_filetypes = {}
-  endif
-  " let g:context_filetype#same_filetypes.html   = 'javascript, ruby'
-  " let g:context_filetype#same_filetypes.haml   = 'javascript, ruby'
-  let g:context_filetype#same_filetypes.slim   = 'javascript, ruby'
-  let g:context_filetype#same_filetypes.yaml   = 'ruby'
-  " let g:context_filetype#same_filetypes.php    = 'html, javascript'
-  let g:context_filetype#same_filetypes.scss   = 'css, slim, coffee, ruby'
-  let g:context_filetype#same_filetypes.sass   = 'css, slim, coffee, ruby'
-  " let g:context_filetype#same_filetypes.js     = 'html, haml'
-  let g:context_filetype#same_filetypes.es6   = 'javascript'
-  let g:context_filetype#same_filetypes.coffee = 'javascript'
-  " let g:context_filetype#same_filetypes.ruby   = 'slim'
-  " In gitconfig buffers, completes from all buffers.
-  let g:context_filetype#same_filetypes.gitconfig = '_'
-  " In default, completes from all buffers.
-  let g:context_filetype#same_filetypes._ = '_'
-
-  let g:context_filetype#filetypes = {
-  \ 'slim' : [
-  \   {
-  \    'start' : '^\s*-',
-  \    'end' : '$', 'filetype' : 'ruby',
-  \   },
-  \   {
-  \    'start' : '^\s*\w*=',
-  \    'end' : '$', 'filetype' : 'ruby',
-  \   },
-  \   {
-  \    'start' : '^\s*ruby:',
-  \    'end' : '^\S', 'filetype' : 'ruby',
-  \   },
-  \ ],
-  \ 'toml' : [
-  \   {
-  \    'start' : '^hook_add = ',
-  \    'end' : '$', 'filetype' : 'vim',
-  \   },
-  \ ],
-  \ 'vue' : [
-  \   {
-  \    'start' : '^<script type=''ts''>',
-  \    'end' : '$', 'filetype' : 'typescript',
-  \   },
-  \ ]
-  \}
+  nmap <silent> <C-g> <Plug>(git-messenger)
 '''
 
 
