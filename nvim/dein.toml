@@ -20,7 +20,7 @@ hook_add = '''
     let list = map(a:lines[1:], '{"filename": v:val}')
 
     let first = list[0]
-    execute cmd escape(first.filename, ' %#\')
+    execute cmd first.filename
 
     if len(list) > 1
       call setqflist(list)
@@ -44,16 +44,21 @@ hook_add = '''
   \ }))
 
   function! s:old_files_and_buffers()
-    return uniq(sort(map(
-    \   extend(
+    return filter(
+    \   map(
     \     filter(
-    \       copy(v:oldfiles),
+    \       uniq(
+    \         extend(
+    \           copy(v:oldfiles),
+    \           map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)')
+    \         )
+    \       ),
     \       "v:val =~ '^'.getcwd()"
     \     ),
-    \     map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)')
+    \     'substitute(v:val, getcwd()."/", "", "g")'
     \   ),
-    \   'substitute(v:val, getcwd()."/", "", "g")'
-    \ )))
+    \   { idx, val -> val !~ 'Agit\|denite' }
+    \ )
   endfunction
 
   command! FZFMru call fzf#run({
