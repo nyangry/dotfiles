@@ -208,7 +208,13 @@ hook_add = '''
   nmap gs :Gstatus<CR>
   nmap gb :Gblame<CR>
   nmap gd :Gdiff<CR>
+
+  autocmd FileType fugitiveblame call s:fugitiveblame_my_settings()
+  function! s:fugitiveblame_my_settings() abort
+    nnoremap <silent> <C-p> :<C-u>!hub openpr <cword><CR>
+  endfunction
 '''
+
 [[plugins]]
 repo = 'tpope/vim-rhubarb'
 [[plugins]]
