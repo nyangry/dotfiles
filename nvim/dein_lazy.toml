@@ -1,83 +1,57 @@
-# [[plugins]]
-# repo = 'Shougo/deoplete.nvim'
-# depends = 'context_filetype.vim'
-# on_i = 1
-# hook_source = '''
-#   inoremap <expr><C-g>       deoplete#refresh()
-#   inoremap <expr><C-e>       deoplete#close_popup()
-#   inoremap <silent><expr><C-l>       deoplete#complete_common_string()
-#   inoremap <expr><C-m>       deoplete#manual_complete()
-#
-#   call deoplete#custom#source('_', 'matchers',
-#     \ ['matcher_fuzzy', 'matcher_length'])
-#
-#   call deoplete#custom#option('keyword_patterns', {
-#     \ '_': '[a-zA-Z_]\k*',
-#     \ 'ruby': ['@*[a-zA-Z_]\w*[!?]?'],
-#     \})
-#
-#   call deoplete#custom#var('omni', 'input_patterns', {
-#     \ 'ruby': ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::'],
-#     \})
-#
-#   call deoplete#custom#source('_', 'converters', [
-#     \ 'converter_remove_paren',
-#     \ 'converter_remove_overlap',
-#     \ 'matcher_length',
-#     \ 'converter_truncate_abbr',
-#     \ 'converter_truncate_menu',
-#     \ 'converter_auto_delimiter',
-#     \ 'converter_auto_paren',
-#     \ ])
-#
-#   call deoplete#custom#option({
-#     \ 'auto_refresh_delay': 10,
-#     \ 'camel_case': v:true,
-#     \ 'skip_multibyte': v:true,
-#     \ 'prev_completion_mode': 'length',
-#     \ })
-#
-#   call deoplete#enable()
-# '''
-#
-# [[plugins]]
-# repo = 'Shougo/neoinclude.vim'
-# on_source = ['deoplete.nvim']
-# [[plugins]]
-# repo = 'Shougo/neosnippet.vim'
-# depends = ['neosnippet-snippets', 'context_filetype.vim']
-# on_i = 1
-# hook_source = '''
-#   imap <silent><C-k>     <Plug>(neosnippet_jump_or_expand)
-#   smap <silent><C-k>     <Plug>(neosnippet_jump_or_expand)
-#   xmap <silent><C-k>     <Plug>(neosnippet_expand_target)
-#
-#   let g:neosnippet#enable_snipmate_compatibility = 1
-#   let g:neosnippet#enable_completed_snippet = 1
-#   let g:neosnippet#expand_word_boundary = 1
-#   let g:neosnippet#snippets_directory = '~/.vim/snippets'
-# '''
-# [[plugins]]
-# repo = 'Shougo/neosnippet-snippets'
-# [[plugins]]
-# repo = 'Shougo/neco-vim'
-# on_source = ['deoplete.nvim']
-# [[plugins]]
-# repo = 'Shougo/neco-syntax'
-# on_source = ['deoplete.nvim']
-# [[plugins]]
-# repo = 'fishbullet/deoplete-ruby'
-# on_ft = 'ruby'
-# on_source = ['deoplete.nvim']
-# [[plugins]]
-# repo = 'uplus/deoplete-solargraph'
-# on_ft = 'ruby'
-# on_source = ['deoplete.nvim']
-# [[plugins]]
-# repo = 'carlitux/deoplete-ternjs'
-# on_ft = ['javascript', 'coffee', 'typescript']
-# on_source = ['deoplete.nvim']
-# build = 'npm install -g tern'
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+depends = 'context_filetype.vim'
+on_i = 1
+hook_source = '''
+  " Use deoplete.
+  let g:deoplete#enable_at_startup = 1
+
+  " <CR>: close popup and save indent.
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  function! s:my_cr_function() abort
+    return deoplete#close_popup() . "\<CR>"
+  endfunction
+'''
+
+[[plugins]]
+repo = 'Shougo/neoinclude.vim'
+on_source = ['deoplete.nvim']
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_i = 1
+hook_source = '''
+  imap <silent><C-k>     <Plug>(neosnippet_jump_or_expand)
+  smap <silent><C-k>     <Plug>(neosnippet_jump_or_expand)
+  xmap <silent><C-k>     <Plug>(neosnippet_expand_target)
+
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#enable_completed_snippet = 1
+  let g:neosnippet#expand_word_boundary = 1
+  let g:neosnippet#snippets_directory = '~/.vim/snippets'
+'''
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+[[plugins]]
+repo = 'Shougo/neco-vim'
+on_source = ['deoplete.nvim']
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+on_source = ['deoplete.nvim']
+[[plugins]]
+repo = 'fishbullet/deoplete-ruby'
+on_ft = 'ruby'
+on_source = ['deoplete.nvim']
+[[plugins]]
+repo = 'uplus/deoplete-solargraph'
+on_ft = 'ruby'
+on_source = ['deoplete.nvim']
+[[plugins]]
+repo = 'carlitux/deoplete-ternjs'
+on_ft = ['javascript', 'coffee', 'typescript']
+on_source = ['deoplete.nvim']
+build = 'npm install -g tern'
+
 
 [[plugins]]
 repo = 'rhysd/git-messenger.vim'
