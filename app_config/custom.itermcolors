@@ -20,13 +20,13 @@
 		<key>Alpha Component</key>
 		<real>1</real>
 		<key>Blue Component</key>
-		<real>0.81476897001266479</real>
+		<real>0.43425950407981873</real>
 		<key>Color Space</key>
 		<string>sRGB</string>
 		<key>Green Component</key>
-		<real>0.65375548601150513</real>
+		<real>0.30041977763175964</real>
 		<key>Red Component</key>
-		<real>0.69002425670623779</real>
+		<real>0.93291443586349487</real>
 	</dict>
 	<key>Ansi 10 Color</key>
 	<dict>
@@ -111,39 +111,39 @@
 		<key>Alpha Component</key>
 		<real>1</real>
 		<key>Blue Component</key>
-		<real>0.80141007900238037</real>
+		<real>0.44994193315505981</real>
 		<key>Color Space</key>
 		<string>sRGB</string>
 		<key>Green Component</key>
-		<real>0.76933538913726807</real>
+		<real>0.98347383737564087</real>
 		<key>Red Component</key>
-		<real>0.60968410968780518</real>
+		<real>0.70657283067703247</real>
 	</dict>
 	<key>Ansi 3 Color</key>
 	<dict>
 		<key>Alpha Component</key>
 		<real>1</real>
 		<key>Blue Component</key>
-		<real>0.55450016260147095</real>
+		<real>0.75885528326034546</real>
 		<key>Color Space</key>
 		<string>sRGB</string>
 		<key>Green Component</key>
-		<real>0.70322370529174805</real>
+		<real>0.99336796998977661</real>
 		<key>Red Component</key>
-		<real>0.90972286462783813</real>
+		<real>0.99965935945510864</real>
 	</dict>
 	<key>Ansi 4 Color</key>
 	<dict>
 		<key>Alpha Component</key>
 		<real>1</real>
 		<key>Blue Component</key>
-		<real>0.81486743688583374</real>
+		<real>0.99758428335189819</real>
 		<key>Color Space</key>
 		<string>sRGB</string>
 		<key>Green Component</key>
-		<real>0.69460457563400269</real>
+		<real>0.83712881803512573</real>
 		<key>Red Component</key>
-		<real>0.56716740131378174</real>
+		<real>0.64852482080459595</real>
 	</dict>
 	<key>Ansi 5 Color</key>
 	<dict>
@@ -202,26 +202,26 @@
 		<key>Alpha Component</key>
 		<real>1</real>
 		<key>Blue Component</key>
-		<real>0.3832489550113678</real>
+		<real>0.73887497186660767</real>
 		<key>Color Space</key>
 		<string>sRGB</string>
 		<key>Green Component</key>
-		<real>0.2854764461517334</real>
+		<real>0.64136862754821777</real>
 		<key>Red Component</key>
-		<real>0.82702642679214478</real>
+		<real>1</real>
 	</dict>
 	<key>Background Color</key>
 	<dict>
 		<key>Alpha Component</key>
 		<real>1</real>
 		<key>Blue Component</key>
-		<real>0.13873291015625</real>
+		<real>0.19607843458652496</real>
 		<key>Color Space</key>
 		<string>sRGB</string>
 		<key>Green Component</key>
-		<real>0.10089666396379471</real>
+		<real>0.12941177189350128</real>
 		<key>Red Component</key>
-		<real>0.092488609254360199</real>
+		<real>0.11764705926179886</real>
 	</dict>
 	<key>Badge Color</key>
 	<dict>
@@ -254,26 +254,26 @@
 		<key>Alpha Component</key>
 		<real>1</real>
 		<key>Blue Component</key>
-		<real>0.43258994817733765</real>
+		<real>0.44982129335403442</real>
 		<key>Color Space</key>
 		<string>sRGB</string>
 		<key>Green Component</key>
-		<real>0.96517938375473022</real>
+		<real>0.98446387052536011</real>
 		<key>Red Component</key>
-		<real>0.51125621795654297</real>
+		<real>0.78194600343704224</real>
 	</dict>
 	<key>Cursor Guide Color</key>
 	<dict>
 		<key>Alpha Component</key>
-		<real>0.25</real>
+		<real>0.039215686274509803</real>
 		<key>Blue Component</key>
-		<real>1</real>
+		<real>0.96078431606292725</real>
 		<key>Color Space</key>
 		<string>sRGB</string>
 		<key>Green Component</key>
-		<real>0.9268307089805603</real>
+		<real>0.96078431606292725</real>
 		<key>Red Component</key>
-		<real>0.70213186740875244</real>
+		<real>0.96078431606292725</real>
 	</dict>
 	<key>Cursor Text Color</key>
 	<dict>
@@ -293,13 +293,13 @@
 		<key>Alpha Component</key>
 		<real>1</real>
 		<key>Blue Component</key>
-		<real>0.85393959283828735</real>
+		<real>0.99999994039535522</real>
 		<key>Color Space</key>
 		<string>sRGB</string>
 		<key>Green Component</key>
-		<real>0.82451635599136353</real>
+		<real>0.99999994039535522</real>
 		<key>Red Component</key>
-		<real>0.78339082002639771</real>
+		<real>0.9999966025352478</real>
 	</dict>
 	<key>Link Color</key>
 	<dict>
