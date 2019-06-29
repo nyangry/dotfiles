@@ -219,6 +219,11 @@ nnoremap <silent> k gk
 " Escの2回押しでハイライト消去
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
+" 強制終了
+nmap <C-q><C-q> :qa!<CR>
+vmap <C-q><C-q> :qa!<CR>
+imap <C-q><C-q> :qa!<CR>
+
 " redraw!
 nmap <Leader>w :redraw!<CR>
 
