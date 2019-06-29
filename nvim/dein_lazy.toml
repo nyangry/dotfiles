@@ -87,6 +87,9 @@ hook_add = '''
   nmap <silent> <C-g> <Plug>(git-messenger)
 '''
 
+[[plugins]]
+repo = 'mhinz/vim-signify'
+on_i = 1
 
 [[plugins]]
 repo = 'cespare/vim-toml'
