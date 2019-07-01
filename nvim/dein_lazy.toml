@@ -40,10 +40,6 @@ repo = 'fishbullet/deoplete-ruby'
 on_ft = 'ruby'
 on_source = ['deoplete.nvim']
 [[plugins]]
-repo = 'uplus/deoplete-solargraph'
-on_ft = 'ruby'
-on_source = ['deoplete.nvim']
-[[plugins]]
 repo = 'carlitux/deoplete-ternjs'
 on_ft = ['javascript', 'coffee', 'typescript']
 on_source = ['deoplete.nvim']
