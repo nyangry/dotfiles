@@ -277,10 +277,10 @@ cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 "-------------------------------------------
 " 画面移動
 "-------------------------------------------
-" nnoremap <c-k> <c-w>k
-" nnoremap <c-j> <c-w>j
-" nnoremap <c-h> <c-w>h
-" nnoremap <c-l> <c-w>l
+nnoremap <c-k> <c-w>k
+nnoremap <c-j> <c-w>j
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
 nnoremap <c-up> <c-w>k
 nnoremap <c-down> <c-w>j
 nnoremap <c-left> <c-w>h
