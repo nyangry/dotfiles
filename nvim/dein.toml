@@ -13,9 +13,11 @@ hook_add = '''
   function! s:common_handler(lines)
     if len(a:lines) < 2 | return | endif
 
-    let cmd = get({'ctrl-x': 'split',
-                 \ 'ctrl-v': 'vertical split',
-                 \ 'ctrl-n': 'tabe'}, a:lines[0], 'e')
+    let cmd = get({
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vertical split',
+      \ 'ctrl-n': 'tabe'
+    \ }, a:lines[0], 'e')
 
     let list = map(a:lines[1:], '{"filename": v:val}')
 
@@ -32,14 +34,14 @@ hook_add = '''
   command! -nargs=* CustomFZF call fzf#run({
   \   'source': 'git ls-files',
   \   'sink*':    function('<sid>common_handler'),
-  \   'options': '-m -x --reverse --expect=enter,ctrl-x,ctrl-v,ctrl-n',
+  \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n',
   \   'down':    '50%'
   \ })
 
   command! FZFBuffers call fzf#run(fzf#wrap({
   \   'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
   \   'sink*':    function('<sid>common_handler'),
-  \   'options': '-m -x --reverse --expect=enter,ctrl-x,ctrl-v,ctrl-n',
+  \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n',
   \   'down':    '50%'
   \ }))
 
@@ -64,7 +66,7 @@ hook_add = '''
   command! FZFMru call fzf#run({
   \   'source':  s:old_files_and_buffers(),
   \   'sink*':    function('<sid>common_handler'),
-  \   'options': '-m -x --reverse --expect=enter,ctrl-x,ctrl-v,ctrl-n',
+  \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n',
   \   'down':    '50%'
   \ })
 
@@ -77,9 +79,11 @@ hook_add = '''
   function! s:ag_handler(lines)
     if len(a:lines) < 2 | return | endif
 
-    let cmd = get({'ctrl-x': 'split',
-                 \ 'ctrl-v': 'vertical split',
-                 \ 'ctrl-n': 'tabe'}, a:lines[0], 'e')
+    let cmd = get({
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vertical split',
+      \ 'ctrl-n': 'tabe'
+    \ }, a:lines[0], 'e')
 
     let list = map(a:lines[1:], 's:ag_to_qf(v:val)')
 
@@ -99,7 +103,7 @@ hook_add = '''
   \   'source':  printf('ag --column --color "%s"',
   \                     escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
   \   'sink*':    function('<sid>ag_handler'),
-  \   'options': '--ansi --expect=ctrl-x,ctrl-v,ctrl-n '.
+  \   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
   \              '-m -x --reverse '.
   \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
   \   'down':    '50%'
@@ -109,7 +113,7 @@ hook_add = '''
   \   'source':  printf('ag --column --color "%s"',
   \                     escape(empty(<q-args>) ? expand('<cword>') : <q-args>, '"\')),
   \   'sink*':    function('<sid>ag_handler'),
-  \   'options': '--ansi --expect=ctrl-x,ctrl-v,ctrl-n '.
+  \   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
   \              '-m -x --reverse '.
   \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
   \   'down':    '50%'
