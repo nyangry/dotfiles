@@ -116,7 +116,7 @@ hook_add = '''
   \                     escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
   \   'sink*':    function('<sid>ag_handler'),
   \   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
-  \              '-m -x --delimiter : --nth 4.. --reverse '.
+  \              '-m -x --reverse '.
   \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
   \   'down':    '50%'
   \ })
@@ -126,7 +126,7 @@ hook_add = '''
   \                     escape(empty(<q-args>) ? expand('<cword>') : <q-args>, '"\')),
   \   'sink*':    function('<sid>ag_handler'),
   \   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
-  \              '-m -x --delimiter : --nth 4.. --reverse '.
+  \              '-m -x --reverse '.
   \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
   \   'down':    '50%'
   \ })
