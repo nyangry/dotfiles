@@ -413,6 +413,10 @@ command! -nargs=0 CopyPath     call CopyPath()
 command! -nargs=0 CopyFullPath call CopyFullPath()
 command! -nargs=0 CopyFileName call CopyFileName()
 
+nnoremap <leader>p :<C-u>CopyPath<CR>
+nnoremap <leader>fp :<C-u>CopyFullPath<CR>
+nnoremap <leader>fn :<C-u>CopyFileName<CR>
+
 "====================================================================================
 " ['cursorline' を必要な時にだけ有効にする - 永遠に未完成](http://thinca.hatenablog.com/entry/20090530/1243615055)
 "====================================================================================
