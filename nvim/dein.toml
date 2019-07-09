@@ -107,6 +107,8 @@ hook_add = '''
     else
       for file in list
         execute cmd file.filename
+        execute file.lnum
+        execute 'normal!' file.col.'|zz'
       endfor
     endif
   endfunction
