@@ -69,8 +69,23 @@ hook_add = '''
     \ )
   endfunction
 
+  function! s:old_files_and_buffers2()
+    return map(
+    \   filter(
+    \     uniq(
+    \       extend(
+    \         copy(v:oldfiles),
+    \         map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)')
+    \       )
+    \     ),
+    \     "v:val =~ '^'.getcwd()"
+    \   ),
+    \   'substitute(v:val, getcwd()."/", "", "g")'
+    \ )
+  endfunction
+
   command! FZFMru call fzf#run({
-  \   'source':  s:old_files_and_buffers(),
+  \   'source':  s:old_files_and_buffers2(),
   \   'sink*':    function('<sid>common_handler'),
   \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n',
   \   'down':    '50%'
