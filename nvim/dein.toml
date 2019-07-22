@@ -8,6 +8,7 @@ hook_add = '''
   nnoremap <silent> [fzf]b :<C-u>FZFBuffers<CR>
   nnoremap <silent> [fzf]m :<C-u>FZFMru<CR>
   nnoremap <silent> [fzf]gg :<C-u>Agg<CR>
+  nnoremap <silent> [fzf]gk :<C-u>Agk<CR>
   nnoremap <silent> [fzf]gc :<C-u>Agc<CR>
 
   function! s:common_handler(lines)
@@ -133,6 +134,17 @@ hook_add = '''
   \                     escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
   \   'sink*':    function('<sid>ag_handler'),
   \   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
+  \              '-m -x --reverse '.
+  \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
+  \   'down':    '50%'
+  \ })
+
+  command! -nargs=* Agk call fzf#run({
+  \   'source':  printf('ag --column --color "%s"',
+  \                     escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
+  \   'sink*':    function('<sid>ag_handler'),
+  \   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
+  \              '--delimiter : --nth 4.. '.
   \              '-m -x --reverse '.
   \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
   \   'down':    '50%'
