@@ -39,7 +39,7 @@ hook_add = '''
   endfunction
 
   command! -nargs=* CustomFZF call fzf#run({
-  \   'source': 'git ls-files',
+  \   'source': 'git ls-files -oc',
   \   'sink*':    function('<sid>common_handler'),
   \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n',
   \   'down':    '50%'
