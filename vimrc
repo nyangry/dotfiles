@@ -245,7 +245,7 @@ nnoremap <silent> p p`]
 " [Insert current filename - Vim Tips Wiki - Wikia](http://vim.wikia.com/wiki/Insert_current_filename)
 "-------------------------------------------
 " inserts the current filename without the extension
-:inoremap <leader>n <C-R>=expand("%:t:r")<CR>
+:inoremap <leader>fn <C-R>=expand("%:t:r")<CR>
 
 " To keep the extension use:
 " :inoremap <leader>n <C-R>=expand("%:t")<CR>
