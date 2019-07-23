@@ -230,6 +230,7 @@ alias railsdbrt='RAILS_ENV=test bin/rails db:rollback'
 alias railsra='bin/rails ridgepole:apply'
 alias railsrat='RAILS_ENV=test bin/rails ridgepole:apply'
 alias rspec='bin/rspec'
+alias rails='bin/rails'
 alias fs='bin/fast_seed'
 alias fst='RAILS_ENV=test bin/fast_seed'
 
