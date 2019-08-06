@@ -248,9 +248,9 @@ hook_add = '''
     nnoremap <silent> <C-p> :<C-u>!hub openpr <cword><CR>
   endfunction
 '''
-
 [[plugins]]
 repo = 'tpope/vim-rhubarb'
+
 [[plugins]]
 repo = 'cohama/agit.vim'
 hook_add = '''
