@@ -279,6 +279,10 @@ repo = 'rhysd/committia.vim'
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
 
+
+[[plugins]]
+repo = 'mhinz/vim-signify'
+
 [[plugins]]
 repo = 'powerman/vim-plugin-AnsiEsc'
 
