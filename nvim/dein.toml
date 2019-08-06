@@ -278,8 +278,6 @@ hook_add = '''
 repo = 'rhysd/committia.vim'
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
-[[plugins]]
-repo = 'kmnk/vim-unite-giti.git'
 
 [[plugins]]
 repo = 'powerman/vim-plugin-AnsiEsc'

@@ -72,10 +72,6 @@ repo = 'rhysd/vim-textobj-ruby'
 on_ft = 'ruby'
 
 [[plugins]]
-repo = 'rhysd/unite-ruby-require.vim'
-on_ft = 'ruby'
-
-[[plugins]]
 repo = 'vim-scripts/ruby-matchit'
 on_ft = 'ruby'
 
