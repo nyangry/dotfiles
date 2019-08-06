@@ -275,10 +275,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'rhysd/committia.vim'
-
-
-[[plugins]]
 repo = 'mhinz/vim-signify'
 
 [[plugins]]
