@@ -276,8 +276,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'rhysd/committia.vim'
-[[plugins]]
-repo = 'lambdalisue/gina.vim'
 
 
 [[plugins]]
