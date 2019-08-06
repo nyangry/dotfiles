@@ -334,11 +334,11 @@ set splitright
 "====================================================================================
 " Hack #206: 外部で変更のあったファイルを自動的に読み直す
 "====================================================================================
-set autoread
-augroup vimrc-checktime
-  autocmd!
-  autocmd WinEnter * checktime
-augroup END
+" set autoread
+" augroup vimrc-checktime
+"   autocmd!
+"   autocmd WinEnter * checktime
+" augroup END
 
 
 "====================================================================================
@@ -422,36 +422,3 @@ command! -nargs=0 CopyFileName call CopyFileName()
 nnoremap <leader>p :<C-u>CopyPath<CR>
 nnoremap <leader>fp :<C-u>CopyFullPath<CR>
 nnoremap <leader>fn :<C-u>CopyFileName<CR>
-
-"====================================================================================
-" ['cursorline' を必要な時にだけ有効にする - 永遠に未完成](http://thinca.hatenablog.com/entry/20090530/1243615055)
-"====================================================================================
-augroup vimrc-auto-cursorline
-  autocmd!
-  autocmd CursorMoved,CursorMovedI * call s:auto_cursorline('CursorMoved')
-  autocmd CursorHold,CursorHoldI * call s:auto_cursorline('CursorHold')
-  autocmd WinEnter * call s:auto_cursorline('WinEnter')
-  autocmd WinLeave * call s:auto_cursorline('WinLeave')
-
-  let s:cursorline_lock = 0
-  function! s:auto_cursorline(event)
-    if a:event ==# 'WinEnter'
-      setlocal cursorline
-      let s:cursorline_lock = 2
-    elseif a:event ==# 'WinLeave'
-      setlocal nocursorline
-    elseif a:event ==# 'CursorMoved'
-      if s:cursorline_lock
-        if 1 < s:cursorline_lock
-          let s:cursorline_lock = 1
-        else
-          setlocal nocursorline
-          let s:cursorline_lock = 0
-        endif
-      endif
-    elseif a:event ==# 'CursorHold'
-      setlocal cursorline
-      let s:cursorline_lock = 1
-    endif
-  endfunction
-augroup END
