@@ -158,7 +158,15 @@ repo = 'Shougo/junkfile.vim'
 repo = 'Shougo/defx.nvim'
 hook_add = '''
 nnoremap <silent>   <leader>f
-\ :<C-u>Defx `expand('%:p:h')` -search=`expand('%:p')` -direction=topleft -split=vertical -winwidth=50 -toggle -buffer-name=tab`tabpagenr()`<CR>
+\ :<C-u>Defx `expand('%:p:h')` -listed -direction=topleft -split=vertical -winwidth=50 -toggle -buffer-name=tab`tabpagenr()`<CR>
+
+function! Root(path) abort
+  return fnamemodify(a:path, ':t')
+endfunction
+
+call defx#custom#source('file', {
+     \ 'root': 'Root',
+     \})
 
 " Define mappings
 autocmd FileType defx call s:defx_my_settings()
@@ -173,6 +181,8 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> K defx#do_action('new_directory')
   nnoremap <silent><buffer><expr> N defx#do_action('new_file')
   nnoremap <silent><buffer><expr> M defx#do_action('new_multiple_files')
+  nnoremap <silent><buffer><expr> o defx#async_action('open_or_close_tree')
+  nnoremap <silent><buffer><expr> O defx#async_action('open_tree_recursive')
   nnoremap <silent><buffer><expr> d defx#do_action('remove_trash')
   nnoremap <silent><buffer><expr> r defx#do_action('rename')
   nnoremap <silent><buffer><expr> yy defx#do_action('yank_path')
