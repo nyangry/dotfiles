@@ -2,3 +2,4 @@
 BUNDLE_PATH: ".bundle"
 BUNDLE_JOBS: "32"
 BUNDLE_GITHUB__HTTPS: "true"
+BUNDLE_BUILD__MYSQL2: "--with-opt-dir=/usr/local/opt/openssl"
