@@ -285,7 +285,7 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'mhinz/vim-signify'
+repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
 repo = 'powerman/vim-plugin-AnsiEsc'
