@@ -285,9 +285,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'airblade/vim-gitgutter'
-
-[[plugins]]
 repo = 'powerman/vim-plugin-AnsiEsc'
 
 [[plugins]]
