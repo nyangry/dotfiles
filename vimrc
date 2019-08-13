@@ -254,7 +254,7 @@ nnoremap <silent> p p`]
 " :inoremap <leader>n <C-R>=expand("%:p:h")<CR>
 
 " To insert the relative path of the directory the file is in use:
-" :inoremap <leader>n <C-R>=expand("%:h")<CR>
+:inoremap <leader>fp <C-R>=expand("%:h")<CR>
 
 "-------------------------------------------
 " 自動補完
