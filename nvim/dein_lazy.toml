@@ -3,19 +3,16 @@ repo = 'Shougo/deoplete.nvim'
 depends = 'context_filetype.vim'
 on_i = 1
 hook_source = '''
-  " Use deoplete.
   let g:deoplete#enable_at_startup = 1
-
-  " Use smartcase.
-  call deoplete#custom#option('smart_case', v:true)
 '''
 
 [[plugins]]
 repo = 'Shougo/neoinclude.vim'
 on_source = ['deoplete.nvim']
+
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
-depends = ['neosnippet-snippets', 'context_filetype.vim']
+depends = ['context_filetype.vim', 'deoplete.nvim']
 on_i = 1
 hook_source = '''
   imap <silent><C-k>     <Plug>(neosnippet_jump_or_expand)
@@ -29,6 +26,8 @@ hook_source = '''
 '''
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
+on_source = 'neosnippet.vim']
+
 [[plugins]]
 repo = 'Shougo/neco-vim'
 on_source = ['deoplete.nvim']
