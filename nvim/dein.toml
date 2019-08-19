@@ -410,7 +410,7 @@ hook_add = '''
   " let g:context_filetype#same_filetypes.js     = 'html, haml'
   let g:context_filetype#same_filetypes.es6   = 'javascript'
   let g:context_filetype#same_filetypes.coffee = 'javascript'
-  " let g:context_filetype#same_filetypes.ruby   = 'slim'
+  let g:context_filetype#same_filetypes.ruby   = 'rails'
   " In gitconfig buffers, completes from all buffers.
   let g:context_filetype#same_filetypes.gitconfig = '_'
   " In default, completes from all buffers.
