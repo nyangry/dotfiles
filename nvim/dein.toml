@@ -157,8 +157,7 @@ repo = 'Shougo/junkfile.vim'
 # pip3 install --user pynvim
 repo = 'Shougo/defx.nvim'
 hook_add = '''
-nnoremap <silent>   <leader>f
-\ :<C-u>Defx `expand('%:p:h')` -listed -direction=topleft -split=vertical -winwidth=50 -toggle -buffer-name=tab`tabpagenr()`<CR>
+nnoremap <silent> <leader>f :<C-u>Defx `expand('%:p:h')` -listed -resume -direction=topleft -split=vertical -winwidth=50<CR>
 
 function! Root(path) abort
   return fnamemodify(a:path, ':t')
