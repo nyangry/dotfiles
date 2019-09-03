@@ -282,9 +282,9 @@ hook_add = '''
   nnoremap <silent> <leader>ga :<C-u>Agit<CR>
   nnoremap <silent> <leader>g :<C-u>AgitFile<CR>
 '''
-
-[[plugins]]
-repo = 'powerman/vim-plugin-AnsiEsc'
+#
+# [[plugins]]
+# repo = 'powerman/vim-plugin-AnsiEsc'
 
 [[plugins]]
 repo = 'w0rp/ale'
