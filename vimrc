@@ -24,7 +24,6 @@ syntax enable
 set encoding=utf-8
 scriptencoding utf-8
 
-map \ <leader>
 set fileencodings=utf-8,sjis
 set textwidth=0                 " 一行に長い文章を書いていても自動折り返しを
 set nobackup                    " バックアップ取らない
@@ -90,7 +89,7 @@ setlocal iskeyword& iskeyword+=-
 "====================================================================================
 " Delete
 "====================================================================================
-nnoremap <Leader>fd :call delete(expand('%'))<CR>
+nnoremap ,fd :call delete(expand('%'))<CR>
 
 "====================================================================================
 " View
@@ -225,7 +224,7 @@ vmap <C-q><C-q> :qa!<CR>
 imap <C-q><C-q> :qa!<CR>
 
 " redraw!
-nmap <Leader>w :redraw!<CR>
+nmap ,w :redraw!<CR>
 
 " ビジュアルモードで選択したテキストで検索する
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
@@ -245,16 +244,16 @@ nnoremap <silent> p p`]
 " [Insert current filename - Vim Tips Wiki - Wikia](http://vim.wikia.com/wiki/Insert_current_filename)
 "-------------------------------------------
 " inserts the current filename without the extension
-:inoremap <leader>fn <C-R>=expand("%:t:r")<CR>
+:inoremap ,fn <C-R>=expand("%:t:r")<CR>
 
 " To keep the extension use:
-" :inoremap <leader>n <C-R>=expand("%:t")<CR>
+" :inoremap ,n <C-R>=expand("%:t")<CR>
 
 " To insert the absolute path of the directory the file is in use:
-" :inoremap <leader>n <C-R>=expand("%:p:h")<CR>
+" :inoremap ,n <C-R>=expand("%:p:h")<CR>
 
 " To insert the relative path of the directory the file is in use:
-:inoremap <leader>fp <C-R>=expand("%:h")<CR>
+:inoremap ,fp <C-R>=expand("%:h")<CR>
 
 "-------------------------------------------
 " 自動補完
@@ -424,9 +423,9 @@ command! -nargs=0 CopyPath     call CopyPath()
 command! -nargs=0 CopyFullPath call CopyFullPath()
 command! -nargs=0 CopyFileName call CopyFileName()
 
-nnoremap <leader>p :<C-u>CopyPath<CR>
-nnoremap <leader>fp :<C-u>CopyFullPath<CR>
-nnoremap <leader>fn :<C-u>CopyFileName<CR>
+nnoremap ,p :<C-u>CopyPath<CR>
+nnoremap ,fp :<C-u>CopyFullPath<CR>
+nnoremap ,fn :<C-u>CopyFileName<CR>
 
 
 "====================================================================================
