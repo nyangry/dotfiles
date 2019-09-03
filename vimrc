@@ -81,9 +81,6 @@ set smartindent
 " http://qiita.com/ponko2/items/0a14d0649f918f5e3ce7
 setlocal iskeyword& iskeyword+=-
 
-" これをしないと候補選択時に Scratch ウィンドウが開いてしまう
-set completeopt=menuone
-
 " html インデントの解除
 " augroup stop_html_indent
 "   autocmd!
@@ -127,6 +124,16 @@ set nowrapscan " 検索をファイルの先頭へループしない
 set wildmenu
 set wildignore=*.jpg,*.png,*.gif,*.pdf,*.svg,*.ico,*.keep
 " set wildignore+=node_modules/**,images/**,vendor/**
+
+set shortmess+=c
+
+" これをしないと候補選択時に Scratch ウィンドウが開いてしまう
+set completeopt=menuone,preview
+
+autocmd FileType *
+  \   if &l:omnifunc == ''
+  \ |   setlocal omnifunc=syntaxcomplete#Complete
+  \ | endif
 
 " for performance
 set re=1
