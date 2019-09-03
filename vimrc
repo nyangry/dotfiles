@@ -96,7 +96,6 @@ nnoremap <Leader>fd :call delete(expand('%'))<CR>
 " View
 "====================================================================================
 " Ref: https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
-syntax enable
 set t_Co=256
 set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
