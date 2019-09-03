@@ -427,9 +427,3 @@ command! -nargs=0 CopyFileName call CopyFileName()
 nnoremap ,p :<C-u>CopyPath<CR>
 nnoremap ,fp :<C-u>CopyFullPath<CR>
 nnoremap ,fn :<C-u>CopyFileName<CR>
-
-
-"====================================================================================
-" Abbreviations
-"====================================================================================
-abbreviate yaer year
