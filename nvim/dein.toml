@@ -157,6 +157,9 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'ajh17/VimCompletesMe'
+
+[[plugins]]
 repo = 'kana/vim-textobj-user'
 [[plugins]]
 repo = 'kana/vim-textobj-line'
