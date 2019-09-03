@@ -241,8 +241,8 @@ hook_add = '''
   \    'layout': 'belowright {winheight(".") * 3 / 4}new'}
   \ ]}
 
-  nnoremap <silent> ,ga :<C-u>Agit<CR>
-  nnoremap <silent> ,g :<C-u>AgitFile<CR>
+  nnoremap <silent> ,gaa :<C-u>Agit<CR>
+  nnoremap <silent> ,ga :<C-u>AgitFile<CR>
 '''
 #
 # [[plugins]]
