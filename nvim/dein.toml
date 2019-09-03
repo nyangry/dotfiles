@@ -210,7 +210,7 @@ repo = 'rhysd/textobj-word-column.vim'
 [[plugins]]
 repo = 'jwhitley/vim-matchit'
 [[plugins]]
-repo = 'tpope/vim-surround'
+repo = 'machakann/vim-sandwich'
 [[plugins]]
 repo = 'tpope/vim-endwise'
 [[plugins]]
