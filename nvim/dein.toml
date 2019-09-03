@@ -152,9 +152,9 @@ hook_add = '''
 
 [[plugins]]
 repo = 'cocopon/vaffle.vim'
-
-[[plugins]]
-repo = 'prabirshrestha/asyncomplete.vim'
+hook_add = '''
+  nmap ,f :<C-u>Vaffle %:p:h<CR>
+'''
 
 [[plugins]]
 repo = 'kana/vim-textobj-user'
