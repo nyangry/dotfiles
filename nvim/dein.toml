@@ -324,62 +324,11 @@ hook_add = '''
   nmap <C-n> <Plug>(yankround-next)
 '''
 
+# [[plugins]]
+# repo = 'tomtom/tcomment_vim'
 [[plugins]]
-repo = 'thinca/vim-quickrun'
-hook_add = '''
-  let g:quickrun_config = {}
-  let g:quickrun_config._ = {'runner' : 'vimproc'}
+repo = 'tyru/caw.vim'
 
-  " %cはcommandに設定した値に置換される
-  " %oはcmdoptに設定した値に置換される
-  " %sはソースファイル名に置換される
-  " ref: [cmdline - Vim日本語ドキュメント](http://vim-jp.org/vimdoc-ja/cmdline.html)
-
-  let g:quickrun_config['ruby.minitest'] = {
-    \ 'exec': 'm %s:.'
-    \}
-
-  let g:quickrun_config['ruby.minitest_line'] = {
-    \ 'exec': "m %s:.:%{line('.')}",
-    \ 'cmdopt': ":%{line('.')}"
-    \}
-
-  let g:quickrun_config['ruby.rspec'] = {
-    \ 'command': 'bin/rspec',
-    \ 'cmdopt': '--color --tty',
-    \ 'exec': '%c %o %s'
-    \}
-
-  let g:quickrun_config['ruby.rspec_line'] = {
-    \ 'command': 'bin/rspec',
-    \ 'cmdopt': '--color --tty',
-    \ 'exec': "%c %s:%{line('.')} %o"
-    \}
-
-  function! MinitestQuickrun()
-    let b:quickrun_config = {'type' : 'ruby.minitest'}
-
-    nnoremap <silent><buffer> <Leader>lr :<C-u>QuickRun ruby.minitest_line<CR>
-  endfunction
-
-  function! RSpecQuickrun()
-    let b:quickrun_config = {'type' : 'ruby.rspec'}
-
-    nnoremap <silent><buffer> <Leader>lr :<C-u>QuickRun ruby.rspec_line<CR>
-  endfunction
-
-  augroup Quickrun
-    autocmd!
-    autocmd FileType quickrun AnsiEsc
-    autocmd BufNewFile,BufRead *_test.rb set filetype=ruby.minitest
-    autocmd BufNewFile,BufRead *_spec.rb set filetype=ruby.rspec
-    autocmd BufReadPost *_test.rb call MinitestQuickrun()
-    autocmd BufReadPost *_spec.rb call RSpecQuickrun()
-  augroup END
-'''
-
-[[plugins]]
-repo = 'tomtom/tcomment_vim'
 [[plugins]]
 repo = 'bkad/CamelCaseMotion'
 
