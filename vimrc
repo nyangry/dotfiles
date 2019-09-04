@@ -134,7 +134,7 @@ autocmd FileType *
   \ | endif
 
 " for performance
-set timeoutlen=250
+set timeoutlen=300
 set re=1
 set nocursorline
 set norelativenumber
