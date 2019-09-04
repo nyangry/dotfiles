@@ -225,7 +225,7 @@ vmap <C-q><C-q> :qa!<CR>
 imap <C-q><C-q> :qa!<CR>
 
 " redraw!
-nmap ,w :redraw!<CR>
+nmap <leader>w :redraw!<CR>
 
 " ビジュアルモードで選択したテキストで検索する
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
@@ -245,7 +245,7 @@ nnoremap <silent> p p`]
 " [Insert current filename - Vim Tips Wiki - Wikia](http://vim.wikia.com/wiki/Insert_current_filename)
 "-------------------------------------------
 " inserts the current filename without the extension
-:inoremap ,fn <C-R>=expand("%:t:r")<CR>
+:inoremap <leader>fn <C-R>=expand("%:t:r")<CR>
 
 " To keep the extension use:
 " :inoremap ,n <C-R>=expand("%:t")<CR>
@@ -254,7 +254,7 @@ nnoremap <silent> p p`]
 " :inoremap ,n <C-R>=expand("%:p:h")<CR>
 
 " To insert the relative path of the directory the file is in use:
-:inoremap ,fp <C-R>=expand("%:h")<CR>
+:inoremap <leader>fp <C-R>=expand("%:h")<CR>
 
 "-------------------------------------------
 " 自動補完
@@ -424,6 +424,6 @@ command! -nargs=0 CopyPath     call CopyPath()
 command! -nargs=0 CopyFullPath call CopyFullPath()
 command! -nargs=0 CopyFileName call CopyFileName()
 
-nnoremap ,p :<C-u>CopyPath<CR>
-nnoremap ,fp :<C-u>CopyFullPath<CR>
-nnoremap ,fn :<C-u>CopyFileName<CR>
+nnoremap <leader>p :<C-u>CopyPath<CR>
+nnoremap <leader>fp :<C-u>CopyFullPath<CR>
+nnoremap <leader>fn :<C-u>CopyFileName<CR>
