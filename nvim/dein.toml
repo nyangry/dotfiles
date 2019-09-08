@@ -158,6 +158,9 @@ hook_add = '''
 
 [[plugins]]
 repo = 'ajh17/VimCompletesMe'
+hook_add = '''
+  autocmd FileType vim let b:vcm_tab_complete = 'vim'
+'''
 
 [[plugins]]
 repo = 'kana/vim-textobj-user'
