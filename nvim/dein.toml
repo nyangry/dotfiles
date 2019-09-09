@@ -151,12 +151,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'cocopon/vaffle.vim'
-hook_add = '''
-  nmap ,f :<C-u>Vaffle %:p:h<CR>
-'''
-
-[[plugins]]
 repo = 'ajh17/VimCompletesMe'
 hook_add = '''
   autocmd FileType vim let b:vcm_tab_complete = 'vim'
