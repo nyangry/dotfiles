@@ -151,6 +151,12 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'scrooloose/nerdtree'
+hook_add = '''
+  nnoremap <leader>f :NERDTreeFind<CR>
+'''
+
+[[plugins]]
 repo = 'ajh17/VimCompletesMe'
 hook_add = '''
   autocmd FileType vim let b:vcm_tab_complete = 'vim'
