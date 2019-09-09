@@ -320,26 +320,6 @@ augroup END
 
 
 "====================================================================================
-" Hack #69: 簡単にカレントディレクトリを変更する
-"====================================================================================
-command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
-function! s:ChangeCurrentDir(directory, bang)
-    if a:directory == ''
-        lcd %:p:h
-    else
-        execute 'lcd' . a:directory
-    endif
-
-    if a:bang == ''
-        pwd
-    endif
-endfunction
-
-" Change current directory.
-nnoremap <silent> <Space>cd :<C-u>CD<CR>
-
-
-"====================================================================================
 " Hack #198: ウィンドウを開く方向を指定する
 "====================================================================================
 " 新しいウィンドウを下に開く
