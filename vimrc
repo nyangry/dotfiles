@@ -419,3 +419,12 @@ command! -nargs=0 CopyFileName call CopyFileName()
 nnoremap <leader>p :<C-u>CopyPath<CR>
 nnoremap <leader>fp :<C-u>CopyFullPath<CR>
 nnoremap <leader>fn :<C-u>CopyFileName<CR>
+
+
+"====================================================================================
+" Profiling
+"====================================================================================
+" profile start profile.log
+" profile func *
+" profile file *
+" profile pause
