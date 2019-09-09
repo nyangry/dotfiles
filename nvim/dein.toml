@@ -170,6 +170,8 @@ repo = 'kana/vim-textobj-line'
 repo = 'lucapette/vim-textobj-underscore'
 [[plugins]]
 repo = 'kana/vim-textobj-entire'
+# [[plugins]]
+# repo = 'rhysd/vim-textobj-ruby'
 [[plugins]]
 repo = 'rhysd/textobj-word-column.vim'
 [[plugins]]
@@ -348,6 +350,26 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'shougo/neosnippet.vim'
+depends = ['context_filetype.vim']
+hook_add = '''
+  imap <silent><c-k>     <plug>(neosnippet_jump_or_expand)
+  smap <silent><c-k>     <plug>(neosnippet_jump_or_expand)
+  xmap <silent><c-k>     <plug>(neosnippet_expand_target)
+
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#enable_completed_snippet = 1
+  let g:neosnippet#expand_word_boundary = 1
+  let g:neosnippet#snippets_directory = '~/.vim/snippets'
+'''
+
+[[plugins]]
+repo = 'shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'vim-scripts/ruby-matchit'
+
+[[plugins]]
 repo = 'vim-ruby/vim-ruby'
 hook_add = '''
   let g:rubycomplete_rails                = 1
@@ -359,3 +381,86 @@ hook_add = '''
 
 [[plugins]]
 repo = 'tpope/vim-rails'
+
+[[plugins]]
+repo = 'slim-template/vim-slim'
+
+[[plugins]]
+repo = 'cakebaker/scss-syntax.vim'
+
+# HTML5 + inline SVG omnicomplete function, indent and syntax for Vim
+[[plugins]]
+repo = 'othree/html5.vim'
+
+# CSS3 syntax (and syntax defined in some foreign specifications) support for Vim’s built-in syntax/css.vim
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+
+
+# This is a Vim plugin that provides Tern-based JavaScript editing support.
+[[plugins]]
+repo = 'ternjs/tern_for_vim'
+
+# Yet Another JavaScript Syntax for Vim
+[[plugins]]
+repo = 'othree/yajs.vim'
+
+# Vim indenter for standalone and embedded JavaScript and TypeScript.
+[[plugins]]
+repo = 'jason0x43/vim-js-indent'
+
+[[plugins]]
+repo = 'othree/es.next.syntax.vim'
+
+# # Yet Another TypeScript Syntax
+# [[plugins]]
+# repo = 'HerringtonDarkholme/yats.vim'
+
+# Typescript syntax files for Vim
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+
+# Typescript tooling for Neovim
+# [[plugins]]
+# repo = 'mhartington/nvim-typescript'
+# build = './install.sh'
+
+# CoffeeScript support for vim
+[[plugins]]
+repo = 'kchmck/vim-coffee-script'
+
+[[plugins]]
+repo = 'posva/vim-vue'
+
+# Syntax for JavaScript libraries
+[[plugins]]
+repo = 'othree/javascript-libraries-syntax.vim'
+hook_add = '''
+  let b:javascript_lib_use_jquery = 1
+  let b:javascript_lib_use_underscore = 1
+'''
+
+# quickly format javascript, html and css files
+# [[plugins]]
+# repo = 'maksimr/vim-jsbeautify'
+# hook_add = '''
+#   " for JS
+#   autocmd FileType javascript noremap <buffer>  <C-b> :call JsBeautify()<CR>
+#   autocmd FileType javascript vnoremap <buffer>  <C-b> :call RangeJsBeautify()<CR>
+#   " for json
+#   autocmd FileType json noremap <buffer> <C-b> :call JsonBeautify()<CR>
+#   autocmd FileType json vnoremap <buffer> <C-b> :call RangeJsonBeautify()<CR>
+#   " for jsx
+#   autocmd FileType jsx noremap <buffer> <C-b> :call JsxBeautify()<CR>
+#   autocmd FileType jsx vnoremap <buffer> <C-b> :call RangeJsxBeautify()<CR>
+#   " for html
+#   autocmd FileType html noremap <buffer> <C-b> :call HtmlBeautify()<CR>
+#   autocmd FileType html vnoremap <buffer> <C-b> :call RangeHtmlBeautify()<CR>
+#   " for css or scss
+#   autocmd FileType css noremap <buffer> <C-b> :call CSSBeautify()<CR>
+#   autocmd FileType css vnoremap <buffer> <C-b> :call RangeCSSBeautify()<CR>
+# '''
+
+# colorize all text in the form #rgb, #rgba, #rrggbb, #rrgbbaa, rgb(...), rgba(...)
+# [[plugins]]
+# repo = 'lilydjwg/colorizer'
