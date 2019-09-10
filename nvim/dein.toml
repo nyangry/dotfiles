@@ -154,6 +154,9 @@ hook_add = '''
 repo = 'scrooloose/nerdtree'
 hook_add = '''
   nnoremap <leader>f :NERDTreeFind<CR>
+  nnoremap <leader>fg :NERDTreeVCS<CR>
+
+  let g:NERDTreeWinSize = 70
 '''
 
 [[plugins]]
