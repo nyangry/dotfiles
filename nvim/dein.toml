@@ -157,6 +157,9 @@ hook_add = '''
   nnoremap <leader>fg :NERDTreeVCS<CR>
 
   let g:NERDTreeWinSize = 70
+  let g:NERDTreeMinimalUI = 1
+  let g:NERDTreeShowHidden = 1
+  let g:NERDTreeAutoDeleteBuffer = 1
 '''
 
 [[plugins]]
