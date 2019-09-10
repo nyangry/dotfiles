@@ -160,6 +160,7 @@ hook_add = '''
   let g:NERDTreeMinimalUI = 1
   let g:NERDTreeShowHidden = 1
   let g:NERDTreeAutoDeleteBuffer = 1
+  let g:NERDTreeCustomOpenArgs, {'file':{'where': 'v'}}
 '''
 
 [[plugins]]
