@@ -291,6 +291,7 @@ nnoremap <c-right> <c-w>l
 "====================================================================================
 " 編集中ファイルを別名で複製する
 "====================================================================================
+nnoremap <leader>dt :DuplicateTo <C-r>=expand('%:t')<CR>
 function DuplicateTo(new_file_name, ...)
   let path = get(a:, 1, expand('%:h'))
   let new_file = path . '/' . a:new_file_name
