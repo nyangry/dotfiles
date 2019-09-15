@@ -184,7 +184,7 @@ repo = 'rhysd/textobj-word-column.vim'
 [[plugins]]
 repo = 'jwhitley/vim-matchit'
 [[plugins]]
-repo = 'machakann/vim-sandwich'
+repo = 'tpope/vim-surround'
 [[plugins]]
 repo = 'tpope/vim-endwise'
 [[plugins]]
