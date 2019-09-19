@@ -291,10 +291,10 @@ hook_add = '''
   nmap <C-n> <Plug>(yankround-next)
 '''
 
-# [[plugins]]
-# repo = 'tomtom/tcomment_vim'
 [[plugins]]
-repo = 'tyru/caw.vim'
+repo = 'tomtom/tcomment_vim'
+# [[plugins]]
+# repo = 'tyru/caw.vim'
 
 [[plugins]]
 repo = 'bkad/CamelCaseMotion'
