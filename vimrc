@@ -163,7 +163,8 @@ let g:NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeCustomOpenArgs = {'file':{'where': 'v'}}
 Plug 'ajh17/VimCompletesMe'
 " inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-autocmd FileType vim let b:vcm_tab_complete = 'vim'
+autocmd FileType vim let b:vcm_tab_complete = "vim"
+autocmd FileType ruby let b:vcm_tab_complete = "omni"
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 Plug 'lucapette/vim-textobj-underscore'
