@@ -162,7 +162,6 @@ let g:NERDTreeShowHidden = 1
 let g:NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeCustomOpenArgs = {'file':{'where': 'v'}}
 Plug 'ajh17/VimCompletesMe'
-" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 autocmd FileType vim let b:vcm_tab_complete = "vim"
 autocmd FileType ruby let b:vcm_tab_complete = "omni"
 Plug 'kana/vim-textobj-user'
@@ -288,15 +287,15 @@ let g:neosnippet#enable_completed_snippet = 1
 let g:neosnippet#expand_word_boundary = 1
 let g:neosnippet#snippets_directory = '~/.vim/snippets'
 Plug 'shougo/neosnippet-snippets'
-Plug 'rhysd/vim-textobj-ruby', { 'for': 'ruby' }
-Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 let g:rubycomplete_rails                = 1
 let g:rubycomplete_buffer_loading       = 1
 let g:rubycomplete_classes_in_global    = 1
 let g:rubycomplete_include_object       = 1
 let g:rubycomplete_include_object_space = 1
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'rhysd/vim-textobj-ruby', { 'for': 'ruby' }
+Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 Plug 'slim-template/vim-slim', { 'for': 'slim' }
 " HTML5 + inline SVG omnicomplete function, indent and syntax for Vim
 Plug 'othree/html5.vim', { 'for': 'html' }
@@ -430,7 +429,6 @@ set shortmess+=c
 
 " これをしないと候補選択時に Scratch ウィンドウが開いてしまう
 set completeopt=menuone,preview
-set completeopt+=longest
 
 autocmd FileType *
   \   if &l:omnifunc == ''
