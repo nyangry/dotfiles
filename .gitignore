@@ -3,6 +3,7 @@
 .netrwhist
 
 /vimfiles/.netrwhist
+/vimfiles/plugged
 tmuxfiles
 
 __pycache__/
