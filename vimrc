@@ -242,7 +242,8 @@ Plug 'tomtom/tcomment_vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'kana/vim-fakeclip'
 Plug 'h1mesuke/vim-alignta'
-Plug 'godlygeek/tabular'
+" Plug 'godlygeek/tabular'
+Plug 'junegunn/vim-easy-align'
 Plug 'Shougo/context_filetype.vim'
 if !exists('g:context_filetype#same_filetypes')
   let g:context_filetype#same_filetypes = {}
