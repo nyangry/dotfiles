@@ -162,7 +162,7 @@ let g:NERDTreeShowHidden = 1
 let g:NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeCustomOpenArgs = {'file':{'where': 'v'}}
 Plug 'ajh17/VimCompletesMe'
-inoremap <expr> <CR> pumvisible() ? '<C-y>' : '<C-g>u<CR>'
+" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 autocmd FileType vim let b:vcm_tab_complete = 'vim'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
