@@ -164,8 +164,6 @@ let g:NERDTreeCustomOpenArgs = {'file':{'where': 'v'}}
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 Plug 'lucapette/vim-textobj-underscore'
-Plug 'kana/vim-textobj-entire'
-Plug 'rhysd/textobj-word-column.vim'
 Plug 'jwhitley/vim-matchit'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
