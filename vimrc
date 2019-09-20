@@ -161,9 +161,6 @@ let g:NERDTreeMinimalUI = 1
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeCustomOpenArgs = {'file':{'where': 'v'}}
-Plug 'ajh17/VimCompletesMe'
-autocmd FileType vim let b:vcm_tab_complete = "vim"
-autocmd FileType ruby let b:vcm_tab_complete = "omni"
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 Plug 'lucapette/vim-textobj-underscore'
