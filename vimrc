@@ -239,6 +239,10 @@ Plug 'kana/vim-fakeclip'
 Plug 'h1mesuke/vim-alignta'
 " Plug 'godlygeek/tabular'
 Plug 'junegunn/vim-easy-align'
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 Plug 'Shougo/context_filetype.vim'
 if !exists('g:context_filetype#same_filetypes')
   let g:context_filetype#same_filetypes = {}
