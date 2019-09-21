@@ -289,6 +289,12 @@ let g:rubycomplete_include_object       = 1
 let g:rubycomplete_include_object_space = 1
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
+let g:rspec_command = "!bin/rspec {spec}"
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
 Plug 'rhysd/vim-textobj-ruby', { 'for': 'ruby' }
 Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 Plug 'slim-template/vim-slim', { 'for': 'slim' }
