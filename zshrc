@@ -199,7 +199,7 @@ function current_dir() {
 PROMPT='$(current_dir)$(vcs_info_with_color) %{${fg[yellow]}%}$%{${reset_color}%} '
 
 alias b='bundle; bundle clean'
-alias vim='vim'
+alias vim='nvim'
 alias vimrc='vim ~/.vimrc'
 alias tmuxconf='vim ~/.tmux.conf'
 alias zshrc='vim ~/.zshrc'
