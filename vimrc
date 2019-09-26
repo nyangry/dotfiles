@@ -224,6 +224,10 @@ let g:ale_linters = {
       \ }
 Plug 'jimsei/winresizer'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'tyru/open-browser.vim'
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
 Plug 'LeafCage/yankround.vim'
 nmap p <Plug>(yankround-p)
 xmap p <Plug>(yankround-p)
