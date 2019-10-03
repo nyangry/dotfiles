@@ -8,7 +8,7 @@
 "
 " File:       iceberg.vim
 " Maintainer: cocopon <cocopon@me.com>
-" Modified:   2019-01-04 19:45+0900
+" Modified:   2019-08-31 16:56+0900
 " License:    MIT
 
 
@@ -77,9 +77,10 @@ hi! StatusLineTermNC cterm=reverse ctermbg=238 ctermfg=233 gui=reverse guibg=#3e
 hi! StorageClass ctermfg=110 guifg=#84a0c6
 hi! String ctermfg=109 guifg=#89b8c2
 hi! Structure ctermfg=110 guifg=#84a0c6
-hi! TabLine cterm=NONE ctermbg=245 ctermfg=234 gui=NONE guibg=#818596 guifg=#17171b
-hi! TabLineFill cterm=reverse ctermbg=234 ctermfg=245 gui=reverse guibg=#17171b guifg=#818596
+hi! TabLine cterm=NONE ctermbg=233 ctermfg=238 gui=NONE guibg=#0f1117 guifg=#3e445e
+hi! TabLineFill cterm=reverse ctermbg=238 ctermfg=233 gui=reverse guibg=#3e445e guifg=#0f1117
 hi! TabLineSel cterm=NONE ctermbg=234 ctermfg=252 gui=NONE guibg=#161821 guifg=#9a9ca5
+hi! TermCursorNC ctermbg=242 ctermfg=234 guibg=#6b7089 guifg=#161821
 hi! Title ctermfg=216 gui=NONE guifg=#e2a478
 hi! Todo ctermbg=234 ctermfg=150 guibg=#45493e guifg=#b4be82
 hi! Type ctermfg=110 gui=NONE guifg=#84a0c6
@@ -93,7 +94,7 @@ hi! ALEErrorSign ctermbg=235 ctermfg=203 guibg=#1e2132 guifg=#e27878
 hi! ALEWarningSign ctermbg=235 ctermfg=216 guibg=#1e2132 guifg=#e2a478
 hi! ALEVirtualTextError ctermfg=203 guifg=#e27878
 hi! ALEVirtualTextWarning ctermfg=216 guifg=#e2a478
-hi! CtrlPMode1 ctermbg=241 ctermfg=234 guibg=#5a5f72 guifg=#17171b
+hi! CtrlPMode1 ctermbg=236 ctermfg=242 guibg=#2e313f guifg=#6b7089
 hi! EasyMotionShade ctermfg=239 guifg=#3d425b
 hi! EasyMotionTarget ctermfg=150 guifg=#b4be82
 hi! EasyMotionTarget2First ctermfg=216 guifg=#e2a478
@@ -102,6 +103,8 @@ hi! GitGutterAdd ctermbg=235 ctermfg=150 guibg=#1e2132 guifg=#b4be82
 hi! GitGutterChange ctermbg=235 ctermfg=109 guibg=#1e2132 guifg=#89b8c2
 hi! GitGutterChangeDelete ctermbg=235 ctermfg=109 guibg=#1e2132 guifg=#89b8c2
 hi! GitGutterDelete ctermbg=235 ctermfg=203 guibg=#1e2132 guifg=#e27878
+hi! gitmessengerEndOfBuffer ctermbg=235 ctermfg=239 guibg=#1e2132 guifg=#444b71
+hi! gitmessengerPopupNormal ctermbg=235 ctermfg=252 guibg=#1e2132 guifg=#c6c8d1
 hi! Sneak ctermbg=140 ctermfg=234 guibg=#a093c7 guifg=#161821
 hi! SneakScope ctermbg=236 ctermfg=242 guibg=#272c42 guifg=#6b7089
 hi! SyntasticErrorSign ctermbg=235 ctermfg=203 guibg=#1e2132 guifg=#e27878
@@ -111,6 +114,7 @@ hi! SyntasticWarningSign ctermbg=235 ctermfg=216 guibg=#1e2132 guifg=#e2a478
 hi! ZenSpace ctermbg=203 guibg=#e27878
 hi! icebergALAccentRed ctermfg=203 guifg=#e27878
 
+hi! link TermCursor Cursor
 hi! link cssBraces Delimiter
 hi! link cssClassName Special
 hi! link cssClassNameDot Normal
@@ -152,11 +156,26 @@ hi! link CtrlPMatch Title
 hi! link CtrlPMode2 StatusLine
 hi! link deniteMatched Normal
 hi! link deniteMatchedChar Title
+hi! link elixirBlockDefinition Statement
+hi! link elixirDefine Statement
+hi! link elixirDocSigilDelimiter String
+hi! link elixirDocTest String
+hi! link elixirExUnitMacro Statement
+hi! link elixirExceptionDefine Statement
+hi! link elixirFunctionDeclaration Title
+hi! link elixirKeyword Statement
+hi! link elixirModuleDeclaration Normal
+hi! link elixirModuleDefine Statement
+hi! link elixirPrivateDefine Statement
+hi! link elixirStringDelimiter String
 hi! link jsFlowMaybe Normal
 hi! link jsFlowObject Normal
 hi! link jsFlowType PreProc
 hi! link graphqlName Normal
 hi! link graphqlOperator Normal
+hi! link gitmessengerHash Comment
+hi! link gitmessengerHeader Statement
+hi! link gitmessengerHistory Constant
 hi! link jsArrowFunction Operator
 hi! link jsClassDefinition Normal
 hi! link jsClassFuncName Title
