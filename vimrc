@@ -215,8 +215,8 @@ function! s:gitmessengerpopup_my_settings() abort
 endfunction
 Plug 'w0rp/ale'
 let g:prettier#config#print_width = 140
-let g:prettier#config#arrow_parens = 'always'
-let g:ale_completion_enabled = 1
+" let g:prettier#config#arrow_parens = 'always'
+" let g:ale_completion_enabled = 1
 let g:ale_linters = {
       \ 'html': ['htmlhint'],
       \ 'css': ['stylelint'],
@@ -228,15 +228,15 @@ Plug 'tyru/open-browser.vim'
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
-Plug 'LeafCage/yankround.vim'
-nmap p <Plug>(yankround-p)
-xmap p <Plug>(yankround-p)
-nmap P <Plug>(yankround-P)
-nmap gp <Plug>(yankround-gp)
-xmap gp <Plug>(yankround-gp)
-nmap gP <Plug>(yankround-gP)
-nmap <C-p> <Plug>(yankround-prev)
-nmap <C-n> <Plug>(yankround-next)
+" Plug 'LeafCage/yankround.vim'
+" nmap p <Plug>(yankround-p)
+" xmap p <Plug>(yankround-p)
+" nmap P <Plug>(yankround-P)
+" nmap gp <Plug>(yankround-gp)
+" xmap gp <Plug>(yankround-gp)
+" nmap gP <Plug>(yankround-gP)
+" nmap <C-p> <Plug>(yankround-prev)
+" nmap <C-n> <Plug>(yankround-next)
 Plug 'tomtom/tcomment_vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'kana/vim-fakeclip'
