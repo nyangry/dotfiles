@@ -4,6 +4,7 @@
 
 /vimfiles/.netrwhist
 /vimfiles/plugged
+/vimfiles/autoload/plug.vim.old
 tmuxfiles
 
 __pycache__/
