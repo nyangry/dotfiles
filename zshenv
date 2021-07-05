@@ -24,6 +24,11 @@ if [ -d ${HOME}/.rbenv  ] ; then
   eval "$(rbenv init - --no-rehash)"
 fi
 
+# nodenv
+if [ -d ${HOME}/.nodenv  ] ; then
+  eval "$(nodenv init -)"
+fi
+
 # pyenv
 if [ -d ${HOME}/.pyenv  ] ; then
   export PYENV_ROOT="$HOME/.pyenv"
