@@ -45,14 +45,16 @@ endfunction
 command! -nargs=* CustomFZF call fzf#run({
 \   'source': 'git ls-files -oc --exclude-standard',
 \   'sink*':    function('<sid>common_handler'),
-\   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n',
+\   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
+\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
 \   'down':    '50%'
 \ })
 
 command! FZFBuffers call fzf#run(fzf#wrap({
 \   'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
 \   'sink*':    function('<sid>common_handler'),
-\   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n',
+\   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
+\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
 \   'down':    '50%'
 \ }))
 
@@ -81,7 +83,8 @@ endfunction
 command! FZFMru call fzf#run({
 \   'source':  s:all_files(),
 \   'sink*':    function('<sid>common_handler'),
-\   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n',
+\   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
+\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
 \   'down':    '50%'
 \ })
 
@@ -128,7 +131,7 @@ command! -nargs=* Agg call fzf#run({
 \   'sink*':    function('<sid>ag_handler'),
 \   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
 \              '-m -x --reverse '.
-\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
+\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
 \   'down':    '50%'
 \ })
 
@@ -139,7 +142,7 @@ command! -nargs=* Agk call fzf#run({
 \   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
 \              '--delimiter : --nth 4.. '.
 \              '-m -x --reverse '.
-\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
+\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
 \   'down':    '50%'
 \ })
 
@@ -149,7 +152,7 @@ command! -nargs=* Agc call fzf#run({
 \   'sink*':    function('<sid>ag_handler'),
 \   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
 \              '-m -x --reverse '.
-\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
+\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
 \   'down':    '50%'
 \ })
 
