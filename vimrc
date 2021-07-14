@@ -720,6 +720,10 @@ function CopyPath()
     let @*=@%
 endfunction
 
+function CopyPathWithLineNumber()
+    let @*=@% . '#L' . line(".")
+endfunction
+
 function CopyFullPath()
     let @*=expand('%:p')
 endfunction
@@ -728,11 +732,13 @@ function CopyFileName()
     let @*=expand('%:t')
 endfunction
 
-command! -nargs=0 CopyPath     call CopyPath()
-command! -nargs=0 CopyFullPath call CopyFullPath()
-command! -nargs=0 CopyFileName call CopyFileName()
+command! -nargs=0 CopyPath               call CopyPath()
+command! -nargs=0 CopyPathWithLineNumber call CopyPathWithLineNumber()
+command! -nargs=0 CopyFullPath           call CopyFullPath()
+command! -nargs=0 CopyFileName           call CopyFileName()
 
-nnoremap <leader>p :<C-u>CopyPath<CR>
+nnoremap <leader>p  :<C-u>CopyPath<CR>
+nnoremap <leader>pl :<C-u>CopyPathWithLineNumber<CR>
 nnoremap <leader>fp :<C-u>CopyFullPath<CR>
 nnoremap <leader>fn :<C-u>CopyFileName<CR>
 
