@@ -184,9 +184,9 @@ nmap N <Plug>(anzu-N-with-echo)
 nmap * <Plug>(anzu-star)
 nmap # <Plug>(anzu-sharp)
 Plug 'tpope/vim-fugitive'
-nmap gs :Gstatus<CR>
-nmap gb :Gblame<CR>
-nmap gd :Gdiff<CR>
+nmap gs :Git status<CR>
+nmap gb :Git blame<CR>
+nmap gd :Git diff<CR>
 autocmd FileType fugitiveblame call s:fugitiveblame_my_settings()
 function! s:fugitiveblame_my_settings() abort
   nnoremap <silent> <C-p> :<C-u>!hub openpr <cword><CR>
