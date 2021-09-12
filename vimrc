@@ -391,7 +391,9 @@ set number " 行番号を表示する
 
 " for performance
 set timeoutlen=500
-set re=1
+" re=1 だと重くなる事象
+" https://github.com/HerringtonDarkholme/yats.vim/issues/116
+" set re=1
 set nocursorline
 set norelativenumber
 set nocursorcolumn
@@ -717,6 +719,11 @@ command! SyntaxInfo call s:get_syn_info()
 "====================================================================================
 nnoremap <expr> c* ':%s ;\<' . expand('<cword>') . '\>;'
 vnoremap <expr> c* ':s ;\<' . expand('<cword>') . '\>;'
+
+"====================================================================================
+" Syntax on/off
+"====================================================================================
+noremap <silent> ,f :if exists("g:syntax_on")\|syntax off\|else\|syntax enable\|endif<CR>"
 
 "====================================================================================
 " Copy File Path/Name
