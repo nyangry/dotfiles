@@ -389,6 +389,24 @@ set ruler " カーソルが何行目の何列目に置かれているかを表�
 set number " 行番号を表示する
 " set noequalalways " ウインドウ幅の自動調整を行わない
 
+syntax on
+" for performance
+set timeoutlen=500
+set re=1
+set nocursorline
+set norelativenumber
+set nocursorcolumn
+set guicursor=
+set synmaxcol=200
+syntax sync minlines=100 maxlines=1000
+
+" タブ幅をリセット
+augroup set_tab_stop
+  autocmd!
+  autocmd BufNewFile,BufRead * set tabstop=2 shiftwidth=2
+augroup END
+
+
 "====================================================================================
 " インデント調整
 "====================================================================================
@@ -455,22 +473,6 @@ autocmd FileType *
   \   if &l:omnifunc == ''
   \ |   setlocal omnifunc=syntaxcomplete#Complete
   \ | endif
-
-" for performance
-" set timeoutlen=500
-set re=1
-set nocursorline
-set norelativenumber
-set nocursorcolumn
-set guicursor=
-" set synmaxcol=180
-" syntax sync minlines=100 maxlines=1000
-
-" タブ幅をリセット
-augroup set_tab_stop
-  autocmd!
-  autocmd BufNewFile,BufRead * set tabstop=2 shiftwidth=2
-augroup END
 
 " vimを使って保存時に楽をする
 " http://qiita.com/katton/items/bc9720826120f5f61fc1
