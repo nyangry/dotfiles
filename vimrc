@@ -311,26 +311,34 @@ Plug 'rhysd/vim-textobj-ruby', { 'for': 'ruby' }
 Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 Plug 'slim-template/vim-slim', { 'for': 'slim' }
 " HTML5 + inline SVG omnicomplete function, indent and syntax for Vim
-Plug 'othree/html5.vim', { 'for': 'html' }
-Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
+" Plug 'othree/html5.vim', { 'for': 'html' }
+" Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
+
 " CSS3 syntax (and syntax defined in some foreign specifications) support for Vim’s built-in syntax/css.vim
-Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+" Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+
 " This is a Vim plugin that provides Tern-based JavaScript editing support.
-Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
+" Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
+
 " Yet Another JavaScript Syntax for Vim
-Plug 'othree/yajs.vim' , { 'for': 'javascript' }
+" Plug 'othree/yajs.vim' , { 'for': 'javascript' }
+
 " Syntax for JavaScript libraries
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
-let b:javascript_lib_use_jquery = 1
-let b:javascript_lib_use_underscore = 1
+" Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
+" let b:javascript_lib_use_jquery = 1
+" let b:javascript_lib_use_underscore = 1
+
 " Vim indenter for standalone and embedded JavaScript and TypeScript.
-Plug 'jason0x43/vim-js-indent', { 'for': 'javascript' }
-Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
+" Plug 'jason0x43/vim-js-indent', { 'for': 'javascript' }
+" Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
+
 " Typescript syntax files for Vim
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+" Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+
 " CoffeeScript support for vim
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'posva/vim-vue', { 'for': 'vue' }
+" Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+
+" Plug 'posva/vim-vue', { 'for': 'vue' }
 
 
 call plug#end()
