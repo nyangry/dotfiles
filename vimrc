@@ -389,7 +389,6 @@ set ruler " カーソルが何行目の何列目に置かれているかを表�
 set number " 行番号を表示する
 " set noequalalways " ウインドウ幅の自動調整を行わない
 
-syntax on
 " for performance
 set timeoutlen=500
 set re=1
