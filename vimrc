@@ -183,6 +183,10 @@ nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 nmap * <Plug>(anzu-star)
 nmap # <Plug>(anzu-sharp)
+Plug 'APZelos/blamer.nvim'
+let g:blamer_delay = 500
+let g:blamer_template = '<committer> <committer-time> <commit-short> <summary>'
+let g:blamer_date_format = '%Y/%m/%d'
 Plug 'tpope/vim-fugitive'
 nmap gs :Git status<CR>
 nmap gb :Git blame<CR>
