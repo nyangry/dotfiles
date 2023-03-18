@@ -5,6 +5,36 @@ export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 
+
+# rbenv
+if [ -d ${HOME}/.rbenv  ] ; then
+  # export PATH=${HOME}/.rbenv/bin:${HOME}/.rbenv/shims:${PATH}
+  eval "$(rbenv init - --no-rehash)"
+fi
+
+# nodenv
+if [ -d ${HOME}/.nodenv  ] ; then
+  export PATH=$HOMEBREW_PREFIX/opt/nodenv/bin:$PATH
+  eval "$(nodenv init -)"
+fi
+
+# pyenv
+if [ -d ${HOME}/.pyenv  ] ; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/shims:$PATH"
+  if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+fi
+
+# for auto_cd
+cdpath=(
+  $HOME/workspace/
+  $HOME/workspace/mf/
+  $cdpath
+)
+
+# git diff-highlight
+export PATH="$PATH:/opt/homebrew/share/git-core/contrib/diff-highlight"
+
 #=======================================================
 # zsh config
 #=======================================================

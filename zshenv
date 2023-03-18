@@ -17,28 +17,3 @@ export LANG=en_US.UTF-8
 # fi
 
 export XDG_CONFIG_HOME=$HOME/.config
-
-# rbenv
-if [ -d ${HOME}/.rbenv  ] ; then
-  # export PATH=${HOME}/.rbenv/bin:${HOME}/.rbenv/shims:${PATH}
-  eval "$(rbenv init - --no-rehash)"
-fi
-
-# nodenv
-if [ -d ${HOME}/.nodenv  ] ; then
-  eval "$(nodenv init -)"
-fi
-
-# pyenv
-if [ -d ${HOME}/.pyenv  ] ; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/shims:$PATH"
-  if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-fi
-
-# for auto_cd
-cdpath=(
-  $HOME/workspace/
-  $HOME/workspace/mf/
-  $cdpath
-)
