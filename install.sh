@@ -64,16 +64,6 @@ add_zsh_completions()
   ln -s ~/dotfiles/zsh_completions ~/.zsh/completions
 }
 
-install_neovim()
-{
-  echo "install neovim"
-  # for denite.vim
-  pip3 install neovim
-
-  mkdir -p $HOME/.config/nvim
-  ln -s $HOME/dotfiles/init.vim $HOME/.config/nvim/init.vim
-}
-
 #
 # Main Start
 #
@@ -81,7 +71,6 @@ add_directories 1
 delete_old_files 1
 symlink_files 1
 # add_zsh_completions 1
-# install_neovim 1
 
 echo "[DONE]  All done."
 
