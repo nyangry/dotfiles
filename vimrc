@@ -6,178 +6,207 @@ set rtp+=/usr/local/opt/fzf
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-nnoremap    [fzf]   <Nop>
-nmap      , [fzf]
-nnoremap <silent> <C-f> :<C-u>CustomFZF<CR>
-nnoremap <silent> [fzf]b :<C-u>FZFBuffers<CR>
-nnoremap <silent> [fzf]m :<C-u>FZFMru<CR>
-nnoremap <silent> [fzf]gg :<C-u>Agg<CR>
-nnoremap <silent> [fzf]gk :<C-u>Agk<CR>
-nnoremap <silent> [fzf]gc :<C-u>Agc<CR>
+Plug 'ryanoasis/vim-devicons'
+Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release/rpc' }
 
-function! s:common_handler(lines)
-  if len(a:lines) < 2 | return | endif
+nmap , [fzf-p]
+xmap , [fzf-p]
 
-  let cmd = get({
-    \ 'ctrl-s': 'split',
-    \ 'ctrl-v': 'vertical split',
-    \ 'ctrl-n': 'tabe'
-  \ }, a:lines[0], 'e')
+nnoremap <silent> <C-f>        :<C-u>FzfPreviewDirectoryFilesRpc<CR>
+nnoremap <silent> [fzf-p]p     :<C-u>FzfPreviewFromResourcesRpc project_mru git<CR>
+nnoremap <silent> [fzf-p]gs    :<C-u>FzfPreviewGitStatusRpc<CR>
+nnoremap <silent> [fzf-p]ga    :<C-u>FzfPreviewGitActionsRpc<CR>
+nnoremap <silent> [fzf-p]b     :<C-u>FzfPreviewBuffersRpc<CR>
+nnoremap <silent> [fzf-p]B     :<C-u>FzfPreviewAllBuffersRpc<CR>
+nnoremap <silent> [fzf-p]o     :<C-u>FzfPreviewFromResourcesRpc buffer project_mru<CR>
+nnoremap <silent> [fzf-p]<C-o> :<C-u>FzfPreviewJumpsRpc<CR>
+nnoremap <silent> [fzf-p]g;    :<C-u>FzfPreviewChangesRpc<CR>
+nnoremap <silent> [fzf-p]/     :<C-u>FzfPreviewLinesRpc --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
+nnoremap <silent> [fzf-p]*     :<C-u>FzfPreviewLinesRpc --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap          [fzf-p]gr    :<C-u>FzfPreviewProjectGrepRpc<Space>
+xnoremap          [fzf-p]gr    "sy:FzfPreviewProjectGrepRpc<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+nnoremap <silent> [fzf-p]t     :<C-u>FzfPreviewBufferTagsRpc<CR>
+nnoremap <silent> [fzf-p]q     :<C-u>FzfPreviewQuickFixRpc<CR>
+nnoremap <silent> [fzf-p]l     :<C-u>FzfPreviewLocationListRpc<CR>
 
-  let list = map(a:lines[1:], '{"filename": v:val}')
+let g:fzf_preview_command = 'bat --color=always --plain {-1}'
+let g:fzf_preview_lines_command = 'bat --color=always --plain --number'
+let g:fzf_preview_use_dev_icons = 1
+let g:fzf_preview_dev_icon_prefix_string_length = 3
+let g:fzf_preview_dev_icons_limit = 5000
 
-  if a:lines[0] == 'ctrl-n'
-    let first = list[0]
-    execute cmd first.filename
-
-    if len(list) > 1
-      call setqflist(list)
-      copen
-      wincmd p
-    endif
-  else
-    for file in list
-      execute cmd file.filename
-    endfor
-  endif
-endfunction
-
-" command! -nargs=* CustomFZF call fzf#run({
-" \   'source': 'git ls-files -oc --exclude-standard',
+" Plug 'junegunn/fzf.vim'
+" nnoremap    [fzf]   <Nop>
+" nmap      , [fzf]
+" nnoremap <silent> <C-f> :<C-u>CustomFZF<CR>
+" nnoremap <silent> [fzf]b :<C-u>FZFBuffers<CR>
+" nnoremap <silent> [fzf]m :<C-u>FZFMru<CR>
+" nnoremap <silent> [fzf]gg :<C-u>Agg<CR>
+" nnoremap <silent> [fzf]gk :<C-u>Agk<CR>
+" nnoremap <silent> [fzf]gc :<C-u>Agc<CR>
+"
+" function! s:common_handler(lines)
+"   if len(a:lines) < 2 | return | endif
+"
+"   let cmd = get({
+"     \ 'ctrl-s': 'split',
+"     \ 'ctrl-v': 'vertical split',
+"     \ 'ctrl-n': 'tabe'
+"   \ }, a:lines[0], 'e')
+"
+"   let list = map(a:lines[1:], '{"filename": v:val}')
+"
+"   if a:lines[0] == 'ctrl-n'
+"     let first = list[0]
+"     execute cmd first.filename
+"
+"     if len(list) > 1
+"       call setqflist(list)
+"       copen
+"       wincmd p
+"     endif
+"   else
+"     for file in list
+"       execute cmd file.filename
+"     endfor
+"   endif
+" endfunction
+"
+" " command! -nargs=* CustomFZF call fzf#run({
+" " \   'source': 'git ls-files -oc --exclude-standard',
+" " \   'sink*':    function('<sid>common_handler'),
+" " \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
+" " \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
+" " \   'down':    '50%'
+" " \ })
+"
+" command! -nargs=* CustomFZF call s:custom_fzf()
+"
+" function! s:custom_fzf()
+"   if system('git rev-parse --is-inside-work-tree') == "true\n"
+"     call fzf#run({
+"     \   'source': 'git ls-files -oc --exclude-standard',
+"     \   'sink*':    function('<sid>common_handler'),
+"     \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
+"     \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort --info=inline --preview="bat --color=always --style=numbers {}"',
+"     \   'down':    '50%'
+"     \ })
+"   else
+"     call fzf#run({
+"     \   'source': 'rg --files',
+"     \   'sink*':    function('<sid>common_handler'),
+"     \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
+"     \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort --info=inline --preview="bat --color=always --style=numbers {}"',
+"     \   'down':    '50%'
+"     \ })
+"   end
+" endfunction
+"
+" command! FZFBuffers call fzf#run(fzf#wrap({
+" \   'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
+" \   'sink*':    function('<sid>common_handler'),
+" \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
+" \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
+" \   'down':    '50%'
+" \ }))
+"
+" function! s:sort_buffers(...)
+"   let [b1, b2] = map(copy(a:000), 'get(g:fzf#vim#buffers, v:val, v:val)')
+"   " Using minus between a float and a number in a sort function causes an error
+"   return b1 < b2 ? 1 : -1
+" endfunction
+"
+" function! s:buflisted()
+"   return filter(range(1, bufnr('$')), 'buflisted(v:val) && getbufvar(v:val, "&filetype") != "qf"')
+" endfunction
+"
+" function! s:buflisted_sorted()
+"   return sort(s:buflisted(), 's:sort_buffers')
+" endfunction
+"
+" function! s:all_files()
+"   return fzf#vim#_uniq(map(
+"     \ filter([expand('%')], 'len(v:val)')
+"     \   + filter(map(s:buflisted_sorted(), 'bufname(v:val)'), 'len(v:val)')
+"     \   + filter(copy(v:oldfiles), "filereadable(fnamemodify(v:val, ':p'))"),
+"     \ 'fnamemodify(v:val, ":~:.")'))
+" endfunction
+"
+" command! FZFMru call fzf#run({
+" \   'source':  s:all_files(),
 " \   'sink*':    function('<sid>common_handler'),
 " \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
 " \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
 " \   'down':    '50%'
 " \ })
-
-command! -nargs=* CustomFZF call s:custom_fzf()
-
-function! s:custom_fzf()
-  if system('git rev-parse --is-inside-work-tree') == "true\n"
-    call fzf#run({
-    \   'source': 'git ls-files -oc --exclude-standard',
-    \   'sink*':    function('<sid>common_handler'),
-    \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
-    \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort --info=inline --preview="bat --color=always --style=numbers {}"',
-    \   'down':    '50%'
-    \ })
-  else
-    call fzf#run({
-    \   'source': 'rg --files',
-    \   'sink*':    function('<sid>common_handler'),
-    \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
-    \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort --info=inline --preview="bat --color=always --style=numbers {}"',
-    \   'down':    '50%'
-    \ })
-  end
-endfunction
-
-command! FZFBuffers call fzf#run(fzf#wrap({
-\   'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
-\   'sink*':    function('<sid>common_handler'),
-\   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
-\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
-\   'down':    '50%'
-\ }))
-
-function! s:sort_buffers(...)
-  let [b1, b2] = map(copy(a:000), 'get(g:fzf#vim#buffers, v:val, v:val)')
-  " Using minus between a float and a number in a sort function causes an error
-  return b1 < b2 ? 1 : -1
-endfunction
-
-function! s:buflisted()
-  return filter(range(1, bufnr('$')), 'buflisted(v:val) && getbufvar(v:val, "&filetype") != "qf"')
-endfunction
-
-function! s:buflisted_sorted()
-  return sort(s:buflisted(), 's:sort_buffers')
-endfunction
-
-function! s:all_files()
-  return fzf#vim#_uniq(map(
-    \ filter([expand('%')], 'len(v:val)')
-    \   + filter(map(s:buflisted_sorted(), 'bufname(v:val)'), 'len(v:val)')
-    \   + filter(copy(v:oldfiles), "filereadable(fnamemodify(v:val, ':p'))"),
-    \ 'fnamemodify(v:val, ":~:.")'))
-endfunction
-
-command! FZFMru call fzf#run({
-\   'source':  s:all_files(),
-\   'sink*':    function('<sid>common_handler'),
-\   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
-\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
-\   'down':    '50%'
-\ })
-
-function! s:ag_to_qf(line)
-  let parts = split(a:line, ':')
-  return {'filename': parts[0], 'lnum': parts[1], 'col': parts[2],
-        \ 'text': join(parts[3:], ':')}
-endfunction
-
-function! s:ag_handler(lines)
-  if len(a:lines) < 2 | return | endif
-
-  let cmd = get({
-    \ 'ctrl-s': 'split',
-    \ 'ctrl-v': 'vertical split',
-    \ 'ctrl-n': 'tabe'
-  \ }, a:lines[0], 'e')
-
-  let list = map(a:lines[1:], 's:ag_to_qf(v:val)')
-
-  if a:lines[0] == 'ctrl-n'
-    let first = list[0]
-    execute cmd escape(first.filename, ' %#\')
-    execute first.lnum
-    execute 'normal!' first.col.'|zz'
-
-    if len(list) > 1
-      call setqflist(list)
-      copen
-      wincmd p
-    endif
-  else
-    for file in list
-      execute cmd file.filename
-      execute file.lnum
-      execute 'normal!' file.col.'|zz'
-    endfor
-  endif
-endfunction
-
-command! -nargs=* Agg call fzf#run({
-\   'source':  printf('ag --column --color "%s"',
-\                     escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
-\   'sink*':    function('<sid>ag_handler'),
-\   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
-\              '-m -x --reverse '.
-\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
-\   'down':    '50%'
-\ })
-
-command! -nargs=* Agk call fzf#run({
-\   'source':  printf('ag --column --color "%s"',
-\                     escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
-\   'sink*':    function('<sid>ag_handler'),
-\   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
-\              '--delimiter : --nth 4.. '.
-\              '-m -x --reverse '.
-\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
-\   'down':    '50%'
-\ })
-
-command! -nargs=* Agc call fzf#run({
-\   'source':  printf('ag --column --color "%s"',
-\                     escape(empty(<q-args>) ? expand('<cword>') : <q-args>, '"\')),
-\   'sink*':    function('<sid>ag_handler'),
-\   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
-\              '-m -x --reverse '.
-\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
-\   'down':    '50%'
-\ })
+"
+" function! s:ag_to_qf(line)
+"   let parts = split(a:line, ':')
+"   return {'filename': parts[0], 'lnum': parts[1], 'col': parts[2],
+"         \ 'text': join(parts[3:], ':')}
+" endfunction
+"
+" function! s:ag_handler(lines)
+"   if len(a:lines) < 2 | return | endif
+"
+"   let cmd = get({
+"     \ 'ctrl-s': 'split',
+"     \ 'ctrl-v': 'vertical split',
+"     \ 'ctrl-n': 'tabe'
+"   \ }, a:lines[0], 'e')
+"
+"   let list = map(a:lines[1:], 's:ag_to_qf(v:val)')
+"
+"   if a:lines[0] == 'ctrl-n'
+"     let first = list[0]
+"     execute cmd escape(first.filename, ' %#\')
+"     execute first.lnum
+"     execute 'normal!' first.col.'|zz'
+"
+"     if len(list) > 1
+"       call setqflist(list)
+"       copen
+"       wincmd p
+"     endif
+"   else
+"     for file in list
+"       execute cmd file.filename
+"       execute file.lnum
+"       execute 'normal!' file.col.'|zz'
+"     endfor
+"   endif
+" endfunction
+"
+" command! -nargs=* Agg call fzf#run({
+" \   'source':  printf('ag --column --color "%s"',
+" \                     escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
+" \   'sink*':    function('<sid>ag_handler'),
+" \   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
+" \              '-m -x --reverse '.
+" \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
+" \   'down':    '50%'
+" \ })
+"
+" command! -nargs=* Agk call fzf#run({
+" \   'source':  printf('ag --column --color "%s"',
+" \                     escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
+" \   'sink*':    function('<sid>ag_handler'),
+" \   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
+" \              '--delimiter : --nth 4.. '.
+" \              '-m -x --reverse '.
+" \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
+" \   'down':    '50%'
+" \ })
+"
+" command! -nargs=* Agc call fzf#run({
+" \   'source':  printf('ag --column --color "%s"',
+" \                     escape(empty(<q-args>) ? expand('<cword>') : <q-args>, '"\')),
+" \   'sink*':    function('<sid>ag_handler'),
+" \   'options': '--ansi --expect=ctrl-s,ctrl-v,ctrl-n '.
+" \              '-m -x --reverse '.
+" \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
+" \   'down':    '50%'
+" \ })
 
 Plug 'scrooloose/nerdtree'
 nnoremap <leader>f :NERDTreeFind<CR>
@@ -374,26 +403,26 @@ call plug#end()
 "====================================================================================
 " Configuration
 "====================================================================================
-set fileencodings=utf-8,sjis
-set textwidth=0                 " 一行に長い文章を書いていても自動折り返しを
-set nobackup                    " バックアップ取らない
-set noswapfile                  " スワップファイル作らない
-set hidden                      " 編集中でも他のファイルを開けるようにする
-set backspace=indent,eol,start  " バックスペースでなんでも消せるように
-set whichwrap=b,s,h,l,<,>,[,]   " カーソルを行頭、行末で止まらないようにする
-set showcmd                     " コマンドをステータス行に表示
-set showmode                    " 現在のモードを表示
-set viminfo='50,<1000,s100,\"50 " viminfoファイルの設定
-set modelines=0                 " モードラインは無効
-set clipboard=unnamed           " yank to clipboard
-set ambiwidth=double
-
-set display=lastline
-set pumheight=10
-set tabpagemax=1000
-set breakindent
-set t_BE=
-set nf=""
+" set fileencodings=utf-8,sjis
+" set textwidth=0                 " 一行に長い文章を書いていても自動折り返しを
+" set nobackup                    " バックアップ取らない
+" set noswapfile                  " スワップファイル作らない
+" set hidden                      " 編集中でも他のファイルを開けるようにする
+" set backspace=indent,eol,start  " バックスペースでなんでも消せるように
+" set whichwrap=b,s,h,l,<,>,[,]   " カーソルを行頭、行末で止まらないようにする
+" set showcmd                     " コマンドをステータス行に表示
+" set showmode                    " 現在のモードを表示
+" set viminfo='1000
+" set modelines=0                 " モードラインは無効
+" set clipboard=unnamed           " yank to clipboard
+" " set ambiwidth=double
+"
+" set display=lastline
+" set pumheight=10
+" set tabpagemax=1000
+" set breakindent
+" " set t_BE=
+" " set nf=""
 
 augroup set_fo
   " t textwidthを使ってテキストを自動折返しする。
