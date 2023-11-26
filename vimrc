@@ -5,6 +5,7 @@ set rtp+=/usr/local/opt/fzf
 "====================================================================================
 call plug#begin('~/.vim/plugged')
 
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 nnoremap    [fzf]   <Nop>
 nmap      , [fzf]
