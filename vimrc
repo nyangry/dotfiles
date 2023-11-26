@@ -43,13 +43,35 @@ function! s:common_handler(lines)
   endif
 endfunction
 
-command! -nargs=* CustomFZF call fzf#run({
-\   'source': 'git ls-files -oc --exclude-standard',
-\   'sink*':    function('<sid>common_handler'),
-\   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
-\              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
-\   'down':    '50%'
-\ })
+" command! -nargs=* CustomFZF call fzf#run({
+" \   'source': 'git ls-files -oc --exclude-standard',
+" \   'sink*':    function('<sid>common_handler'),
+" \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
+" \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort',
+" \   'down':    '50%'
+" \ })
+
+command! -nargs=* CustomFZF call s:custom_fzf()
+
+function! s:custom_fzf()
+  if system('git rev-parse --is-inside-work-tree') == "true\n"
+    call fzf#run({
+    \   'source': 'git ls-files -oc --exclude-standard',
+    \   'sink*':    function('<sid>common_handler'),
+    \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
+    \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort --info=inline --preview="bat --color=always --style=numbers {}"',
+    \   'down':    '50%'
+    \ })
+  else
+    call fzf#run({
+    \   'source': 'rg --files',
+    \   'sink*':    function('<sid>common_handler'),
+    \   'options': '-m -x --reverse --expect=enter,ctrl-s,ctrl-v,ctrl-n ' .
+    \              '--bind=ctrl-a:select-all,ctrl-d:deselect-all,ctrl-r:toggle-sort --info=inline --preview="bat --color=always --style=numbers {}"',
+    \   'down':    '50%'
+    \ })
+  end
+endfunction
 
 command! FZFBuffers call fzf#run(fzf#wrap({
 \   'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
