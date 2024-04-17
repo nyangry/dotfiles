@@ -470,7 +470,7 @@ return {
     config = function()
       keymap("n", "R", "<Plug>(operator-replace)", opts)
       keymap("v", "R", "<Plug>(operator-replace)", opts)
-      keymap("i", "R", "<Plug>(operator-replace)", opts)
+      -- keymap("i", "R", "<Plug>(operator-replace)", opts)
     end
   },
 
