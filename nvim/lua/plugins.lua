@@ -204,7 +204,7 @@ return {
       lspconfig.taplo.setup {}
       lspconfig.marksman.setup {}
       lspconfig.prosemd_lsp.setup {}
-      lspconfig.remark_ls.setup {}
+      -- lspconfig.remark_ls.setup {}
       lspconfig.vale_ls.setup {}
       lspconfig.zk.setup {}
       lspconfig.vimls.setup {}
