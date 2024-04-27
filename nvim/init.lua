@@ -1,21 +1,5 @@
 vim.loader.enable()
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup("plugins")
-
-
 -- options
 local options = {
   encoding = "utf-8",
@@ -66,6 +50,23 @@ vim.opt.shortmess:append("c")
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup("plugins")
+
+
 
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd([[set iskeyword+=-]])
@@ -156,10 +157,10 @@ keymap("v", "c*", [[':s ;\<' . expand('<cword>') . '\>;']], { expr = true })
 
 -- autocmds
 -- タブ幅をリセット (効いてない？)
-vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
-  pattern = '*',
-  callback = function()
-    vim.api.nvim_buf_set_option(0, 'tabstop', 2)
-    vim.api.nvim_buf_set_option(0, 'shiftwidth', 2)
-  end,
-})
+-- vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
+--   pattern = '*',
+--   callback = function()
+--     vim.api.nvim_buf_set_option(0, 'tabstop', 2)
+--     vim.api.nvim_buf_set_option(0, 'shiftwidth', 2)
+--   end,
+-- })
