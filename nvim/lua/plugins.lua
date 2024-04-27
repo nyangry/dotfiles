@@ -45,7 +45,21 @@ return {
               path = 3 -- 0 = just filename, 1 = relative path, 2 = absolute path
             }
           }
-        }
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {
+            {
+              'filename',
+              file_status = true, -- displays file status (readonly status, modified status)
+              path = 3 -- 0 = just filename, 1 = relative path, 2 = absolute path
+            }
+          },
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {}
+        },
       })
     end
   },
@@ -191,7 +205,7 @@ return {
       -- lspconfig.sourcery.setup {}
       -- lspconfig.pylsp.setup {}
       -- lspconfig.ruff_lsp.setup {}
-      lspconfig.ruby_ls.setup {}
+      lspconfig.ruby_lsp.setup {}
       lspconfig.solargraph.setup {}
       lspconfig.sorbet.setup {}
       lspconfig.standardrb.setup {}
@@ -245,7 +259,7 @@ return {
           "golangci_lint_ls", "gopls",
           "kotlin_language_server",
           "jedi_language_server", "pyre", "pyright", "pylyzer", "sourcery", "pylsp", "ruff_lsp",
-          "ruby_ls", "solargraph", "sorbet", "standardrb", "rubocop",
+          "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
           "lua_ls",
           "html",
           "cssls", "cssmodules_ls", "unocss", "tailwindcss",
@@ -381,9 +395,8 @@ return {
     end
   },
 
-  -- TODO: deprecated
   {
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     config = function ()
       local null_ls = require("null-ls")
 
@@ -392,6 +405,10 @@ return {
       local async = event == "BufWritePost"
 
       null_ls.setup({
+        sources = {
+          null_ls.builtins.formatting.black,
+          null_ls.builtins.formatting.prettierd,
+        },
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
             vim.keymap.set("n", "<Leader>f", function()
@@ -420,28 +437,12 @@ return {
     end
   },
 
-  -- formatter
   {
-    'MunifTanjim/prettier.nvim',
+    "jay-babu/mason-null-ls.nvim",
     config = function ()
-      local prettier = require("prettier")
-
-      prettier.setup({
-        bin = 'prettier', -- or `'prettierd'` (v0.23.3+)
-        filetypes = {
-          "css",
-          "graphql",
-          "html",
-          "javascript",
-          "javascriptreact",
-          "json",
-          "less",
-          "markdown",
-          "scss",
-          "typescript",
-          "typescriptreact",
-          "yaml",
-        },
+      require("mason-null-ls").setup({
+        ensure_installed = nil,
+        automatic_installation = true,
       })
     end
   },
