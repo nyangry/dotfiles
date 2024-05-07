@@ -403,10 +403,12 @@ return {
       local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
       local event = "BufWritePre" -- or "BufWritePost"
       local async = event == "BufWritePost"
-
       null_ls.setup({
         sources = {
           null_ls.builtins.formatting.black,
+          null_ls.builtins.formatting.black.with({
+              extra_args = {"--line-length=120"}
+          }),
           null_ls.builtins.formatting.prettierd,
         },
         on_attach = function(client, bufnr)
@@ -433,6 +435,7 @@ return {
             end, { buffer = bufnr, desc = "[lsp] format" })
           end
         end,
+        debug = true
       })
     end
   },
