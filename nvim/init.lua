@@ -43,6 +43,7 @@ local options = {
   sidescrolloff = 8,
   splitbelow = true,
   splitright = true,
+  wrapscan = false,
 }
 
 vim.opt.shortmess:append("c")
