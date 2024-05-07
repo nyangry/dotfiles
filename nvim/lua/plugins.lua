@@ -545,5 +545,5 @@ return {
         require("dial.map").manipulate("decrement", "normal")
       end)
     end
-  }
+  },
 }
