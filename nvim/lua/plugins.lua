@@ -129,7 +129,8 @@ return {
       vim.keymap.set('n', '<C-f>', builtin.find_files, {})
       vim.keymap.set('n', '<leader>gf', builtin.git_files, {})
       vim.keymap.set('n', '<leader>b', builtin.buffers, {})
-      vim.keymap.set('n', '<C-g>', builtin.live_grep, {})
+      vim.keymap.set('n', '<C-g>', builtin.grep_string, {})
+      vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
       vim.keymap.set('n', '<leader>ht', builtin.help_tags, {})
     end
   },
