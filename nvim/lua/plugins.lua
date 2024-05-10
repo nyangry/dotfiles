@@ -442,6 +442,27 @@ return {
     end,
   },
 
+  -- annotation / docstring generator
+  {
+    "danymat/neogen",
+    config = function()
+      local neogen = require('neogen')
+      neogen.setup({
+        input_after_comment = false,
+        languages = {
+          python = {
+            template = {
+              annotation_convention = "reST"
+            }
+          },
+        }
+      })
+      local opts = { noremap = true, silent = true }
+      vim.keymap.set("n", "<C-n>", ":lua require('neogen').generate()<CR>", opts)
+      -- vim.keymap.set("n", "<Leader>nf", ":lua require('neogen').generate({ type = 'func' })<CR>", opts)
+    end
+  },
+
   -- LSP
   {
     "williamboman/mason.nvim",
