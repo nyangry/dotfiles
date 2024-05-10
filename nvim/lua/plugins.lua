@@ -434,6 +434,14 @@ return {
     end
   },
 
+  -- action preview
+  {
+    "aznhe21/actions-preview.nvim",
+    config = function()
+      vim.keymap.set({ "v", "n" }, "<C-c>", require("actions-preview").code_actions)
+    end,
+  },
+
   -- LSP
   {
     "williamboman/mason.nvim",
