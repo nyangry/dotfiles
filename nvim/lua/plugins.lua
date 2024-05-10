@@ -435,80 +435,26 @@ return {
   },
 
   -- LSP
-  -- {
-  --   'neovim/nvim-lspconfig',
-  --   config = function()
-  --     -- Set up lspconfig.
-  --     local lspconfig = require('lspconfig')
-  --     -- lspconfig.diagnosticls.setup {}
-  --     -- lspconfig.dockerls.setup {}
-  --     -- lspconfig.docker_compose_language_service.setup {}
-  --     -- lspconfig.terraformls.setup {}
-  --     -- lspconfig.tflint.setup {}
-  --     -- lspconfig.golangci_lint_ls.setup {}
-  --     -- lspconfig.gopls.setup {}
-  --     -- lspconfig.kotlin_language_server.setup {}
-  --     -- lspconfig.jedi_language_server.setup {}
-  --     -- lspconfig.pyre.setup {}
-  --     -- lspconfig.pyright.setup {}
-  --     -- lspconfig.sourcery.setup {}
-  --     -- lspconfig.pylsp.setup {}
-  --     -- lspconfig.ruff_lsp.setup {}
-  --     -- lspconfig.ruby_lsp.setup {}
-  --     -- lspconfig.solargraph.setup {}
-  --     -- lspconfig.sorbet.setup {}
-  --     -- lspconfig.standardrb.setup {}
-  --     -- lspconfig.rubocop.setup {}
-  --     -- lspconfig.lua_ls.setup {}
-  --     -- lspconfig.html.setup {}
-  --     -- lspconfig.cssls.setup {}
-  --     -- lspconfig.cssmodules_ls.setup {}
-  --     -- lspconfig.unocss.setup {}
-  --     -- lspconfig.tailwindcss.setup {}
-  --     -- lspconfig.eslint.setup {}
-  --     -- lspconfig.quick_lint_js.setup {}
-  --     -- lspconfig.tsserver.setup {}
-  --     -- lspconfig.vtsls.setup {}
-  --     -- lspconfig.biome.setup {}
-  --     -- lspconfig.graphql.setup {}
-  --     -- lspconfig.sqlls.setup {}
-  --     -- lspconfig.jsonls.setup {}
-  --     -- lspconfig.yamlls.setup {}
-  --     -- lspconfig.taplo.setup {}
-  --     -- lspconfig.marksman.setup {}
-  --     -- lspconfig.prosemd_lsp.setup {}
-  --     -- lspconfig.remark_ls.setup {}
-  --     -- lspconfig.vale_ls.setup {}
-  --     -- lspconfig.zk.setup {}
-  --     -- lspconfig.vimls.setup {}
-  --   end
-  -- },
-
   {
     "williamboman/mason.nvim",
     config = function()
-      require("mason").setup({
-        ui = {
-          icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗"
-          }
-        }
-      })
+      require("mason").setup()
     end
   },
+
   {
     'williamboman/mason-lspconfig.nvim',
     config = function()
-      require("mason-lspconfig").setup {
+      local mason_lspconfig = require('mason-lspconfig')
+      mason_lspconfig.setup({
         ensure_installed = {
           "diagnosticls",
           "dockerls", "docker_compose_language_service",
           "terraformls", "tflint",
           "golangci_lint_ls", "gopls",
           "kotlin_language_server",
-          "jedi_language_server", "pyre", "pyright", "pylyzer", "sourcery", "pylsp", "ruff_lsp",
+          "jedi_language_server",
+          -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff_lsp",
           "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
           "lua_ls",
           "html",
@@ -523,25 +469,90 @@ return {
           "marksman", "prosemd_lsp", "remark_ls", "vale_ls", "zk",
           "vimls",
         },
-      }
+      })
+      mason_lspconfig.setup_handlers({
+        function (server_name) -- default handler (optional)
+          require("lspconfig")[server_name].setup({})
+        end,
+      })
+    end,
+  },
+
+  {
+    'neovim/nvim-lspconfig',
+    config = function()
+      -- local lspconfig = require('lspconfig')
+      -- lspconfig.diagnosticls.setup {}
+      -- lspconfig.dockerls.setup {}
+      -- lspconfig.docker_compose_language_service.setup {}
+      -- lspconfig.terraformls.setup {}
+      -- lspconfig.tflint.setup {}
+      -- lspconfig.golangci_lint_ls.setup {}
+      -- lspconfig.gopls.setup {}
+      -- lspconfig.kotlin_language_server.setup {}
+      -- lspconfig.jedi_language_server.setup {}
+      -- -- lspconfig.pyre.setup {}
+      -- -- lspconfig.pyright.setup {}
+      -- -- lspconfig.sourcery.setup {}
+      -- -- lspconfig.pylsp.setup {}
+      -- lspconfig.ruff_lsp.setup {}
+      -- lspconfig.ruby_lsp.setup {}
+      -- lspconfig.solargraph.setup {}
+      -- lspconfig.sorbet.setup {}
+      -- lspconfig.standardrb.setup {}
+      -- lspconfig.rubocop.setup {}
+      -- lspconfig.lua_ls.setup {}
+      -- lspconfig.html.setup {}
+      -- lspconfig.cssls.setup {}
+      -- lspconfig.cssmodules_ls.setup {}
+      -- lspconfig.unocss.setup {}
+      -- lspconfig.tailwindcss.setup {}
+      -- lspconfig.eslint.setup {}
+      -- lspconfig.quick_lint_js.setup {}
+      -- lspconfig.tsserver.setup {}
+      -- lspconfig.vtsls.setup {}
+      -- lspconfig.biome.setup {}
+      -- lspconfig.graphql.setup {}
+      -- lspconfig.sqlls.setup {}
+      -- lspconfig.jsonls.setup {}
+      -- lspconfig.yamlls.setup {}
+      -- lspconfig.taplo.setup {}
+      -- lspconfig.marksman.setup {}
+      -- lspconfig.prosemd_lsp.setup {}
+      -- lspconfig.remark_ls.setup {}
+      -- lspconfig.vale_ls.setup {}
+      -- lspconfig.zk.setup {}
+      -- lspconfig.vimls.setup {}
     end
   },
 
   {
+    -- 'jose-elias-alvarez/null-ls.nvim',
     'nvimtools/none-ls.nvim',
     config = function ()
       local null_ls = require("null-ls")
 
       local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
       local event = "BufWritePre" -- or "BufWritePost"
-      local async = event == "BufWritePost"
+      local async = event == "BufWritePre"
       null_ls.setup({
         sources = {
-          null_ls.builtins.formatting.black,
+          -- Github action
+          null_ls.builtins.diagnostics.actionlint,
+          -- python
+          -- null_ls.builtins.diagnostics.mypy,
+          null_ls.builtins.diagnostics.pylint.with({
+            diagnostics_postprocess = function(diagnostic)
+              diagnostic.code = diagnostic.message_id
+            end,
+          }),
+          null_ls.builtins.formatting.usort,
+          null_ls.builtins.formatting.isort,
           null_ls.builtins.formatting.black.with({
               extra_args = {"--line-length=120"}
           }),
-          null_ls.builtins.formatting.prettierd,
+          -- code formatter
+          -- null_ls.builtins.formatting.prettier,
         },
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
@@ -574,9 +585,12 @@ return {
 
   {
     "jay-babu/mason-null-ls.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "nvimtools/none-ls.nvim",
+    },
     config = function ()
       require("mason-null-ls").setup({
-        ensure_installed = nil,
         automatic_installation = true,
       })
     end
