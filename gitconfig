@@ -14,7 +14,7 @@
   autocrlf     = input
   eol          = lf
   excludesfile = ~/.gitignore
-  editor = /usr/local/bin/nvim
+  editor = vim
   commentChar = "%"
 [diff]
   ; tool      = vimdiff
