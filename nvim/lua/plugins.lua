@@ -495,7 +495,7 @@ return {
       local mason_lspconfig = require('mason-lspconfig')
       mason_lspconfig.setup({
         ensure_installed = {
-          "diagnosticls",
+          -- "diagnosticls",
           "dockerls", "docker_compose_language_service",
           "terraformls", "tflint",
           "golangci_lint_ls", "gopls",
@@ -588,11 +588,15 @@ return {
           null_ls.builtins.diagnostics.actionlint,
           -- python
           -- null_ls.builtins.diagnostics.mypy,
+          -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
           null_ls.builtins.diagnostics.pylint.with({
+            -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+            -- command = vim.fn.system({ "which", "pylint" }),
             diagnostics_postprocess = function(diagnostic)
               diagnostic.code = diagnostic.message_id
             end,
           }),
+          -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
           null_ls.builtins.formatting.usort,
           null_ls.builtins.formatting.isort,
           null_ls.builtins.formatting.black.with({
@@ -638,7 +642,8 @@ return {
     },
     config = function ()
       require("mason-null-ls").setup({
-        automatic_installation = true,
+        -- to avoid ensure install pylint ... pylint should use of each project's bin, but using mason cause a problem that mason use own bin rather than project venv's bin.
+        -- automatic_installation = true,
       })
     end
   },
