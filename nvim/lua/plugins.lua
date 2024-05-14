@@ -434,6 +434,35 @@ return {
     end
   },
 
+  {
+    'uga-rosa/translate.nvim',
+    event = "BufRead",
+    config = function ()
+      local translate = require("translate")
+      translate.setup({
+        default = {
+          command = "translate_shell",
+        },
+        preset = {
+          output = {
+            split = {
+              append = true,
+            },
+          },
+        },
+      })
+
+      vim.keymap.set({ "n" }, "<space>te", ":<C-u>Translate EN<CR>", opts)
+      vim.keymap.set({ "n" }, "<space>tj", ":<C-u>Translate JA<CR>", opts)
+      vim.keymap.set({ "n" }, "<space>tei", ":<C-u>Translate EN -output=insert<CR>", opts)
+      vim.keymap.set({ "n" }, "<space>tji", ":<C-u>Translate JA -output=insert<CR>", opts)
+      vim.keymap.set({ "v" }, "<space>te", ":Translate EN<CR>", opts)
+      vim.keymap.set({ "v" }, "<space>tj", ":Translate JA<CR>", opts)
+      vim.keymap.set({ "v" }, "<space>tei", ":Translate EN -output=insert<CR>", opts)
+      vim.keymap.set({ "v" }, "<space>tji", ":Translate JA -output=insert<CR>", opts)
+    end
+  },
+
   -- venv
   -- {
   --   'linux-cultist/venv-selector.nvim',
