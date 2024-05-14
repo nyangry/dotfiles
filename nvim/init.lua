@@ -44,6 +44,8 @@ local options = {
   splitbelow = true,
   splitright = true,
   wrapscan = false,
+  textwidth = 120,
+  formatoptions = "qjt",
 }
 
 vim.opt.shortmess:append("c")
