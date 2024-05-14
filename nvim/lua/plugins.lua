@@ -473,6 +473,18 @@ return {
     end
   },
 
+  -- yankring
+  {
+    "gbprod/yanky.nvim",
+    opts = {},
+    config = function ()
+      vim.keymap.set("n", "<C-p>", "<Plug>(YankyPreviousEntry)", opts)
+      vim.keymap.set("n", "<C-n>", "<Plug>(YankyNextEntry)", opts)
+    end
+  },
+
+  -- translate
+
   {
     'uga-rosa/translate.nvim',
     event = "BufRead",
