@@ -216,21 +216,31 @@ return {
     config = function()
     end
   },
+
+  {
+    'hrsh7th/cmp-nvim-lsp-signature-help',
+    config = function()
+    end
+  },
+
   {
     'hrsh7th/cmp-buffer',
     config = function()
     end
   },
+
   {
     'hrsh7th/cmp-path',
     config = function()
     end
   },
+
   {
     'hrsh7th/cmp-cmdline',
     config = function()
     end
   },
+
   {
     'hrsh7th/nvim-cmp',
     config = function()
@@ -263,6 +273,7 @@ return {
         }),
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
+          { name = 'nvim_lsp_signature_help' },
           { name = 'vsnip' },
           { name = 'buffer' },
         }, {
