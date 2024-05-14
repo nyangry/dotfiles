@@ -676,6 +676,8 @@ return {
         sources = {
           -- Github action
           null_ls.builtins.diagnostics.actionlint,
+          -- markdown or txt
+          null_ls.builtins.diagnostics.textlint,
           -- python
           -- null_ls.builtins.diagnostics.mypy,
           -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
@@ -694,6 +696,7 @@ return {
           }),
           -- code formatter
           -- null_ls.builtins.formatting.prettier,
+          -- null_ls.builtins.formatting.textlint,
         },
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
