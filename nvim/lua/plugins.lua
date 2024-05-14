@@ -555,7 +555,7 @@ return {
           },
         }
       })
-      vim.keymap.set("n", "<C-n>", ":lua require('neogen').generate()<CR>", opts)
+      vim.keymap.set("n", "<leader>ng", ":lua require('neogen').generate()<CR>", opts)
       -- vim.keymap.set("n", "<Leader>nf", ":lua require('neogen').generate({ type = 'func' })<CR>", opts)
     end
   },
