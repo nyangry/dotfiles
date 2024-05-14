@@ -568,6 +568,7 @@ return {
           "golangci_lint_ls", "gopls",
           "kotlin_language_server",
           "jedi_language_server",
+          -- "pyright", "pylsp", "pyre",
           -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff_lsp",
           "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
           "lua_ls",
@@ -612,10 +613,16 @@ return {
       lspconfig.jedi_language_server.setup {
         capabilities = capabilities
       }
-      -- lspconfig.pyre.setup {}
-      -- lspconfig.pyright.setup {}
+      -- lspconfig.pyre.setup {
+      --   capabilities = capabilities
+      -- }
+      -- lspconfig.pyright.setup {
+      --   capabilities = capabilities
+      -- }
+      -- lspconfig.pylsp.setup {
+      --   capabilities = capabilities
+      -- }
       -- lspconfig.sourcery.setup {}
-      -- lspconfig.pylsp.setup {}
       -- lspconfig.ruff_lsp.setup {}
       -- lspconfig.ruby_lsp.setup {}
       -- lspconfig.solargraph.setup {}
@@ -653,9 +660,6 @@ return {
     config = function ()
       local null_ls = require("null-ls")
 
-      local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-      local event = "BufWritePre" -- or "BufWritePost"
-      local async = event == "BufWritePre"
       null_ls.setup({
         sources = {
           -- Github action
@@ -686,7 +690,10 @@ return {
             end, { buffer = bufnr, desc = "[lsp] format" })
 
             -- format on save
-            vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+            -- local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+            -- local event = "BufWritePre" -- or "BufWritePost"
+            -- local async = event == "BufWritePre"
+            -- vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
             -- vim.api.nvim_create_autocmd(event, {
             --   buffer = bufnr,
             --   group = group,
@@ -703,7 +710,7 @@ return {
             end, { buffer = bufnr, desc = "[lsp] format" })
           end
         end,
-        vim.lsp.buf.format({ timeout_ms = 2000 })
+        -- vim.lsp.buf.format({ timeout_ms = 2000 })
         -- debug = true
       })
     end
