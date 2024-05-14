@@ -573,18 +573,20 @@ return {
           "vimls",
         },
       })
-      mason_lspconfig.setup_handlers({
-        function (server_name) -- default handler (optional)
-          require("lspconfig")[server_name].setup({})
-        end,
-      })
+      -- mason_lspconfig.setup_handlers({
+      --   function (server_name) -- default handler (optional)
+      --     require("lspconfig")[server_name].setup({})
+      --   end,
+      -- })
     end,
   },
 
   {
     'neovim/nvim-lspconfig',
     config = function()
-      -- local lspconfig = require('lspconfig')
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+      local lspconfig = require('lspconfig')
       -- lspconfig.diagnosticls.setup {}
       -- lspconfig.dockerls.setup {}
       -- lspconfig.docker_compose_language_service.setup {}
@@ -593,11 +595,13 @@ return {
       -- lspconfig.golangci_lint_ls.setup {}
       -- lspconfig.gopls.setup {}
       -- lspconfig.kotlin_language_server.setup {}
-      -- lspconfig.jedi_language_server.setup {}
-      -- -- lspconfig.pyre.setup {}
-      -- -- lspconfig.pyright.setup {}
-      -- -- lspconfig.sourcery.setup {}
-      -- -- lspconfig.pylsp.setup {}
+      lspconfig.jedi_language_server.setup {
+        capabilities = capabilities
+      }
+      -- lspconfig.pyre.setup {}
+      -- lspconfig.pyright.setup {}
+      -- lspconfig.sourcery.setup {}
+      -- lspconfig.pylsp.setup {}
       -- lspconfig.ruff_lsp.setup {}
       -- lspconfig.ruby_lsp.setup {}
       -- lspconfig.solargraph.setup {}
@@ -615,10 +619,10 @@ return {
       -- lspconfig.tsserver.setup {}
       -- lspconfig.vtsls.setup {}
       -- lspconfig.biome.setup {}
-      -- lspconfig.graphql.setup {}
+      lspconfig.graphql.setup {}
       -- lspconfig.sqlls.setup {}
       -- lspconfig.jsonls.setup {}
-      -- lspconfig.yamlls.setup {}
+      lspconfig.yamlls.setup {}
       -- lspconfig.taplo.setup {}
       -- lspconfig.marksman.setup {}
       -- lspconfig.prosemd_lsp.setup {}
