@@ -523,7 +523,7 @@ return {
       })
 
       vim.keymap.set({ "n" }, "<C-e>", ":<C-u>Translate EN<CR>", opts)
-      vim.keymap.set({ "n" }, "<C-j>", ":<C-u>Translate JA<CR>", opts)
+      -- vim.keymap.set({ "n" }, "<C-j>", ":<C-u>Translate JA<CR>", opts)
       vim.keymap.set({ "n" }, "<space>te", ":<C-u>Translate EN<CR>", opts)
       vim.keymap.set({ "n" }, "<space>tj", ":<C-u>Translate JA<CR>", opts)
       vim.keymap.set({ "n" }, "<space>tei", ":<C-u>Translate EN -output=insert<CR>", opts)
