@@ -64,6 +64,16 @@ return {
     end
   },
 
+  -- file explorer
+  {
+    "nvim-tree/nvim-tree.lua",
+    config = function ()
+      local nvim_tree = require("nvim-tree")
+
+      nvim_tree.setup()
+    end
+  },
+
   -- syntax provider
   {
     "nvim-treesitter/nvim-treesitter",
