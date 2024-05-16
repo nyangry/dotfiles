@@ -70,7 +70,11 @@ return {
     config = function ()
       local nvim_tree = require("nvim-tree")
 
-      nvim_tree.setup()
+      nvim_tree.setup({
+        view = {
+          width = 70,
+        },
+      })
 
       vim.keymap.set({ "n" }, "<space>t", ":NvimTreeToggle<CR>", opts)
     end
