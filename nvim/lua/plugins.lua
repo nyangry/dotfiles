@@ -80,11 +80,6 @@ return {
     end
   },
 
-  -- improve gf
-  {
-    'sam4llis/nvim-lua-gf'
-  },
-
   -- syntax provider
   {
     "nvim-treesitter/nvim-treesitter",
