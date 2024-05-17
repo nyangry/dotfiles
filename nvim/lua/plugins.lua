@@ -76,7 +76,8 @@ return {
         },
       })
 
-      vim.keymap.set({ "n" }, "<space>t", ":NvimTreeToggle<CR>", opts)
+      vim.keymap.set({ "n" }, "<leader>t", ":NvimTreeToggle<CR>", opts)
+      vim.keymap.set({ "n" }, "<leader>tf", ":NvimTreeFindFile<CR>", opts)
     end
   },
 
