@@ -712,6 +712,9 @@ return {
           null_ls.builtins.diagnostics.actionlint,
           -- markdown or txt
           null_ls.builtins.diagnostics.textlint,
+          -- json/yaml
+          null_ls.builtins.diagnostics.vacuum,
+          null_ls.builtins.diagnostics.yamllint,
           -- python
           -- null_ls.builtins.diagnostics.mypy,
           -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
@@ -729,8 +732,10 @@ return {
             extra_args = {"--line-length=120"}
           }),
           -- code formatter
-          -- null_ls.builtins.formatting.prettier,
-          -- null_ls.builtins.formatting.textlint,
+          null_ls.builtins.formatting.prettier,
+          null_ls.builtins.formatting.textlint,
+          -- Formatter, linter, bundler, and more for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
+          null_ls.builtins.formatting.biome,
         },
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
