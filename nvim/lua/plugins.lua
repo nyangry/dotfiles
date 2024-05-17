@@ -404,6 +404,15 @@ return {
     end
   },
 
+  -- keyword Jump
+  {
+    'echasnovski/mini.jump',
+    config = function()
+      local mini_jump = require('mini.jump')
+      mini_jump.setup()
+    end
+  },
+
   -- Comment
   {
     'echasnovski/mini.comment',
