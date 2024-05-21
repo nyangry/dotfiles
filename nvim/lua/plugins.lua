@@ -609,6 +609,38 @@ return {
     end
   },
 
+  -- test runner
+  {
+    "klen/nvim-test",
+    config = function()
+      local nvim_test = require('nvim-test')
+      nvim_test.setup({
+        termOpts = {
+          direction = "float", -- terminal's direction ("horizontal"|"vertical"|"float")
+        },
+      })
+
+      local nvim_test_runners_python = require("nvim-test.runners.pytest")
+      nvim_test_runners_python:setup{
+        -- https://github.com/klen/nvim-test/blob/main/lua/nvim-test/runners/pytest.lua
+        file_pattern = "\\v(__tests__/.*|test_[^.]+|[^.]+_test|tests)\\.py$",
+        find_files = { "{name}_test.py", "test_{name}.py",  "tests.py", "tests" },
+        filename_modifier = nil,
+        working_directory = nil,
+      }
+
+      -- TestSuite - run the whole test suite
+      -- TestFile - run all tests for the current file
+      -- TestEdit - edit tests for the current file
+      -- TestNearest - run the test nearest to the cursor
+      -- TestLast - rerun the latest test
+      -- TestVisit - open the last run test in the current buffer
+      -- TestInfo - show an information about the plugin
+      vim.keymap.set({ "n" }, "<leader>r", ":TestFile<CR>", opts)
+      vim.keymap.set({ "n" }, "<leader>re", ":TestEdit<CR>", opts)
+    end
+  },
+
   -- LSP
   {
     "williamboman/mason.nvim",
