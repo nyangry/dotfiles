@@ -811,7 +811,7 @@ return {
             end, { buffer = bufnr, desc = "[lsp] format" })
           end
         end,
-        vim.lsp.buf.format({ timeout_ms = 3000 })
+        vim.lsp.buf.format({ timeout_ms = 5000 })
         -- debug = true
       })
     end
