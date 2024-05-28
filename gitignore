@@ -126,3 +126,6 @@ node_modules
 .lock-wscript
 
 .tern-port
+
+
+.langchain.db
