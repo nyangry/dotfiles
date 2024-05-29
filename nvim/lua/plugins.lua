@@ -629,7 +629,7 @@ return {
       nvim_test_runners_python:setup{
         -- https://github.com/klen/nvim-test/blob/main/lua/nvim-test/runners/pytest.lua
         file_pattern = "\\v(__tests__/.*|test_[^.]+|[^.]+_test|tests)\\.py$",
-        find_files = { "{name}_test.py", "test_{name}.py",  "tests.py", "tests" },
+        find_files = { "__tests__/{name}_test.py", "{name}_test.py", "test_{name}.py",  "tests.py", "tests" },
         filename_modifier = nil,
         working_directory = nil,
       }
