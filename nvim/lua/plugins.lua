@@ -619,7 +619,9 @@ return {
       local nvim_test = require('nvim-test')
       nvim_test.setup({
         termOpts = {
-          direction = "float", -- terminal's direction ("horizontal"|"vertical"|"float")
+          direction = "vertical", -- terminal's direction ("horizontal"|"vertical"|"float")
+          width = 140,               -- terminal's width (for vertical|float)
+          height = 70,              -- terminal's height (for horizontal|float)
         },
       })
 
