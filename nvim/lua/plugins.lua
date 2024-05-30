@@ -197,6 +197,8 @@ return {
       local builtin = require('telescope.builtin')
       vim.keymap.set('n', '<C-f>', builtin.find_files, {})
       vim.keymap.set('n', '<leader>gf', builtin.git_files, {})
+      vim.keymap.set('n', '<leader>gc', builtin.git_commits, {})
+      vim.keymap.set('n', '<leader>gcb', builtin.git_bcommits, {})
       vim.keymap.set('n', '<leader>gb', builtin.git_branches, {})
       vim.keymap.set('n', '<leader>gs', builtin.git_status, {})
       vim.keymap.set('n', '<leader>gst', builtin.git_stash, {})
@@ -245,7 +247,7 @@ return {
     config = function()
       require('telescope').load_extension 'frecency'
 
-      vim.keymap.set('n', '<leader>m', '<Cmd>Telescope frecency<CR>')
+      vim.keymap.set('n', '<C-m>', '<Cmd>Telescope frecency<CR>')
     end,
   },
 
