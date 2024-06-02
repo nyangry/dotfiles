@@ -131,6 +131,7 @@ keymap("i", "<C-q><C-q>", ":qa!<CR>", opts)
 
 -- redraw!
 keymap("n", "<leader>w", ":redraw!<CR>", opts)
+keymap("n", "<leader>e", ":e!<CR>", opts)
 
 -- ビジュアルモードで選択したテキストで検索する
 -- keymap("v", "<silent> *", '"vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>', opts)
