@@ -196,16 +196,16 @@ return {
 
       local builtin = require('telescope.builtin')
       vim.keymap.set('n', '<C-f>', builtin.find_files, {})
-      vim.keymap.set('n', '<leader>gf', builtin.git_files, {})
-      vim.keymap.set('n', '<leader>gc', builtin.git_commits, {})
-      vim.keymap.set('n', '<leader>gcb', builtin.git_bcommits, {})
-      vim.keymap.set('n', '<leader>gb', builtin.git_branches, {})
-      vim.keymap.set('n', '<leader>gs', builtin.git_status, {})
-      vim.keymap.set('n', '<leader>gst', builtin.git_stash, {})
-      vim.keymap.set('n', '<leader>b', builtin.buffers, {})
+      vim.keymap.set('n', '<leader>tgf', builtin.git_files, {})
+      vim.keymap.set('n', '<leader>tgc', builtin.git_commits, {})
+      vim.keymap.set('n', '<leader>tgcb', builtin.git_bcommits, {})
+      vim.keymap.set('n', '<leader>tgb', builtin.git_branches, {})
+      vim.keymap.set('n', '<leader>tgs', builtin.git_status, {})
+      vim.keymap.set('n', '<leader>tgst', builtin.git_stash, {})
+      vim.keymap.set('n', '<leader>tb', builtin.buffers, {})
       vim.keymap.set('n', '<C-g>', builtin.grep_string, {})
       vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
-      vim.keymap.set('n', '<leader>ht', builtin.help_tags, {})
+      -- vim.keymap.set('n', '<leader>ht', builtin.help_tags, {})
     end
   },
 
