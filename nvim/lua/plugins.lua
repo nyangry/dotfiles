@@ -793,8 +793,7 @@ return {
           "golangci_lint_ls", "gopls",
           "kotlin_language_server",
           "jedi_language_server",
-          -- "pyright", "pylsp", "pyre",
-          -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff_lsp",
+          -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff_lsp", "sourcery",
           "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
           "lua_ls",
           "html",
@@ -836,7 +835,50 @@ return {
       -- lspconfig.gopls.setup {}
       -- lspconfig.kotlin_language_server.setup {}
       lspconfig.jedi_language_server.setup {
-        capabilities = capabilities
+        init_options = {
+          codeAction = {
+            nameExtractVariable = "jls_extract_var",
+            nameExtractFunction = "jls_extract_def",
+          },
+          completion = {
+            disableSnippets = false,
+            resolveEagerly = false,
+            ignorePatterns = {},
+          },
+          diagnostics = {
+            enable = true,
+            didOpen = true,
+            didChange = true,
+            didSave = true,
+          },
+          hover = {
+            enable = true,
+            disable = {
+              class = { all = false, names = {}, fullNames = {} },
+              ["function"] = { all = false, names = {}, fullNames = {} },
+              instance = { all = false, names = {}, fullNames = {} },
+              keyword = { all = false, names = {}, fullNames = {} },
+              module = { all = false, names = {}, fullNames = {} },
+              param = { all = false, names = {}, fullNames = {} },
+              path = { all = false, names = {}, fullNames = {} },
+              property = { all = false, names = {}, fullNames = {} },
+              statement = { all = false, names = {}, fullNames = {} },
+            },
+          },
+          jediSettings = {
+            autoImportModules = {},
+            caseInsensitiveCompletion = true,
+            debug = false,
+          },
+          markupKindPreferred = "markdown",
+          workspace = {
+            extraPaths = {},
+            symbols = {
+              ignoreFolders = { ".nox", ".tox", ".venv", "__pycache__", "venv" },
+              maxSymbols = 20,
+            },
+          },
+        },
       }
       -- lspconfig.pyre.setup {
       --   capabilities = capabilities
@@ -845,9 +887,29 @@ return {
       --   capabilities = capabilities
       -- }
       -- lspconfig.pylsp.setup {
-      --   capabilities = capabilities
+      --   capabilities = capabilities,
+      --   -- settings = {
+      --   --   pylsp = {
+      --   --     plugins = {
+      --   --       maxLineLength = 120,
+      --   --       jedi_completion = {
+      --   --         include_class_objects = true,
+      --   --         include_function_objects = true
+      --   --       },
+      --   --       -- jedi = {
+      --   --       --   environment = os.getenv("VENV_PATH_PYLSP")
+      --   --       -- }
+      --   --       -- note each python application may require different
+      --   --       -- virtual environment, users need to add
+      --   --       -- path to specific venv when typing command
+      --   --       -- `nvim /path/to/file.py`
+      --   --     }
+      --   --   }
+      --   -- }
       -- }
-      -- lspconfig.sourcery.setup {}
+      -- lspconfig.sourcery.setup {
+      --   capabilities = capabilities,
+      -- }
       -- lspconfig.ruff_lsp.setup {}
       -- lspconfig.ruby_lsp.setup {}
       -- lspconfig.solargraph.setup {}
