@@ -480,15 +480,15 @@ return {
   },
 
   -- Operator
-  {
-    'kana/vim-operator-replace',
-    dependencies = { 'kana/vim-operator-user' },
-    config = function()
-      keymap("n", "R", "<Plug>(operator-replace)", opts)
-      keymap("v", "R", "<Plug>(operator-replace)", opts)
-      -- keymap("i", "R", "<Plug>(operator-replace)", opts)
-    end
-  },
+  -- {
+  --   'kana/vim-operator-replace',
+  --   dependencies = { 'kana/vim-operator-user' },
+  --   config = function()
+  --     keymap("n", "R", "<Plug>(operator-replace)", opts)
+  --     keymap("v", "R", "<Plug>(operator-replace)", opts)
+  --     -- keymap("i", "R", "<Plug>(operator-replace)", opts)
+  --   end
+  -- },
 
   -- keyword Jump
   {
@@ -550,13 +550,13 @@ return {
   },
 
   -- pair
-  {
-    'echasnovski/mini.pairs',
-    version = '*',
-    config = function ()
-      require('mini.pairs').setup()
-    end
-  },
+  -- {
+  --   'echasnovski/mini.pairs',
+  --   version = '*',
+  --   config = function ()
+  --     require('mini.pairs').setup()
+  --   end
+  -- },
 
   -- autoclose and autorename html tag / js / jsx / markdown / tsx / typescript / vue / xml
   {
