@@ -390,15 +390,15 @@ return {
   },
 
   -- It allows you to quickly select, yank, delete or replace language-specific ranges.
-  {
-    'David-Kunz/treesitter-unit',
-    config = function()
-      keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
-      keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
-      keymap('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>', {noremap=true})
-      keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>', {noremap=true})
-    end
-  },
+  -- {
+  --   'David-Kunz/treesitter-unit',
+  --   config = function()
+  --     keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
+  --     keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
+  --     keymap('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>', {noremap=true})
+  --     keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>', {noremap=true})
+  --   end
+  -- },
 
   -- git sign
   {
@@ -454,10 +454,10 @@ return {
   },
 
   -- removes trailing white space and empty lines on BufWritePre
-  {
-    "mcauley-penney/tidy.nvim",
-    config = true,
-  },
+  -- {
+  --   "mcauley-penney/tidy.nvim",
+  --   config = true,
+  -- },
 
   -- mkdir
   {
@@ -653,32 +653,32 @@ return {
   -- },
 
   -- action preview
-  {
-    "aznhe21/actions-preview.nvim",
-    config = function()
-      vim.keymap.set({ "v", "n" }, "<C-c>", require("actions-preview").code_actions)
-    end,
-  },
+  -- {
+  --   "aznhe21/actions-preview.nvim",
+  --   config = function()
+  --     vim.keymap.set({ "v", "n" }, "<C-c>", require("actions-preview").code_actions)
+  --   end,
+  -- },
 
   -- annotation / docstring generator
-  {
-    "danymat/neogen",
-    config = function()
-      local neogen = require('neogen')
-      neogen.setup({
-        input_after_comment = false,
-        languages = {
-          python = {
-            template = {
-              annotation_convention = "reST"
-            }
-          },
-        }
-      })
-      vim.keymap.set("n", "<leader>ng", ":lua require('neogen').generate()<CR>", opts)
-      -- vim.keymap.set("n", "<Leader>nf", ":lua require('neogen').generate({ type = 'func' })<CR>", opts)
-    end
-  },
+  -- {
+  --   "danymat/neogen",
+  --   config = function()
+  --     local neogen = require('neogen')
+  --     neogen.setup({
+  --       input_after_comment = false,
+  --       languages = {
+  --         python = {
+  --           template = {
+  --             annotation_convention = "reST"
+  --           }
+  --         },
+  --       }
+  --     })
+  --     vim.keymap.set("n", "<leader>ng", ":lua require('neogen').generate()<CR>", opts)
+  --     -- vim.keymap.set("n", "<Leader>nf", ":lua require('neogen').generate({ type = 'func' })<CR>", opts)
+  --   end
+  -- },
 
   -- test runner
   {
@@ -715,313 +715,313 @@ return {
   },
 
   -- REPL window
-  {
-    'Vigemus/iron.nvim',
-    config = function()
-      local iron = require("iron.core")
-      iron.setup {
-        config = {
-          -- Whether a repl should be discarded or not
-          scratch_repl = true,
-          -- Your repl definitions come here
-          repl_definition = {
-            python = {
-              command = { "python" },
-              -- format = require("iron.fts.common").bracketed_paste,
-            },
-            sh = {
-              -- Can be a table or a function that
-              -- returns a table (see below)
-              command = {"zsh"}
-            }
-          },
-          -- How the repl window will be displayed
-          -- See below for more information
-          repl_open_cmd = require("iron.view").right(90),
-        },
-        -- Iron doesn't set keymaps by default anymore.
-        -- You can set them here or manually add keymaps to the functions in iron.core
-        keymaps = {
-          send_motion = "<leader>sc",
-          visual_send = "<leader>sc",
-          send_file = "<leader>sf",
-          send_line = "<leader>sl",
-          send_paragraph = "<leader>sp",
-          send_until_cursor = "<leader>su",
-          send_mark = "<leader>sm",
-          mark_motion = "<leader>mc",
-          mark_visual = "<leader>mc",
-          remove_mark = "<leader>md",
-          cr = "<leader>s<cr>",
-          interrupt = "<leader>s<leader>",
-          exit = "<leader>sq",
-          clear = "<leader>cl",
-        },
-        -- If the highlight is on, you can change how it looks
-        -- For the available options, check nvim_set_hl
-        highlight = {
-          italic = true
-        },
-        ignore_blank_lines = true, -- ignore blank lines when sending visual select lines
-      }
-
-      -- iron also has a list of commands, see :h iron-commands for all available commands
-      vim.keymap.set('n', '<leader>rs', '<cmd>IronRepl<cr>')
-      vim.keymap.set('n', '<leader>rr', '<cmd>IronRestart<cr>')
-      vim.keymap.set('n', '<leader>rf', '<cmd>IronFocus<cr>')
-      vim.keymap.set('n', '<leader>rh', '<cmd>IronHide<cr>')
-    end
-  },
+  -- {
+  --   'Vigemus/iron.nvim',
+  --   config = function()
+  --     local iron = require("iron.core")
+  --     iron.setup {
+  --       config = {
+  --         -- Whether a repl should be discarded or not
+  --         scratch_repl = true,
+  --         -- Your repl definitions come here
+  --         repl_definition = {
+  --           python = {
+  --             command = { "python" },
+  --             -- format = require("iron.fts.common").bracketed_paste,
+  --           },
+  --           sh = {
+  --             -- Can be a table or a function that
+  --             -- returns a table (see below)
+  --             command = {"zsh"}
+  --           }
+  --         },
+  --         -- How the repl window will be displayed
+  --         -- See below for more information
+  --         repl_open_cmd = require("iron.view").right(90),
+  --       },
+  --       -- Iron doesn't set keymaps by default anymore.
+  --       -- You can set them here or manually add keymaps to the functions in iron.core
+  --       keymaps = {
+  --         send_motion = "<leader>sc",
+  --         visual_send = "<leader>sc",
+  --         send_file = "<leader>sf",
+  --         send_line = "<leader>sl",
+  --         send_paragraph = "<leader>sp",
+  --         send_until_cursor = "<leader>su",
+  --         send_mark = "<leader>sm",
+  --         mark_motion = "<leader>mc",
+  --         mark_visual = "<leader>mc",
+  --         remove_mark = "<leader>md",
+  --         cr = "<leader>s<cr>",
+  --         interrupt = "<leader>s<leader>",
+  --         exit = "<leader>sq",
+  --         clear = "<leader>cl",
+  --       },
+  --       -- If the highlight is on, you can change how it looks
+  --       -- For the available options, check nvim_set_hl
+  --       highlight = {
+  --         italic = true
+  --       },
+  --       ignore_blank_lines = true, -- ignore blank lines when sending visual select lines
+  --     }
+  --
+  --     -- iron also has a list of commands, see :h iron-commands for all available commands
+  --     vim.keymap.set('n', '<leader>rs', '<cmd>IronRepl<cr>')
+  --     vim.keymap.set('n', '<leader>rr', '<cmd>IronRestart<cr>')
+  --     vim.keymap.set('n', '<leader>rf', '<cmd>IronFocus<cr>')
+  --     vim.keymap.set('n', '<leader>rh', '<cmd>IronHide<cr>')
+  --   end
+  -- },
 
   -- LSP
-  {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end
-  },
-
-  {
-    'williamboman/mason-lspconfig.nvim',
-    config = function()
-      local mason_lspconfig = require('mason-lspconfig')
-      mason_lspconfig.setup({
-        ensure_installed = {
-          -- "diagnosticls",
-          "dockerls", "docker_compose_language_service",
-          "terraformls", "tflint",
-          "golangci_lint_ls", "gopls",
-          "kotlin_language_server",
-          "jedi_language_server",
-          -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff_lsp", "sourcery",
-          "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
-          "lua_ls",
-          "html",
-          "cssls", "cssmodules_ls", "unocss", "tailwindcss",
-          "eslint",
-          "quick_lint_js", "tsserver", "vtsls",  "biome",
-          "graphql",
-          "sqlls",
-          "jsonls",
-          "yamlls",
-          "taplo",
-          "marksman", "prosemd_lsp", "remark_ls", "vale_ls", "zk",
-          "vimls",
-        },
-      })
-      -- mason_lspconfig.setup_handlers({
-      --   function (server_name) -- default handler (optional)
-      --     require("lspconfig")[server_name].setup({})
-      --   end,
-      -- })
-    end,
-  },
-
-  {
-    'neovim/nvim-lspconfig',
-    opts = {
-      inlay_hints = { enabled = true },
-    },
-    config = function()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      local lspconfig = require('lspconfig')
-      -- lspconfig.diagnosticls.setup {}
-      -- lspconfig.dockerls.setup {}
-      -- lspconfig.docker_compose_language_service.setup {}
-      -- lspconfig.terraformls.setup {}
-      -- lspconfig.tflint.setup {}
-      -- lspconfig.golangci_lint_ls.setup {}
-      -- lspconfig.gopls.setup {}
-      -- lspconfig.kotlin_language_server.setup {}
-      lspconfig.jedi_language_server.setup {
-        init_options = {
-          codeAction = {
-            nameExtractVariable = "jls_extract_var",
-            nameExtractFunction = "jls_extract_def",
-          },
-          completion = {
-            disableSnippets = false,
-            resolveEagerly = false,
-            ignorePatterns = {},
-          },
-          diagnostics = {
-            enable = true,
-            didOpen = true,
-            didChange = true,
-            didSave = true,
-          },
-          hover = {
-            enable = true,
-            disable = {
-              class = { all = false, names = {}, fullNames = {} },
-              ["function"] = { all = false, names = {}, fullNames = {} },
-              instance = { all = false, names = {}, fullNames = {} },
-              keyword = { all = false, names = {}, fullNames = {} },
-              module = { all = false, names = {}, fullNames = {} },
-              param = { all = false, names = {}, fullNames = {} },
-              path = { all = false, names = {}, fullNames = {} },
-              property = { all = false, names = {}, fullNames = {} },
-              statement = { all = false, names = {}, fullNames = {} },
-            },
-          },
-          jediSettings = {
-            autoImportModules = {},
-            caseInsensitiveCompletion = true,
-            debug = false,
-          },
-          markupKindPreferred = "markdown",
-          workspace = {
-            extraPaths = {},
-            symbols = {
-              ignoreFolders = { ".nox", ".tox", ".venv", "__pycache__", "venv" },
-              maxSymbols = 20,
-            },
-          },
-        },
-      }
-      -- lspconfig.pyre.setup {
-      --   capabilities = capabilities
-      -- }
-      -- lspconfig.pyright.setup {
-      --   capabilities = capabilities
-      -- }
-      -- lspconfig.pylsp.setup {
-      --   capabilities = capabilities,
-      --   -- settings = {
-      --   --   pylsp = {
-      --   --     plugins = {
-      --   --       maxLineLength = 120,
-      --   --       jedi_completion = {
-      --   --         include_class_objects = true,
-      --   --         include_function_objects = true
-      --   --       },
-      --   --       -- jedi = {
-      --   --       --   environment = os.getenv("VENV_PATH_PYLSP")
-      --   --       -- }
-      --   --       -- note each python application may require different
-      --   --       -- virtual environment, users need to add
-      --   --       -- path to specific venv when typing command
-      --   --       -- `nvim /path/to/file.py`
-      --   --     }
-      --   --   }
-      --   -- }
-      -- }
-      -- lspconfig.sourcery.setup {
-      --   capabilities = capabilities,
-      -- }
-      -- lspconfig.ruff_lsp.setup {}
-      -- lspconfig.ruby_lsp.setup {}
-      -- lspconfig.solargraph.setup {}
-      -- lspconfig.sorbet.setup {}
-      -- lspconfig.standardrb.setup {}
-      -- lspconfig.rubocop.setup {}
-      -- lspconfig.lua_ls.setup {}
-      -- lspconfig.html.setup {}
-      -- lspconfig.cssls.setup {}
-      -- lspconfig.cssmodules_ls.setup {}
-      -- lspconfig.unocss.setup {}
-      -- lspconfig.tailwindcss.setup {}
-      -- lspconfig.eslint.setup {}
-      -- lspconfig.quick_lint_js.setup {}
-      -- lspconfig.tsserver.setup {}
-      -- lspconfig.vtsls.setup {}
-      -- lspconfig.biome.setup {}
-      lspconfig.graphql.setup {}
-      -- lspconfig.sqlls.setup {}
-      -- lspconfig.jsonls.setup {}
-      lspconfig.yamlls.setup {}
-      -- lspconfig.taplo.setup {}
-      -- lspconfig.marksman.setup {}
-      -- lspconfig.prosemd_lsp.setup {}
-      -- lspconfig.remark_ls.setup {}
-      -- lspconfig.vale_ls.setup {}
-      -- lspconfig.zk.setup {}
-      -- lspconfig.vimls.setup {}
-    end
-  },
-
-  {
-    -- 'jose-elias-alvarez/null-ls.nvim',
-    'nvimtools/none-ls.nvim',
-    config = function ()
-      local null_ls = require("null-ls")
-
-      null_ls.setup({
-        sources = {
-          -- Github action
-          null_ls.builtins.diagnostics.actionlint,
-          -- markdown or txt
-          null_ls.builtins.diagnostics.textlint,
-          -- json/yaml
-          null_ls.builtins.diagnostics.vacuum,
-          null_ls.builtins.diagnostics.yamllint,
-          -- python
-          -- null_ls.builtins.diagnostics.mypy,
-          -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-          null_ls.builtins.diagnostics.pylint.with({
-            -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-            -- command = vim.fn.system({ "which", "pylint" }),
-            diagnostics_postprocess = function(diagnostic)
-              diagnostic.code = diagnostic.message_id
-            end,
-          }),
-          -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-          null_ls.builtins.formatting.usort,
-          null_ls.builtins.formatting.isort,
-          null_ls.builtins.formatting.black.with({
-            extra_args = {"--line-length=120"}
-          }),
-          -- code formatter
-          null_ls.builtins.formatting.prettier,
-          null_ls.builtins.formatting.textlint,
-          -- Formatter, linter, bundler, and more for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
-          null_ls.builtins.formatting.biome,
-        },
-        on_attach = function(client, bufnr)
-          if client.supports_method("textDocument/formatting") then
-            vim.keymap.set("n", "<Leader>f", function()
-              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-            end, { buffer = bufnr, desc = "[lsp] format" })
-
-            -- format on save
-            local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-            local event = "BufWritePre" -- or "BufWritePost"
-            local async = event == "BufWritePre"
-            vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-            vim.api.nvim_create_autocmd(event, {
-              buffer = bufnr,
-              group = group,
-              callback = function()
-                vim.lsp.buf.format({ bufnr = bufnr, async = async })
-              end,
-              desc = "[lsp] format on save",
-            })
-          end
-
-          if client.supports_method("textDocument/rangeFormatting") then
-            vim.keymap.set("x", "<Leader>f", function()
-              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-            end, { buffer = bufnr, desc = "[lsp] format" })
-          end
-        end,
-        vim.lsp.buf.format({ timeout_ms = 5000 })
-        -- debug = true
-      })
-    end
-  },
-
-  {
-    "jay-babu/mason-null-ls.nvim",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "nvimtools/none-ls.nvim",
-    },
-    config = function ()
-      require("mason-null-ls").setup({
-        -- to avoid ensure install pylint ... pylint should use of each project's bin, but using mason cause a problem that mason use own bin rather than project venv's bin.
-        -- automatic_installation = true,
-      })
-    end
-  },
+  -- {
+  --   "williamboman/mason.nvim",
+  --   config = function()
+  --     require("mason").setup()
+  --   end
+  -- },
+  --
+  -- {
+  --   'williamboman/mason-lspconfig.nvim',
+  --   config = function()
+  --     local mason_lspconfig = require('mason-lspconfig')
+  --     mason_lspconfig.setup({
+  --       ensure_installed = {
+  --         -- "diagnosticls",
+  --         "dockerls", "docker_compose_language_service",
+  --         "terraformls", "tflint",
+  --         "golangci_lint_ls", "gopls",
+  --         "kotlin_language_server",
+  --         "jedi_language_server",
+  --         -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff_lsp", "sourcery",
+  --         "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
+  --         "lua_ls",
+  --         "html",
+  --         "cssls", "cssmodules_ls", "unocss", "tailwindcss",
+  --         "eslint",
+  --         "quick_lint_js", "tsserver", "vtsls",  "biome",
+  --         "graphql",
+  --         "sqlls",
+  --         "jsonls",
+  --         "yamlls",
+  --         "taplo",
+  --         "marksman", "prosemd_lsp", "remark_ls", "vale_ls", "zk",
+  --         "vimls",
+  --       },
+  --     })
+  --     -- mason_lspconfig.setup_handlers({
+  --     --   function (server_name) -- default handler (optional)
+  --     --     require("lspconfig")[server_name].setup({})
+  --     --   end,
+  --     -- })
+  --   end,
+  -- },
+  --
+  -- {
+  --   'neovim/nvim-lspconfig',
+  --   opts = {
+  --     inlay_hints = { enabled = true },
+  --   },
+  --   config = function()
+  --     local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  --
+  --     local lspconfig = require('lspconfig')
+  --     -- lspconfig.diagnosticls.setup {}
+  --     -- lspconfig.dockerls.setup {}
+  --     -- lspconfig.docker_compose_language_service.setup {}
+  --     -- lspconfig.terraformls.setup {}
+  --     -- lspconfig.tflint.setup {}
+  --     -- lspconfig.golangci_lint_ls.setup {}
+  --     -- lspconfig.gopls.setup {}
+  --     -- lspconfig.kotlin_language_server.setup {}
+  --     lspconfig.jedi_language_server.setup {
+  --       init_options = {
+  --         codeAction = {
+  --           nameExtractVariable = "jls_extract_var",
+  --           nameExtractFunction = "jls_extract_def",
+  --         },
+  --         completion = {
+  --           disableSnippets = false,
+  --           resolveEagerly = false,
+  --           ignorePatterns = {},
+  --         },
+  --         diagnostics = {
+  --           enable = true,
+  --           didOpen = true,
+  --           didChange = true,
+  --           didSave = true,
+  --         },
+  --         hover = {
+  --           enable = true,
+  --           disable = {
+  --             class = { all = false, names = {}, fullNames = {} },
+  --             ["function"] = { all = false, names = {}, fullNames = {} },
+  --             instance = { all = false, names = {}, fullNames = {} },
+  --             keyword = { all = false, names = {}, fullNames = {} },
+  --             module = { all = false, names = {}, fullNames = {} },
+  --             param = { all = false, names = {}, fullNames = {} },
+  --             path = { all = false, names = {}, fullNames = {} },
+  --             property = { all = false, names = {}, fullNames = {} },
+  --             statement = { all = false, names = {}, fullNames = {} },
+  --           },
+  --         },
+  --         jediSettings = {
+  --           autoImportModules = {},
+  --           caseInsensitiveCompletion = true,
+  --           debug = false,
+  --         },
+  --         markupKindPreferred = "markdown",
+  --         workspace = {
+  --           extraPaths = {},
+  --           symbols = {
+  --             ignoreFolders = { ".nox", ".tox", ".venv", "__pycache__", "venv" },
+  --             maxSymbols = 20,
+  --           },
+  --         },
+  --       },
+  --     }
+  --     -- lspconfig.pyre.setup {
+  --     --   capabilities = capabilities
+  --     -- }
+  --     -- lspconfig.pyright.setup {
+  --     --   capabilities = capabilities
+  --     -- }
+  --     -- lspconfig.pylsp.setup {
+  --     --   capabilities = capabilities,
+  --     --   -- settings = {
+  --     --   --   pylsp = {
+  --     --   --     plugins = {
+  --     --   --       maxLineLength = 120,
+  --     --   --       jedi_completion = {
+  --     --   --         include_class_objects = true,
+  --     --   --         include_function_objects = true
+  --     --   --       },
+  --     --   --       -- jedi = {
+  --     --   --       --   environment = os.getenv("VENV_PATH_PYLSP")
+  --     --   --       -- }
+  --     --   --       -- note each python application may require different
+  --     --   --       -- virtual environment, users need to add
+  --     --   --       -- path to specific venv when typing command
+  --     --   --       -- `nvim /path/to/file.py`
+  --     --   --     }
+  --     --   --   }
+  --     --   -- }
+  --     -- }
+  --     -- lspconfig.sourcery.setup {
+  --     --   capabilities = capabilities,
+  --     -- }
+  --     -- lspconfig.ruff_lsp.setup {}
+  --     -- lspconfig.ruby_lsp.setup {}
+  --     -- lspconfig.solargraph.setup {}
+  --     -- lspconfig.sorbet.setup {}
+  --     -- lspconfig.standardrb.setup {}
+  --     -- lspconfig.rubocop.setup {}
+  --     -- lspconfig.lua_ls.setup {}
+  --     -- lspconfig.html.setup {}
+  --     -- lspconfig.cssls.setup {}
+  --     -- lspconfig.cssmodules_ls.setup {}
+  --     -- lspconfig.unocss.setup {}
+  --     -- lspconfig.tailwindcss.setup {}
+  --     -- lspconfig.eslint.setup {}
+  --     -- lspconfig.quick_lint_js.setup {}
+  --     -- lspconfig.tsserver.setup {}
+  --     -- lspconfig.vtsls.setup {}
+  --     -- lspconfig.biome.setup {}
+  --     lspconfig.graphql.setup {}
+  --     -- lspconfig.sqlls.setup {}
+  --     -- lspconfig.jsonls.setup {}
+  --     lspconfig.yamlls.setup {}
+  --     -- lspconfig.taplo.setup {}
+  --     -- lspconfig.marksman.setup {}
+  --     -- lspconfig.prosemd_lsp.setup {}
+  --     -- lspconfig.remark_ls.setup {}
+  --     -- lspconfig.vale_ls.setup {}
+  --     -- lspconfig.zk.setup {}
+  --     -- lspconfig.vimls.setup {}
+  --   end
+  -- },
+  --
+  -- {
+  --   -- 'jose-elias-alvarez/null-ls.nvim',
+  --   'nvimtools/none-ls.nvim',
+  --   config = function ()
+  --     local null_ls = require("null-ls")
+  --
+  --     null_ls.setup({
+  --       sources = {
+  --         -- Github action
+  --         null_ls.builtins.diagnostics.actionlint,
+  --         -- markdown or txt
+  --         null_ls.builtins.diagnostics.textlint,
+  --         -- json/yaml
+  --         null_ls.builtins.diagnostics.vacuum,
+  --         null_ls.builtins.diagnostics.yamllint,
+  --         -- python
+  --         -- null_ls.builtins.diagnostics.mypy,
+  --         -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+  --         null_ls.builtins.diagnostics.pylint.with({
+  --           -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+  --           -- command = vim.fn.system({ "which", "pylint" }),
+  --           diagnostics_postprocess = function(diagnostic)
+  --             diagnostic.code = diagnostic.message_id
+  --           end,
+  --         }),
+  --         -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+  --         null_ls.builtins.formatting.usort,
+  --         null_ls.builtins.formatting.isort,
+  --         null_ls.builtins.formatting.black.with({
+  --           extra_args = {"--line-length=120"}
+  --         }),
+  --         -- code formatter
+  --         null_ls.builtins.formatting.prettier,
+  --         null_ls.builtins.formatting.textlint,
+  --         -- Formatter, linter, bundler, and more for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
+  --         null_ls.builtins.formatting.biome,
+  --       },
+  --       on_attach = function(client, bufnr)
+  --         if client.supports_method("textDocument/formatting") then
+  --           vim.keymap.set("n", "<Leader>f", function()
+  --             vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+  --           end, { buffer = bufnr, desc = "[lsp] format" })
+  --
+  --           -- format on save
+  --           local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+  --           local event = "BufWritePre" -- or "BufWritePost"
+  --           local async = event == "BufWritePre"
+  --           vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+  --           vim.api.nvim_create_autocmd(event, {
+  --             buffer = bufnr,
+  --             group = group,
+  --             callback = function()
+  --               vim.lsp.buf.format({ bufnr = bufnr, async = async })
+  --             end,
+  --             desc = "[lsp] format on save",
+  --           })
+  --         end
+  --
+  --         if client.supports_method("textDocument/rangeFormatting") then
+  --           vim.keymap.set("x", "<Leader>f", function()
+  --             vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+  --           end, { buffer = bufnr, desc = "[lsp] format" })
+  --         end
+  --       end,
+  --       vim.lsp.buf.format({ timeout_ms = 5000 })
+  --       -- debug = true
+  --     })
+  --   end
+  -- },
+  --
+  -- {
+  --   "jay-babu/mason-null-ls.nvim",
+  --   dependencies = {
+  --     "williamboman/mason.nvim",
+  --     "nvimtools/none-ls.nvim",
+  --   },
+  --   config = function ()
+  --     require("mason-null-ls").setup({
+  --       -- to avoid ensure install pylint ... pylint should use of each project's bin, but using mason cause a problem that mason use own bin rather than project venv's bin.
+  --       -- automatic_installation = true,
+  --     })
+  --   end
+  -- },
 }
