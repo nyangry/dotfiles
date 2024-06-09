@@ -103,7 +103,7 @@ return {
       local configs = require("nvim-treesitter.configs")
 
       configs.setup({
-        ensure_installed = { "python", "kotlin", "ruby", "lua", "vim", "sql", "graphql", "json", "yaml", "javascript", "html" },
+        ensure_installed = { "python", "kotlin", "ruby", "lua", "vim", "sql", "graphql", "json", "yaml", "javascript", "html", "markdown", "markdown_inline"},
         sync_install = false,
         highlight = { enable = true },
         indent = { enable = true },
@@ -373,20 +373,6 @@ return {
     'hrsh7th/vim-vsnip',
     config = function()
     end
-  },
-
-  -- Extensible UI for Neovim notifications and LSP progress messages
-  {
-    "j-hui/fidget.nvim",
-    config = function()
-      require("fidget").setup {}
-    end
-  },
-
-  {
-    "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {},
   },
 
   -- It allows you to quickly select, yank, delete or replace language-specific ranges.
@@ -775,253 +761,232 @@ return {
 
   -- LSP
   -- {
-  --   "williamboman/mason.nvim",
-  --   config = function()
-  --     require("mason").setup()
-  --   end
+  --   'neoclide/coc.nvim', 
+  --   branch = 'release',
   -- },
-  --
-  -- {
-  --   'williamboman/mason-lspconfig.nvim',
-  --   config = function()
-  --     local mason_lspconfig = require('mason-lspconfig')
-  --     mason_lspconfig.setup({
-  --       ensure_installed = {
-  --         -- "diagnosticls",
-  --         "dockerls", "docker_compose_language_service",
-  --         "terraformls", "tflint",
-  --         "golangci_lint_ls", "gopls",
-  --         "kotlin_language_server",
-  --         "jedi_language_server",
-  --         -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff_lsp", "sourcery",
-  --         "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
-  --         "lua_ls",
-  --         "html",
-  --         "cssls", "cssmodules_ls", "unocss", "tailwindcss",
-  --         "eslint",
-  --         "quick_lint_js", "tsserver", "vtsls",  "biome",
-  --         "graphql",
-  --         "sqlls",
-  --         "jsonls",
-  --         "yamlls",
-  --         "taplo",
-  --         "marksman", "prosemd_lsp", "remark_ls", "vale_ls", "zk",
-  --         "vimls",
-  --       },
-  --     })
-  --     -- mason_lspconfig.setup_handlers({
-  --     --   function (server_name) -- default handler (optional)
-  --     --     require("lspconfig")[server_name].setup({})
-  --     --   end,
-  --     -- })
-  --   end,
-  -- },
-  --
-  -- {
-  --   'neovim/nvim-lspconfig',
-  --   opts = {
-  --     inlay_hints = { enabled = true },
-  --   },
-  --   config = function()
-  --     local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  --
-  --     local lspconfig = require('lspconfig')
-  --     -- lspconfig.diagnosticls.setup {}
-  --     -- lspconfig.dockerls.setup {}
-  --     -- lspconfig.docker_compose_language_service.setup {}
-  --     -- lspconfig.terraformls.setup {}
-  --     -- lspconfig.tflint.setup {}
-  --     -- lspconfig.golangci_lint_ls.setup {}
-  --     -- lspconfig.gopls.setup {}
-  --     -- lspconfig.kotlin_language_server.setup {}
-  --     lspconfig.jedi_language_server.setup {
-  --       init_options = {
-  --         codeAction = {
-  --           nameExtractVariable = "jls_extract_var",
-  --           nameExtractFunction = "jls_extract_def",
-  --         },
-  --         completion = {
-  --           disableSnippets = false,
-  --           resolveEagerly = false,
-  --           ignorePatterns = {},
-  --         },
-  --         diagnostics = {
-  --           enable = true,
-  --           didOpen = true,
-  --           didChange = true,
-  --           didSave = true,
-  --         },
-  --         hover = {
-  --           enable = true,
-  --           disable = {
-  --             class = { all = false, names = {}, fullNames = {} },
-  --             ["function"] = { all = false, names = {}, fullNames = {} },
-  --             instance = { all = false, names = {}, fullNames = {} },
-  --             keyword = { all = false, names = {}, fullNames = {} },
-  --             module = { all = false, names = {}, fullNames = {} },
-  --             param = { all = false, names = {}, fullNames = {} },
-  --             path = { all = false, names = {}, fullNames = {} },
-  --             property = { all = false, names = {}, fullNames = {} },
-  --             statement = { all = false, names = {}, fullNames = {} },
-  --           },
-  --         },
-  --         jediSettings = {
-  --           autoImportModules = {},
-  --           caseInsensitiveCompletion = true,
-  --           debug = false,
-  --         },
-  --         markupKindPreferred = "markdown",
-  --         workspace = {
-  --           extraPaths = {},
-  --           symbols = {
-  --             ignoreFolders = { ".nox", ".tox", ".venv", "__pycache__", "venv" },
-  --             maxSymbols = 20,
-  --           },
-  --         },
-  --       },
-  --     }
-  --     -- lspconfig.pyre.setup {
-  --     --   capabilities = capabilities
-  --     -- }
-  --     -- lspconfig.pyright.setup {
-  --     --   capabilities = capabilities
-  --     -- }
-  --     -- lspconfig.pylsp.setup {
-  --     --   capabilities = capabilities,
-  --     --   -- settings = {
-  --     --   --   pylsp = {
-  --     --   --     plugins = {
-  --     --   --       maxLineLength = 120,
-  --     --   --       jedi_completion = {
-  --     --   --         include_class_objects = true,
-  --     --   --         include_function_objects = true
-  --     --   --       },
-  --     --   --       -- jedi = {
-  --     --   --       --   environment = os.getenv("VENV_PATH_PYLSP")
-  --     --   --       -- }
-  --     --   --       -- note each python application may require different
-  --     --   --       -- virtual environment, users need to add
-  --     --   --       -- path to specific venv when typing command
-  --     --   --       -- `nvim /path/to/file.py`
-  --     --   --     }
-  --     --   --   }
-  --     --   -- }
-  --     -- }
-  --     -- lspconfig.sourcery.setup {
-  --     --   capabilities = capabilities,
-  --     -- }
-  --     -- lspconfig.ruff_lsp.setup {}
-  --     -- lspconfig.ruby_lsp.setup {}
-  --     -- lspconfig.solargraph.setup {}
-  --     -- lspconfig.sorbet.setup {}
-  --     -- lspconfig.standardrb.setup {}
-  --     -- lspconfig.rubocop.setup {}
-  --     -- lspconfig.lua_ls.setup {}
-  --     -- lspconfig.html.setup {}
-  --     -- lspconfig.cssls.setup {}
-  --     -- lspconfig.cssmodules_ls.setup {}
-  --     -- lspconfig.unocss.setup {}
-  --     -- lspconfig.tailwindcss.setup {}
-  --     -- lspconfig.eslint.setup {}
-  --     -- lspconfig.quick_lint_js.setup {}
-  --     -- lspconfig.tsserver.setup {}
-  --     -- lspconfig.vtsls.setup {}
-  --     -- lspconfig.biome.setup {}
-  --     lspconfig.graphql.setup {}
-  --     -- lspconfig.sqlls.setup {}
-  --     -- lspconfig.jsonls.setup {}
-  --     lspconfig.yamlls.setup {}
-  --     -- lspconfig.taplo.setup {}
-  --     -- lspconfig.marksman.setup {}
-  --     -- lspconfig.prosemd_lsp.setup {}
-  --     -- lspconfig.remark_ls.setup {}
-  --     -- lspconfig.vale_ls.setup {}
-  --     -- lspconfig.zk.setup {}
-  --     -- lspconfig.vimls.setup {}
-  --   end
-  -- },
-  --
-  -- {
-  --   -- 'jose-elias-alvarez/null-ls.nvim',
-  --   'nvimtools/none-ls.nvim',
-  --   config = function ()
-  --     local null_ls = require("null-ls")
-  --
-  --     null_ls.setup({
-  --       sources = {
-  --         -- Github action
-  --         null_ls.builtins.diagnostics.actionlint,
-  --         -- markdown or txt
-  --         null_ls.builtins.diagnostics.textlint,
-  --         -- json/yaml
-  --         null_ls.builtins.diagnostics.vacuum,
-  --         null_ls.builtins.diagnostics.yamllint,
-  --         -- python
-  --         -- null_ls.builtins.diagnostics.mypy,
-  --         -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-  --         null_ls.builtins.diagnostics.pylint.with({
-  --           -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-  --           -- command = vim.fn.system({ "which", "pylint" }),
-  --           diagnostics_postprocess = function(diagnostic)
-  --             diagnostic.code = diagnostic.message_id
-  --           end,
-  --         }),
-  --         -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-  --         null_ls.builtins.formatting.usort,
-  --         null_ls.builtins.formatting.isort,
-  --         null_ls.builtins.formatting.black.with({
-  --           extra_args = {"--line-length=120"}
-  --         }),
-  --         -- code formatter
-  --         null_ls.builtins.formatting.prettier,
-  --         null_ls.builtins.formatting.textlint,
-  --         -- Formatter, linter, bundler, and more for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
-  --         null_ls.builtins.formatting.biome,
-  --       },
-  --       on_attach = function(client, bufnr)
-  --         if client.supports_method("textDocument/formatting") then
-  --           vim.keymap.set("n", "<Leader>f", function()
-  --             vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-  --           end, { buffer = bufnr, desc = "[lsp] format" })
-  --
-  --           -- format on save
-  --           local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-  --           local event = "BufWritePre" -- or "BufWritePost"
-  --           local async = event == "BufWritePre"
-  --           vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-  --           vim.api.nvim_create_autocmd(event, {
-  --             buffer = bufnr,
-  --             group = group,
-  --             callback = function()
-  --               vim.lsp.buf.format({ bufnr = bufnr, async = async })
-  --             end,
-  --             desc = "[lsp] format on save",
-  --           })
-  --         end
-  --
-  --         if client.supports_method("textDocument/rangeFormatting") then
-  --           vim.keymap.set("x", "<Leader>f", function()
-  --             vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-  --           end, { buffer = bufnr, desc = "[lsp] format" })
-  --         end
-  --       end,
-  --       vim.lsp.buf.format({ timeout_ms = 5000 })
-  --       -- debug = true
-  --     })
-  --   end
-  -- },
-  --
-  -- {
-  --   "jay-babu/mason-null-ls.nvim",
-  --   dependencies = {
-  --     "williamboman/mason.nvim",
-  --     "nvimtools/none-ls.nvim",
-  --   },
-  --   config = function ()
-  --     require("mason-null-ls").setup({
-  --       -- to avoid ensure install pylint ... pylint should use of each project's bin, but using mason cause a problem that mason use own bin rather than project venv's bin.
-  --       -- automatic_installation = true,
-  --     })
-  --   end
-  -- },
+
+  {
+    "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup()
+    end
+  },
+
+  {
+    'williamboman/mason-lspconfig.nvim',
+    config = function()
+      local mason_lspconfig = require('mason-lspconfig')
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      mason_lspconfig.setup({
+        ensure_installed = {
+          -- "diagnosticls",
+          -- "dockerls", "docker_compose_language_service",
+          -- "terraformls", "tflint",
+          -- "golangci_lint_ls", "gopls",
+          "kotlin_language_server",
+          "jedi_language_server",
+          -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff_lsp", "sourcery",
+          -- "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
+          -- "lua_ls",
+          -- "html",
+          -- "cssls", "cssmodules_ls", "unocss", "tailwindcss",
+          -- "eslint",
+          -- "quick_lint_js", "tsserver", "vtsls",  "biome",
+          -- "graphql",
+          -- "sqlls",
+          -- "jsonls",
+          "yamlls",
+          -- "taplo",
+          -- "marksman", "prosemd_lsp", "remark_ls", "vale_ls", "zk",
+          -- "vimls",
+        },
+      })
+      -- mason_lspconfig.setup_handlers({
+      --   function (server_name) -- default handler (optional)
+      --     require("lspconfig")[server_name].setup({
+      --       capabilities = capabilities,
+      --     })
+      --   end,
+      -- })
+    end,
+  },
+
+  {
+    'neovim/nvim-lspconfig',
+    -- opts = {
+    --   inlay_hints = { enabled = true },
+    -- },
+    config = function()
+      local lspconfig = require('lspconfig')
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+      lspconfig.jedi_language_server.setup {}
+      -- lspconfig.jedi_language_server.setup {
+      --   settings = {
+      --     jedi = {
+      --       codeAction = {
+      --         nameExtractVariable = "jls_extract_var",
+      --         nameExtractFunction = "jls_extract_def",
+      --       },
+      --       completion = {
+      --         disableSnippets = false,
+      --         fuzzy = true,
+      --         includeParams = true,
+      --         resolveEagerly = true,
+      --       },
+      --       diagnostics = {
+      --         enable = true,
+      --       },
+      --       hover = {
+      --         enable = true,
+      --       },
+      --       references = {
+      --         enable = true,
+      --       },
+      --       symbols = {
+      --         enable = true,
+      --       },
+      --       workspace = {
+      --         extraPaths = {},
+      --         symbols = {
+      --           ignoreFolders = { ".nox", ".tox", ".venv", "__pycache__", "venv" },
+      --           maxSymbols = 20,
+      --         },
+      --       },
+      --     }
+      --   }
+      -- }
+    end
+  },
+
+  {
+    'nvimdev/lspsaga.nvim',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter', -- optional
+      'nvim-tree/nvim-web-devicons',     -- optional
+    },
+    config = function()
+      require('lspsaga').setup({
+        code_action = {
+          extend_gitsigns = true,
+        },
+        finder = {
+          max_height = 0.7,
+          left_width = 0.3,
+          right_width = 0.6,
+          keys = {
+            shuttle = "<Space>w",
+            toggle_or_open = "<CR>"
+          }
+        },
+        lightbulb = {
+          enable = false,
+        },
+      })
+
+      vim.keymap.set('n', 'gr', "<cmd>Lspsaga finder ref+def<CR>", opts)
+      vim.keymap.set('n', 'K', "<cmd>Lspsaga hover_doc<CR>", opts)
+      -- vim.keymap.set({ 'n', 'i' }, '<M-CR>', "<cmd>Lspsaga code_action<CR>", opts)
+    end,
+  },
+
+  -- Extensible UI for Neovim notifications and LSP progress messages
+  {
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup {}
+    end
+  },
+
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {},
+  },
+
+
+  {
+    -- 'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
+    config = function ()
+      local null_ls = require("null-ls")
+
+      null_ls.setup({
+        sources = {
+          -- Github action
+          -- null_ls.builtins.diagnostics.actionlint,
+          -- markdown or txt
+          -- null_ls.builtins.diagnostics.textlint,
+          -- json/yaml
+          -- null_ls.builtins.diagnostics.vacuum,
+          -- null_ls.builtins.diagnostics.yamllint,
+          -- python
+          -- null_ls.builtins.diagnostics.mypy,
+          -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+          null_ls.builtins.diagnostics.pylint.with({
+            -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+            -- command = vim.fn.system({ "which", "pylint" }),
+            diagnostics_postprocess = function(diagnostic)
+              diagnostic.code = diagnostic.message_id
+            end,
+          }),
+          -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+          -- null_ls.builtins.formatting.usort,
+          null_ls.builtins.formatting.isort,
+          null_ls.builtins.formatting.black,
+          -- null_ls.builtins.formatting.black.with({
+          --   extra_args = {"--line-length=120"}
+          -- }),
+          -- code formatter
+          null_ls.builtins.formatting.prettier,
+          -- null_ls.builtins.formatting.textlint,
+          -- Formatter, linter, bundler, and more for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
+          -- null_ls.builtins.formatting.biome,
+        },
+        on_attach = function(client, bufnr)
+          if client.supports_method("textDocument/formatting") then
+            vim.keymap.set("n", "<Leader>f", function()
+              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+            end, { buffer = bufnr, desc = "[lsp] format" })
+
+            -- format on save
+            local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+            local event = "BufWritePre" -- or "BufWritePost"
+            local async = event == "BufWritePre"
+            vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+            vim.api.nvim_create_autocmd(event, {
+              buffer = bufnr,
+              group = group,
+              callback = function()
+                vim.lsp.buf.format({ bufnr = bufnr, async = async })
+              end,
+              desc = "[lsp] format on save",
+            })
+          end
+
+          if client.supports_method("textDocument/rangeFormatting") then
+            vim.keymap.set("x", "<Leader>f", function()
+              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+            end, { buffer = bufnr, desc = "[lsp] format" })
+          end
+        end,
+        vim.lsp.buf.format({ timeout_ms = 5000 })
+        -- debug = true
+      })
+    end
+  },
+
+  {
+    "jay-babu/mason-null-ls.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "nvimtools/none-ls.nvim",
+    },
+    config = function ()
+      require("mason-null-ls").setup({
+        -- to avoid ensure install pylint ... pylint should use of each project's bin, but using mason cause a problem that mason use own bin rather than project venv's bin.
+        -- automatic_installation = true,
+      })
+    end
+  },
 }
