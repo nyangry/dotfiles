@@ -87,7 +87,7 @@ local keymap = vim.api.nvim_set_keymap
 
 
 -- file delete
-keymap("n", ",fd", ":call delete(expand('%'))<CR>", opts)
+keymap("n", "<leader>fd", ":call delete(expand('%'))<CR>", opts)
 --
 
 keymap("n", "*", "*zz", opts)
@@ -162,6 +162,28 @@ keymap("n", "<c-right>", "<c-w>l", opts)
 keymap("n", "c*", [[':%s ;\<' . expand('<cword>') . '\>;']], { expr = true })
 keymap("v", "c*", [[':s ;\<' . expand('<cword>') . '\>;']], { expr = true })
 
+-- for LSP
+local function lspkeys()
+  -- C-X C-O for completion
+  vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
+  -- gq to format code
+  vim.opt_local.formatexpr = "v:lua.vim.lsp.formatexpr"
+  -- C-], C-W ], C-W } for jump to definitions
+  vim.opt_local.tagfunc = "v:lua.vim.lsp.tagfunc"
+  vim.api.nvim_buf_set_keymap(0, "n", "gD",       "<cmd>lua vim.lsp.buf.declaration()<CR>",     { silent = true })
+  vim.api.nvim_buf_set_keymap(0, "n", "gd",       "<cmd>lua vim.lsp.buf.definition()<CR>",      { silent = true })
+  -- vim.api.nvim_buf_set_keymap(0, "n", "gr",       "<cmd>lua vim.lsp.buf.references()<CR>",      { silent = true })
+  -- vim.api.nvim_buf_set_keymap(0, "n", "K",        "<cmd>lua vim.lsp.buf.hover()<CR>",           { silent = true })
+  vim.api.nvim_buf_set_keymap(0, "n", "gi",       "<cmd>lua vim.lsp.buf.implementation()<CR>",  { silent = true })
+  vim.api.nvim_buf_set_keymap(0, "n", "<C-k>",    "<cmd>lua vim.lsp.buf.signature_help()<CR>",  { silent = true })
+  vim.api.nvim_buf_set_keymap(0, "n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", { silent = true })
+  vim.api.nvim_buf_set_keymap(0, "n", "<space>rn","<cmd>lua vim.lsp.buf.rename()<CR>",          { silent = true })
+  vim.api.nvim_buf_set_keymap(0, "n", "<space>ca","<cmd>lua vim.lsp.buf.code_action()<CR>",     { silent = true })
+  vim.api.nvim_buf_set_keymap(0, "n", "<space>f", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", { silent = true })
+  vim.api.nvim_buf_set_keymap(0, "n", "gS",       "<cmd>lua vim.lsp.buf.document_symbol()<CR>", { silent = true })
+  vim.api.nvim_buf_set_keymap(0, "n", "gW",       "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>",{ silent = true })
+end
+vim.api.nvim_create_autocmd("FileType", { pattern = "python", callback = lspkeys })
 
 -- autocmds
 -- タブ幅をリセット (効いてない？)
