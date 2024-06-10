@@ -83,6 +83,7 @@ return {
   -- file explorer
   {
     "nvim-tree/nvim-tree.lua",
+    event = "VeryLazy",
     config = function ()
       local nvim_tree = require("nvim-tree")
 
@@ -101,6 +102,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    event = "VeryLazy",
     config = function ()
       local configs = require("nvim-treesitter.configs")
 
@@ -116,6 +118,7 @@ return {
   -- context support for nvim-treesitter
   {
     "nvim-treesitter/nvim-treesitter-context",
+    event = "VeryLazy",
     config = function ()
       require('treesitter-context').setup {
         enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
@@ -137,6 +140,7 @@ return {
   -- textsubjects for nvim-treesitter
   {
     'RRethy/nvim-treesitter-textsubjects',
+    event = "VeryLazy",
     config = function ()
       require('nvim-treesitter.configs').setup {
         textsubjects = {
@@ -155,6 +159,7 @@ return {
   -- code outline window
   {
     'stevearc/aerial.nvim',
+    event = "VeryLazy",
     opts = {},
     -- Optional dependencies
     dependencies = {
@@ -182,6 +187,7 @@ return {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.4',
     dependencies = { 'nvim-lua/plenary.nvim' },
+    event = "VeryLazy",
     config = function()
       local telescope = require("telescope")
       local actions = require("telescope.actions")
@@ -215,6 +221,7 @@ return {
   {
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
+    event = "VeryLazy",
     config = function()
       require("telescope").setup({
         defaults = {
@@ -246,6 +253,7 @@ return {
   -- MRU provider for telescope
   {
     'nvim-telescope/telescope-frecency.nvim',
+    event = "VeryLazy",
     config = function()
       require('telescope').load_extension 'frecency'
 
@@ -257,6 +265,7 @@ return {
   {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    event = "VeryLazy",
     config = function()
       require("telescope").load_extension "file_browser"
     end
@@ -264,30 +273,35 @@ return {
 
   {
     'hrsh7th/cmp-nvim-lsp',
+    event = "VeryLazy",
     config = function()
     end
   },
 
   {
     'hrsh7th/cmp-nvim-lsp-signature-help',
+    event = "VeryLazy",
     config = function()
     end
   },
 
   {
     'hrsh7th/cmp-buffer',
+    event = "VeryLazy",
     config = function()
     end
   },
 
   {
     'hrsh7th/cmp-path',
+    event = "VeryLazy",
     config = function()
     end
   },
 
   {
     'hrsh7th/cmp-cmdline',
+    event = "VeryLazy",
     config = function()
     end
   },
@@ -369,11 +383,13 @@ return {
   },
   {
     'hrsh7th/cmp-vsnip',
+    event = "VeryLazy",
     config = function()
     end
   },
   {
     'hrsh7th/vim-vsnip',
+    event = "VeryLazy",
     config = function()
     end
   },
@@ -381,6 +397,7 @@ return {
   -- It allows you to quickly select, yank, delete or replace language-specific ranges.
   {
     'David-Kunz/treesitter-unit',
+    event = "VeryLazy",
     config = function()
       keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
       keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
@@ -392,6 +409,7 @@ return {
   -- git sign
   {
     'lewis6991/gitsigns.nvim',
+    event = "VeryLazy",
     config = function()
       local gitsigns = require('gitsigns')
       gitsigns.setup {
@@ -450,12 +468,14 @@ return {
 
   -- mkdir
   {
-    'jghauser/mkdir.nvim'
+    'jghauser/mkdir.nvim',
+    event = "VeryLazy",
   },
 
   -- highlighting other uses of the word under the cursor using either LSP, Tree-sitter, or regex matching.
   {
     'RRethy/vim-illuminate',
+    event = "VeryLazy",
     config = function ()
     end
   },
@@ -463,6 +483,7 @@ return {
   -- A high-performance color highlighter for Neovim
   {
     'norcalli/nvim-colorizer.lua',
+    event = "VeryLazy",
     config = function ()
       require'colorizer'.setup()
     end
@@ -472,6 +493,7 @@ return {
   {
     'kana/vim-operator-replace',
     dependencies = { 'kana/vim-operator-user' },
+    event = "VeryLazy",
     config = function()
       keymap("n", "R", "<Plug>(operator-replace)", opts)
       keymap("v", "R", "<Plug>(operator-replace)", opts)
@@ -482,6 +504,7 @@ return {
   -- keyword Jump
   {
     'echasnovski/mini.jump',
+    event = "VeryLazy",
     config = function()
       local mini_jump = require('mini.jump')
       mini_jump.setup()
@@ -491,7 +514,7 @@ return {
   -- Comment
   {
     'echasnovski/mini.comment',
-    version = '*',
+    event = "VeryLazy",
     config = function ()
       require('mini.comment').setup({
         -- Options which control module behavior
@@ -532,7 +555,7 @@ return {
   -- surround
   {
     'echasnovski/mini.surround',
-    version = '*',
+    event = "VeryLazy",
     config = function ()
       require('mini.surround').setup()
     end
@@ -550,6 +573,7 @@ return {
   -- autoclose and autorename html tag / js / jsx / markdown / tsx / typescript / vue / xml
   {
     'windwp/nvim-ts-autotag',
+    event = "VeryLazy",
     config = function ()
       require'nvim-treesitter.configs'.setup {
         autotag = {
@@ -562,6 +586,7 @@ return {
   -- increment / decrement
   {
     'monaqa/dial.nvim',
+    event = "VeryLazy",
     config = function ()
       local augend = require("dial.augend")
       require("dial.config").augends:register_group{
@@ -583,6 +608,7 @@ return {
   -- yankring
   {
     "gbprod/yanky.nvim",
+    event = "VeryLazy",
     opts = {},
     config = function ()
       vim.keymap.set("n", "<C-p>", "<Plug>(YankyPreviousEntry)", opts)
@@ -652,6 +678,7 @@ return {
   -- annotation / docstring generator
   {
     "danymat/neogen",
+    event = "VeryLazy",
     config = function()
       local neogen = require('neogen')
       neogen.setup({
@@ -672,6 +699,7 @@ return {
   -- test runner
   {
     "klen/nvim-test",
+    event = "VeryLazy",
     config = function()
       local nvim_test = require('nvim-test')
       nvim_test.setup({
@@ -770,6 +798,7 @@ return {
 
   {
     "williamboman/mason.nvim",
+    event = "VeryLazy",
     config = function()
       require("mason").setup()
     end
@@ -816,6 +845,7 @@ return {
 
   {
     'neovim/nvim-lspconfig',
+    event = "VeryLazy",
     -- opts = {
     --   inlay_hints = { enabled = true },
     -- },
@@ -864,6 +894,7 @@ return {
 
   {
     'nvimdev/lspsaga.nvim',
+    event = "VeryLazy",
     dependencies = {
       'nvim-treesitter/nvim-treesitter', -- optional
       'nvim-tree/nvim-web-devicons',     -- optional
@@ -896,6 +927,7 @@ return {
   -- Extensible UI for Neovim notifications and LSP progress messages
   {
     "j-hui/fidget.nvim",
+    event = "VeryLazy",
     config = function()
       require("fidget").setup {}
     end
@@ -903,6 +935,7 @@ return {
 
   {
     "folke/trouble.nvim",
+    event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {},
   },
@@ -911,6 +944,7 @@ return {
   {
     -- 'jose-elias-alvarez/null-ls.nvim',
     'nvimtools/none-ls.nvim',
+    event = "VeryLazy",
     config = function ()
       local null_ls = require("null-ls")
 
@@ -981,6 +1015,7 @@ return {
 
   {
     "jay-babu/mason-null-ls.nvim",
+    event = "VeryLazy",
     dependencies = {
       "williamboman/mason.nvim",
       "nvimtools/none-ls.nvim",
