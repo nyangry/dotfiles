@@ -677,22 +677,14 @@ return {
 
   -- annotation / docstring generator
   {
-    "danymat/neogen",
-    event = "VeryLazy",
+    "kkoomen/vim-doge",
+    build = ":call doge#install()",
     config = function()
-      local neogen = require('neogen')
-      neogen.setup({
-        input_after_comment = false,
-        languages = {
-          python = {
-            template = {
-              annotation_convention = "reST"
-            }
-          },
-        }
-      })
-      vim.keymap.set("n", "<leader>ng", ":lua require('neogen').generate()<CR>", opts)
-      -- vim.keymap.set("n", "<Leader>nf", ":lua require('neogen').generate({ type = 'func' })<CR>", opts)
+      vim.g.doge_doc_standard_python = "sphinx" -- Default: reST
+      vim.g.doge_python_settings = {
+        single_quotes = 0,
+        omit_redundant_param_types = 0
+      }
     end
   },
 
