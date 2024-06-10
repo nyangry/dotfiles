@@ -379,15 +379,15 @@ return {
   },
 
   -- It allows you to quickly select, yank, delete or replace language-specific ranges.
-  -- {
-  --   'David-Kunz/treesitter-unit',
-  --   config = function()
-  --     keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
-  --     keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
-  --     keymap('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>', {noremap=true})
-  --     keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>', {noremap=true})
-  --   end
-  -- },
+  {
+    'David-Kunz/treesitter-unit',
+    config = function()
+      keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
+      keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
+      keymap('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>', {noremap=true})
+      keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>', {noremap=true})
+    end
+  },
 
   -- git sign
   {
@@ -469,15 +469,15 @@ return {
   },
 
   -- Operator
-  -- {
-  --   'kana/vim-operator-replace',
-  --   dependencies = { 'kana/vim-operator-user' },
-  --   config = function()
-  --     keymap("n", "R", "<Plug>(operator-replace)", opts)
-  --     keymap("v", "R", "<Plug>(operator-replace)", opts)
-  --     -- keymap("i", "R", "<Plug>(operator-replace)", opts)
-  --   end
-  -- },
+  {
+    'kana/vim-operator-replace',
+    dependencies = { 'kana/vim-operator-user' },
+    config = function()
+      keymap("n", "R", "<Plug>(operator-replace)", opts)
+      keymap("v", "R", "<Plug>(operator-replace)", opts)
+      -- keymap("i", "R", "<Plug>(operator-replace)", opts)
+    end
+  },
 
   -- keyword Jump
   {
@@ -650,24 +650,24 @@ return {
   -- },
 
   -- annotation / docstring generator
-  -- {
-  --   "danymat/neogen",
-  --   config = function()
-  --     local neogen = require('neogen')
-  --     neogen.setup({
-  --       input_after_comment = false,
-  --       languages = {
-  --         python = {
-  --           template = {
-  --             annotation_convention = "reST"
-  --           }
-  --         },
-  --       }
-  --     })
-  --     vim.keymap.set("n", "<leader>ng", ":lua require('neogen').generate()<CR>", opts)
-  --     -- vim.keymap.set("n", "<Leader>nf", ":lua require('neogen').generate({ type = 'func' })<CR>", opts)
-  --   end
-  -- },
+  {
+    "danymat/neogen",
+    config = function()
+      local neogen = require('neogen')
+      neogen.setup({
+        input_after_comment = false,
+        languages = {
+          python = {
+            template = {
+              annotation_convention = "reST"
+            }
+          },
+        }
+      })
+      vim.keymap.set("n", "<leader>ng", ":lua require('neogen').generate()<CR>", opts)
+      -- vim.keymap.set("n", "<Leader>nf", ":lua require('neogen').generate({ type = 'func' })<CR>", opts)
+    end
+  },
 
   -- test runner
   {
