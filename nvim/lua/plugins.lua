@@ -456,10 +456,10 @@ return {
   },
 
   -- removes trailing white space and empty lines on BufWritePre
-  -- {
-  --   "mcauley-penney/tidy.nvim",
-  --   config = true,
-  -- },
+  {
+    "mcauley-penney/tidy.nvim",
+    config = true,
+  },
 
   -- mkdir
   {
