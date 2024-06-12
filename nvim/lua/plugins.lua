@@ -393,7 +393,7 @@ return {
   -- git sign
   {
     'lewis6991/gitsigns.nvim',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
       local gitsigns = require('gitsigns')
       gitsigns.setup {
