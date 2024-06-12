@@ -443,6 +443,17 @@ return {
       keymap('n', '<leader>b', '<cmd>lua require"gitsigns".blame_line()<CR>', opts)
     end
   },
+  --  indentation guides 
+  { 
+    "lukas-reineke/indent-blankline.nvim", 
+    main = "ibl", 
+    opts = {},
+    event = "BufRead",
+    config = function ()
+      local ibl = require("ibl")
+      ibl.setup()
+    end
+  },
 
   -- removes trailing white space and empty lines on BufWritePre
   -- {
