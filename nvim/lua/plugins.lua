@@ -443,10 +443,10 @@ return {
       keymap('n', '<leader>b', '<cmd>lua require"gitsigns".blame_line()<CR>', opts)
     end
   },
-  --  indentation guides 
-  { 
-    "lukas-reineke/indent-blankline.nvim", 
-    main = "ibl", 
+  --  indentation guides
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
     opts = {},
     event = "BufRead",
     config = function ()
@@ -780,7 +780,7 @@ return {
 
   -- LSP
   -- {
-  --   'neoclide/coc.nvim', 
+  --   'neoclide/coc.nvim',
   --   branch = 'release',
   -- },
 
