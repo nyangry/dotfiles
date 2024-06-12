@@ -181,7 +181,7 @@ return {
               ["<esc>"] = actions.close,
             },
           },
-          sorting_strategy = "descending",
+          -- sorting_strategy = "descending",
         },
       })
 
@@ -212,12 +212,13 @@ return {
           vimgrep_arguments = {
             -- ripggrepコマンドのオプション
             "rg",
+            -- "--sort=path",
             "--color=never",
             "--no-heading",
             "--with-filename",
             "--line-number",
             "--column",
-            "--smart-case",
+            -- "--smart-case",
           },
         },
         extensions = {
