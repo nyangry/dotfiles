@@ -181,6 +181,7 @@ return {
               ["<esc>"] = actions.close,
             },
           },
+          sorting_strategy = "descending",
         },
       })
 
@@ -195,6 +196,7 @@ return {
       vim.keymap.set('n', '<leader>b', builtin.buffers, {})
       vim.keymap.set('n', '<C-g>', builtin.grep_string, {})
       vim.keymap.set('n', '<leader>gr', builtin.live_grep, {})
+      vim.keymap.set('n', '<leader>fr', builtin.resume, {})
       -- vim.keymap.set('n', '<leader>ht', builtin.help_tags, {})
     end
   },
