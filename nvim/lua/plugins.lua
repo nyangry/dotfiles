@@ -65,7 +65,7 @@ return {
   -- file explorer
   {
     "nvim-tree/nvim-tree.lua",
-    event = "VeryLazy",
+    event = "BufRead",
     config = function ()
       local nvim_tree = require("nvim-tree")
 
@@ -84,7 +84,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    event = "VeryLazy",
+    event = "BufRead",
     config = function ()
       local configs = require("nvim-treesitter.configs")
 
@@ -100,7 +100,7 @@ return {
   -- context support for nvim-treesitter
   {
     "nvim-treesitter/nvim-treesitter-context",
-    event = "VeryLazy",
+    event = "BufRead",
     config = function ()
       require('treesitter-context').setup {
         enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
@@ -122,7 +122,7 @@ return {
   -- textsubjects for nvim-treesitter
   {
     'RRethy/nvim-treesitter-textsubjects',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function ()
       require('nvim-treesitter.configs').setup {
         textsubjects = {
@@ -141,7 +141,7 @@ return {
   -- code outline window
   {
     'stevearc/aerial.nvim',
-    event = "VeryLazy",
+    event = "BufRead",
     opts = {},
     -- Optional dependencies
     dependencies = {
@@ -288,35 +288,35 @@ return {
 
   {
     'hrsh7th/cmp-nvim-lsp',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
     end
   },
 
   {
     'hrsh7th/cmp-nvim-lsp-signature-help',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
     end
   },
 
   {
     'hrsh7th/cmp-buffer',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
     end
   },
 
   {
     'hrsh7th/cmp-path',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
     end
   },
 
   {
     'hrsh7th/cmp-cmdline',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
     end
   },
@@ -398,13 +398,13 @@ return {
   },
   {
     'hrsh7th/cmp-vsnip',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
     end
   },
   {
     'hrsh7th/vim-vsnip',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
     end
   },
@@ -412,7 +412,7 @@ return {
   -- It allows you to quickly select, yank, delete or replace language-specific ranges.
   {
     'David-Kunz/treesitter-unit',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
       keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
       keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
@@ -495,13 +495,13 @@ return {
   -- mkdir
   {
     'jghauser/mkdir.nvim',
-    event = "VeryLazy",
+    event = "BufRead",
   },
 
   -- highlighting other uses of the word under the cursor using either LSP, Tree-sitter, or regex matching.
   {
     'RRethy/vim-illuminate',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function ()
     end
   },
@@ -509,7 +509,7 @@ return {
   -- A high-performance color highlighter for Neovim
   {
     'norcalli/nvim-colorizer.lua',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function ()
       require'colorizer'.setup()
     end
@@ -519,7 +519,7 @@ return {
   {
     'kana/vim-operator-replace',
     dependencies = { 'kana/vim-operator-user' },
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
       keymap("n", "R", "<Plug>(operator-replace)", opts)
       keymap("v", "R", "<Plug>(operator-replace)", opts)
@@ -530,7 +530,7 @@ return {
   -- keyword Jump
   {
     'echasnovski/mini.jump',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
       local mini_jump = require('mini.jump')
       mini_jump.setup()
@@ -540,7 +540,7 @@ return {
   -- Comment
   {
     'echasnovski/mini.comment',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function ()
       require('mini.comment').setup({
         -- Options which control module behavior
@@ -581,7 +581,7 @@ return {
   -- surround
   {
     'echasnovski/mini.surround',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function ()
       require('mini.surround').setup()
     end
@@ -599,7 +599,7 @@ return {
   -- autoclose and autorename html tag / js / jsx / markdown / tsx / typescript / vue / xml
   {
     'windwp/nvim-ts-autotag',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function ()
       require'nvim-treesitter.configs'.setup {
         autotag = {
@@ -612,7 +612,7 @@ return {
   -- increment / decrement
   {
     'monaqa/dial.nvim',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function ()
       local augend = require("dial.augend")
       require("dial.config").augends:register_group{
@@ -634,7 +634,7 @@ return {
   -- yankring
   {
     "gbprod/yanky.nvim",
-    event = "VeryLazy",
+    event = "BufRead",
     opts = {},
     config = function ()
       vim.keymap.set("n", "<C-p>", "<Plug>(YankyPreviousEntry)", opts)
@@ -717,7 +717,7 @@ return {
   -- test runner
   {
     "klen/nvim-test",
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
       local nvim_test = require('nvim-test')
       nvim_test.setup({
@@ -817,7 +817,7 @@ return {
 
   {
     "williamboman/mason.nvim",
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
       require("mason").setup()
     end
@@ -825,6 +825,7 @@ return {
 
   {
     'williamboman/mason-lspconfig.nvim',
+    event = "BufRead",
     config = function()
       local mason_lspconfig = require('mason-lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -864,7 +865,7 @@ return {
 
   {
     'neovim/nvim-lspconfig',
-    event = "VeryLazy",
+    event = "BufRead",
     -- opts = {
     --   inlay_hints = { enabled = true },
     -- },
@@ -913,7 +914,7 @@ return {
 
   {
     'nvimdev/lspsaga.nvim',
-    event = "VeryLazy",
+    event = "BufRead",
     dependencies = {
       'nvim-treesitter/nvim-treesitter', -- optional
       'nvim-tree/nvim-web-devicons',     -- optional
@@ -946,7 +947,7 @@ return {
   -- Extensible UI for Neovim notifications and LSP progress messages
   {
     "j-hui/fidget.nvim",
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
       require("fidget").setup {}
     end
@@ -954,7 +955,7 @@ return {
 
   {
     "folke/trouble.nvim",
-    event = "VeryLazy",
+    event = "BufRead",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {},
   },
@@ -963,7 +964,7 @@ return {
   {
     -- 'jose-elias-alvarez/null-ls.nvim',
     'nvimtools/none-ls.nvim',
-    event = "VeryLazy",
+    event = "BufRead",
     config = function ()
       local null_ls = require("null-ls")
 
@@ -1034,7 +1035,7 @@ return {
 
   {
     "jay-babu/mason-null-ls.nvim",
-    event = "VeryLazy",
+    event = "BufRead",
     dependencies = {
       "williamboman/mason.nvim",
       "nvimtools/none-ls.nvim",
