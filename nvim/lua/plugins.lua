@@ -817,7 +817,7 @@ return {
 
   {
     "williamboman/mason.nvim",
-    event = "BufRead",
+    event = "VeryLazy",
     config = function()
       require("mason").setup()
     end
@@ -825,7 +825,7 @@ return {
 
   {
     'williamboman/mason-lspconfig.nvim',
-    event = "BufRead",
+    event = "VeryLazy",
     config = function()
       local mason_lspconfig = require('mason-lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -835,7 +835,7 @@ return {
           -- "dockerls", "docker_compose_language_service",
           -- "terraformls", "tflint",
           -- "golangci_lint_ls", "gopls",
-          "kotlin_language_server",
+          -- "kotlin_language_server",
           "jedi_language_server",
           -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff_lsp", "sourcery",
           -- "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
@@ -865,7 +865,7 @@ return {
 
   {
     'neovim/nvim-lspconfig',
-    event = "BufRead",
+    event = "VeryLazy",
     -- opts = {
     --   inlay_hints = { enabled = true },
     -- },
