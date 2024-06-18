@@ -539,6 +539,7 @@ return {
   -- removes trailing white space and empty lines on BufWritePre
   {
     "mcauley-penney/tidy.nvim",
+    event = "BufRead",
     config = true,
   },
 
@@ -755,6 +756,7 @@ return {
   {
     "kkoomen/vim-doge",
     build = ":call doge#install()",
+    event = "BufRead",
     config = function()
       vim.g.doge_doc_standard_python = "sphinx" -- Default: reST
       vim.g.doge_python_settings = {
