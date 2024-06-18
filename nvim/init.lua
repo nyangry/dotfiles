@@ -118,8 +118,10 @@ keymap("n", "sO", "<C-w>=", opts)
 keymap("n", "st", ":<C-u>tabnew<CR>", opts)
 keymap("n", "ss", ":<C-u>sp<CR>", opts)
 keymap("n", "sv", ":<C-u>vs<CR>", opts)
-keymap("n", "<silent> j", "gj", opts)
-keymap("n", "<silent> k", "gk", opts)
+keymap("n", "j", "gj", opts)
+keymap("n", "k", "gk", opts)
+keymap("n", "gj", "j", opts)
+keymap("n", "gk", "k", opts)
 
 -- Escの2回押しでハイライト消去
 keymap("n", "<Esc><Esc>", ":nohlsearch<CR><Esc>", opts)
