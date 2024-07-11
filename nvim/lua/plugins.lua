@@ -226,6 +226,8 @@ return {
       vim.keymap.set('n', '<C-g>', builtin.grep_string, {})
       vim.keymap.set('n', '<leader>gr', builtin.live_grep, {})
       vim.keymap.set('n', '<leader>fr', builtin.resume, {})
+      vim.keymap.set('n', '<leader>qf', builtin.quickfix, {})
+      vim.keymap.set('n', '<leader>qh', builtin.quickfixhistory, {})
       -- vim.keymap.set('n', '<leader>ht', builtin.help_tags, {})
     end
   },
