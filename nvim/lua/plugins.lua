@@ -437,10 +437,20 @@ return {
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
-          { name = 'path' }
+          { name = 'path' },
+          { name = 'cmdline' },
+          { name = 'buffer' },
         }, {
             { name = 'cmdline' }
           })
+      })
+
+      -- Additional setup for :%s to use buffer and path sources
+      cmp.setup.cmdline(':%s', {
+        sources = cmp.config.sources({
+          { name = 'buffer' },
+          { name = 'path' }
+        })
       })
     end
   },
