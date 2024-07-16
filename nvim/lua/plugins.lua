@@ -215,6 +215,35 @@ return {
       })
 
       local builtin = require('telescope.builtin')
+
+      -- ファイル名のみでlive_grep
+      local function live_grep_file_only()
+        builtin.live_grep({
+          vimgrep_arguments = {
+            "rg",
+            "--color=never",
+            "--no-heading",
+            "-l",
+            "--smart-case",
+          },
+        })
+      end
+
+      -- 行番号付きでlive_grep
+      local function live_grep_with_line_numbers()
+        builtin.live_grep({
+          vimgrep_arguments = {
+            "rg",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+          },
+        })
+      end
+
       vim.keymap.set('n', '<C-f>', builtin.find_files, {})
       vim.keymap.set('n', '<leader>gf', builtin.git_files, {})
       vim.keymap.set('n', '<leader>gc', builtin.git_commits, {})
@@ -224,10 +253,11 @@ return {
       vim.keymap.set('n', '<leader>gst', builtin.git_stash, {})
       vim.keymap.set('n', '<leader>b', builtin.buffers, {})
       vim.keymap.set('n', '<C-g>', builtin.grep_string, {})
-      vim.keymap.set('n', '<leader>gr', builtin.live_grep, {})
       vim.keymap.set('n', '<leader>fr', builtin.resume, {})
       vim.keymap.set('n', '<leader>qf', builtin.quickfix, {})
       vim.keymap.set('n', '<leader>qh', builtin.quickfixhistory, {})
+      vim.keymap.set('n', '<leader>gr', live_grep_file_only, {})
+      vim.keymap.set('n', '<leader>grn', live_grep_with_line_numbers, {})
       -- vim.keymap.set('n', '<leader>ht', builtin.help_tags, {})
     end
   },
@@ -240,18 +270,17 @@ return {
     config = function()
       require("telescope").setup({
         defaults = {
-          vimgrep_arguments = {
-            -- ripggrepコマンドのオプション
-            "rg",
-            -- "--sort=path",
-            "--color=never",
-            "--no-heading",
-            "-l",
-            -- "--with-filename",
-            -- "--line-number",
-            -- "--column",
-            -- "--smart-case",
-          },
+          -- vimgrep_arguments = {
+          --   -- ripggrepコマンドのオプション
+          --   "rg",
+          --   "--sort=path",
+          --   "--color=never",
+          --   "--no-heading",
+          --   "--with-filename",
+          --   "--line-number",
+          --   "--column",
+          --   "--smart-case",
+          -- },
         },
         extensions = {
           -- ソート性能を大幅に向上させるfzfを使う
