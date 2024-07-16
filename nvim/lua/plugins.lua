@@ -811,7 +811,7 @@ return {
       nvim_test.setup({
         termOpts = {
           direction = "vertical", -- terminal's direction ("horizontal"|"vertical"|"float")
-          width = 100,               -- terminal's width (for vertical|float)
+          width = 150,               -- terminal's width (for vertical|float)
           height = 70,              -- terminal's height (for horizontal|float)
         },
       })
