@@ -164,6 +164,18 @@ keymap("n", "<c-right>", "<c-w>l", opts)
 keymap("n", "c*", [[':%s ;\<' . expand('<cword>') . '\>;']], { expr = true })
 keymap("v", "c*", [[':s ;\<' . expand('<cword>') . '\>;']], { expr = true })
 
+-- クリップボードにコピーする関数
+function copy_to_clipboard(text)
+  vim.fn.setreg('+', text)
+  print('Copied to clipboard: ' .. text)
+end
+
+-- 現在のファイルの名前をクリップボードにコピー
+keymap('n', '<leader>fn', ':lua copy_to_clipboard(vim.fn.expand("%:t"))<CR>', opts)
+
+-- プロジェクトディレクトリからの相対パスをクリップボードにコピー
+keymap('n', '<leader>fp', ':lua copy_to_clipboard(vim.fn.fnamemodify(vim.fn.expand("%"), ":~:."))<CR>', opts)
+
 -- for LSP
 local function lspkeys()
   -- C-X C-O for completion
