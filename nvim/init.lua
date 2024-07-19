@@ -87,8 +87,13 @@ local keymap = vim.api.nvim_set_keymap
 
 
 -- file delete
-keymap("n", "<leader>fd", ":call delete(expand('%'))<CR>", opts)
---
+function delete_current_file()
+    local filename = vim.fn.expand('%')
+    os.remove(filename)
+    print('Deleted: ' .. filename)
+end
+
+keymap('n', '<leader>fd', ':lua delete_current_file()<CR>', opts)
 
 keymap("n", "*", "*zz", opts)
 keymap("n", "#", "#zz", opts)
