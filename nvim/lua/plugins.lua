@@ -832,9 +832,9 @@ return {
       -- TestLast - rerun the latest test
       -- TestVisit - open the last run test in the current buffer
       -- TestInfo - show an information about the plugin
-      vim.keymap.set({ "n" }, "<leader>r", ":TestFile<CR>", opts)
+      vim.keymap.set({ "n" }, "<leader>ra", ":TestFile<CR>", opts)
       vim.keymap.set({ "n" }, "<leader>re", ":TestEdit<CR>", opts)
-      vim.keymap.set({ "n" }, "<leader>rn", ":TestNearest<CR>", opts)
+      vim.keymap.set({ "n" }, "<leader>r", ":TestNearest<CR>", opts)
     end
   },
 
