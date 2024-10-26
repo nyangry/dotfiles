@@ -566,3 +566,6 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 # if (which zprof > /dev/null) ;then
 #   zprof | less
 # fi
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/masuyama.daisuke/.cache/lm-studio/bin"
