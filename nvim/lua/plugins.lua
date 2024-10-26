@@ -213,35 +213,6 @@ return {
           },
           -- sorting_strategy = "descending",
         },
-        pickers = {
-          -- live_grep = {
-          --   attach_mappings = function(prompt_bufnr, map)
-          --     local function file_only(prompt_bufnr)
-          --       local picker = action_state.get_current_picker(prompt_bufnr)
-          --       local results = picker.finder.results
-          --       local unique_files = {}
-          --       local unique_display = {}
-          --
-          --       for _, result in ipairs(results) do
-          --         local file = result.filename
-          --         if not unique_files[file] then
-          --           unique_files[file] = true
-          --           table.insert(unique_display, file)
-          --         end
-          --       end
-          --
-          --       picker:refresh(finders.new_table {
-          --         results = unique_display,
-          --         entry_maker = make_entry.gen_from_file(),
-          --       }, { reset_prompt = true })
-          --     end
-          --
-          --     map('i', '<C-u>', file_only)
-          --     map('n', '<C-u>', file_only)
-          --     return true
-          --   end,
-          -- },
-        },
       })
 
       local builtin = require('telescope.builtin')
