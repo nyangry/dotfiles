@@ -815,7 +815,14 @@ return {
       -- TestInfo - show an information about the plugin
       vim.keymap.set({ "n" }, "<leader>ra", ":TestFile<CR>", opts)
       vim.keymap.set({ "n" }, "<leader>re", ":TestEdit<CR>", opts)
-      vim.keymap.set({ "n" }, "<leader>r", ":TestNearest<CR>", opts)
+
+      -- Define a function to run TestNearest and then balance windows
+      local function test_and_balance()
+        vim.cmd(":TestNearest")
+        vim.cmd(":wincmd =")
+      end
+
+      vim.keymap.set({ "n" }, "<leader>r", test_and_balance, opts)
     end
   },
 
