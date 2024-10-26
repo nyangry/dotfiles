@@ -138,6 +138,36 @@ return {
     end
   },
 
+  -- -- support for camelcase and snakecase
+  -- {
+  --     'bkad/CamelCaseMotion',
+  --     event = "BufRead",
+  --     config = function()
+  --         -- CamelCaseMotion のキーバインドを設定
+  --         keymap('n', 'w', '<Plug>CamelCaseMotion_w', opts)
+  --         keymap('x', 'w', '<Plug>CamelCaseMotion_w', opts)
+  --         keymap('o', 'w', '<Plug>CamelCaseMotion_w', opts)
+  --         keymap('n', 'b', '<Plug>CamelCaseMotion_b', opts)
+  --         keymap('x', 'b', '<Plug>CamelCaseMotion_b', opts)
+  --         keymap('o', 'b', '<Plug>CamelCaseMotion_b', opts)
+  --         keymap('n', 'e', '<Plug>CamelCaseMotion_e', opts)
+  --         keymap('x', 'e', '<Plug>CamelCaseMotion_e', opts)
+  --         keymap('o', 'e', '<Plug>CamelCaseMotion_e', opts)
+  --         keymap('n', 'ge', '<Plug>CamelCaseMotion_ge', opts)
+  --         keymap('x', 'ge', '<Plug>CamelCaseMotion_ge', opts)
+  --         keymap('o', 'ge', '<Plug>CamelCaseMotion_ge', opts)
+  --         keymap('n', 'iw', '<Plug>CamelCaseMotion_iw', opts)
+  --         keymap('x', 'iw', '<Plug>CamelCaseMotion_iw', opts)
+  --         keymap('o', 'iw', '<Plug>CamelCaseMotion_iw', opts)
+  --         keymap('n', 'ib', '<Plug>CamelCaseMotion_ib', opts)
+  --         keymap('x', 'ib', '<Plug>CamelCaseMotion_ib', opts)
+  --         keymap('o', 'ib', '<Plug>CamelCaseMotion_ib', opts)
+  --         keymap('n', 'ie', '<Plug>CamelCaseMotion_ie', opts)
+  --         keymap('x', 'ie', '<Plug>CamelCaseMotion_ie', opts)
+  --         keymap('o', 'ie', '<Plug>CamelCaseMotion_ie', opts)
+  --     end
+  -- },
+
   -- code outline window
   {
     'stevearc/aerial.nvim',
