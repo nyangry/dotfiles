@@ -213,6 +213,14 @@ return {
           },
           -- sorting_strategy = "descending",
         },
+        extensions = {
+          frecency = {
+            default_workspace = 'CWD', -- 現在のディレクトリに基づいた履歴を表示
+            show_scores = true, -- スコアを表示
+            show_unindexed = true, -- インデックスされていないファイルも表示
+            -- ignore_patterns = { '*.git/*', '*/tmp/*' }, -- 無視するパターン
+          },
+        },
       })
 
       local builtin = require('telescope.builtin')
