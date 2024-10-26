@@ -217,6 +217,12 @@ return {
 
       local builtin = require('telescope.builtin')
 
+      local function find_files_with_hidden_files()
+        builtin.find_files({
+          find_command = { "rg", "--files", "--hidden" },
+        })
+      end
+
       -- ファイル名のみでlive_grep
       local function live_grep_file_only()
         builtin.live_grep({
@@ -245,7 +251,7 @@ return {
         })
       end
 
-      vim.keymap.set('n', '<C-f>', builtin.find_files, {})
+      vim.keymap.set('n', '<C-f>', find_files_with_hidden_files, {})
       vim.keymap.set('n', '<leader>gf', builtin.git_files, {})
       vim.keymap.set('n', '<leader>gc', builtin.git_commits, {})
       vim.keymap.set('n', '<leader>gcb', builtin.git_bcommits, {})
