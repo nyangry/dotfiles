@@ -448,7 +448,7 @@ return {
           { name = 'cmdline' },
           { name = 'buffer' },
         }, {
-            { name = 'cmdline' }
+            -- { name = 'cmdline' }
           })
       })
 
