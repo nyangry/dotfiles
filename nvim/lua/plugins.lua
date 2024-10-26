@@ -821,7 +821,7 @@ return {
 
   {
     "williamboman/mason.nvim",
-    event = "VeryLazy",
+    -- event = "VeryLazy",
     config = function()
       require("mason").setup()
     end
@@ -829,7 +829,7 @@ return {
 
   {
     'williamboman/mason-lspconfig.nvim',
-    event = "VeryLazy",
+    -- event = "VeryLazy",
     config = function()
       local mason_lspconfig = require('mason-lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -869,7 +869,7 @@ return {
 
   {
     'neovim/nvim-lspconfig',
-    event = "VeryLazy",
+    -- event = "VeryLazy",
     -- opts = {
     --   inlay_hints = { enabled = true },
     -- },
