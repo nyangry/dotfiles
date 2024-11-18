@@ -197,12 +197,16 @@ return {
   -- fuzzy finder
   {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.4',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope-live-grep-args.nvim'
+    },
     event = "VeryLazy",
     config = function()
       local telescope = require("telescope")
       local actions = require("telescope.actions")
+      local action_state = require("telescope.actions.state")
+      local lga_actions = require("telescope-live-grep-args.actions")
 
       telescope.setup({
         defaults = {
@@ -220,10 +224,27 @@ return {
             show_unindexed = true, -- インデックスされていないファイルも表示
             -- ignore_patterns = { '*.git/*', '*/tmp/*' }, -- 無視するパターン
           },
+          live_grep_args = {
+            auto_quoting = true, -- enable/disable auto-quoting
+            -- define mappings, e.g.
+            mappings = { -- extend mappings
+              i = {
+                ["<C-i>"] = lga_actions.quote_prompt({}),
+                -- ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+                -- freeze the current list and start a fuzzy search in the frozen list
+                ["<C-space>"] = actions.to_fuzzy_refine,
+              },
+            },
+            -- ... also accepts theme settings, for example:
+            -- theme = "dropdown", -- use dropdown theme
+            -- theme = { }, -- use own theme spec
+            -- layout_config = { mirror=true }, -- mirror preview pane
+          }
         },
       })
 
       local builtin = require('telescope.builtin')
+      telescope.load_extension("live_grep_args")
 
       local function find_files_with_hidden_files()
         builtin.find_files({
@@ -271,8 +292,9 @@ return {
       vim.keymap.set('n', '<leader>fr', builtin.resume, {})
       vim.keymap.set('n', '<leader>qf', builtin.quickfix, {})
       vim.keymap.set('n', '<leader>qh', builtin.quickfixhistory, {})
-      vim.keymap.set('n', '<leader>gr', live_grep_file_only, {})
-      vim.keymap.set('n', '<leader>grn', live_grep_with_line_numbers, {})
+      -- vim.keymap.set('n', '<leader>gr', live_grep_file_only, {})
+      vim.keymap.set('n', '<leader>gr', ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", {})
+      -- vim.keymap.set('n', '<leader>grn', live_grep_with_line_numbers, {})
       -- vim.keymap.set('n', '<leader>ht', builtin.help_tags, {})
     end
   },
