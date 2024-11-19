@@ -12,7 +12,6 @@ delete_old_files()
   rm $HOME/.bashrc
   rm $HOME/.zshrc
   rm $HOME/.zshenv
-  rm $HOME/.agignore
   rm $HOME/.config/nvim
   rm $HOME/.vim
   rm $HOME/.vimrc
@@ -21,14 +20,9 @@ delete_old_files()
   rm $HOME/.gitconfig
   rm $HOME/.gitignore
   rm $HOME/.tmux.conf
-  rm $HOME/.peco
   rm $HOME/.ctags
   rm $HOME/.gemrc
   rm $HOME/.bundle/config
-  rm $HOME/.railsrc
-  rm $HOME/.rspec
-  rm $HOME/.pryrc
-  rm $HOME/.my.cnf
   rm $HOME/monitor.sh
 }
 
@@ -38,7 +32,6 @@ symlink_files()
   ln -s $HOME/dotfiles/bashrc    $HOME/.bashrc
   ln -s $HOME/dotfiles/zshrc     $HOME/.zshrc
   ln -s $HOME/dotfiles/zshenv    $HOME/.zshenv
-  ln -s $HOME/dotfiles/agignore     $HOME/.agignore
   ln -s $HOME/dotfiles/nvim     $HOME/.config/nvim
   ln -s $HOME/dotfiles/vimfiles     $HOME/.vim
   ln -s $HOME/dotfiles/vimrc     $HOME/.vimrc
@@ -47,14 +40,9 @@ symlink_files()
   ln -s $HOME/dotfiles/gitconfig $HOME/.gitconfig
   ln -s $HOME/dotfiles/gitignore $HOME/.gitignore
   ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
-  ln -s $HOME/dotfiles/peco $HOME/.peco
   ln -s $HOME/dotfiles/ctags $HOME/.ctags
   ln -s $HOME/dotfiles/gemrc     $HOME/.gemrc
   ln -s $HOME/dotfiles/bundle_config $HOME/.bundle/config
-  ln -s $HOME/dotfiles/railsrc $HOME/.railsrc
-  ln -s $HOME/dotfiles/rspec $HOME/.rspec
-  ln -s $HOME/dotfiles/pryrc $HOME/.pryrc
-  ln -s $HOME/dotfiles/app_config/my.cnf $HOME/.my.cnf
   ln -s $HOME/dotfiles/monitor.sh $HOME/monitor.sh
 }
 
