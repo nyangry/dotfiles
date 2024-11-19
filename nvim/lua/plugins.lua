@@ -65,19 +65,49 @@ return {
   -- file explorer
   {
     "nvim-tree/nvim-tree.lua",
-    event = "BufRead",
-    config = function ()
+    lazy = false,  -- 即時読み込み
+    config = function()
       local nvim_tree = require("nvim-tree")
 
       nvim_tree.setup({
         view = {
           width = 70,
         },
+        actions = {
+          open_file = {
+            window_picker = {
+              enable = false,
+            },
+          },
+        },
+        sync_root_with_cwd = true,
+        respect_buf_cwd = true,
+        update_focused_file = {
+          enable = true,
+          update_root = true,
+        },
       })
 
+      -- 起動時に開く（新しい方法）
+      local function open_nvim_tree(data)
+        -- バッファがディレクトリの場合は開く
+        local directory = vim.fn.isdirectory(data.file) == 1
+
+        if directory then
+          vim.cmd.cd(data.file)
+        end
+
+        -- NvimTreeを開く
+        require("nvim-tree.api").tree.open()
+      end
+
+      vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+
+      -- キーマップ
+      local opts = { silent = true, noremap = true }
       vim.keymap.set({ "n" }, "<leader>t", ":NvimTreeFindFile<CR>", opts)
       vim.keymap.set({ "n" }, "<leader>tt", ":NvimTreeToggle<CR>", opts)
-    end
+    end,
   },
 
   -- syntax provider
