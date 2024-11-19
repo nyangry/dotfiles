@@ -114,16 +114,18 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    event = "BufRead",
-    config = function ()
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },  -- コマンド実行時のみ読み込み
+    config = function()
       local configs = require("nvim-treesitter.configs")
-
-      configs.setup({
-        ensure_installed = { "python", "kotlin", "ruby", "lua", "vim", "sql", "graphql", "json", "yaml", "javascript", "html", "markdown", "markdown_inline"},
-        sync_install = false,
-        highlight = { enable = true },
-        indent = { enable = true },
-      })
+      vim.defer_fn(function()  -- 遅延実行
+        configs.setup({
+          ensure_installed = { "python", "kotlin", "ruby", "lua", "vim", "sql", "graphql", "json", "yaml", "javascript", "html", "markdown", "markdown_inline"},
+          sync_install = false,
+          highlight = { enable = true },
+          indent = { enable = true },
+        })
+      end, 0)
     end
   },
 
@@ -227,11 +229,11 @@ return {
   -- fuzzy finder
   {
     'nvim-telescope/telescope.nvim',
+    cmd = { "Telescope" },  -- コマンド実行時のみ読み込み
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-live-grep-args.nvim'
     },
-    event = "VeryLazy",
     config = function()
       local telescope = require("telescope")
       local actions = require("telescope.actions")
@@ -427,6 +429,11 @@ return {
       local cmp = require'cmp'
 
       cmp.setup({
+        performance = {
+          debounce = 150,        -- 補完の遅延時間
+          throttle = 60,         -- スロットリング
+          fetching_timeout = 200, -- フェッチのタイムアウト
+        },
         snippet = {
           -- REQUIRED - you must specify a snippet engine
           expand = function(args)
@@ -477,7 +484,7 @@ return {
             }
           },
         }, {
-        }),
+          }),
         completion = {
           completeopt = 'menu,menuone,noinsert,noselect'
         }
@@ -933,50 +940,42 @@ return {
 
   {
     'neovim/nvim-lspconfig',
-    -- event = "VeryLazy",
-    -- opts = {
-    --   inlay_hints = { enabled = true },
-    -- },
+    event = { "BufReadPre", "BufNewFile" },  -- より早い段階でLSPを準備
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "williamboman/mason-lspconfig.nvim",
+    },
     config = function()
+      -- キャッシュの有効化
+      vim.lsp.set_log_level("ERROR")
+
       local lspconfig = require('lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      lspconfig.jedi_language_server.setup {}
-      -- lspconfig.jedi_language_server.setup {
-      --   settings = {
-      --     jedi = {
-      --       codeAction = {
-      --         nameExtractVariable = "jls_extract_var",
-      --         nameExtractFunction = "jls_extract_def",
-      --       },
-      --       completion = {
-      --         disableSnippets = false,
-      --         fuzzy = true,
-      --         includeParams = true,
-      --         resolveEagerly = true,
-      --       },
-      --       diagnostics = {
-      --         enable = true,
-      --       },
-      --       hover = {
-      --         enable = true,
-      --       },
-      --       references = {
-      --         enable = true,
-      --       },
-      --       symbols = {
-      --         enable = true,
-      --       },
-      --       workspace = {
-      --         extraPaths = {},
-      --         symbols = {
-      --           ignoreFolders = { ".nox", ".tox", ".venv", "__pycache__", "venv" },
-      --           maxSymbols = 20,
-      --         },
-      --       },
-      --     }
-      --   }
-      -- }
+      -- キャッシュを有効化
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
+      capabilities.textDocument.completion.completionItem.preselectSupport = true
+      capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+      capabilities.textDocument.completion.completionItem.resolveSupport = {
+        properties = {
+          'documentation',
+          'detail',
+          'additionalTextEdits',
+        }
+      }
+
+      lspconfig.jedi_language_server.setup({
+        capabilities = capabilities,
+        settings = {
+          jedi = {
+            completion = {
+              -- 補完の最適化
+              resolveEagerly = false,  -- 遅延解決
+              cacheSize = 5000,       -- キャッシュサイズ
+            }
+          }
+        }
+      })
     end
   },
 

@@ -25,9 +25,11 @@ local options = {
   smartcase = true,
   smartindent = true,
   termguicolors = true,
-  timeoutlen = 300,
   undofile = true,
-  updatetime = 300,
+  updatetime = 250,
+  timeoutlen = 250,
+  redrawtime = 1500,
+  lazyredraw = true,
   shell = "zsh",
   backupskip = { "/tmp/*", "/private/tmp/*" },
   expandtab = true,
@@ -75,6 +77,23 @@ require("lazy").setup("plugins", {
   change_detection = {
     notify = false,
   },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+    cache = {
+      enabled = true,
+    },
+  },
 })
 
 vim.cmd("set whichwrap+=<,>,[,],h,l")
@@ -90,9 +109,9 @@ local keymap = vim.api.nvim_set_keymap
 
 -- file delete
 function delete_current_file()
-    local filename = vim.fn.expand('%')
-    os.remove(filename)
-    print('Deleted: ' .. filename)
+  local filename = vim.fn.expand('%')
+  os.remove(filename)
+  print('Deleted: ' .. filename)
 end
 
 keymap('n', '<leader>fd', ':lua delete_current_file()<CR>', opts)
