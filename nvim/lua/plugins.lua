@@ -99,6 +99,9 @@ return {
 
         -- NvimTreeを開く
         require("nvim-tree.api").tree.open()
+
+        -- ツリーを開いた後、次のウィンドウにフォーカスを移動
+        vim.cmd("wincmd p")
       end
 
       vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
