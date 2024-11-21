@@ -88,23 +88,23 @@ return {
         },
       })
 
-      -- 起動時に開く（新しい方法）
-      local function open_nvim_tree(data)
-        -- バッファがディレクトリの場合は開く
-        local directory = vim.fn.isdirectory(data.file) == 1
-
-        if directory then
-          vim.cmd.cd(data.file)
-        end
-
-        -- NvimTreeを開く
-        require("nvim-tree.api").tree.open()
-
-        -- ツリーを開いた後、次のウィンドウにフォーカスを移動
-        vim.cmd("wincmd p")
-      end
-
-      vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+      -- 起動時に開く
+      -- local function open_nvim_tree(data)
+      --   -- バッファがディレクトリの場合は開く
+      --   local directory = vim.fn.isdirectory(data.file) == 1
+      --
+      --   if directory then
+      --     vim.cmd.cd(data.file)
+      --   end
+      --
+      --   -- NvimTreeを開く
+      --   require("nvim-tree.api").tree.open()
+      --
+      --   -- ツリーを開いた後、次のウィンドウにフォーカスを移動
+      --   vim.cmd("wincmd p")
+      -- end
+      --
+      -- vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
       -- キーマップ
       local opts = { silent = true, noremap = true }
