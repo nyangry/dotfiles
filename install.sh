@@ -22,6 +22,7 @@ delete_old_files()
   rm $HOME/.tmux.conf
   rm $HOME/.ctags
   rm $HOME/.gemrc
+  rm $HOME/.rgignore
   rm $HOME/.bundle/config
   rm $HOME/monitor.sh
 }
@@ -42,6 +43,7 @@ symlink_files()
   ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
   ln -s $HOME/dotfiles/ctags $HOME/.ctags
   ln -s $HOME/dotfiles/gemrc     $HOME/.gemrc
+  ln -s $HOME/dotfiles/rgignore $HOME/.rgignore
   ln -s $HOME/dotfiles/bundle_config $HOME/.bundle/config
   ln -s $HOME/dotfiles/monitor.sh $HOME/monitor.sh
 }
