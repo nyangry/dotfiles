@@ -1,0 +1,30 @@
+#!/bin/zsh
+# ~/bin/ulogs
+
+# Find the project root directory by looking for .git
+function find_project_root() {
+    local dir=$PWD
+    while [[ $dir != "/" ]]; do
+        if [[ -d $dir/.git ]]; then
+            echo $dir
+            return 0
+        fi
+        dir=${dir:h}  # zsh way to get parent directory
+    done
+    echo $PWD  # Return current directory if .git is not found
+}
+
+# Ensure the log file and directory exist
+log_file=~/work/unified.log
+mkdir -p ${log_file:h}  # Create work directory if it doesn't exist
+touch $log_file         # Create log file if it doesn't exist
+
+# Get service name from project root directory
+project_root=$(find_project_root)
+service=${project_root:t}  # zsh way to get basename
+timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+
+# Process all arguments as messages
+for message in $@; do
+    echo "$timestamp [$service] $message" >> $log_file
+done

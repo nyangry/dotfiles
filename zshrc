@@ -35,6 +35,10 @@ cdpath=(
 # git diff-highlight
 export PATH="$PATH:/opt/homebrew/share/git-core/contrib/diff-highlight"
 
+
+# user bin
+export PATH="$HOME/bin:$PATH"
+
 #=======================================================
 # zsh config
 #=======================================================

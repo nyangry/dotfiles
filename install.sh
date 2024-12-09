@@ -4,6 +4,7 @@ add_directories()
 {
   echo "[mkdir] Add directories"
   mkdir $HOME/.config
+  mkdir $HOME/bin
 }
 
 delete_old_files()
@@ -25,6 +26,7 @@ delete_old_files()
   rm $HOME/.rgignore
   rm $HOME/.bundle/config
   rm $HOME/monitor.sh
+  rm $HOME/bin/ulog
 }
 
 symlink_files()
@@ -46,6 +48,7 @@ symlink_files()
   ln -s $HOME/dotfiles/rgignore $HOME/.rgignore
   ln -s $HOME/dotfiles/bundle_config $HOME/.bundle/config
   ln -s $HOME/dotfiles/monitor.sh $HOME/monitor.sh
+  ln -s $HOME/dotfiles/ulog $HOME/bin/ulog
 }
 
 add_zsh_completions()
