@@ -3,58 +3,58 @@
 add_directories()
 {
   echo "[mkdir] Add directories"
-  mkdir $HOME/.config
-  mkdir $HOME/bin
+  mkdir -p $HOME/.config
+  mkdir -p $HOME/bin
 }
 
 delete_old_files()
 {
   echo "[DELETE] Delete the old files"
-  rm $HOME/.bashrc
-  rm $HOME/.zshrc
-  rm $HOME/.zshenv
-  rm $HOME/.config/nvim
-  rm $HOME/.vim
-  rm $HOME/.vimrc
-  rm $HOME/.editorconfig
-  rm $HOME/.gitattributes
-  rm $HOME/.gitconfig
-  rm $HOME/.gitignore
-  rm $HOME/.tmux.conf
-  rm $HOME/.ctags
-  rm $HOME/.gemrc
-  rm $HOME/.rgignore
-  rm $HOME/.bundle/config
-  rm $HOME/monitor.sh
-  rm $HOME/bin/ulog
+  rm -f $HOME/.bashrc
+  rm -f $HOME/.zshrc
+  rm -f $HOME/.zshenv
+  rm -f $HOME/.config/nvim
+  rm -f $HOME/.vim
+  rm -f $HOME/.vimrc
+  rm -f $HOME/.editorconfig
+  rm -f $HOME/.gitattributes
+  rm -f $HOME/.gitconfig
+  rm -f $HOME/.gitignore
+  rm -f $HOME/.tmux.conf
+  rm -f $HOME/.ctags
+  rm -f $HOME/.gemrc
+  rm -f $HOME/.rgignore
+  rm -f $HOME/.bundle/config
+  rm -f $HOME/monitor.sh
+  rm -f $HOME/bin/ulog
 }
 
 symlink_files()
 {
   echo "[Symlink] Symlinking files"
-  ln -s $HOME/dotfiles/bashrc    $HOME/.bashrc
-  ln -s $HOME/dotfiles/zshrc     $HOME/.zshrc
-  ln -s $HOME/dotfiles/zshenv    $HOME/.zshenv
-  ln -s $HOME/dotfiles/nvim     $HOME/.config/nvim
-  ln -s $HOME/dotfiles/vimfiles     $HOME/.vim
-  ln -s $HOME/dotfiles/vimrc     $HOME/.vimrc
-  ln -s $HOME/dotfiles/editorconfig $HOME/.editorconfig
-  ln -s $HOME/dotfiles/gitattributes $HOME/.gitattributes
-  ln -s $HOME/dotfiles/gitconfig $HOME/.gitconfig
-  ln -s $HOME/dotfiles/gitignore $HOME/.gitignore
-  ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
-  ln -s $HOME/dotfiles/ctags $HOME/.ctags
-  ln -s $HOME/dotfiles/gemrc     $HOME/.gemrc
-  ln -s $HOME/dotfiles/rgignore $HOME/.rgignore
-  ln -s $HOME/dotfiles/bundle_config $HOME/.bundle/config
-  ln -s $HOME/dotfiles/monitor.sh $HOME/monitor.sh
-  ln -s $HOME/dotfiles/ulog $HOME/bin/ulog
+  ln -sf $HOME/dotfiles/bashrc    $HOME/.bashrc
+  ln -sf $HOME/dotfiles/zshrc     $HOME/.zshrc
+  ln -sf $HOME/dotfiles/zshenv    $HOME/.zshenv
+  ln -sf $HOME/dotfiles/nvim     $HOME/.config/nvim
+  ln -sf $HOME/dotfiles/vimfiles     $HOME/.vim
+  ln -sf $HOME/dotfiles/vimrc     $HOME/.vimrc
+  ln -sf $HOME/dotfiles/editorconfig $HOME/.editorconfig
+  ln -sf $HOME/dotfiles/gitattributes $HOME/.gitattributes
+  ln -sf $HOME/dotfiles/gitconfig $HOME/.gitconfig
+  ln -sf $HOME/dotfiles/gitignore $HOME/.gitignore
+  ln -sf $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
+  ln -sf $HOME/dotfiles/ctags $HOME/.ctags
+  ln -sf $HOME/dotfiles/gemrc     $HOME/.gemrc
+  ln -sf $HOME/dotfiles/rgignore $HOME/.rgignore
+  ln -sf $HOME/dotfiles/bundle_config $HOME/.bundle/config
+  ln -sf $HOME/dotfiles/monitor.sh $HOME/monitor.sh
+  ln -sf $HOME/dotfiles/ulog $HOME/bin/ulog
 }
 
 add_zsh_completions()
 {
-  mkdir ~/.zsh
-  ln -s ~/dotfiles/zsh_completions ~/.zsh/completions
+  mkdir -p ~/.zsh
+  ln -sf ~/dotfiles/zsh_completions ~/.zsh/completions
 }
 
 #
@@ -66,5 +66,4 @@ symlink_files 1
 # add_zsh_completions 1
 
 echo "[DONE]  All done."
-
 cd $HOME
