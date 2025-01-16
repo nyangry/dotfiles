@@ -1,17 +1,23 @@
 #!/bin/zsh
-# ~/bin/ulogs
+# ~/bin/ulog
+
+if [[ $# -ne 2 ]]; then
+   echo "Usage: ulog <location> <message>"
+   echo "Example: ulog 'controller#method' 'your message'"
+   exit 1
+fi
 
 # Find the project root directory by looking for .git
 function find_project_root() {
-    local dir=$PWD
-    while [[ $dir != "/" ]]; do
-        if [[ -d $dir/.git ]]; then
-            echo $dir
-            return 0
-        fi
-        dir=${dir:h}  # zsh way to get parent directory
-    done
-    echo $PWD  # Return current directory if .git is not found
+   local dir=$PWD
+   while [[ $dir != "/" ]]; do
+       if [[ -d $dir/.git ]]; then
+           echo $dir
+           return 0
+       fi
+       dir=${dir:h}  # zsh way to get parent directory
+   done
+   echo $PWD  # Return current directory if .git is not found
 }
 
 # Ensure the log file and directory exist
@@ -24,7 +30,14 @@ project_root=$(find_project_root)
 service=${project_root:t}  # zsh way to get basename
 timestamp=$(date '+%Y-%m-%d %H:%M:%S')
 
-# Process all arguments as messages
-for message in $@; do
-    echo "$timestamp [$service] $message" >> $log_file
-done
+# Get the two arguments
+location=$1
+message=$2
+
+# Output with new format and different colors
+# \e[37m: white for timestamp
+# \e[33m: yellow for service
+# \e[36m: cyan for location
+echo -e "\n\e[37m$timestamp\e[0m [\e[33m$service\e[0m][\e[36m$location\e[0m]" >> $log_file
+echo "$message" >> $log_file
+echo "" >> $log_file
