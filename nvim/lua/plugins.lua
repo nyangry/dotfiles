@@ -317,8 +317,8 @@ return {
 
       vim.keymap.set('n', '<C-f>', find_files_with_hidden_files, {})
       vim.keymap.set('n', '<leader>gf', builtin.git_files, {})
-      vim.keymap.set('n', '<leader>gc', builtin.git_commits, {})
-      vim.keymap.set('n', '<leader>gcb', builtin.git_bcommits, {})
+      vim.keymap.set('n', '<leader>gh', builtin.git_commits, {})
+      vim.keymap.set('n', '<leader>ghb', builtin.git_bcommits, {})
       vim.keymap.set('n', '<leader>gb', builtin.git_branches, {})
       vim.keymap.set('n', '<leader>gs', builtin.git_status, {})
       vim.keymap.set('n', '<leader>gst', builtin.git_stash, {})
