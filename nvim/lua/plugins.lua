@@ -254,64 +254,62 @@ return {
     end
   },
 
-  {
-    'hrsh7th/cmp-nvim-lsp',
-    event = "BufRead",
-    config = function()
-    end
-  },
-
-  {
-    'hrsh7th/cmp-nvim-lsp-signature-help',
-    event = "BufRead",
-    config = function()
-    end
-  },
-
-  {
-    'hrsh7th/cmp-buffer',
-    event = "BufRead",
-    config = function()
-    end
-  },
-
-  {
-    'hrsh7th/cmp-path',
-    event = "BufRead",
-    config = function()
-    end
-  },
-
-  {
-    'hrsh7th/cmp-cmdline',
-    event = "BufRead",
-    config = function()
-    end
-  },
-
-  {
-    'hrsh7th/cmp-cmdline',
-    event = "BufRead",
-    config = function()
-    end
-  },
-
+  -- cmp / completion
   {
     'hrsh7th/nvim-cmp',
     event = "InsertEnter",
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-vsnip',
+      'hrsh7th/vim-vsnip',
+      'hrsh7th/vim-vsnip-integ',
+    },
     config = function()
-      -- Set up nvim-cmp.
-      local cmp = require'cmp'
+      local cmp = require('cmp')
 
+      -- VSnip setup
+      vim.g.vsnip_filetypes = {
+        javascriptreact = {'javascript'},
+        typescriptreact = {'typescript'}
+      }
+
+      -- Key mappings for vsnip
+      local function setup_vsnip_mappings()
+        local map = vim.keymap.set
+        local opts = {expr = true}
+
+        -- Expand
+        map('i', '<C-j>', 'vsnip#expandable() ? "<Plug>(vsnip-expand)" : "<C-j>"', opts)
+        map('s', '<C-j>', 'vsnip#expandable() ? "<Plug>(vsnip-expand)" : "<C-j>"', opts)
+
+        -- Expand or jump
+        map('i', '<C-l>', 'vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : "<C-l>"', opts)
+        map('s', '<C-l>', 'vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : "<C-l>"', opts)
+
+        -- Jump forward or backward
+        map('i', '<Tab>', 'vsnip#jumpable(1) ? "<Plug>(vsnip-jump-next)" : "<Tab>"', opts)
+        map('s', '<Tab>', 'vsnip#jumpable(1) ? "<Plug>(vsnip-jump-next)" : "<Tab>"', opts)
+        map('i', '<S-Tab>', 'vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)" : "<S-Tab>"', opts)
+        map('s', '<S-Tab>', 'vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)" : "<S-Tab>"', opts)
+
+        -- Select or cut text
+        map('n', 's', '<Plug>(vsnip-select-text)', {})
+        map('x', 's', '<Plug>(vsnip-select-text)', {})
+        map('n', 'S', '<Plug>(vsnip-cut-text)', {})
+        map('x', 'S', '<Plug>(vsnip-cut-text)', {})
+      end
+
+      setup_vsnip_mappings()
+
+      -- nvim-cmp setup
       cmp.setup({
         snippet = {
-          -- REQUIRED - you must specify a snippet engine
           expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-            -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-            -- vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+            vim.fn["vsnip#anonymous"](args.body)
           end,
         },
         window = {
@@ -323,29 +321,28 @@ return {
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
-          { name = 'vsnip' }, -- For vsnip users.
-          -- { name = 'luasnip' }, -- For luasnip users.
-          -- { name = 'ultisnips' }, -- For ultisnips users.
-          -- { name = 'snippy' }, -- For snippy users.
+          { name = 'nvim_lsp_signature_help' },
+          { name = 'vsnip' },
         }, {
             { name = 'buffer' },
+            { name = 'path' },
           })
       })
 
-      -- Set configuration for specific filetype.
+      -- Filetype specific configuration
       cmp.setup.filetype('gitcommit', {
         sources = cmp.config.sources({
-          { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+          { name = 'git' },
         }, {
             { name = 'buffer' },
           })
       })
 
-      -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+      -- Cmdline configuration
       cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
@@ -353,43 +350,21 @@ return {
         }
       })
 
-      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
           { name = 'path' },
           { name = 'cmdline' },
           { name = 'buffer' },
-        }, {
-            -- { name = 'cmdline' }
-          })
+        })
       })
 
-      -- Additional setup for :%s to use buffer and path sources
       cmp.setup.cmdline(':%s', {
         sources = cmp.config.sources({
           { name = 'buffer' },
           { name = 'path' }
         })
       })
-    end
-  },
-  {
-    'hrsh7th/cmp-vsnip',
-    event = "BufRead",
-    config = function()
-    end
-  },
-  {
-    'hrsh7th/vim-vsnip',
-    event = "BufRead",
-    config = function()
-    end
-  },
-  {
-    'hrsh7th/vim-vsnip-integ',
-    event = "BufRead",
-    config = function()
     end
   },
 
