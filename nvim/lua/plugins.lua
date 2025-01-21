@@ -20,6 +20,379 @@ local term_opts = { silent = true }
 local keymap = vim.api.nvim_set_keymap
 
 return {
+  {
+    "williamboman/mason.nvim",
+    -- event = "VeryLazy",
+    config = function()
+      require("mason").setup()
+    end
+  },
+
+  {
+    'williamboman/mason-lspconfig.nvim',
+    -- event = "VeryLazy",
+    config = function()
+      local mason_lspconfig = require('mason-lspconfig')
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      mason_lspconfig.setup({
+        ensure_installed = {
+          -- "diagnosticls",
+          -- "dockerls", "docker_compose_language_service",
+          -- "terraformls", "tflint",
+          -- "golangci_lint_ls", "gopls",
+          -- "kotlin_language_server",
+          "jedi_language_server",
+          -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff_lsp", "sourcery",
+          -- "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
+          -- "lua_ls",
+          -- "html",
+          -- "cssls", "cssmodules_ls", "unocss", "tailwindcss",
+          -- "eslint",
+          -- "quick_lint_js", "tsserver", "vtsls",  "biome",
+          -- "graphql",
+          -- "sqlls",
+          -- "jsonls",
+          "yamlls",
+          -- "taplo",
+          -- "marksman", "prosemd_lsp", "remark_ls", "vale_ls", "zk",
+          -- "vimls",
+        },
+      })
+      -- mason_lspconfig.setup_handlers({
+      --   function (server_name) -- default handler (optional)
+      --     require("lspconfig")[server_name].setup({
+      --       capabilities = capabilities,
+      --     })
+      --   end,
+      -- })
+    end,
+  },
+
+  {
+    'neovim/nvim-lspconfig',
+    event = { "BufReadPre", "BufNewFile" },  -- より早い段階でLSPを準備
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "williamboman/mason-lspconfig.nvim",
+    },
+    config = function()
+      -- キャッシュの有効化
+      vim.lsp.set_log_level("ERROR")
+
+      local lspconfig = require('lspconfig')
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+      -- キャッシュを有効化
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
+      capabilities.textDocument.completion.completionItem.preselectSupport = true
+      capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+      capabilities.textDocument.completion.completionItem.resolveSupport = {
+        properties = {
+          'documentation',
+          'detail',
+          'additionalTextEdits',
+        }
+      }
+
+      lspconfig.jedi_language_server.setup({
+        capabilities = capabilities,
+        settings = {
+          jedi = {
+            completion = {
+              -- 補完の最適化
+              resolveEagerly = false,  -- 遅延解決
+              cacheSize = 5000,       -- キャッシュサイズ
+            }
+          }
+        }
+      })
+    end
+  },
+
+  {
+    'nvimdev/lspsaga.nvim',
+    event = "BufRead",
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter', -- optional
+      'nvim-tree/nvim-web-devicons',     -- optional
+    },
+    config = function()
+      require('lspsaga').setup({
+        code_action = {
+          extend_gitsigns = true,
+        },
+        finder = {
+          max_height = 0.7,
+          left_width = 0.3,
+          right_width = 0.6,
+          keys = {
+            shuttle = "<Space>w",
+            toggle_or_open = "<CR>"
+          }
+        },
+        lightbulb = {
+          enable = false,
+        },
+      })
+
+      vim.keymap.set('n', 'gr', "<cmd>Lspsaga finder ref+def<CR>", opts)
+      vim.keymap.set('n', 'K', "<cmd>Lspsaga hover_doc<CR>", opts)
+      -- vim.keymap.set({ 'n', 'i' }, '<M-CR>', "<cmd>Lspsaga code_action<CR>", opts)
+    end,
+  },
+
+  -- Extensible UI for Neovim notifications and LSP progress messages
+  {
+    "j-hui/fidget.nvim",
+    event = "BufRead",
+    config = function()
+      require("fidget").setup {}
+    end
+  },
+
+  {
+    -- 'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
+    event = "BufRead",
+    config = function ()
+      local null_ls = require("null-ls")
+
+      null_ls.setup({
+        sources = {
+          -- Github action
+          -- null_ls.builtins.diagnostics.actionlint,
+          -- markdown or txt
+          -- null_ls.builtins.diagnostics.textlint,
+          -- json/yaml
+          -- null_ls.builtins.diagnostics.vacuum,
+          -- null_ls.builtins.diagnostics.yamllint,
+          -- python
+          -- null_ls.builtins.diagnostics.mypy,
+          -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+          null_ls.builtins.diagnostics.pylint.with({
+            -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+            -- command = vim.fn.system({ "which", "pylint" }),
+            diagnostics_postprocess = function(diagnostic)
+              diagnostic.code = diagnostic.message_id
+            end,
+          }),
+          -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+          -- null_ls.builtins.formatting.usort,
+          null_ls.builtins.formatting.isort,
+          null_ls.builtins.formatting.black,
+          -- null_ls.builtins.formatting.black.with({
+          --   extra_args = {"--line-length=120"}
+          -- }),
+          -- code formatter
+          null_ls.builtins.formatting.prettier,
+          -- null_ls.builtins.formatting.textlint,
+          -- Formatter, linter, bundler, and more for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
+          -- null_ls.builtins.formatting.biome,
+        },
+        on_attach = function(client, bufnr)
+          if client.supports_method("textDocument/formatting") then
+            vim.keymap.set("n", "<Leader>f", function()
+              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+            end, { buffer = bufnr, desc = "[lsp] format" })
+
+            -- format on save
+            local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+            local event = "BufWritePre" -- or "BufWritePost"
+            local async = event == "BufWritePre"
+            vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+            vim.api.nvim_create_autocmd(event, {
+              buffer = bufnr,
+              group = group,
+              callback = function()
+                vim.lsp.buf.format({ bufnr = bufnr, async = async })
+              end,
+              desc = "[lsp] format on save",
+            })
+          end
+
+          if client.supports_method("textDocument/rangeFormatting") then
+            vim.keymap.set("x", "<Leader>f", function()
+              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+            end, { buffer = bufnr, desc = "[lsp] format" })
+          end
+        end,
+        vim.lsp.buf.format({ timeout_ms = 5000 })
+        -- debug = true
+      })
+    end
+  },
+
+  {
+    "jay-babu/mason-null-ls.nvim",
+    event = "BufRead",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "nvimtools/none-ls.nvim",
+    },
+    config = function ()
+      require("mason-null-ls").setup({
+        -- to avoid ensure install pylint ... pylint should use of each project's bin, but using mason cause a problem that mason use own bin rather than project venv's bin.
+        -- automatic_installation = true,
+        ensure_installed = {
+          "isort",
+          "usort",
+        },
+        automatic_installation = true,
+      })
+    end
+  },
+
+  -- It allows you to quickly select, yank, delete or replace language-specific ranges.
+  {
+    'David-Kunz/treesitter-unit',
+    event = "BufRead",
+    config = function()
+      keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
+      keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
+      keymap('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>', {noremap=true})
+      keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>', {noremap=true})
+    end
+  },
+
+  {
+    'hrsh7th/cmp-nvim-lsp',
+    event = "BufRead",
+    config = function()
+    end
+  },
+
+  {
+    'hrsh7th/cmp-nvim-lsp-signature-help',
+    event = "BufRead",
+    config = function()
+    end
+  },
+
+  {
+    'hrsh7th/cmp-buffer',
+    event = "BufRead",
+    config = function()
+    end
+  },
+
+  {
+    'hrsh7th/cmp-path',
+    event = "BufRead",
+    config = function()
+    end
+  },
+
+  {
+    'hrsh7th/cmp-cmdline',
+    event = "BufRead",
+    config = function()
+    end
+  },
+
+  {
+    'hrsh7th/cmp-cmdline',
+    event = "BufRead",
+    config = function()
+    end
+  },
+
+  {
+    'hrsh7th/nvim-cmp',
+    event = "InsertEnter",
+    config = function()
+      -- Set up nvim-cmp.
+      local cmp = require'cmp'
+
+      cmp.setup({
+        snippet = {
+          -- REQUIRED - you must specify a snippet engine
+          expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+            -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+            -- vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+          end,
+        },
+        window = {
+          -- completion = cmp.config.window.bordered(),
+          -- documentation = cmp.config.window.bordered(),
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        }),
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' },
+          { name = 'vsnip' }, -- For vsnip users.
+          -- { name = 'luasnip' }, -- For luasnip users.
+          -- { name = 'ultisnips' }, -- For ultisnips users.
+          -- { name = 'snippy' }, -- For snippy users.
+        }, {
+            { name = 'buffer' },
+          })
+      })
+
+      -- Set configuration for specific filetype.
+      cmp.setup.filetype('gitcommit', {
+        sources = cmp.config.sources({
+          { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+        }, {
+            { name = 'buffer' },
+          })
+      })
+
+      -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+      cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = 'buffer' }
+        }
+      })
+
+      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'path' },
+          { name = 'cmdline' },
+          { name = 'buffer' },
+        }, {
+            -- { name = 'cmdline' }
+          })
+      })
+
+      -- Additional setup for :%s to use buffer and path sources
+      cmp.setup.cmdline(':%s', {
+        sources = cmp.config.sources({
+          { name = 'buffer' },
+          { name = 'path' }
+        })
+      })
+    end
+  },
+  {
+    'hrsh7th/cmp-vsnip',
+    event = "BufRead",
+    config = function()
+    end
+  },
+  {
+    'hrsh7th/vim-vsnip',
+    event = "BufRead",
+    config = function()
+    end
+  },
+  {
+    'hrsh7th/vim-vsnip-integ',
+    event = "BufRead",
+    config = function()
+    end
+  },
+
   -- colorscheme
   {
     'EdenEast/nightfox.nvim',
@@ -389,201 +762,6 @@ return {
     end
   },
 
-  {
-    'hrsh7th/cmp-nvim-lsp',
-    event = "BufRead",
-    config = function()
-    end
-  },
-
-  {
-    'hrsh7th/cmp-nvim-lsp-signature-help',
-    event = "BufRead",
-    config = function()
-    end
-  },
-
-  {
-    'hrsh7th/cmp-buffer',
-    event = "BufRead",
-    config = function()
-    end
-  },
-
-  {
-    'hrsh7th/cmp-path',
-    event = "BufRead",
-    config = function()
-    end
-  },
-
-  {
-    'hrsh7th/cmp-cmdline',
-    event = "BufRead",
-    config = function()
-    end
-  },
-
-  {
-    'hrsh7th/nvim-cmp',
-    event = "InsertEnter",
-    config = function()
-      -- Set up nvim-cmp.
-      local cmp = require'cmp'
-
-      cmp.setup({
-        performance = {
-          debounce = 150,        -- 補完の遅延時間
-          throttle = 60,         -- スロットリング
-          fetching_timeout = 200, -- フェッチのタイムアウト
-        },
-        snippet = {
-          -- REQUIRED - you must specify a snippet engine
-          expand = function(args)
-            -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-            -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-          end,
-        },
-        window = {
-          -- completion = cmp.config.window.bordered(),
-          documentation =  {
-            max_width = 0,
-            max_height = 0
-          }
-        },
-        mapping = cmp.mapping.preset.insert({
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              local entry = cmp.get_selected_entry()
-              if entry == nil then
-                fallback()
-              else
-                cmp.confirm({
-                  behavior = cmp.ConfirmBehavior.Insert,
-                  select = false,
-                })
-              end
-            else
-              fallback()
-            end
-          end, {'i', 's'}),
-        }),
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'nvim_lsp_signature_help' },
-          -- { name = 'vsnip' },
-          {
-            name = 'buffer',
-            option = {
-              get_bufnrs = function()
-                return vim.api.nvim_list_bufs()
-              end
-            }
-          },
-        }, {
-          }),
-        completion = {
-          completeopt = 'menu,menuone,noinsert,noselect'
-        }
-      })
-
-      -- Set configuration for specific filetype.
-      cmp.setup.filetype('gitcommit', {
-        sources = cmp.config.sources({
-          { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-        }, {
-            { name = 'buffer' },
-          })
-      })
-
-      -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = 'buffer' }
-        }
-      })
-
-      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'path' },
-          { name = 'cmdline' },
-          { name = 'buffer' },
-        }, {
-            -- { name = 'cmdline' }
-          })
-      })
-
-      -- Additional setup for :%s to use buffer and path sources
-      cmp.setup.cmdline(':%s', {
-        sources = cmp.config.sources({
-          { name = 'buffer' },
-          { name = 'path' }
-        })
-      })
-    end
-  },
-  {
-    'hrsh7th/cmp-vsnip',
-    event = "BufRead",
-    config = function()
-    end
-  },
-  {
-    'hrsh7th/vim-vsnip',
-    event = "BufRead",
-    config = function()
-    end
-  },
-
-  -- snippet
-  { "rafamadriz/friendly-snippets" },
-
-  {
-    "L3MON4D3/LuaSnip",
-    dependencies = { "rafamadriz/friendly-snippets" },
-    -- follow latest release.
-    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-    -- install jsregexp (optional!).
-    build = "make install_jsregexp",
-    event = "BufRead",
-    config = function()
-      local ls = require("luasnip")
-
-      vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
-      vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
-      vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
-
-      vim.keymap.set({"i", "s"}, "<C-E>", function()
-        if ls.choice_active() then
-          ls.change_choice(1)
-        end
-      end, {silent = true})
-      require("luasnip.loaders.from_vscode").lazy_load()
-      -- require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my-cool-snippets" } })
-    end
-  },
-
-  -- It allows you to quickly select, yank, delete or replace language-specific ranges.
-  {
-    'David-Kunz/treesitter-unit',
-    event = "BufRead",
-    config = function()
-      keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
-      keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
-      keymap('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>', {noremap=true})
-      keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>', {noremap=true})
-    end
-  },
-
   -- git sign
   {
     'lewis6991/gitsigns.nvim',
@@ -894,227 +1072,9 @@ return {
   },
 
   {
-    "williamboman/mason.nvim",
-    -- event = "VeryLazy",
-    config = function()
-      require("mason").setup()
-    end
-  },
-
-  {
-    'williamboman/mason-lspconfig.nvim',
-    -- event = "VeryLazy",
-    config = function()
-      local mason_lspconfig = require('mason-lspconfig')
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      mason_lspconfig.setup({
-        ensure_installed = {
-          -- "diagnosticls",
-          -- "dockerls", "docker_compose_language_service",
-          -- "terraformls", "tflint",
-          -- "golangci_lint_ls", "gopls",
-          -- "kotlin_language_server",
-          "jedi_language_server",
-          -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff_lsp", "sourcery",
-          -- "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
-          -- "lua_ls",
-          -- "html",
-          -- "cssls", "cssmodules_ls", "unocss", "tailwindcss",
-          -- "eslint",
-          -- "quick_lint_js", "tsserver", "vtsls",  "biome",
-          -- "graphql",
-          -- "sqlls",
-          -- "jsonls",
-          "yamlls",
-          -- "taplo",
-          -- "marksman", "prosemd_lsp", "remark_ls", "vale_ls", "zk",
-          -- "vimls",
-        },
-      })
-      -- mason_lspconfig.setup_handlers({
-      --   function (server_name) -- default handler (optional)
-      --     require("lspconfig")[server_name].setup({
-      --       capabilities = capabilities,
-      --     })
-      --   end,
-      -- })
-    end,
-  },
-
-  {
-    'neovim/nvim-lspconfig',
-    event = { "BufReadPre", "BufNewFile" },  -- より早い段階でLSPを準備
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "williamboman/mason-lspconfig.nvim",
-    },
-    config = function()
-      -- キャッシュの有効化
-      vim.lsp.set_log_level("ERROR")
-
-      local lspconfig = require('lspconfig')
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      -- キャッシュを有効化
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
-      capabilities.textDocument.completion.completionItem.preselectSupport = true
-      capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-      capabilities.textDocument.completion.completionItem.resolveSupport = {
-        properties = {
-          'documentation',
-          'detail',
-          'additionalTextEdits',
-        }
-      }
-
-      lspconfig.jedi_language_server.setup({
-        capabilities = capabilities,
-        settings = {
-          jedi = {
-            completion = {
-              -- 補完の最適化
-              resolveEagerly = false,  -- 遅延解決
-              cacheSize = 5000,       -- キャッシュサイズ
-            }
-          }
-        }
-      })
-    end
-  },
-
-  {
-    'nvimdev/lspsaga.nvim',
-    event = "BufRead",
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter', -- optional
-      'nvim-tree/nvim-web-devicons',     -- optional
-    },
-    config = function()
-      require('lspsaga').setup({
-        code_action = {
-          extend_gitsigns = true,
-        },
-        finder = {
-          max_height = 0.7,
-          left_width = 0.3,
-          right_width = 0.6,
-          keys = {
-            shuttle = "<Space>w",
-            toggle_or_open = "<CR>"
-          }
-        },
-        lightbulb = {
-          enable = false,
-        },
-      })
-
-      vim.keymap.set('n', 'gr', "<cmd>Lspsaga finder ref+def<CR>", opts)
-      vim.keymap.set('n', 'K', "<cmd>Lspsaga hover_doc<CR>", opts)
-      -- vim.keymap.set({ 'n', 'i' }, '<M-CR>', "<cmd>Lspsaga code_action<CR>", opts)
-    end,
-  },
-
-  -- Extensible UI for Neovim notifications and LSP progress messages
-  {
-    "j-hui/fidget.nvim",
-    event = "BufRead",
-    config = function()
-      require("fidget").setup {}
-    end
-  },
-
-  {
     "folke/trouble.nvim",
     event = "BufRead",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {},
-  },
-
-
-  {
-    -- 'jose-elias-alvarez/null-ls.nvim',
-    'nvimtools/none-ls.nvim',
-    event = "BufRead",
-    config = function ()
-      local null_ls = require("null-ls")
-
-      null_ls.setup({
-        sources = {
-          -- Github action
-          -- null_ls.builtins.diagnostics.actionlint,
-          -- markdown or txt
-          -- null_ls.builtins.diagnostics.textlint,
-          -- json/yaml
-          -- null_ls.builtins.diagnostics.vacuum,
-          -- null_ls.builtins.diagnostics.yamllint,
-          -- python
-          -- null_ls.builtins.diagnostics.mypy,
-          -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-          null_ls.builtins.diagnostics.pylint.with({
-            -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-            -- command = vim.fn.system({ "which", "pylint" }),
-            diagnostics_postprocess = function(diagnostic)
-              diagnostic.code = diagnostic.message_id
-            end,
-          }),
-          -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-          -- null_ls.builtins.formatting.usort,
-          null_ls.builtins.formatting.isort,
-          null_ls.builtins.formatting.black,
-          -- null_ls.builtins.formatting.black.with({
-          --   extra_args = {"--line-length=120"}
-          -- }),
-          -- code formatter
-          null_ls.builtins.formatting.prettier,
-          -- null_ls.builtins.formatting.textlint,
-          -- Formatter, linter, bundler, and more for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
-          -- null_ls.builtins.formatting.biome,
-        },
-        on_attach = function(client, bufnr)
-          if client.supports_method("textDocument/formatting") then
-            vim.keymap.set("n", "<Leader>f", function()
-              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-            end, { buffer = bufnr, desc = "[lsp] format" })
-
-            -- format on save
-            local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-            local event = "BufWritePre" -- or "BufWritePost"
-            local async = event == "BufWritePre"
-            vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-            vim.api.nvim_create_autocmd(event, {
-              buffer = bufnr,
-              group = group,
-              callback = function()
-                vim.lsp.buf.format({ bufnr = bufnr, async = async })
-              end,
-              desc = "[lsp] format on save",
-            })
-          end
-
-          if client.supports_method("textDocument/rangeFormatting") then
-            vim.keymap.set("x", "<Leader>f", function()
-              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-            end, { buffer = bufnr, desc = "[lsp] format" })
-          end
-        end,
-        vim.lsp.buf.format({ timeout_ms = 5000 })
-        -- debug = true
-      })
-    end
-  },
-
-  {
-    "jay-babu/mason-null-ls.nvim",
-    event = "BufRead",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "nvimtools/none-ls.nvim",
-    },
-    config = function ()
-      require("mason-null-ls").setup({
-        -- to avoid ensure install pylint ... pylint should use of each project's bin, but using mason cause a problem that mason use own bin rather than project venv's bin.
-        -- automatic_installation = true,
-      })
-    end
   },
 }
