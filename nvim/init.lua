@@ -127,16 +127,6 @@ keymap("n", "Y", "y$", opts)
 
 -- http:/qiita.com/tekkoc/items/98adcadfa4bdc8b5a6ca/
 keymap("n", "s", "<Nop>", opts)
--- keymap("n", "sh", "<C-w>h", opts)
--- keymap("n", "sj", "<C-w>j", opts)
--- keymap("n", "sk", "<C-w>k", opts)
--- keymap("n", "sl", "<C-w>l", opts)
--- keymap("n", "sH", "<C-w>H", opts)
--- keymap("n", "sJ", "<C-w>J", opts)
--- keymap("n", "sK", "<C-w>k", opts)
--- keymap("n", "sL", "<C-w>L", opts)
--- keymap("n", "sn", "gt", opts)
--- keymap("n", "sp", "gT", opts)
 keymap("n", "th", ":tabmove -1<CR>", opts)
 keymap("n", "tl", ":tabmove +1<CR>", opts)
 keymap("n", "tc", ":tabclose<CR>", opts)
@@ -160,9 +150,6 @@ keymap("i", "<C-q><C-q>", ":qa!<CR>", opts)
 -- redraw!
 keymap("n", "<leader>w", ":redraw!<CR>", opts)
 keymap("n", "<leader>e", ":e!<CR>", opts)
-
--- ビジュアルモードで選択したテキストで検索する
--- keymap("v", "<silent> *", '"vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>', opts)
 
 -- ヤンク、ペースト後のカーソル移動
 keymap("v", "<silent> y", "y`]", opts)
@@ -224,13 +211,3 @@ local function lspkeys()
   vim.api.nvim_buf_set_keymap(0, "n", "gW",       "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>",{ silent = true })
 end
 vim.api.nvim_create_autocmd("FileType", { pattern = "python", callback = lspkeys })
-
--- autocmds
--- タブ幅をリセット (効いてない？)
--- vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
---   pattern = '*',
---   callback = function()
---     vim.api.nvim_buf_set_option(0, 'tabstop', 2)
---     vim.api.nvim_buf_set_option(0, 'shiftwidth', 2)
---   end,
--- })
