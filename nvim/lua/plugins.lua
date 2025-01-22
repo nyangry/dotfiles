@@ -250,68 +250,104 @@ return {
     config = function ()
       local null_ls = require("null-ls")
 
+      -- 仮想環境のパスを取得する関数
+      local function get_python_tool_path(tool)
+        local venv = vim.env.VIRTUAL_ENV
+        if venv then
+          return venv .. "/bin/" .. tool
+        end
+        return tool  -- 仮想環境が見つからない場合はツール名をそのまま返す
+      end
+
       null_ls.setup({
         sources = {
-          -- Github action
-          -- null_ls.builtins.diagnostics.actionlint,
-          -- markdown or txt
-          -- null_ls.builtins.diagnostics.textlint,
-          -- json/yaml
-          -- null_ls.builtins.diagnostics.vacuum,
-          -- null_ls.builtins.diagnostics.yamllint,
-          -- python
-          -- null_ls.builtins.diagnostics.mypy,
-          -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
           null_ls.builtins.diagnostics.pylint.with({
-            -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-            -- command = vim.fn.system({ "which", "pylint" }),
-            diagnostics_postprocess = function(diagnostic)
-              diagnostic.code = diagnostic.message_id
-            end,
+            command = get_python_tool_path("pylint"),
+            prefer_local = true,
           }),
-          -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-          -- null_ls.builtins.formatting.usort,
-          null_ls.builtins.formatting.isort,
-          null_ls.builtins.formatting.black,
-          -- null_ls.builtins.formatting.black.with({
-          --   extra_args = {"--line-length=120"}
-          -- }),
-          -- code formatter
-          null_ls.builtins.formatting.prettier,
-          -- null_ls.builtins.formatting.textlint,
-          -- Formatter, linter, bundler, and more for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
-          -- null_ls.builtins.formatting.biome,
+          null_ls.builtins.formatting.isort.with({
+            command = get_python_tool_path("isort"),
+            prefer_local = true,
+            extra_args = {"--profile", "black"}
+          }),
+          null_ls.builtins.formatting.black.with({
+            command = get_python_tool_path("black"),
+            prefer_local = true,
+          }),
         },
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
             vim.keymap.set("n", "<Leader>f", function()
               vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
             end, { buffer = bufnr, desc = "[lsp] format" })
-
-            -- format on save
-            local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-            local event = "BufWritePre" -- or "BufWritePost"
-            local async = event == "BufWritePre"
-            vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-            vim.api.nvim_create_autocmd(event, {
-              buffer = bufnr,
-              group = group,
-              callback = function()
-                vim.lsp.buf.format({ bufnr = bufnr, async = async })
-              end,
-              desc = "[lsp] format on save",
-            })
-          end
-
-          if client.supports_method("textDocument/rangeFormatting") then
-            vim.keymap.set("x", "<Leader>f", function()
-              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-            end, { buffer = bufnr, desc = "[lsp] format" })
           end
         end,
-        vim.lsp.buf.format({ timeout_ms = 5000 })
-        -- debug = true
       })
+
+      -- null_ls.setup({
+      --   sources = {
+      --     -- Github action
+      --     -- null_ls.builtins.diagnostics.actionlint,
+      --     -- markdown or txt
+      --     -- null_ls.builtins.diagnostics.textlint,
+      --     -- json/yaml
+      --     -- null_ls.builtins.diagnostics.vacuum,
+      --     -- null_ls.builtins.diagnostics.yamllint,
+      --     -- python
+      --     -- null_ls.builtins.diagnostics.mypy,
+      --     -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+      --     null_ls.builtins.diagnostics.pylint.with({
+      --       -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+      --       -- command = vim.fn.system({ "which", "pylint" }),
+      --       diagnostics_postprocess = function(diagnostic)
+      --         diagnostic.code = diagnostic.message_id
+      --       end,
+      --     }),
+      --     -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
+      --     null_ls.builtins.formatting.usort,
+      --     null_ls.builtins.formatting.isort.with({
+      --       extra_args = {"--profile", "black"}  -- blackと互換性のある設定
+      --     }),
+      --     null_ls.builtins.formatting.black,
+      --     -- null_ls.builtins.formatting.black.with({
+      --     --   extra_args = {"--line-length=120"}
+      --     -- }),
+      --     -- code formatter
+      --     null_ls.builtins.formatting.prettier,
+      --     -- null_ls.builtins.formatting.textlint,
+      --     -- Formatter, linter, bundler, and more for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
+      --     -- null_ls.builtins.formatting.biome,
+      --   },
+      --   on_attach = function(client, bufnr)
+      --     if client.supports_method("textDocument/formatting") then
+      --       vim.keymap.set("n", "<Leader>f", function()
+      --         vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+      --       end, { buffer = bufnr, desc = "[lsp] format" })
+      --
+      --       -- format on save
+      --       local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+      --       local event = "BufWritePre" -- or "BufWritePost"
+      --       local async = event == "BufWritePre"
+      --       vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+      --       vim.api.nvim_create_autocmd(event, {
+      --         buffer = bufnr,
+      --         group = group,
+      --         callback = function()
+      --           vim.lsp.buf.format({ bufnr = bufnr, async = async })
+      --         end,
+      --         desc = "[lsp] format on save",
+      --       })
+      --     end
+      --
+      --     if client.supports_method("textDocument/rangeFormatting") then
+      --       vim.keymap.set("x", "<Leader>f", function()
+      --         vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+      --       end, { buffer = bufnr, desc = "[lsp] format" })
+      --     end
+      --   end,
+      --   vim.lsp.buf.format({ timeout_ms = 5000 })
+      --   -- debug = true
+      -- })
     end
   },
 
