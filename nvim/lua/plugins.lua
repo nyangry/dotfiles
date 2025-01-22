@@ -1031,13 +1031,13 @@ return {
   },
 
   -- pair
-  -- {
-  --   'echasnovski/mini.pairs',
-  --   version = '*',
-  --   config = function ()
-  --     require('mini.pairs').setup()
-  --   end
-  -- },
+  {
+    'echasnovski/mini.pairs',
+    version = '*',
+    config = function ()
+      require('mini.pairs').setup()
+    end
+  },
 
   -- autoclose and autorename html tag / js / jsx / markdown / tsx / typescript / vue / xml
   {
