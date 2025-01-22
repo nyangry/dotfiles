@@ -160,7 +160,7 @@ keymap("n", "<silent> p", "p`]", opts)
 keymap("n", "x", '"_x', opts)
 
 -- コンマの後に自動的にスペースを挿入
--- keymap("i", ",", ",<Space>", opts)
+keymap("i", ",", ",<Space>", opts)
 
 -- 画面移動
 keymap("n", "<c-h>", "<c-w>h", opts)
