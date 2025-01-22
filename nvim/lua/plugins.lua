@@ -151,26 +151,86 @@ return {
     },
     config = function()
       require('lspsaga').setup({
+        ui = {
+          border = 'rounded',        -- ウィンドウの境界線スタイル
+          code_action = "💡",        -- コードアクションのアイコン
+        },
+        hover = {
+          max_width = 0.6,          -- ホバーウィンドウの最大幅
+          max_height = 0.6,         -- ホバーウィンドウの最大高さ
+          open_link = 'gx',         -- リンクを開くキー
+          open_cmd = '!chrome'
+        },
+        diagnostic = {
+          show_code_action = true,  -- 診断にコードアクションを表示
+          jump_num_shortcut = true, -- ジャンプのショートカット番号を表示
+        },
         code_action = {
+          num_shortcut = true,
+          show_server_name = true,
           extend_gitsigns = true,
         },
-        finder = {
-          max_height = 0.7,
-          left_width = 0.3,
-          right_width = 0.6,
-          keys = {
-            shuttle = "<Space>w",
-            toggle_or_open = "<CR>"
-          }
-        },
         lightbulb = {
-          enable = false,
+          enable = true,
+          sign = true,
+          debounce = 10,
+          virtual_text = true
         },
       })
 
-      vim.keymap.set('n', 'gr', "<cmd>Lspsaga finder ref+def<CR>", opts)
-      vim.keymap.set('n', 'K', "<cmd>Lspsaga hover_doc<CR>", opts)
-      -- vim.keymap.set({ 'n', 'i' }, '<M-CR>', "<cmd>Lspsaga code_action<CR>", opts)
+      -- 診断表示の基本設定
+      vim.diagnostic.config({
+        virtual_text = {
+          source = true,    -- ソースを表示
+          prefix = '●',     -- または任意の文字
+        },
+        float = {
+          source = "always",  -- フロートウィンドウでソースを常に表示
+          format = function(diagnostic)
+            local source = diagnostic.source or "unknown"
+            local code = diagnostic.code or ""
+            return string.format("[%s:%s] %s", source, code, diagnostic.message)
+          end,
+        },
+        signs = true,
+        underline = true,
+        severity_sort = true,
+      })
+
+      -- 自動ホバー用の設定
+      -- vim.opt.updatetime = 100
+      -- vim.api.nvim_create_autocmd("CursorHold", {
+      --   callback = function()
+      --     vim.cmd("Lspsaga hover_doc")
+      --   end
+      -- })
+
+      -- LSPの基本的なキーマッピングをLspsagaに変更
+      vim.keymap.set('n', 'K',  '<cmd>Lspsaga hover_doc<CR>')              -- hover docの表示
+      vim.keymap.set('n', 'gf', '<cmd>Lspsaga finder<CR>')                 -- 定義/参照の検索
+      vim.keymap.set('n', 'gr', '<cmd>Lspsaga finder ref<CR>')             -- 参照検索
+      vim.keymap.set('n', 'gd', '<cmd>Lspsaga goto_definition<CR>')        -- 定義へジャンプ
+      vim.keymap.set('n', 'gi', '<cmd>Lspsaga finder imp<CR>')             -- 実装の検索
+      vim.keymap.set('n', 'gt', '<cmd>Lspsaga peek_type_definition<CR>')   -- 型定義のプレビュー
+      vim.keymap.set('n', 'gn', '<cmd>Lspsaga rename<CR>')                 -- 名前の変更
+      vim.keymap.set('n', 'ga', '<cmd>Lspsaga code_action<CR>')            -- コードアクション
+      -- vim.keymap.set('n', 'ga', function()
+      --   vim.lsp.buf.code_action({
+      --     -- コードアクションのフィルタリングが必要な場合
+      --     filter = function(action)
+      --       return action.kind == "quickfix" or action.kind == "source.addImport"
+      --     end,
+      --     -- プレビューを表示
+      --     apply = false
+      --   })
+      -- end, { noremap = true, silent = true })
+      vim.keymap.set('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')  -- 診断情報の表示
+      vim.keymap.set('n', 'g]', '<cmd>Lspsaga diagnostic_jump_next<CR>')   -- 次の診断へジャンプ
+      vim.keymap.set('n', 'g[', '<cmd>Lspsaga diagnostic_jump_prev<CR>')   -- 前の診断へジャンプ
+      -- 追加の便利な機能
+      vim.keymap.set('n', '<leader>o', '<cmd>Lspsaga outline<CR>')         -- アウトライン表示
+      vim.keymap.set('n', '<leader>ci', '<cmd>Lspsaga incoming_calls<CR>') -- 呼び出し元を表示
+      vim.keymap.set('n', '<leader>co', '<cmd>Lspsaga outgoing_calls<CR>') -- 呼び出し先を表示
     end,
   },
 
