@@ -1,17 +1,3 @@
--- debug
--- local function dump(o)
---   if type(o) == 'table' then
---     local s = '{ '
---     for k,v in pairs(o) do
---       if type(k) ~= 'number' then k = '"'..k..'"' end
---       s = s .. '['..k..'] = ' .. dump(v) .. ','
---     end
---     return s .. '} '
---   else
---     return tostring(o)
---   end
--- end
-
 -- keymaps
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
@@ -38,26 +24,8 @@ return {
 
       mason_lspconfig.setup({
         ensure_installed = {
-          -- "diagnosticls",
-          -- "dockerls", "docker_compose_language_service",
-          -- "terraformls", "tflint",
-          -- "golangci_lint_ls", "gopls",
-          -- "kotlin_language_server",
           "pyright", "ruff",
-          -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff", "sourcery",
-          -- "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
-          -- "lua_ls",
-          -- "html",
-          -- "cssls", "cssmodules_ls", "unocss", "tailwindcss",
-          -- "eslint",
-          -- "quick_lint_js", "tsserver", "vtsls",  "biome",
-          -- "graphql",
-          -- "sqlls",
-          -- "jsonls",
           "yamlls",
-          -- "taplo",
-          -- "marksman", "prosemd_lsp", "remark_ls", "vale_ls", "zk",
-          -- "vimls",
         },
       })
 
@@ -91,10 +59,6 @@ return {
                 }
               }
             },
-            -- コードアクションのハンドラーを明示的に有効化
-            -- handlers = {
-            --   ["textDocument/codeAction"] = vim.lsp.handlers["textDocument/codeAction"]
-            -- }
           })
         end,
 
@@ -127,18 +91,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      -- vim.keymap.set('n', 'K',  '<cmd>lua vim.lsp.buf.hover()<CR>')
-      -- vim.keymap.set('n', 'gf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-      -- vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-      -- vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-      -- vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
-      -- vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-      -- vim.keymap.set('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-      -- vim.keymap.set('n', 'gn', '<cmd>lua vim.lsp.buf.rename()<CR>')
-      -- vim.keymap.set('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-      -- vim.keymap.set('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
-      -- vim.keymap.set('n', 'g]', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-      -- vim.keymap.set('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
     end
   },
 
@@ -214,16 +166,6 @@ return {
       vim.keymap.set('n', 'gt', '<cmd>Lspsaga peek_type_definition<CR>')   -- 型定義のプレビュー
       vim.keymap.set('n', 'gn', '<cmd>Lspsaga rename<CR>')                 -- 名前の変更
       vim.keymap.set('n', 'ga', '<cmd>Lspsaga code_action<CR>')            -- コードアクション
-      -- vim.keymap.set('n', 'ga', function()
-      --   vim.lsp.buf.code_action({
-      --     -- コードアクションのフィルタリングが必要な場合
-      --     filter = function(action)
-      --       return action.kind == "quickfix" or action.kind == "source.addImport"
-      --     end,
-      --     -- プレビューを表示
-      --     apply = false
-      --   })
-      -- end, { noremap = true, silent = true })
       vim.keymap.set('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')  -- 診断情報の表示
       vim.keymap.set('n', 'g]', '<cmd>Lspsaga diagnostic_jump_next<CR>')   -- 次の診断へジャンプ
       vim.keymap.set('n', 'g[', '<cmd>Lspsaga diagnostic_jump_prev<CR>')   -- 前の診断へジャンプ
@@ -261,6 +203,7 @@ return {
 
       null_ls.setup({
         sources = {
+          -- python
           null_ls.builtins.diagnostics.pylint.with({
             command = get_python_tool_path("pylint"),
             prefer_local = true,
@@ -274,6 +217,13 @@ return {
             command = get_python_tool_path("black"),
             prefer_local = true,
           }),
+          -- markdown or txt
+          null_ls.builtins.diagnostics.textlint,
+          -- json/yaml
+          null_ls.builtins.diagnostics.vacuum,
+          null_ls.builtins.diagnostics.yamllint,
+          -- code formatter
+          null_ls.builtins.formatting.prettier,
         },
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
@@ -283,71 +233,6 @@ return {
           end
         end,
       })
-
-      -- null_ls.setup({
-      --   sources = {
-      --     -- Github action
-      --     -- null_ls.builtins.diagnostics.actionlint,
-      --     -- markdown or txt
-      --     -- null_ls.builtins.diagnostics.textlint,
-      --     -- json/yaml
-      --     -- null_ls.builtins.diagnostics.vacuum,
-      --     -- null_ls.builtins.diagnostics.yamllint,
-      --     -- python
-      --     -- null_ls.builtins.diagnostics.mypy,
-      --     -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-      --     null_ls.builtins.diagnostics.pylint.with({
-      --       -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-      --       -- command = vim.fn.system({ "which", "pylint" }),
-      --       diagnostics_postprocess = function(diagnostic)
-      --         diagnostic.code = diagnostic.message_id
-      --       end,
-      --     }),
-      --     -- print(dump(null_ls.builtins.diagnostics.pylint._opts.command)),
-      --     null_ls.builtins.formatting.usort,
-      --     null_ls.builtins.formatting.isort.with({
-      --       extra_args = {"--profile", "black"}  -- blackと互換性のある設定
-      --     }),
-      --     null_ls.builtins.formatting.black,
-      --     -- null_ls.builtins.formatting.black.with({
-      --     --   extra_args = {"--line-length=120"}
-      --     -- }),
-      --     -- code formatter
-      --     null_ls.builtins.formatting.prettier,
-      --     -- null_ls.builtins.formatting.textlint,
-      --     -- Formatter, linter, bundler, and more for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
-      --     -- null_ls.builtins.formatting.biome,
-      --   },
-      --   on_attach = function(client, bufnr)
-      --     if client.supports_method("textDocument/formatting") then
-      --       vim.keymap.set("n", "<Leader>f", function()
-      --         vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-      --       end, { buffer = bufnr, desc = "[lsp] format" })
-      --
-      --       -- format on save
-      --       local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-      --       local event = "BufWritePre" -- or "BufWritePost"
-      --       local async = event == "BufWritePre"
-      --       vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-      --       vim.api.nvim_create_autocmd(event, {
-      --         buffer = bufnr,
-      --         group = group,
-      --         callback = function()
-      --           vim.lsp.buf.format({ bufnr = bufnr, async = async })
-      --         end,
-      --         desc = "[lsp] format on save",
-      --       })
-      --     end
-      --
-      --     if client.supports_method("textDocument/rangeFormatting") then
-      --       vim.keymap.set("x", "<Leader>f", function()
-      --         vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-      --       end, { buffer = bufnr, desc = "[lsp] format" })
-      --     end
-      --   end,
-      --   vim.lsp.buf.format({ timeout_ms = 5000 })
-      --   -- debug = true
-      -- })
     end
   },
 
@@ -565,26 +450,6 @@ return {
         },
       })
 
-      -- 起動時に開く
-      -- local function open_nvim_tree(data)
-      --   -- バッファがディレクトリの場合は開く
-      --   local directory = vim.fn.isdirectory(data.file) == 1
-      --
-      --   if directory then
-      --     vim.cmd.cd(data.file)
-      --   end
-      --
-      --   -- NvimTreeを開く
-      --   require("nvim-tree.api").tree.open()
-      --
-      --   -- ツリーを開いた後、次のウィンドウにフォーカスを移動
-      --   vim.cmd("wincmd p")
-      -- end
-      --
-      -- vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
-
-      -- キーマップ
-      local opts = { silent = true, noremap = true }
       vim.keymap.set({ "n" }, "<leader>t", ":NvimTreeFindFile<CR>", opts)
       vim.keymap.set({ "n" }, "<leader>tt", ":NvimTreeToggle<CR>", opts)
     end,
@@ -650,36 +515,6 @@ return {
     end
   },
 
-  -- -- support for camelcase and snakecase
-  -- {
-  --     'bkad/CamelCaseMotion',
-  --     event = "BufRead",
-  --     config = function()
-  --         -- CamelCaseMotion のキーバインドを設定
-  --         keymap('n', 'w', '<Plug>CamelCaseMotion_w', opts)
-  --         keymap('x', 'w', '<Plug>CamelCaseMotion_w', opts)
-  --         keymap('o', 'w', '<Plug>CamelCaseMotion_w', opts)
-  --         keymap('n', 'b', '<Plug>CamelCaseMotion_b', opts)
-  --         keymap('x', 'b', '<Plug>CamelCaseMotion_b', opts)
-  --         keymap('o', 'b', '<Plug>CamelCaseMotion_b', opts)
-  --         keymap('n', 'e', '<Plug>CamelCaseMotion_e', opts)
-  --         keymap('x', 'e', '<Plug>CamelCaseMotion_e', opts)
-  --         keymap('o', 'e', '<Plug>CamelCaseMotion_e', opts)
-  --         keymap('n', 'ge', '<Plug>CamelCaseMotion_ge', opts)
-  --         keymap('x', 'ge', '<Plug>CamelCaseMotion_ge', opts)
-  --         keymap('o', 'ge', '<Plug>CamelCaseMotion_ge', opts)
-  --         keymap('n', 'iw', '<Plug>CamelCaseMotion_iw', opts)
-  --         keymap('x', 'iw', '<Plug>CamelCaseMotion_iw', opts)
-  --         keymap('o', 'iw', '<Plug>CamelCaseMotion_iw', opts)
-  --         keymap('n', 'ib', '<Plug>CamelCaseMotion_ib', opts)
-  --         keymap('x', 'ib', '<Plug>CamelCaseMotion_ib', opts)
-  --         keymap('o', 'ib', '<Plug>CamelCaseMotion_ib', opts)
-  --         keymap('n', 'ie', '<Plug>CamelCaseMotion_ie', opts)
-  --         keymap('x', 'ie', '<Plug>CamelCaseMotion_ie', opts)
-  --         keymap('o', 'ie', '<Plug>CamelCaseMotion_ie', opts)
-  --     end
-  -- },
-
   -- code outline window
   {
     'stevearc/aerial.nvim',
@@ -734,11 +569,9 @@ return {
             default_workspace = 'CWD', -- 現在のディレクトリに基づいた履歴を表示
             show_scores = true, -- スコアを表示
             show_unindexed = true, -- インデックスされていないファイルも表示
-            -- ignore_patterns = { '*.git/*', '*/tmp/*' }, -- 無視するパターン
           },
           live_grep_args = {
             auto_quoting = true, -- enable/disable auto-quoting
-            -- define mappings, e.g.
             mappings = { -- extend mappings
               i = {
                 ["<C-i>"] = lga_actions.quote_prompt({}),
@@ -747,10 +580,6 @@ return {
                 ["<C-space>"] = actions.to_fuzzy_refine,
               },
             },
-            -- ... also accepts theme settings, for example:
-            -- theme = "dropdown", -- use dropdown theme
-            -- theme = { }, -- use own theme spec
-            -- layout_config = { mirror=true }, -- mirror preview pane
           }
         },
       })
@@ -819,20 +648,8 @@ return {
     config = function()
       require("telescope").setup({
         defaults = {
-          -- vimgrep_arguments = {
-          --   -- ripggrepコマンドのオプション
-          --   "rg",
-          --   "--sort=path",
-          --   "--color=never",
-          --   "--no-heading",
-          --   "--with-filename",
-          --   "--line-number",
-          --   "--column",
-          --   "--smart-case",
-          -- },
         },
         extensions = {
-          -- ソート性能を大幅に向上させるfzfを使う
           fzf = {
             fuzzy = true,
             override_generic_sorter = true,
