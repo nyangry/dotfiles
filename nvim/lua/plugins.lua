@@ -32,8 +32,10 @@ return {
     'williamboman/mason-lspconfig.nvim',
     -- event = "VeryLazy",
     config = function()
+      local lspconfig = require('lspconfig')
       local mason_lspconfig = require('mason-lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
       mason_lspconfig.setup({
         ensure_installed = {
           -- "diagnosticls",
@@ -41,8 +43,8 @@ return {
           -- "terraformls", "tflint",
           -- "golangci_lint_ls", "gopls",
           -- "kotlin_language_server",
-          "jedi_language_server",
-          -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff_lsp", "sourcery",
+          "pyright", "ruff",
+          -- "jedi_language_server", "pyre", "pyright", "pylyzer", "pylsp", "ruff", "sourcery",
           -- "ruby_lsp", "solargraph", "sorbet", "standardrb", "rubocop",
           -- "lua_ls",
           -- "html",
@@ -58,13 +60,62 @@ return {
           -- "vimls",
         },
       })
-      -- mason_lspconfig.setup_handlers({
-      --   function (server_name) -- default handler (optional)
-      --     require("lspconfig")[server_name].setup({
-      --       capabilities = capabilities,
-      --     })
-      --   end,
-      -- })
+
+      mason_lspconfig.setup_handlers({
+        function (server_name)
+          require("lspconfig")[server_name].setup({
+            capabilities = capabilities,
+          })
+        end,
+
+        ["pyright"] = function()
+          lspconfig.pyright.setup({
+            capabilities = capabilities,
+            settings = {
+              python = {
+                venv = "venv",
+                venvPath = ".",
+                pythonPath = "./venv/bin/python",
+                analysis = {
+                  autoSearchPaths = true,
+                  useLibraryCodeForTypes = true,
+                  diagnosticMode = "workspace",
+                  diagnosticSeverityOverrides = {
+                    reportCallIssue = "information",
+                    reportOptionalMemberAccess = "information",
+                    reportOptionalCall = "information",
+                  },
+                  typeCheckingMode = "basic",
+                  useImportStrategy = "fromImports",
+                  -- autoImportCompletions = true,
+                }
+              }
+            },
+            -- コードアクションのハンドラーを明示的に有効化
+            -- handlers = {
+            --   ["textDocument/codeAction"] = vim.lsp.handlers["textDocument/codeAction"]
+            -- }
+          })
+        end,
+
+        -- ruff_lspの設定（リンティングとコードアクション）
+        ["ruff"] = function()
+          require("lspconfig").ruff.setup({
+            capabilities = capabilities,
+            init_options = {
+              settings = {
+                -- Ruffの設定
+                args = {},
+              }
+            },
+            -- pyrightと診断が重複しないように
+            on_attach = function(client, bufnr)
+              -- インポートと一部のコードアクションのみを有効化
+              client.server_capabilities.hoverProvider = false  -- pyrightに任せる
+            end
+          })
+        end
+      })
     end,
   },
 
@@ -76,36 +127,18 @@ return {
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      -- キャッシュの有効化
-      vim.lsp.set_log_level("ERROR")
-
-      local lspconfig = require('lspconfig')
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      -- キャッシュを有効化
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
-      capabilities.textDocument.completion.completionItem.preselectSupport = true
-      capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-      capabilities.textDocument.completion.completionItem.resolveSupport = {
-        properties = {
-          'documentation',
-          'detail',
-          'additionalTextEdits',
-        }
-      }
-
-      lspconfig.jedi_language_server.setup({
-        capabilities = capabilities,
-        settings = {
-          jedi = {
-            completion = {
-              -- 補完の最適化
-              resolveEagerly = false,  -- 遅延解決
-              cacheSize = 5000,       -- キャッシュサイズ
-            }
-          }
-        }
-      })
+      -- vim.keymap.set('n', 'K',  '<cmd>lua vim.lsp.buf.hover()<CR>')
+      -- vim.keymap.set('n', 'gf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+      -- vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+      -- vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+      -- vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
+      -- vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+      -- vim.keymap.set('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+      -- vim.keymap.set('n', 'gn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+      -- vim.keymap.set('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+      -- vim.keymap.set('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
+      -- vim.keymap.set('n', 'g]', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+      -- vim.keymap.set('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
     end
   },
 
