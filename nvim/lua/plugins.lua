@@ -22,16 +22,18 @@ return {
       local mason_lspconfig = require('mason-lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+      -- vim.lsp.set_log_level("debug")
+
       mason_lspconfig.setup({
         ensure_installed = {
-          "pyright", "ruff",
+          "pyright",
           "yamlls",
         },
       })
 
       mason_lspconfig.setup_handlers({
         function (server_name)
-          require("lspconfig")[server_name].setup({
+          lspconfig[server_name].setup({
             capabilities = capabilities,
           })
         end,
@@ -41,44 +43,25 @@ return {
             capabilities = capabilities,
             settings = {
               python = {
-                venv = "venv",
-                venvPath = ".",
+                venvPath = "venv",
                 pythonPath = "./venv/bin/python",
                 analysis = {
                   autoSearchPaths = true,
+                  autoImportCompletions = true,
                   useLibraryCodeForTypes = true,
+                  typeCheckingMode = "basic",
+                  useImportStrategy = "fromImports",
                   diagnosticMode = "workspace",
                   diagnosticSeverityOverrides = {
                     reportCallIssue = "information",
                     reportOptionalMemberAccess = "information",
                     reportOptionalCall = "information",
                   },
-                  typeCheckingMode = "basic",
-                  useImportStrategy = "fromImports",
-                  -- autoImportCompletions = true,
                 }
               }
             },
           })
         end,
-
-        -- ruff_lspの設定（リンティングとコードアクション）
-        ["ruff"] = function()
-          require("lspconfig").ruff.setup({
-            capabilities = capabilities,
-            init_options = {
-              settings = {
-                -- Ruffの設定
-                args = {},
-              }
-            },
-            -- pyrightと診断が重複しないように
-            on_attach = function(client, bufnr)
-              -- インポートと一部のコードアクションのみを有効化
-              client.server_capabilities.hoverProvider = false  -- pyrightに任せる
-            end
-          })
-        end
       })
     end,
   },
@@ -191,6 +174,7 @@ return {
     event = "BufRead",
     config = function ()
       local null_ls = require("null-ls")
+      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
       -- 仮想環境のパスを取得する関数
       local function get_python_tool_path(tool)
@@ -227,11 +211,28 @@ return {
         },
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
-            vim.keymap.set("n", "<Leader>f", function()
+            -- format on save
+            local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+            local event = "BufWritePre" -- or "BufWritePost"
+            local async = event == "BufWritePre"
+            vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+            vim.api.nvim_create_autocmd(event, {
+              buffer = bufnr,
+              group = group,
+              callback = function()
+                vim.lsp.buf.format({ bufnr = bufnr, async = async })
+              end,
+              desc = "[lsp] format on save",
+            })
+          end
+
+          if client.supports_method("textDocument/rangeFormatting") then
+            vim.keymap.set("x", "<Leader>f", function()
               vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
             end, { buffer = bufnr, desc = "[lsp] format" })
           end
         end,
+        vim.lsp.buf.format({ timeout_ms = 5000 })
       })
     end
   },
