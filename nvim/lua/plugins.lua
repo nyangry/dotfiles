@@ -636,12 +636,26 @@ return {
       vim.keymap.set('n', '<leader>gs', builtin.git_status, {})
       vim.keymap.set('n', '<leader>gst', builtin.git_stash, {})
       vim.keymap.set('n', '<leader>b', builtin.buffers, {})
+      -- あいまい検索
       vim.keymap.set('n', '<C-g>', builtin.grep_string, {})
+      -- 完全一致検索
+      vim.keymap.set('n', '<C-w>', function()
+        builtin.grep_string({ word_match = "-w" })
+      end, {})
       vim.keymap.set('n', '<leader>fr', builtin.resume, {})
       vim.keymap.set('n', '<leader>qf', builtin.quickfix, {})
       vim.keymap.set('n', '<leader>qh', builtin.quickfixhistory, {})
       -- vim.keymap.set('n', '<leader>gr', live_grep_file_only, {})
-      vim.keymap.set('n', '<leader>gr', ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", {})
+      vim.keymap.set('n', '<leader>gr', function()
+        require('telescope').extensions.live_grep_args.live_grep_args()
+      end, {})
+      vim.keymap.set('n', '<leader>grw', function()
+        require('telescope').extensions.live_grep_args.live_grep_args({
+          additional_args = function()
+            return { "--fixed-strings" }
+          end
+        })
+      end, {})
       -- vim.keymap.set('n', '<leader>grn', live_grep_with_line_numbers, {})
       -- vim.keymap.set('n', '<leader>ht', builtin.help_tags, {})
     end
