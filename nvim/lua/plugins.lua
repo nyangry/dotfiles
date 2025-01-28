@@ -26,7 +26,7 @@ return {
 
       mason_lspconfig.setup({
         ensure_installed = {
-          "pyright",
+          -- "pyright",
           "yamlls",
         },
       })
@@ -37,31 +37,43 @@ return {
             capabilities = capabilities,
           })
         end,
-
-        ["pyright"] = function()
-          lspconfig.pyright.setup({
-            capabilities = capabilities,
-            settings = {
-              python = {
-                venvPath = "venv",
-                pythonPath = "./venv/bin/python",
-                analysis = {
-                  autoSearchPaths = true,
-                  autoImportCompletions = true,
-                  useLibraryCodeForTypes = true,
-                  typeCheckingMode = "basic",
-                  useImportStrategy = "fromImports",
-                  diagnosticMode = "workspace",
-                  diagnosticSeverityOverrides = {
-                    reportCallIssue = "information",
-                    reportOptionalMemberAccess = "information",
-                    reportOptionalCall = "information",
-                  },
-                }
-              }
-            },
-          })
-        end,
+        -- ["pyright"] = function()
+        --   lspconfig.pyright.setup({
+        --     capabilities = capabilities,
+        --     settings = {
+        --       python = {
+        --         venvPath = "venv",
+        --         pythonPath = "./venv/bin/python",
+        --         analysis = {
+        --           autoSearchPaths = true,
+        --           autoImportCompletions = true,
+        --           useLibraryCodeForTypes = true,
+        --           typeCheckingMode = "basic",
+        --           useImportStrategy = "fromImports",
+        --           diagnosticMode = "workspace",
+        --           diagnosticSeverityOverrides = {
+        --             reportCallIssue = "information",
+        --             reportOptionalMemberAccess = "information",
+        --             reportOptionalCall = "information",
+        --             reportUnknownMemberType = "information",
+        --             reportPrivateUsage = "information", 
+        --             reportUnknownParameterType = "warning",
+        --             reportMissingParameterType = "error",
+        --             reportInvalidTypeVarUse = "information",
+        --             reportGeneralTypeIssues = "none",
+        --             reportUntypedClassDecorator = "information",
+        --             reportUnusedImport = "none",
+        --             reportUnusedVariable = "none",
+        --             reportUnusedClass = "information",
+        --             reportReturnType = "warning",
+        --             reportUnusedFunction = "information",
+        --             reportUnusedCallParameters = "none",
+        --           },
+        --         }
+        --       }
+        --     },
+        --   })
+        -- end,
       })
     end,
   },
