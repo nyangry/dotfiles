@@ -26,7 +26,8 @@ return {
 
       mason_lspconfig.setup({
         ensure_installed = {
-          -- "pyright",
+          "pyright",
+          "pylsp",
           "yamlls",
         },
       })
@@ -37,43 +38,68 @@ return {
             capabilities = capabilities,
           })
         end,
-        -- ["pyright"] = function()
-        --   lspconfig.pyright.setup({
-        --     capabilities = capabilities,
-        --     settings = {
-        --       python = {
-        --         venvPath = "venv",
-        --         pythonPath = "./venv/bin/python",
-        --         analysis = {
-        --           autoSearchPaths = true,
-        --           autoImportCompletions = true,
-        --           useLibraryCodeForTypes = true,
-        --           typeCheckingMode = "basic",
-        --           useImportStrategy = "fromImports",
-        --           diagnosticMode = "workspace",
-        --           diagnosticSeverityOverrides = {
-        --             reportCallIssue = "information",
-        --             reportOptionalMemberAccess = "information",
-        --             reportOptionalCall = "information",
-        --             reportUnknownMemberType = "information",
-        --             reportPrivateUsage = "information", 
-        --             reportUnknownParameterType = "warning",
-        --             reportMissingParameterType = "error",
-        --             reportInvalidTypeVarUse = "information",
-        --             reportGeneralTypeIssues = "none",
-        --             reportUntypedClassDecorator = "information",
-        --             reportUnusedImport = "none",
-        --             reportUnusedVariable = "none",
-        --             reportUnusedClass = "information",
-        --             reportReturnType = "warning",
-        --             reportUnusedFunction = "information",
-        --             reportUnusedCallParameters = "none",
-        --           },
-        --         }
-        --       }
-        --     },
-        --   })
-        -- end,
+        ["pyright"] = function()
+          lspconfig.pyright.setup({
+            capabilities = capabilities,
+            settings = {
+              python = {
+                venvPath = "venv",
+                pythonPath = "./venv/bin/python",
+                analysis = {
+                  autoSearchPaths = true,
+                  autoImportCompletions = true,
+                  useLibraryCodeForTypes = true,
+                  typeCheckingMode = "off",
+                  useImportStrategy = "fromImports",
+                  diagnosticMode = "workspace",
+                  -- diagnosticSeverityOverrides = {
+                  --   reportCallIssue = "information",
+                  --   reportOptionalMemberAccess = "information",
+                  --   reportOptionalCall = "information",
+                  --   reportUnknownMemberType = "information",
+                  --   reportPrivateUsage = "information", 
+                  --   reportUnknownParameterType = "warning",
+                  --   reportMissingParameterType = "error",
+                  --   reportInvalidTypeVarUse = "information",
+                  --   reportGeneralTypeIssues = "none",
+                  --   reportUntypedClassDecorator = "information",
+                  --   reportUnusedImport = "none",
+                  --   reportUnusedVariable = "none",
+                  --   reportUnusedClass = "information",
+                  --   reportReturnType = "warning",
+                  --   reportUnusedFunction = "information",
+                  --   reportUnusedCallParameters = "none",
+                  -- },
+                }
+              }
+            },
+          })
+        end,
+        ["pylsp"] = function()
+          lspconfig.pylsp.setup({
+            capabilities = capabilities,
+            settings = {
+              pylsp = {
+                plugins = {
+                  rope_completion = { enabled = true },
+                  rope_autoimport = { enabled = true },
+                  pycodestyle = { enabled = false },
+                  mccabe = { enabled = false },
+                  pyflakes = { enabled = false },
+                  pylint = { enabled = false },
+                  yapf = { enabled = false },
+                  autopep8 = { enabled = false },
+                  flake8 = { enabled = false },
+                  jedi_completion = { enabled = false },
+                  jedi_hover = { enabled = false },
+                  jedi_references = { enabled = false },
+                  jedi_signature_help = { enabled = false },
+                  jedi_symbols = { enabled = false },
+                }
+              }
+            }
+          })
+        end,
       })
     end,
   },
