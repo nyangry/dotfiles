@@ -243,6 +243,25 @@ return {
               vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
             end, { buffer = bufnr, desc = "[lsp] format" })
           end
+
+          -- diagnosticsの自動実行設定
+          local group = vim.api.nvim_create_augroup("lsp_diagnostics_refresh", { clear = false })
+
+          -- バッファ移動時
+          vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+            buffer = bufnr,
+            group = group,
+            callback = function()
+              vim.diagnostic.show()
+            end,
+          })
+
+          local timer = vim.loop.new_timer()
+          timer:start(0, 5000, vim.schedule_wrap(function()
+            if vim.api.nvim_buf_is_valid(bufnr) then
+              vim.diagnostic.show()
+            end
+          end))
         end,
         vim.lsp.buf.format({ timeout_ms = 5000 })
       })
@@ -259,10 +278,8 @@ return {
     config = function ()
       require("mason-null-ls").setup({
         -- to avoid ensure install pylint ... pylint should use of each project's bin, but using mason cause a problem that mason use own bin rather than project venv's bin.
-        -- automatic_installation = true,
         ensure_installed = {
           "isort",
-          "usort",
         },
         automatic_installation = true,
       })
