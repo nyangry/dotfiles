@@ -216,8 +216,12 @@ return {
           -- markdown or txt
           null_ls.builtins.diagnostics.textlint,
           -- json/yaml
-          null_ls.builtins.diagnostics.vacuum,
-          null_ls.builtins.diagnostics.yamllint,
+          -- null_ls.builtins.diagnostics.vacuum,
+          -- null_ls.builtins.diagnostics.yamllint.with({
+          --   extra_args = {
+          --     "-d", "{extends: default, rules: {line-length: disable}}"
+          --   }
+          -- }),
           -- code formatter
           null_ls.builtins.formatting.prettier,
         },
@@ -278,10 +282,11 @@ return {
     config = function ()
       require("mason-null-ls").setup({
         -- to avoid ensure install pylint ... pylint should use of each project's bin, but using mason cause a problem that mason use own bin rather than project venv's bin.
-        ensure_installed = {
-          "isort",
-        },
-        automatic_installation = true,
+        -- ensure_installed = {
+        --   "isort",
+        --   "yamllint",
+        -- },
+        -- automatic_installation = true,
       })
     end
   },
