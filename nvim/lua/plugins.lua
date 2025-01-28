@@ -156,9 +156,9 @@ return {
       vim.keymap.set('n', 'K',  '<cmd>Lspsaga hover_doc<CR>')              -- hover docの表示
       vim.keymap.set('n', 'gf', '<cmd>Lspsaga finder<CR>')                 -- 定義/参照の検索
       vim.keymap.set('n', 'gr', '<cmd>Lspsaga finder ref<CR>')             -- 参照検索
-      vim.keymap.set('n', 'gd', '<cmd>Lspsaga goto_definition<CR>')        -- 定義へジャンプ
       vim.keymap.set('n', 'gi', '<cmd>Lspsaga finder imp<CR>')             -- 実装の検索
-      vim.keymap.set('n', 'gt', '<cmd>Lspsaga peek_type_definition<CR>')   -- 型定義のプレビュー
+      vim.keymap.set('n', 'gd', '<cmd>Lspsaga goto_definition<CR>')        -- 定義へジャンプ
+      vim.keymap.set('n', 'gdt', '<cmd>Lspsaga peek_type_definition<CR>')   -- 型定義のプレビュー
       vim.keymap.set('n', 'gn', '<cmd>Lspsaga rename<CR>')                 -- 名前の変更
       vim.keymap.set('n', 'ga', '<cmd>Lspsaga code_action<CR>')            -- コードアクション
       vim.keymap.set('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')  -- 診断情報の表示
