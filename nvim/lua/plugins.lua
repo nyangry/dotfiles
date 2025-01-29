@@ -708,9 +708,9 @@ return {
       -- あいまい検索
       vim.keymap.set('n', '<C-g>', builtin.grep_string, {})
       -- 完全一致検索
-      vim.keymap.set('n', '<C-w>', function()
-        builtin.grep_string({ word_match = "-w" })
-      end, {})
+      -- vim.keymap.set('n', '<C-w>', function()
+      --   builtin.grep_string({ word_match = "-w" })
+      -- end, {})
       vim.keymap.set('n', '<leader>fr', builtin.resume, {})
       vim.keymap.set('n', '<leader>qf', builtin.quickfix, {})
       vim.keymap.set('n', '<leader>qh', builtin.quickfixhistory, {})
