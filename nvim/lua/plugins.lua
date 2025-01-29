@@ -83,6 +83,13 @@ return {
                 plugins = {
                   rope_completion = { enabled = true },
                   rope_autoimport = { enabled = true },
+                  rope_rename = { enabled = true },
+                  rope_refactor = { enabled = true },
+                  definition = { enabled = true },
+                  references = { enabled = true },
+                  signature = { enabled = true },
+                  symbols = { enabled = true },
+                  preload_imports = { enabled = true },
                   pycodestyle = { enabled = false },
                   mccabe = { enabled = false },
                   pyflakes = { enabled = false },
@@ -248,6 +255,8 @@ return {
           --     "-d", "{extends: default, rules: {line-length: disable}}"
           --   }
           -- }),
+          -- code actions
+          null_ls.builtins.code_actions.refactoring,
           -- code formatter
           null_ls.builtins.formatting.prettier,
         },
