@@ -786,24 +786,34 @@ return {
           changedelete = { text = '~' },
           untracked    = { text = '┆' },
         },
+        signs_staged = {
+          add          = { text = '┃' },
+          change       = { text = '┃' },
+          delete       = { text = '_' },
+          topdelete    = { text = '‾' },
+          changedelete = { text = '~' },
+          untracked    = { text = '┆' },
+        },
+        signs_staged_enable = true,
         signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
         numhl      = true, -- Toggle with `:Gitsigns toggle_numhl`
-        linehl     = true, -- Toggle with `:Gitsigns toggle_linehl`
+        linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
         word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
         watch_gitdir = {
           follow_files = true
         },
         auto_attach = true,
-        attach_to_untracked = true,
-        current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+        attach_to_untracked = false,
+        current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
         current_line_blame_opts = {
           virt_text = true,
           virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-          delay = 500,
+          delay = 200,
           ignore_whitespace = false,
           virt_text_priority = 100,
+          use_focus = true,
         },
-        current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+        current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
         sign_priority = 6,
         update_debounce = 100,
         status_formatter = nil, -- Use default
@@ -881,8 +891,6 @@ return {
           map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
         end
       }
-      keymap('n', '<leader>bf', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>', opts)
-      keymap('n', '<leader>b', '<cmd>lua require"gitsigns".blame_line()<CR>', opts)
     end
   },
   --  indentation guides
