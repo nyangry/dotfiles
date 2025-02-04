@@ -698,35 +698,33 @@ return {
       end
 
       vim.keymap.set('n', '<C-f>', find_files_with_hidden_files, {})
-      vim.keymap.set('n', '<leader>gf', builtin.git_files, {})
-      vim.keymap.set('n', '<leader>gh', builtin.git_commits, {})
-      vim.keymap.set('n', '<leader>ghb', builtin.git_bcommits, {})
-      vim.keymap.set('n', '<leader>gb', builtin.git_branches, {})
-      vim.keymap.set('n', '<leader>gs', builtin.git_status, {})
-      vim.keymap.set('n', '<leader>gst', builtin.git_stash, {})
-      vim.keymap.set('n', '<leader>b', builtin.buffers, {})
+      vim.keymap.set('n', '<leader>tgf', builtin.git_files, {})
+      vim.keymap.set('n', '<leader>tgh', builtin.git_commits, {})
+      vim.keymap.set('n', '<leader>tghb', builtin.git_bcommits, {})
+      vim.keymap.set('n', '<leader>tgb', builtin.git_branches, {})
+      vim.keymap.set('n', '<leader>tgs', builtin.git_status, {})
+      vim.keymap.set('n', '<leader>tgst', builtin.git_stash, {})
+      vim.keymap.set('n', '<leader>tb', builtin.buffers, {})
       -- あいまい検索
       vim.keymap.set('n', '<C-g>', builtin.grep_string, {})
       -- 完全一致検索
       -- vim.keymap.set('n', '<C-w>', function()
       --   builtin.grep_string({ word_match = "-w" })
       -- end, {})
-      vim.keymap.set('n', '<leader>fr', builtin.resume, {})
-      vim.keymap.set('n', '<leader>qf', builtin.quickfix, {})
-      vim.keymap.set('n', '<leader>qh', builtin.quickfixhistory, {})
+      -- vim.keymap.set('n', '<leader>fr', builtin.resume, {})
+      vim.keymap.set('n', '<leader>tqf', builtin.quickfix, {})
+      vim.keymap.set('n', '<leader>tqh', builtin.quickfixhistory, {})
       -- vim.keymap.set('n', '<leader>gr', live_grep_file_only, {})
-      vim.keymap.set('n', '<leader>gr', function()
+      vim.keymap.set('n', '<leader>tr', function()
         require('telescope').extensions.live_grep_args.live_grep_args()
       end, {})
-      vim.keymap.set('n', '<leader>grw', function()
+      vim.keymap.set('n', '<leader>trw', function()
         require('telescope').extensions.live_grep_args.live_grep_args({
           additional_args = function()
             return { "--fixed-strings" }
           end
         })
       end, {})
-      -- vim.keymap.set('n', '<leader>grn', live_grep_with_line_numbers, {})
-      -- vim.keymap.set('n', '<leader>ht', builtin.help_tags, {})
     end
   },
 
