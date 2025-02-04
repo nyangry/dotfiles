@@ -526,8 +526,8 @@ return {
         },
       })
 
-      vim.keymap.set({ "n" }, "<leader>t", ":NvimTreeFindFile<CR>", opts)
-      vim.keymap.set({ "n" }, "<leader>tt", ":NvimTreeToggle<CR>", opts)
+      vim.keymap.set({ "n" }, ",t", ":NvimTreeFindFile<CR>", opts)
+      vim.keymap.set({ "n" }, ",tt", ":NvimTreeToggle<CR>", opts)
     end,
   },
 
@@ -613,7 +613,7 @@ return {
         end,
       })
       -- You probably also want to set a keymap to toggle aerial
-      vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
+      vim.keymap.set("n", ",a", "<cmd>AerialToggle!<CR>")
     end
   },
 
@@ -818,6 +818,70 @@ return {
           row = 0,
           col = 1
         },
+        on_attach = function(bufnr)
+          local gitsigns = require('gitsigns')
+
+          local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+          end
+
+          -- Navigation
+          map('n', ']c', function()
+            if vim.wo.diff then
+              vim.cmd.normal({']c', bang = true})
+            else
+              gitsigns.nav_hunk('next')
+            end
+          end)
+
+          map('n', '[c', function()
+            if vim.wo.diff then
+              vim.cmd.normal({'[c', bang = true})
+            else
+              gitsigns.nav_hunk('prev')
+            end
+          end)
+
+          -- Actions
+          map('n', '<leader>ghs', gitsigns.stage_hunk)
+          map('n', '<leader>ghr', gitsigns.reset_hunk)
+
+          map('v', '<leader>ghs', function()
+            gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+          end)
+
+          map('v', '<leader>ghr', function()
+            gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+          end)
+
+          map('n', '<leader>ghS', gitsigns.stage_buffer)
+          map('n', '<leader>ghR', gitsigns.reset_buffer)
+          map('n', '<leader>ghp', gitsigns.preview_hunk)
+          map('n', '<leader>ghi', gitsigns.preview_hunk_inline)
+
+          map('n', '<leader>gb', function()
+            gitsigns.blame_line({ full = true })
+          end)
+
+          map('n', '<leader>gd', gitsigns.diffthis)
+
+          map('n', '<leader>gD', function()
+            gitsigns.diffthis('~')
+          end)
+
+          map('n', '<leader>gQ', function() gitsigns.setqflist('all') end)
+          map('n', '<leader>gq', gitsigns.setqflist)
+
+          -- Toggles
+          map('n', '<leader>gtb', gitsigns.toggle_current_line_blame)
+          map('n', '<leader>gtd', gitsigns.toggle_deleted)
+          map('n', '<leader>gtw', gitsigns.toggle_word_diff)
+
+          -- Text object
+          map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+        end
       }
       keymap('n', '<leader>bf', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>', opts)
       keymap('n', '<leader>b', '<cmd>lua require"gitsigns".blame_line()<CR>', opts)
