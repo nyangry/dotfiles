@@ -1039,7 +1039,7 @@ return {
         default = {
           augend.integer.alias.decimal,
           augend.integer.alias.hex,
-          augend.context.alias.bool,
+          augend.constant.alias.bool,
           augend.date.alias["%Y/%m/%d"],
         },
       }
