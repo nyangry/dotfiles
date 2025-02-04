@@ -1042,6 +1042,7 @@ return {
           augend.integer.alias.decimal,
           augend.integer.alias.hex,
           augend.constant.alias.bool,
+          augend.constant.new({ elements = {"True", "False"}, word = true }),
           augend.date.alias["%Y/%m/%d"],
         },
       }
