@@ -1231,4 +1231,9 @@ return {
       })
     end,
   },
+
+  {
+    "chaoren/vim-wordmotion", 
+    event = "BufRead",
+  }, 
 }
