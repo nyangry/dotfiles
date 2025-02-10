@@ -114,7 +114,7 @@ function delete_current_file()
   print('Deleted: ' .. filename)
 end
 
-keymap('n', '<leader>fd', ':lua delete_current_file()<CR>', opts)
+keymap('n', ',fd', ':lua delete_current_file()<CR>', opts)
 
 keymap("n", "*", "*zz", opts)
 keymap("n", "#", "#zz", opts)
@@ -184,10 +184,10 @@ function copy_to_clipboard(text)
 end
 
 -- 現在のファイルの名前をクリップボードにコピー
-keymap('n', '<leader>fn', ':lua copy_to_clipboard(vim.fn.expand("%:t"))<CR>', opts)
+keymap('n', ',fn', ':lua copy_to_clipboard(vim.fn.expand("%:t"))<CR>', opts)
 
 -- プロジェクトディレクトリからの相対パスをクリップボードにコピー
-keymap('n', '<leader>fp', ':lua copy_to_clipboard(vim.fn.fnamemodify(vim.fn.expand("%"), ":~:."))<CR>', opts)
+keymap('n', ',fp', ':lua copy_to_clipboard(vim.fn.fnamemodify(vim.fn.expand("%"), ":~:."))<CR>', opts)
 
 -- for LSP
 local function lspkeys()
