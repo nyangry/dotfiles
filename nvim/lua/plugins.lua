@@ -8,7 +8,6 @@ local keymap = vim.api.nvim_set_keymap
 return {
   {
     "williamboman/mason.nvim",
-    -- event = "VeryLazy",
     config = function()
       require("mason").setup()
     end
@@ -16,7 +15,6 @@ return {
 
   {
     'williamboman/mason-lspconfig.nvim',
-    -- event = "VeryLazy",
     config = function()
       local lspconfig = require('lspconfig')
       local mason_lspconfig = require('mason-lspconfig')
@@ -113,7 +111,6 @@ return {
 
   {
     'neovim/nvim-lspconfig',
-    event = { "BufReadPre", "BufNewFile" },  -- より早い段階でLSPを準備
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "williamboman/mason-lspconfig.nvim",
@@ -124,7 +121,6 @@ return {
 
   {
     'nvimdev/lspsaga.nvim',
-    event = "BufRead",
     dependencies = {
       'nvim-treesitter/nvim-treesitter', -- optional
       'nvim-tree/nvim-web-devicons',     -- optional
@@ -207,7 +203,6 @@ return {
   -- Extensible UI for Neovim notifications and LSP progress messages
   {
     "j-hui/fidget.nvim",
-    event = "BufRead",
     config = function()
       require("fidget").setup {}
     end
@@ -216,7 +211,6 @@ return {
   {
     -- 'jose-elias-alvarez/null-ls.nvim',
     'nvimtools/none-ls.nvim',
-    event = "BufRead",
     config = function ()
       local null_ls = require("null-ls")
       local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -264,10 +258,7 @@ return {
           if client.supports_method("textDocument/formatting") then
             -- format on save
             local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-            local event = "BufWritePre" -- or "BufWritePost"
-            local async = event == "BufWritePre"
             vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-            vim.api.nvim_create_autocmd(event, {
               buffer = bufnr,
               group = group,
               callback = function()
@@ -309,7 +300,6 @@ return {
 
   {
     "jay-babu/mason-null-ls.nvim",
-    event = "BufRead",
     dependencies = {
       "williamboman/mason.nvim",
       "nvimtools/none-ls.nvim",
@@ -329,7 +319,6 @@ return {
   -- It allows you to quickly select, yank, delete or replace language-specific ranges.
   {
     'David-Kunz/treesitter-unit',
-    event = "BufRead",
     config = function()
       keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
       keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
@@ -341,7 +330,6 @@ return {
   -- cmp / completion
   {
     'hrsh7th/nvim-cmp',
-    event = "InsertEnter",
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-nvim-lsp-signature-help',
@@ -535,7 +523,6 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" },
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },  -- コマンド実行時のみ読み込み
     config = function()
       local configs = require("nvim-treesitter.configs")
@@ -553,7 +540,6 @@ return {
   -- context support for nvim-treesitter
   {
     "nvim-treesitter/nvim-treesitter-context",
-    event = "BufRead",
     config = function ()
       require('treesitter-context').setup {
         enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
@@ -575,7 +561,6 @@ return {
   -- textsubjects for nvim-treesitter
   {
     'RRethy/nvim-treesitter-textsubjects',
-    event = "BufRead",
     config = function ()
       require('nvim-treesitter.configs').setup {
         textsubjects = {
@@ -594,7 +579,6 @@ return {
   -- code outline window
   {
     'stevearc/aerial.nvim',
-    event = "BufRead",
     opts = {},
     -- Optional dependencies
     dependencies = {
@@ -732,7 +716,6 @@ return {
   {
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
-    event = "VeryLazy",
     config = function()
       require("telescope").setup({
         defaults = {
@@ -753,7 +736,6 @@ return {
   -- MRU provider for telescope
   {
     'nvim-telescope/telescope-frecency.nvim',
-    event = "VeryLazy",
     config = function()
       require('telescope').load_extension 'frecency'
 
@@ -765,7 +747,6 @@ return {
   {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-    event = "VeryLazy",
     config = function()
       require("telescope").load_extension "file_browser"
     end
@@ -774,7 +755,6 @@ return {
   -- git sign
   {
     'lewis6991/gitsigns.nvim',
-    event = "BufRead",
     config = function()
       local gitsigns = require('gitsigns')
       gitsigns.setup {
@@ -906,7 +886,6 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
     opts = {},
-    event = "BufRead",
     config = function ()
       local ibl = require("ibl")
       ibl.setup()
@@ -916,20 +895,17 @@ return {
   -- removes trailing white space and empty lines on BufWritePre
   {
     "mcauley-penney/tidy.nvim",
-    event = "BufRead",
     config = true,
   },
 
   -- mkdir
   {
     'jghauser/mkdir.nvim',
-    event = "BufRead",
   },
 
   -- highlighting other uses of the word under the cursor using either LSP, Tree-sitter, or regex matching.
   {
     'RRethy/vim-illuminate',
-    event = "BufRead",
     config = function ()
     end
   },
@@ -937,7 +913,6 @@ return {
   -- A high-performance color highlighter for Neovim
   {
     'norcalli/nvim-colorizer.lua',
-    event = "BufRead",
     config = function ()
       require'colorizer'.setup()
     end
@@ -947,7 +922,6 @@ return {
   {
     'kana/vim-operator-replace',
     dependencies = { 'kana/vim-operator-user' },
-    event = "BufRead",
     config = function()
       keymap("n", "R", "<Plug>(operator-replace)", opts)
       keymap("v", "R", "<Plug>(operator-replace)", opts)
@@ -958,7 +932,6 @@ return {
   -- keyword Jump
   {
     'echasnovski/mini.jump',
-    event = "BufRead",
     config = function()
       local mini_jump = require('mini.jump')
       mini_jump.setup()
@@ -968,7 +941,6 @@ return {
   -- Comment
   {
     'echasnovski/mini.comment',
-    event = "BufRead",
     config = function ()
       require('mini.comment').setup({
         -- Options which control module behavior
@@ -1009,7 +981,6 @@ return {
   -- surround
   {
     'echasnovski/mini.surround',
-    event = "BufRead",
     config = function ()
       require('mini.surround').setup()
     end
@@ -1027,7 +998,6 @@ return {
   -- autoclose and autorename html tag / js / jsx / markdown / tsx / typescript / vue / xml
   {
     'windwp/nvim-ts-autotag',
-    event = "BufRead",
     config = function ()
       require'nvim-treesitter.configs'.setup {
         autotag = {
@@ -1040,7 +1010,6 @@ return {
   -- increment / decrement
   {
     'monaqa/dial.nvim',
-    event = "BufRead",
     config = function ()
       local augend = require("dial.augend")
       require("dial.config").augends:register_group{
@@ -1064,7 +1033,6 @@ return {
   -- yankring
   {
     "gbprod/yanky.nvim",
-    event = "BufRead",
     opts = {},
     config = function ()
       vim.keymap.set("n", "<C-p>", "<Plug>(YankyPreviousEntry)", opts)
@@ -1076,7 +1044,6 @@ return {
 
   {
     'uga-rosa/translate.nvim',
-    event = "BufRead",
     config = function ()
       local translate = require("translate")
       translate.setup({
@@ -1109,7 +1076,6 @@ return {
   {
     "kkoomen/vim-doge",
     build = ":call doge#install()",
-    event = "BufRead",
     config = function()
       vim.g.doge_doc_standard_python = "sphinx" -- Default: reST
       vim.g.doge_python_settings = {
@@ -1122,7 +1088,6 @@ return {
   -- test runner
   {
     "klen/nvim-test",
-    event = "BufRead",
     config = function()
       local nvim_test = require('nvim-test')
       nvim_test.setup({
@@ -1164,7 +1129,6 @@ return {
 
   {
     "folke/trouble.nvim",
-    event = "BufRead",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {},
     cmd = "Trouble",
@@ -1240,6 +1204,5 @@ return {
 
   {
     "chaoren/vim-wordmotion", 
-    event = "BufRead",
   }, 
 }
