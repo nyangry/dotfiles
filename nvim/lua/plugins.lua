@@ -744,7 +744,7 @@ return {
     config = function()
       require('telescope').load_extension 'frecency'
 
-      vim.keymap.set('n', '<C-m>', '<Cmd>Telescope frecency workspace=CWD<CR>')
+      vim.keymap.set('n', '<leader>m', '<Cmd>Telescope frecency workspace=CWD<CR>', opts)
     end,
   },
 
