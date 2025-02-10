@@ -336,6 +336,8 @@ alias gstp='git stash pop'
 alias gsts='git stash show'
 alias gstsp='git stash show -p'
 
+alias repo='cd $(ghq list --full-path --exact | fzf)'
+
 # ----------------------
 # Git Function
 # ----------------------
