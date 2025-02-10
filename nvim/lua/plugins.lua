@@ -891,8 +891,14 @@ return {
           map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
         end
       }
-      local visual = vim.api.nvim_get_hl_by_name("Visual", true)
-      vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", visual)
+
+      vim.api.nvim_set_hl(0, "MyCustomBlame", {
+        fg = "#fefdd9",
+        bg = "NONE",
+        italic = true,
+      })
+      vim.cmd("highlight clear GitSignsCurrentLineBlame")
+      vim.cmd("highlight link GitSignsCurrentLineBlame MyCustomBlame")
     end
   },
   --  indentation guides
