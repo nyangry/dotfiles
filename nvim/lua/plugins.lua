@@ -496,7 +496,8 @@ return {
   -- file explorer
   {
     "nvim-tree/nvim-tree.lua",
-    lazy = false,  -- 即時読み込み
+    lazy = true,
+    cmd = { 'NvimTreeFindFile', 'NvimTreeToggle', 'NvimTreeOpen' }, 
     config = function()
       local nvim_tree = require("nvim-tree")
 
@@ -760,6 +761,13 @@ return {
   -- toggleterm
   {
     'akinsho/toggleterm.nvim', 
+    lazy = true,
+    cmd = { "ToggleTerm" }, 
+    keys = { -- キーマッピングで読み込みをトリガー
+      { ",th", "<cmd>1ToggleTerm direction=horizontal<cr>", desc = "Horizontal terminal" },
+      { ",tv", "<cmd>1ToggleTerm direction=vertical<cr>", desc = "Vertical terminal" },
+      { ",tt", "<cmd>1ToggleTerm<cr>", desc = "Toggle terminal" },
+    },
     config = function()
       require('toggleterm').setup({
         size = function(term)
@@ -1121,6 +1129,8 @@ return {
 
   {
     'uga-rosa/translate.nvim',
+    lazy = true,
+    cmd = { 'Translate' }, 
     config = function ()
       local translate = require("translate")
       translate.setup({
@@ -1248,9 +1258,15 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
     },
+    lazy = true, 
+    keys = { -- キーマッピングで読み込みをトリガー
+      { "<leader>S", function() require("spectre").toggle() end, desc = "Toggle Spectre" },
+      { "<leader>sw", function() require("spectre").open_visual({select_word=true}) end, mode = "n", desc = "Search current word" },
+      { "<leader>sw", function() require("spectre").open_visual() end, mode = "v", desc = "Search current word" },
+      { "<leader>sp", function() require("spectre").open_file_search({select_word=true}) end, desc = "Search on current file" },
+    },
     config = function()
       require('spectre').setup({
-
         color_devicons = true,
         open_cmd = 'vnew', -- can also be a lua function
         live_update = false, -- auto execute search again when you write to any file in vim
