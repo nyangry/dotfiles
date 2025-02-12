@@ -757,6 +757,56 @@ return {
     end
   },
 
+  -- toggleterm
+  {
+    'akinsho/toggleterm.nvim', 
+    config = function()
+      require('toggleterm').setup({
+        size = function(term)
+          if term.direction == "horizontal" then
+            return 15
+          elseif term.direction == "vertical" then
+            return vim.o.columns * 0.4
+          end
+        end,
+        direction = 'horizontal', -- 'vertical' | 'horizontal' | 'float'
+        start_in_insert = true,       -- 開いた時にインサートモードに
+        insert_mappings = true,       -- インサートモードでのマッピングを有効
+        terminal_mappings = true,     -- ターミナルモードでのマッピングを有効
+        persist_size = true,          -- サイズを記憶
+        persist_mode = true,          -- モードを記憶
+        close_on_exit = true,
+        shell = vim.o.shell,
+        float_opts = {
+          border = 'curved',
+          width = math.floor(vim.o.columns * 0.8),
+          height = math.floor(vim.o.lines * 0.8),
+          winblend = 3,
+        }
+      })
+
+      vim.keymap.set('n', ',th', '<cmd>1ToggleTerm direction=horizontal<cr>')
+      vim.keymap.set('n', ',tv', '<cmd>1ToggleTerm direction=vertical<cr>')
+      vim.keymap.set('n', ',tt', '<cmd>1ToggleTerm<cr>')
+      function _G.set_terminal_keymaps()
+        -- ノーマルモードへの切り替え
+        vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+        -- ウィンドウ移動
+        vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+        vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+        vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+        vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+      end
+      -- ターミナルバッファを開いた時に設定を適用
+      vim.api.nvim_create_autocmd("TermOpen", {
+        pattern = "term://*",
+        callback = function()
+          set_terminal_keymaps()
+        end,
+      })
+    end
+  }, 
+
   -- lazygit
   {
     "kdheepak/lazygit.nvim",
