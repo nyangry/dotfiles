@@ -519,8 +519,8 @@ return {
         },
       })
 
-      vim.keymap.set({ "n" }, ",t", ":NvimTreeFindFile<CR>", opts)
-      vim.keymap.set({ "n" }, ",tt", ":NvimTreeToggle<CR>", opts)
+      vim.keymap.set({ "n" }, ",f", ":NvimTreeFindFile<CR>", opts)
+      vim.keymap.set({ "n" }, ",ft", ":NvimTreeToggle<CR>", opts)
     end,
   },
 
