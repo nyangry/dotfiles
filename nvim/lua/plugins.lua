@@ -529,18 +529,38 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },  -- コマンド実行時のみ読み込み
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     config = function()
       local configs = require("nvim-treesitter.configs")
-      vim.defer_fn(function()  -- 遅延実行
-        configs.setup({
-          ensure_installed = { "python", "kotlin", "ruby", "lua", "vim", "sql", "graphql", "json", "yaml", "javascript", "html", "markdown", "markdown_inline"},
-          sync_install = false,
-          highlight = { enable = true },
-          indent = { enable = true },
-        })
-      end, 0)
-    end
+      configs.setup({
+        ensure_installed = { 
+          "python", "kotlin", "ruby", "lua", "vim", 
+          "sql", "graphql", "json", "yaml", 
+          "javascript", "typescript", "html", 
+          "markdown", "markdown_inline"
+        },
+        sync_install = false,
+        auto_install = false, -- 自動インストールを無効化
+        highlight = { 
+          enable = true,
+          disable = function(lang, buf)
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+              return true
+            end
+          end,
+        },
+        indent = { enable = true },
+      })
+    end,
+    init = function()
+      -- runtimepathの最適化
+      vim.opt.runtimepath:remove("/usr/share/nvim/runtime/parser")
+      vim.opt.runtimepath:append(vim.fn.stdpath("data") .. "/lazy/nvim-treesitter/parser")
+    end,
   },
 
   -- context support for nvim-treesitter
@@ -585,32 +605,29 @@ return {
   -- code outline window
   {
     'stevearc/aerial.nvim',
-    opts = {},
-    -- Optional dependencies
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "AerialPrev", "AerialNext", "AerialToggle" },
+    keys = { 
+      { ",a", "<cmd>AerialToggle!<CR>", desc = "Toggle Aerial" },
+    },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons"
     },
-    config = function()
-      local aerial = require("aerial")
-
-      aerial.setup({
-        -- optionally use on_attach to set keymaps when aerial has attached to a buffer
-        on_attach = function(bufnr)
-          -- Jump forwards/backwards with '{' and '}'
-          vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
-          vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
-        end,
-      })
-      -- You probably also want to set a keymap to toggle aerial
-      vim.keymap.set("n", ",a", "<cmd>AerialToggle!<CR>")
-    end
-  },
+    opts = {
+      on_attach = function(bufnr)
+        vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr, desc = "Aerial Previous" })
+        vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr, desc = "Aerial Next" })
+      end,
+    },
+  }, 
 
   -- fuzzy finder
   {
     'nvim-telescope/telescope.nvim',
-    cmd = { "Telescope" },  -- コマンド実行時のみ読み込み
+    lazy = true, 
+    cmd = { "Telescope" },
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-live-grep-args.nvim'
@@ -1218,6 +1235,7 @@ return {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {},
+    lazy = true, 
     cmd = "Trouble",
     keys = {
       {
