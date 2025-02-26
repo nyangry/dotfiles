@@ -25,11 +25,11 @@ return {
       -- vim.lsp.set_log_level("debug")
 
       mason_lspconfig.setup({
-        ensure_installed = {
-          "pyright",
-          "pylsp",
-          "yamlls",
-        },
+        -- ensure_installed = {
+        --   "pyright",
+        --   "pylsp",
+        --   "yamlls",
+        -- },
       })
 
       mason_lspconfig.setup_handlers({
@@ -113,6 +113,7 @@ return {
 
   {
     'neovim/nvim-lspconfig',
+    event = "BufReadPre",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "williamboman/mason-lspconfig.nvim",
@@ -535,12 +536,12 @@ return {
     config = function()
       local configs = require("nvim-treesitter.configs")
       configs.setup({
-        ensure_installed = { 
-          "python", "kotlin", "ruby", "lua", "vim", 
-          "sql", "graphql", "json", "yaml", 
-          "javascript", "typescript", "html", 
-          "markdown", "markdown_inline"
-        },
+        -- ensure_installed = { 
+        --   "python", "kotlin", "ruby", "lua", "vim", 
+        --   "sql", "graphql", "json", "yaml", 
+        --   "javascript", "typescript", "html", 
+        --   "markdown", "markdown_inline"
+        -- },
         sync_install = false,
         auto_install = false, -- 自動インストールを無効化
         highlight = { 
