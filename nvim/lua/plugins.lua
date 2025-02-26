@@ -1298,6 +1298,41 @@ return {
           search = "Search",
           replace = "CurSearch"
         },
+        find_engine = {
+          ['rg'] = {
+            cmd = "rg",
+            args = {
+              '--case-sensitive',
+              '--color=never',
+              '--no-heading',
+              '--with-filename',
+              '--line-number',
+              '--column',
+            },
+            options = {
+              ['ignore-case'] = {
+                value= "--ignore-case",
+                icon="[I]",
+                desc="ignore case"
+              },
+              ['hidden'] = {
+                value="--hidden",
+                desc="hidden file",
+                icon="[H]"
+              },
+            }
+          }
+        }, 
+        replace_engine = {
+          ["sed"] = {
+            cmd = "sed",
+            args = {
+              "-i",
+              "",
+              "-E",
+            },
+          },
+        },
       })
       vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
         desc = "Toggle Spectre"
