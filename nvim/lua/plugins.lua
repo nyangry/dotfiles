@@ -985,6 +985,7 @@ return {
       vim.cmd("highlight link GitSignsCurrentLineBlame MyCustomBlame")
     end
   },
+
   --  indentation guides
   {
     "lukas-reineke/indent-blankline.nvim",
