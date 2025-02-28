@@ -152,7 +152,7 @@ return {
         lightbulb = {
           enable = true,
           sign = true,
-          debounce = 10,
+          debounce = 5000,
           virtual_text = true
         },
       })
