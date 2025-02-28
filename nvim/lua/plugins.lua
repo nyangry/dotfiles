@@ -1178,19 +1178,6 @@ return {
     end
   },
 
-  -- annotation / docstring generator
-  {
-    "kkoomen/vim-doge",
-    build = ":call doge#install()",
-    config = function()
-      vim.g.doge_doc_standard_python = "sphinx" -- Default: reST
-      vim.g.doge_python_settings = {
-        single_quotes = 0,
-        omit_redundant_param_types = 0
-      }
-    end
-  },
-
   -- test runner
   {
     "klen/nvim-test",
