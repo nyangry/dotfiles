@@ -3,7 +3,7 @@ local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
 
 --local keymap = vim.keymap
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
 
 return {
   {
@@ -185,21 +185,21 @@ return {
       -- })
 
       -- LSPの基本的なキーマッピングをLspsagaに変更
-      vim.keymap.set('n', 'K',  '<cmd>Lspsaga hover_doc<CR>')              -- hover docの表示
-      vim.keymap.set('n', 'gf', '<cmd>Lspsaga finder<CR>')                 -- 定義/参照の検索
-      vim.keymap.set('n', 'gr', '<cmd>Lspsaga finder ref<CR>')             -- 参照検索
-      vim.keymap.set('n', 'gi', '<cmd>Lspsaga finder imp<CR>')             -- 実装の検索
-      vim.keymap.set('n', 'gd', '<cmd>Lspsaga goto_definition<CR>')        -- 定義へジャンプ
-      vim.keymap.set('n', 'gdt', '<cmd>Lspsaga peek_type_definition<CR>')   -- 型定義のプレビュー
-      vim.keymap.set('n', 'gn', '<cmd>Lspsaga rename<CR>')                 -- 名前の変更
-      vim.keymap.set('n', 'ga', '<cmd>Lspsaga code_action<CR>')            -- コードアクション
-      vim.keymap.set('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')  -- 診断情報の表示
-      vim.keymap.set('n', 'g]', '<cmd>Lspsaga diagnostic_jump_next<CR>')   -- 次の診断へジャンプ
-      vim.keymap.set('n', 'g[', '<cmd>Lspsaga diagnostic_jump_prev<CR>')   -- 前の診断へジャンプ
+      keymap('n', 'K',  '<cmd>Lspsaga hover_doc<CR>')              -- hover docの表示
+      keymap('n', 'gf', '<cmd>Lspsaga finder<CR>')                 -- 定義/参照の検索
+      keymap('n', 'gr', '<cmd>Lspsaga finder ref<CR>')             -- 参照検索
+      keymap('n', 'gi', '<cmd>Lspsaga finder imp<CR>')             -- 実装の検索
+      keymap('n', 'gd', '<cmd>Lspsaga goto_definition<CR>')        -- 定義へジャンプ
+      keymap('n', 'gdt', '<cmd>Lspsaga peek_type_definition<CR>')   -- 型定義のプレビュー
+      keymap('n', 'gn', '<cmd>Lspsaga rename<CR>')                 -- 名前の変更
+      keymap('n', 'ga', '<cmd>Lspsaga code_action<CR>')            -- コードアクション
+      keymap('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')  -- 診断情報の表示
+      keymap('n', 'g]', '<cmd>Lspsaga diagnostic_jump_next<CR>')   -- 次の診断へジャンプ
+      keymap('n', 'g[', '<cmd>Lspsaga diagnostic_jump_prev<CR>')   -- 前の診断へジャンプ
       -- 追加の便利な機能
-      vim.keymap.set('n', '<leader>o', '<cmd>Lspsaga outline<CR>')         -- アウトライン表示
-      vim.keymap.set('n', '<leader>ci', '<cmd>Lspsaga incoming_calls<CR>') -- 呼び出し元を表示
-      vim.keymap.set('n', '<leader>co', '<cmd>Lspsaga outgoing_calls<CR>') -- 呼び出し先を表示
+      keymap('n', '<leader>o', '<cmd>Lspsaga outline<CR>')         -- アウトライン表示
+      keymap('n', '<leader>ci', '<cmd>Lspsaga incoming_calls<CR>') -- 呼び出し元を表示
+      keymap('n', '<leader>co', '<cmd>Lspsaga outgoing_calls<CR>') -- 呼び出し先を表示
     end,
   },
 
@@ -275,7 +275,7 @@ return {
           end
 
           if client.supports_method("textDocument/rangeFormatting") then
-            vim.keymap.set("x", "<Leader>f", function()
+            keymap("x", "<Leader>f", function()
               vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
             end, { buffer = bufnr, desc = "[lsp] format" })
           end
@@ -357,28 +357,25 @@ return {
 
       -- Key mappings for vsnip
       local function setup_vsnip_mappings()
-        local map = vim.keymap.set
-        local opts = {expr = true}
-
         -- Expand
-        map('i', '<C-j>', 'vsnip#expandable() ? "<Plug>(vsnip-expand)" : "<C-j>"', opts)
-        map('s', '<C-j>', 'vsnip#expandable() ? "<Plug>(vsnip-expand)" : "<C-j>"', opts)
+        keymap('i', '<C-j>', 'vsnip#expandable() ? "<Plug>(vsnip-expand)" : "<C-j>"', opts)
+        keymap('s', '<C-j>', 'vsnip#expandable() ? "<Plug>(vsnip-expand)" : "<C-j>"', opts)
 
         -- Expand or jump
-        map('i', '<C-l>', 'vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : "<C-l>"', opts)
-        map('s', '<C-l>', 'vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : "<C-l>"', opts)
+        keymap('i', '<C-l>', 'vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : "<C-l>"', opts)
+        keymap('s', '<C-l>', 'vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : "<C-l>"', opts)
 
         -- Jump forward or backward
-        map('i', '<Tab>', 'vsnip#jumpable(1) ? "<Plug>(vsnip-jump-next)" : "<Tab>"', opts)
-        map('s', '<Tab>', 'vsnip#jumpable(1) ? "<Plug>(vsnip-jump-next)" : "<Tab>"', opts)
-        map('i', '<S-Tab>', 'vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)" : "<S-Tab>"', opts)
-        map('s', '<S-Tab>', 'vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)" : "<S-Tab>"', opts)
+        keymap('i', '<Tab>', 'vsnip#jumpable(1) ? "<Plug>(vsnip-jump-next)" : "<Tab>"', opts)
+        keymap('s', '<Tab>', 'vsnip#jumpable(1) ? "<Plug>(vsnip-jump-next)" : "<Tab>"', opts)
+        keymap('i', '<S-Tab>', 'vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)" : "<S-Tab>"', opts)
+        keymap('s', '<S-Tab>', 'vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)" : "<S-Tab>"', opts)
 
         -- Select or cut text
-        map('n', 's', '<Plug>(vsnip-select-text)', {})
-        map('x', 's', '<Plug>(vsnip-select-text)', {})
-        map('n', 'S', '<Plug>(vsnip-cut-text)', {})
-        map('x', 'S', '<Plug>(vsnip-cut-text)', {})
+        keymap('n', 's', '<Plug>(vsnip-select-text)', {})
+        keymap('x', 's', '<Plug>(vsnip-select-text)', {})
+        keymap('n', 'S', '<Plug>(vsnip-cut-text)', {})
+        keymap('x', 'S', '<Plug>(vsnip-cut-text)', {})
       end
 
       setup_vsnip_mappings()
@@ -521,8 +518,8 @@ return {
         },
       })
 
-      vim.keymap.set({ "n" }, ",f", ":NvimTreeFindFile<CR>", opts)
-      vim.keymap.set({ "n" }, ",ft", ":NvimTreeToggle<CR>", opts)
+      keymap("n", ",f", ":NvimTreeFindFile<CR>", opts)
+      keymap("n", ",ft", ":NvimTreeToggle<CR>", opts)
     end,
   },
 
@@ -618,8 +615,18 @@ return {
     },
     opts = {
       on_attach = function(bufnr)
-        vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr, desc = "Aerial Previous" })
-        vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr, desc = "Aerial Next" })
+        keymap("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr, desc = "Aerial Previous" })
+        keymap("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr, desc = "Aerial Next" })
+        keymap("n", "%", function()
+          -- カーソル下の文字が括弧系なら従来の%機能を使用
+          local char = vim.fn.getline("."):sub(vim.fn.col("."), vim.fn.col("."))
+          if char:match("[%(%{%[%]%}%)]") then
+            vim.cmd("normal! %")
+          else
+            -- そうでなければ関数全体を選択
+            require("nvim-treesitter.textobjects.select").select_textobject("@function.outer", "visual")
+          end
+        end, { desc = "Smart % - match brackets or select function" })
       end,
     },
   }, 
@@ -705,28 +712,28 @@ return {
         })
       end
 
-      vim.keymap.set('n', '<C-f>', find_files_with_hidden_files, {})
-      vim.keymap.set('n', '<leader>tgf', builtin.git_files, {})
-      vim.keymap.set('n', '<leader>tgh', builtin.git_commits, {})
-      vim.keymap.set('n', '<leader>tghb', builtin.git_bcommits, {})
-      vim.keymap.set('n', '<leader>tgb', builtin.git_branches, {})
-      vim.keymap.set('n', '<leader>tgs', builtin.git_status, {})
-      vim.keymap.set('n', '<leader>tgst', builtin.git_stash, {})
-      vim.keymap.set('n', '<leader>tb', builtin.buffers, {})
+      keymap('n', '<C-f>', find_files_with_hidden_files, {})
+      keymap('n', '<leader>tgf', builtin.git_files, {})
+      keymap('n', '<leader>tgh', builtin.git_commits, {})
+      keymap('n', '<leader>tghb', builtin.git_bcommits, {})
+      keymap('n', '<leader>tgb', builtin.git_branches, {})
+      keymap('n', '<leader>tgs', builtin.git_status, {})
+      keymap('n', '<leader>tgst', builtin.git_stash, {})
+      keymap('n', '<leader>tb', builtin.buffers, {})
       -- あいまい検索
-      vim.keymap.set('n', '<C-g>', builtin.grep_string, {})
+      keymap('n', '<C-g>', builtin.grep_string, {})
       -- 完全一致検索
-      -- vim.keymap.set('n', '<C-w>', function()
+      -- keymap('n', '<C-w>', function()
       --   builtin.grep_string({ word_match = "-w" })
       -- end, {})
-      -- vim.keymap.set('n', '<leader>fr', builtin.resume, {})
-      vim.keymap.set('n', '<leader>tqf', builtin.quickfix, {})
-      vim.keymap.set('n', '<leader>tqh', builtin.quickfixhistory, {})
-      -- vim.keymap.set('n', '<leader>gr', live_grep_file_only, {})
-      vim.keymap.set('n', '<leader>tr', function()
+      -- keymap('n', '<leader>fr', builtin.resume, {})
+      keymap('n', '<leader>tqf', builtin.quickfix, {})
+      keymap('n', '<leader>tqh', builtin.quickfixhistory, {})
+      -- keymap('n', '<leader>gr', live_grep_file_only, {})
+      keymap('n', '<leader>tr', function()
         require('telescope').extensions.live_grep_args.live_grep_args()
       end, {})
-      vim.keymap.set('n', '<leader>trw', function()
+      keymap('n', '<leader>trw', function()
         require('telescope').extensions.live_grep_args.live_grep_args({
           additional_args = function()
             return { "--fixed-strings" }
@@ -763,7 +770,7 @@ return {
     config = function()
       require('telescope').load_extension 'frecency'
 
-      vim.keymap.set('n', '<leader>m', '<Cmd>Telescope frecency workspace=CWD<CR>', opts)
+      keymap('n', '<leader>m', '<Cmd>Telescope frecency workspace=CWD<CR>', opts)
     end,
   },
 
@@ -811,17 +818,17 @@ return {
         }
       })
 
-      vim.keymap.set('n', ',th', '<cmd>1ToggleTerm direction=horizontal<cr>')
-      vim.keymap.set('n', ',tv', '<cmd>1ToggleTerm direction=vertical<cr>')
-      vim.keymap.set('n', ',tt', '<cmd>1ToggleTerm<cr>')
+      keymap('n', ',th', '<cmd>1ToggleTerm direction=horizontal<cr>')
+      keymap('n', ',tv', '<cmd>1ToggleTerm direction=vertical<cr>')
+      keymap('n', ',tt', '<cmd>1ToggleTerm<cr>')
       function _G.set_terminal_keymaps()
         -- ノーマルモードへの切り替え
-        vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+        keymap('t', '<esc>', [[<C-\><C-n>]], opts)
         -- ウィンドウ移動
-        vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-        vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-        vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-        vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+        keymap('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+        keymap('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+        keymap('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+        keymap('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
       end
       -- ターミナルバッファを開いた時に設定を適用
       vim.api.nvim_create_autocmd("TermOpen", {
@@ -912,14 +919,8 @@ return {
         on_attach = function(bufnr)
           local gitsigns = require('gitsigns')
 
-          local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-          end
-
           -- Navigation
-          map('n', ']c', function()
+          keymap('n', ']c', function()
             if vim.wo.diff then
               vim.cmd.normal({']c', bang = true})
             else
@@ -927,7 +928,7 @@ return {
             end
           end)
 
-          map('n', '[c', function()
+          keymap('n', '[c', function()
             if vim.wo.diff then
               vim.cmd.normal({'[c', bang = true})
             else
@@ -936,42 +937,42 @@ return {
           end)
 
           -- Actions
-          map('n', '<leader>ghs', gitsigns.stage_hunk)
-          map('n', '<leader>ghr', gitsigns.reset_hunk)
+          keymap('n', '<leader>ghs', gitsigns.stage_hunk)
+          keymap('n', '<leader>ghr', gitsigns.reset_hunk)
 
-          map('v', '<leader>ghs', function()
+          keymap('v', '<leader>ghs', function()
             gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
           end)
 
-          map('v', '<leader>ghr', function()
+          keymap('v', '<leader>ghr', function()
             gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
           end)
 
-          map('n', '<leader>ghS', gitsigns.stage_buffer)
-          map('n', '<leader>ghR', gitsigns.reset_buffer)
-          map('n', '<leader>ghp', gitsigns.preview_hunk)
-          map('n', '<leader>ghi', gitsigns.preview_hunk_inline)
+          keymap('n', '<leader>ghS', gitsigns.stage_buffer)
+          keymap('n', '<leader>ghR', gitsigns.reset_buffer)
+          keymap('n', '<leader>ghp', gitsigns.preview_hunk)
+          keymap('n', '<leader>ghi', gitsigns.preview_hunk_inline)
 
-          map('n', '<leader>gb', function()
+          keymap('n', '<leader>gb', function()
             gitsigns.blame_line({ full = true })
           end)
 
-          map('n', '<leader>gd', gitsigns.diffthis)
+          keymap('n', '<leader>gd', gitsigns.diffthis)
 
-          map('n', '<leader>gD', function()
+          keymap('n', '<leader>gD', function()
             gitsigns.diffthis('~')
           end)
 
-          map('n', '<leader>gQ', function() gitsigns.setqflist('all') end)
-          map('n', '<leader>gq', gitsigns.setqflist)
+          keymap('n', '<leader>gQ', function() gitsigns.setqflist('all') end)
+          keymap('n', '<leader>gq', gitsigns.setqflist)
 
           -- Toggles
-          map('n', '<leader>gtb', gitsigns.toggle_current_line_blame)
-          map('n', '<leader>gtd', gitsigns.toggle_deleted)
-          map('n', '<leader>gtw', gitsigns.toggle_word_diff)
+          keymap('n', '<leader>gtb', gitsigns.toggle_current_line_blame)
+          keymap('n', '<leader>gtd', gitsigns.toggle_deleted)
+          keymap('n', '<leader>gtw', gitsigns.toggle_word_diff)
 
           -- Text object
-          map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+          keymap({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
         end
       }
 
@@ -1124,10 +1125,10 @@ return {
           augend.date.alias["%Y/%m/%d"],
         },
       }
-      vim.keymap.set("n", "<C-a>", function()
+      keymap("n", "<C-a>", function()
         require("dial.map").manipulate("increment", "normal")
       end)
-      vim.keymap.set("n", "<C-x>", function()
+      keymap("n", "<C-x>", function()
         require("dial.map").manipulate("decrement", "normal")
       end)
     end
@@ -1138,8 +1139,8 @@ return {
     "gbprod/yanky.nvim",
     opts = {},
     config = function ()
-      vim.keymap.set("n", "<C-p>", "<Plug>(YankyPreviousEntry)", opts)
-      vim.keymap.set("n", "<C-n>", "<Plug>(YankyNextEntry)", opts)
+      keymap("n", "<C-p>", "<Plug>(YankyPreviousEntry)", opts)
+      keymap("n", "<C-n>", "<Plug>(YankyNextEntry)", opts)
     end
   },
 
@@ -1164,16 +1165,16 @@ return {
         },
       })
 
-      vim.keymap.set({ "n" }, "<C-e>", ":<C-u>Translate EN<CR>", opts)
-      -- vim.keymap.set({ "n" }, "<C-j>", ":<C-u>Translate JA<CR>", opts)
-      vim.keymap.set({ "n" }, "<space>te", ":<C-u>Translate EN<CR>", opts)
-      vim.keymap.set({ "n" }, "<space>tj", ":<C-u>Translate JA<CR>", opts)
-      vim.keymap.set({ "n" }, "<space>tei", ":<C-u>Translate EN -output=insert<CR>", opts)
-      vim.keymap.set({ "n" }, "<space>tji", ":<C-u>Translate JA -output=insert<CR>", opts)
-      vim.keymap.set({ "v" }, "<space>te", ":Translate EN<CR>", opts)
-      vim.keymap.set({ "v" }, "<space>tj", ":Translate JA<CR>", opts)
-      vim.keymap.set({ "v" }, "<space>tei", ":Translate EN -output=insert<CR>", opts)
-      vim.keymap.set({ "v" }, "<space>tji", ":Translate JA -output=insert<CR>", opts)
+      keymap({ "n" }, "<C-e>", ":<C-u>Translate EN<CR>", opts)
+      -- keymap({ "n" }, "<C-j>", ":<C-u>Translate JA<CR>", opts)
+      keymap({ "n" }, "<space>te", ":<C-u>Translate EN<CR>", opts)
+      keymap({ "n" }, "<space>tj", ":<C-u>Translate JA<CR>", opts)
+      keymap({ "n" }, "<space>tei", ":<C-u>Translate EN -output=insert<CR>", opts)
+      keymap({ "n" }, "<space>tji", ":<C-u>Translate JA -output=insert<CR>", opts)
+      keymap({ "v" }, "<space>te", ":Translate EN<CR>", opts)
+      keymap({ "v" }, "<space>tj", ":Translate JA<CR>", opts)
+      keymap({ "v" }, "<space>tei", ":Translate EN -output=insert<CR>", opts)
+      keymap({ "v" }, "<space>tji", ":Translate JA -output=insert<CR>", opts)
     end
   },
 
@@ -1219,8 +1220,8 @@ return {
       -- TestLast - rerun the latest test
       -- TestVisit - open the last run test in the current buffer
       -- TestInfo - show an information about the plugin
-      vim.keymap.set({ "n" }, "<leader>ra", ":TestFile<CR>", opts)
-      vim.keymap.set({ "n" }, "<leader>re", ":TestEdit<CR>", opts)
+      keymap({ "n" }, "<leader>ra", ":TestFile<CR>", opts)
+      keymap({ "n" }, "<leader>re", ":TestEdit<CR>", opts)
 
       -- Define a function to run TestNearest and then balance windows
       local function test_and_balance()
@@ -1228,7 +1229,7 @@ return {
         vim.cmd(":wincmd =")
       end
 
-      vim.keymap.set({ "n" }, "<leader>r", test_and_balance, opts)
+      keymap({ "n" }, "<leader>r", test_and_balance, opts)
     end
   },
 
@@ -1334,16 +1335,16 @@ return {
           },
         },
       })
-      vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
+      keymap('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
         desc = "Toggle Spectre"
       })
-      vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+      keymap('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
         desc = "Search current word"
       })
-      vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+      keymap('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
         desc = "Search current word"
       })
-      vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+      keymap('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
         desc = "Search on current file"
       })
     end,
