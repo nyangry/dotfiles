@@ -1146,7 +1146,6 @@ return {
   },
 
   -- translate
-
   {
     'uga-rosa/translate.nvim',
     lazy = true,
