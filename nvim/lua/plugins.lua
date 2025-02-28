@@ -1039,7 +1039,16 @@ return {
     'echasnovski/mini.jump',
     config = function()
       local mini_jump = require('mini.jump')
-      mini_jump.setup()
+      mini_jump.setup({
+        mappings = {
+          forward = 'f',
+          backward = 'F',
+          forward_till = '',
+          backward_till = '',
+          repeat_jump = '',
+        },
+
+      })
     end
   },
 
