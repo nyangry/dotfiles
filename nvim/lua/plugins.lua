@@ -1134,16 +1134,16 @@ return {
         },
       })
 
-      keymap({ "n" }, "<C-e>", ":<C-u>Translate EN<CR>", opts)
-      -- keymap({ "n" }, "<C-j>", ":<C-u>Translate JA<CR>", opts)
-      keymap({ "n" }, "<space>te", ":<C-u>Translate EN<CR>", opts)
-      keymap({ "n" }, "<space>tj", ":<C-u>Translate JA<CR>", opts)
-      keymap({ "n" }, "<space>tei", ":<C-u>Translate EN -output=insert<CR>", opts)
-      keymap({ "n" }, "<space>tji", ":<C-u>Translate JA -output=insert<CR>", opts)
-      keymap({ "v" }, "<space>te", ":Translate EN<CR>", opts)
-      keymap({ "v" }, "<space>tj", ":Translate JA<CR>", opts)
-      keymap({ "v" }, "<space>tei", ":Translate EN -output=insert<CR>", opts)
-      keymap({ "v" }, "<space>tji", ":Translate JA -output=insert<CR>", opts)
+      keymap("n", "<C-e>", ":<C-u>Translate EN<CR>", opts)
+      -- keymap("n", "<C-j>", ":<C-u>Translate JA<CR>", opts)
+      keymap("n", "<space>te", ":<C-u>Translate EN<CR>", opts)
+      keymap("n", "<space>tj", ":<C-u>Translate JA<CR>", opts)
+      keymap("n", "<space>tei", ":<C-u>Translate EN -output=insert<CR>", opts)
+      keymap("n", "<space>tji", ":<C-u>Translate JA -output=insert<CR>", opts)
+      keymap("v", "<space>te", ":Translate EN<CR>", opts)
+      keymap("v", "<space>tj", ":Translate JA<CR>", opts)
+      keymap("v", "<space>tei", ":Translate EN -output=insert<CR>", opts)
+      keymap("v", "<space>tji", ":Translate JA -output=insert<CR>", opts)
     end
   },
 
@@ -1176,8 +1176,8 @@ return {
       -- TestLast - rerun the latest test
       -- TestVisit - open the last run test in the current buffer
       -- TestInfo - show an information about the plugin
-      keymap({ "n" }, "<leader>ra", ":TestFile<CR>", opts)
-      keymap({ "n" }, "<leader>re", ":TestEdit<CR>", opts)
+      keymap("n", "<leader>ra", ":TestFile<CR>", opts)
+      keymap("n", "<leader>re", ":TestEdit<CR>", opts)
 
       -- Define a function to run TestNearest and then balance windows
       local function test_and_balance()
@@ -1185,7 +1185,7 @@ return {
         vim.cmd(":wincmd =")
       end
 
-      keymap({ "n" }, "<leader>r", test_and_balance, opts)
+      keymap("n", "<leader>r", test_and_balance, opts)
     end
   },
 
