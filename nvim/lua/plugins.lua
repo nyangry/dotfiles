@@ -191,7 +191,7 @@ return {
       keymap('n', 'gi', '<cmd>Lspsaga finder imp<CR>')             -- 実装の検索
       keymap('n', 'gd', '<cmd>Lspsaga goto_definition<CR>')        -- 定義へジャンプ
       keymap('n', 'gdt', '<cmd>Lspsaga peek_type_definition<CR>')   -- 型定義のプレビュー
-      keymap('n', 'gn', '<cmd>Lspsaga rename<CR>')                 -- 名前の変更
+      -- keymap('n', 'gn', '<cmd>Lspsaga rename<CR>')                 -- 名前の変更
       keymap('n', 'ga', '<cmd>Lspsaga code_action<CR>')            -- コードアクション
       keymap('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')  -- 診断情報の表示
       keymap('n', 'g]', '<cmd>Lspsaga diagnostic_jump_next<CR>')   -- 次の診断へジャンプ
