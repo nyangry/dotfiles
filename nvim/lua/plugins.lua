@@ -342,51 +342,12 @@ return {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
-      'hrsh7th/cmp-vsnip',
-      'hrsh7th/vim-vsnip',
-      'hrsh7th/vim-vsnip-integ',
     },
     config = function()
       local cmp = require('cmp')
 
-      -- VSnip setup
-      vim.g.vsnip_filetypes = {
-        javascriptreact = {'javascript'},
-        typescriptreact = {'typescript'}
-      }
-
-      -- Key mappings for vsnip
-      local function setup_vsnip_mappings()
-        -- Expand
-        keymap('i', '<C-j>', 'vsnip#expandable() ? "<Plug>(vsnip-expand)" : "<C-j>"', opts)
-        keymap('s', '<C-j>', 'vsnip#expandable() ? "<Plug>(vsnip-expand)" : "<C-j>"', opts)
-
-        -- Expand or jump
-        keymap('i', '<C-l>', 'vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : "<C-l>"', opts)
-        keymap('s', '<C-l>', 'vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : "<C-l>"', opts)
-
-        -- Jump forward or backward
-        keymap('i', '<Tab>', 'vsnip#jumpable(1) ? "<Plug>(vsnip-jump-next)" : "<Tab>"', opts)
-        keymap('s', '<Tab>', 'vsnip#jumpable(1) ? "<Plug>(vsnip-jump-next)" : "<Tab>"', opts)
-        keymap('i', '<S-Tab>', 'vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)" : "<S-Tab>"', opts)
-        keymap('s', '<S-Tab>', 'vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)" : "<S-Tab>"', opts)
-
-        -- Select or cut text
-        keymap('n', 's', '<Plug>(vsnip-select-text)', {})
-        keymap('x', 's', '<Plug>(vsnip-select-text)', {})
-        keymap('n', 'S', '<Plug>(vsnip-cut-text)', {})
-        keymap('x', 'S', '<Plug>(vsnip-cut-text)', {})
-      end
-
-      setup_vsnip_mappings()
-
       -- nvim-cmp setup
       cmp.setup({
-        snippet = {
-          expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body)
-          end,
-        },
         window = {
           -- completion = cmp.config.window.bordered(),
           -- documentation = cmp.config.window.bordered(),
@@ -408,7 +369,6 @@ return {
           },
           { name = 'nvim_lsp' },
           { name = 'nvim_lsp_signature_help' },
-          { name = 'vsnip' },
         }, {
             { name = 'path' },
           })
