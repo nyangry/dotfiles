@@ -511,6 +511,15 @@ return {
             end
           end,
         },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "<CR>", -- set to `false` to disable one of the mappings
+            node_incremental = "<CR>",
+            scope_incremental = "<S-CR>",
+            node_decremental = "<BS>",
+          },
+        },
         indent = { enable = true },
       })
     end,
@@ -542,23 +551,33 @@ return {
     end
   },
 
-  -- textsubjects for nvim-treesitter
+  -- textobjects for nvim-treesitter
   {
-    'RRethy/nvim-treesitter-textsubjects',
+    'nvim-treesitter/nvim-treesitter-textobjects', 
     config = function ()
-      require('nvim-treesitter.configs').setup {
-        textsubjects = {
-          enable = true,
-          prev_selection = ',', -- (Optional) keymap to select the previous selection
-          keymaps = {
-            ['.'] = 'textsubjects-smart',
-            [';'] = 'textsubjects-container-outer',
-            ['i;'] = 'textsubjects-container-inner',
+      require'nvim-treesitter.configs'.setup {
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+              ["af"] = "@function.outer",
+              ["if"] = "@function.inner",
+              ["ac"] = "@class.outer",
+              ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+              ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+            },
+            selection_modes = {
+              ['@parameter.outer'] = 'v', -- charwise
+              ['@function.outer'] = 'V', -- linewise
+              ['@class.outer'] = '<c-v>', -- blockwise
+            },
+            include_surrounding_whitespace = false,
           },
         },
       }
     end
-  },
+  }, 
 
   -- code outline window
   {
