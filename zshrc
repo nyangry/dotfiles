@@ -4,6 +4,7 @@
 export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
+export PYTHONPATH=$PYTHONPATH:~/dotfiles/python_utils
 
 
 # rbenv
