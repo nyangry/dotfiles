@@ -8,7 +8,9 @@ local keymap = vim.keymap.set
 return {
   {
     "williamboman/mason.nvim",
-    -- event = "VeryLazy",
+    lazy = true,
+    cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUninstallAll", "MasonLog" },
+    event = { "VeryLazy" },
     config = function()
       require("mason").setup()
     end
@@ -16,7 +18,8 @@ return {
 
   {
     'williamboman/mason-lspconfig.nvim',
-    -- event = "VeryLazy",
+    lazy = true,
+    event = { "VeryLazy" },
     config = function()
       local lspconfig = require('lspconfig')
       local mason_lspconfig = require('mason-lspconfig')
@@ -113,6 +116,7 @@ return {
 
   {
     'neovim/nvim-lspconfig',
+    lazy = true,
     event = "BufReadPre",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
@@ -124,6 +128,8 @@ return {
 
   {
     'nvimdev/lspsaga.nvim',
+    lazy = true,
+    event = { "LspAttach" },
     dependencies = {
       'nvim-treesitter/nvim-treesitter', -- optional
       'nvim-tree/nvim-web-devicons',     -- optional
@@ -206,6 +212,8 @@ return {
   -- Extensible UI for Neovim notifications and LSP progress messages
   {
     "j-hui/fidget.nvim",
+    lazy = true,
+    event = { "LspAttach" },
     config = function()
       require("fidget").setup {}
     end
@@ -214,6 +222,8 @@ return {
   {
     -- 'jose-elias-alvarez/null-ls.nvim',
     'nvimtools/none-ls.nvim',
+    lazy = true,
+    event = { "BufReadPre", "BufNewFile" },
     config = function ()
       local null_ls = require("null-ls")
       local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -306,6 +316,8 @@ return {
 
   {
     "jay-babu/mason-null-ls.nvim",
+    lazy = true,
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "williamboman/mason.nvim",
       "nvimtools/none-ls.nvim",
@@ -325,6 +337,8 @@ return {
   -- It allows you to quickly select, yank, delete or replace language-specific ranges.
   {
     'David-Kunz/treesitter-unit',
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
       keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
@@ -336,6 +350,8 @@ return {
   -- cmp / completion
   {
     'hrsh7th/nvim-cmp',
+    lazy = true,
+    event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-nvim-lsp-signature-help',
@@ -412,8 +428,8 @@ return {
   -- colorscheme
   {
     'EdenEast/nightfox.nvim',
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
+    lazy = false,
+    priority = 1000,
     config = function()
       vim.cmd("colorscheme nightfox")
     end
@@ -422,6 +438,8 @@ return {
   -- statusline
   {
     'nvim-lualine/lualine.nvim',
+    lazy = true,
+    event = { "VimEnter" },
     config = function()
       require('lualine').setup({
         sections = {
@@ -533,6 +551,8 @@ return {
   -- context support for nvim-treesitter
   {
     "nvim-treesitter/nvim-treesitter-context",
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     config = function ()
       require('treesitter-context').setup {
         enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
@@ -554,6 +574,8 @@ return {
   -- textobjects for nvim-treesitter
   {
     'nvim-treesitter/nvim-treesitter-textobjects', 
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     config = function ()
       require'nvim-treesitter.configs'.setup {
         textobjects = {
@@ -844,6 +866,8 @@ return {
   -- git sign
   {
     'lewis6991/gitsigns.nvim',
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       local gitsigns = require('gitsigns')
       gitsigns.setup {
@@ -968,6 +992,8 @@ return {
   --  indentation guides
   {
     "lukas-reineke/indent-blankline.nvim",
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     main = "ibl",
     opts = {},
     config = function ()
@@ -979,17 +1005,23 @@ return {
   -- removes trailing white space and empty lines on BufWritePre
   {
     "mcauley-penney/tidy.nvim",
+    lazy = true,
+    event = { "BufWritePre" },
     config = true,
   },
 
   -- mkdir
   {
     'jghauser/mkdir.nvim',
+    lazy = true,
+    event = { "BufWritePre" },
   },
 
   -- highlighting other uses of the word under the cursor using either LSP, Tree-sitter, or regex matching.
   {
     'RRethy/vim-illuminate',
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     config = function ()
     end
   },
@@ -997,6 +1029,8 @@ return {
   -- A high-performance color highlighter for Neovim
   {
     'norcalli/nvim-colorizer.lua',
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     config = function ()
       require'colorizer'.setup()
     end
@@ -1005,6 +1039,10 @@ return {
   -- Operator
   {
     'kana/vim-operator-replace',
+    lazy = true,
+    keys = {
+      { "R", "<Plug>(operator-replace)", mode = { "n", "v" } },
+    },
     dependencies = { 'kana/vim-operator-user' },
     config = function()
       keymap("n", "R", "<Plug>(operator-replace)", opts)
@@ -1016,6 +1054,8 @@ return {
   -- keyword Jump
   {
     'echasnovski/mini.jump',
+    lazy = true,
+    keys = { "f", "F" },
     config = function()
       local mini_jump = require('mini.jump')
       mini_jump.setup({
@@ -1034,6 +1074,8 @@ return {
   -- Comment
   {
     'echasnovski/mini.comment',
+    lazy = true,
+    keys = { "--" },
     config = function ()
       require('mini.comment').setup({
         -- Options which control module behavior
@@ -1074,6 +1116,16 @@ return {
   -- surround
   {
     'echasnovski/mini.surround',
+    lazy = true,
+    keys = {
+      { "sa", desc = "Add surrounding" },
+      { "sd", desc = "Delete surrounding" },
+      { "sr", desc = "Replace surrounding" },
+      { "sf", desc = "Find surrounding" },
+      { "sF", desc = "Find surrounding (to the right)" },
+      { "sh", desc = "Highlight surrounding" },
+      { "sn", desc = "Update `MiniSurround.config.n_lines`" },
+    },
     config = function ()
       require('mini.surround').setup()
     end
@@ -1082,7 +1134,8 @@ return {
   -- pair
   {
     'echasnovski/mini.pairs',
-    version = '*',
+    lazy = true,
+    event = "InsertEnter",
     config = function ()
       require('mini.pairs').setup()
     end
@@ -1091,6 +1144,8 @@ return {
   -- autoclose and autorename html tag / js / jsx / markdown / tsx / typescript / vue / xml
   {
     'windwp/nvim-ts-autotag',
+    lazy = true,
+    event = "InsertEnter",
     config = function ()
       require'nvim-treesitter.configs'.setup {
         autotag = {
@@ -1103,6 +1158,11 @@ return {
   -- increment / decrement
   {
     'monaqa/dial.nvim',
+    lazy = true,
+    keys = {
+      { "<C-a>", function() require("dial.map").manipulate("increment", "normal") end },
+      { "<C-x>", function() require("dial.map").manipulate("decrement", "normal") end },
+    },
     config = function ()
       local augend = require("dial.augend")
       require("dial.config").augends:register_group{
@@ -1126,7 +1186,11 @@ return {
   -- yankring
   {
     "gbprod/yanky.nvim",
-    opts = {},
+    lazy = true,
+    keys = {
+      { "<C-p>", "<Plug>(YankyPreviousEntry)" },
+      { "<C-n>", "<Plug>(YankyNextEntry)" },
+    },
     config = function ()
       keymap("n", "<C-p>", "<Plug>(YankyPreviousEntry)", opts)
       keymap("n", "<C-n>", "<Plug>(YankyNextEntry)", opts)
@@ -1169,6 +1233,12 @@ return {
   -- test runner
   {
     "klen/nvim-test",
+    lazy = true,
+    keys = {
+      { "<leader>ra", ":TestFile<CR>" },
+      { "<leader>re", ":TestEdit<CR>" },
+      { "<leader>r", function() vim.cmd(":TestNearest") vim.cmd(":wincmd =") end },
+    },
     config = function()
       local nvim_test = require('nvim-test')
       nvim_test.setup({
