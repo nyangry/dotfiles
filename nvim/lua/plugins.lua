@@ -474,6 +474,10 @@ return {
     "nvim-tree/nvim-tree.lua",
     lazy = true,
     cmd = { 'NvimTreeFindFile', 'NvimTreeToggle', 'NvimTreeOpen' }, 
+    keys = {
+        { "tt", ":NvimTreeToggle<CR>", desc = "Toggle NvimTree" },
+        { "tf", ":NvimTreeFindFile<CR>", desc = "Find File in NvimTree" },
+    },
     config = function()
       local nvim_tree = require("nvim-tree")
 
@@ -496,8 +500,8 @@ return {
         },
       })
 
-      keymap("n", ",f", ":NvimTreeFindFile<CR>", opts)
-      keymap("n", ",ft", ":NvimTreeToggle<CR>", opts)
+      keymap("n", "tt", ":NvimTreeToggle<CR>", opts)
+      keymap("n", "tf", ":NvimTreeFindFile<CR>", opts)
     end,
   },
 
@@ -1055,7 +1059,7 @@ return {
   {
     'echasnovski/mini.jump',
     lazy = true,
-    keys = { "f", "F" },
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       local mini_jump = require('mini.jump')
       mini_jump.setup({
