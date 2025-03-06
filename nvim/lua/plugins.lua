@@ -1284,4 +1284,20 @@ return {
       })
     end,
   },
+
+  -- alignment
+  {
+    'junegunn/vim-easy-align',
+    lazy = true,
+    keys = {
+      { "ga", "<Plug>(EasyAlign)", mode = { "n", "x" }, desc = "Easy Align" },
+    },
+    config = function()
+      -- Start interactive EasyAlign for a motion/text object (e.g. gaip)
+      vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)', { silent = true })
+
+      -- Start interactive EasyAlign in visual mode (e.g. vipga)
+      vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)', { silent = true })
+    end,
+  },
 }
