@@ -1205,6 +1205,7 @@ return {
   {
     'uga-rosa/translate.nvim',
     lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     cmd = { 'Translate' }, 
     config = function ()
       local translate = require("translate")
