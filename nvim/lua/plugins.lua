@@ -993,6 +993,37 @@ return {
     end
   },
 
+  -- git diff view / edit
+  {
+    "sindrets/diffview.nvim",
+    lazy = true,
+    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+    keys = {
+      { "<leader>dv", "<cmd>DiffviewOpen<CR>", desc = "DiffView Open" },
+      { "<leader>dh", "<cmd>DiffviewFileHistory %<CR>", desc = "DiffView File History" },
+      { "<leader>dc", "<cmd>DiffviewClose<CR>", desc = "DiffView Close" },
+    },
+    config = function()
+      require("diffview").setup({
+        enhanced_diff_hl = true, -- ハイライトの強化
+        use_icons = true,        -- アイコン表示
+        view = {
+          merge_tool = {
+            layout = "diff3_mixed",
+            disable_diagnostics = true,
+          },
+        },
+        keymaps = {
+          view = {
+            ["<leader>da"] = function() vim.cmd("DiffviewToggleFiles") end,    -- ファイルパネルの表示切替
+            ["<leader>dg"] = ":diffget<CR>",                                  -- 差分を取り込む
+            ["<leader>dp"] = ":diffput<CR>",                                  -- 差分を適用する
+          },
+        },
+      })
+    end,
+  }, 
+
   --  indentation guides
   {
     "lukas-reineke/indent-blankline.nvim",
