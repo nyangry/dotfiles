@@ -7,3 +7,5 @@ tmuxfiles
 
 __pycache__/
 *.py[cod]
+
+.ropeproject
