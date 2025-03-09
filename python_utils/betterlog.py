@@ -1,5 +1,4 @@
 import inspect as inspect_module
-import logging
 import os
 from typing import Any, Dict, List, Optional
 
@@ -7,28 +6,29 @@ from typing import Any, Dict, List, Optional
 class Betterlog:
     """A simple utility to inspect and display internal structure of Python objects"""
 
-    def __init__(self, name=None, project_root=None):
+    def __init__(self, name=None, project_root=None, use_colors=True):
         """Initialize the inspector"""
         self.name = name or "betterlog"
-        self.level = logging.INFO  # Fixed to INFO level
         self.max_width = 120  # Default table width
         self.project_root = project_root  # Store project root for relative paths
+        self.use_colors = use_colors  # 色を使用するかどうかの設定
+
+        # 色コードの定義 - シンプルに単色のみを使用
+        self.color_code = "\033[32m"  # 緑色
+        self.reset_code = "\033[0m"  # リセット
+
+        # 色辞書は他のメソッドとの互換性のために空にしておく
+        self.colors = {}
 
         # Auto-detect project root if not specified
         if self.project_root is None:
             self.project_root = self._detect_project_root()
 
-        # Configure standard logger
-        self.logger = logging.getLogger(self.name)
-        if not self.logger.handlers:
-            handler = logging.StreamHandler()
-            formatter = logging.Formatter(
-                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-            )
-            handler.setFormatter(formatter)
-            self.logger.addHandler(handler)
-
-        self.logger.setLevel(self.level)
+    def _apply_color(self, text):
+        """色をテキストに適用（単一色）"""
+        if not self.use_colors:
+            return text
+        return f"{self.color_code}{text}{self.reset_code}"
 
     def get_caller_info(self) -> str:
         """Get caller information (file, function, line number)"""
@@ -158,18 +158,18 @@ class Betterlog:
     def _format_value(self, value: Any, max_depth=3, current_depth=0) -> str:
         """Format values in a readable way"""
         if current_depth >= max_depth:
-            return "..."
+            return self._apply_color("...")
 
         if value is None:
-            return "None"
+            return self._apply_color("None")
 
         if isinstance(value, (str, int, float, bool)):
-            return repr(value)
+            return self._apply_color(repr(value))
 
         # For collections of objects, we want to inspect each item
         if isinstance(value, (list, tuple)):
             if not value:
-                return "[]" if isinstance(value, list) else "()"
+                return self._apply_color("[]" if isinstance(value, list) else "()")
 
             # For small collections, expand each item
             if len(value) <= 5:  # Reasonable limit for readability
@@ -184,9 +184,11 @@ class Betterlog:
                             formatted_attr = self._format_value(
                                 attr_value, max_depth, current_depth + 2
                             )
-                            attr_parts.append(f"{attr_name}: {formatted_attr}")
+                            attr_parts.append(
+                                f"{self._apply_color(attr_name)}: {formatted_attr}"
+                            )
                         parts.append(
-                            f"{item.__class__.__name__}{{{', '.join(attr_parts)}}}"
+                            f"{self._apply_color(item.__class__.__name__)}{self._apply_color('{')}{', '.join(attr_parts)}{self._apply_color('}')}"
                         )
                     else:
                         # Standard formatting for non-custom or at depth limit
@@ -196,20 +198,28 @@ class Betterlog:
                         parts.append(formatted_item)
 
                 if isinstance(value, list):
-                    return "[\n  " + ",\n  ".join(parts) + "\n]"
+                    return (
+                        self._apply_color("[\n  ")
+                        + self._apply_color(",\n  ").join(parts)
+                        + self._apply_color("\n]")
+                    )
                 else:
-                    return "(\n  " + ",\n  ".join(parts) + "\n)"
+                    return (
+                        self._apply_color("(\n  ")
+                        + self._apply_color(",\n  ").join(parts)
+                        + self._apply_color("\n)")
+                    )
             else:
                 # For larger collections, summarize
                 sample_count = min(3, len(value))
-                summary = f"[{len(value)} items: "
+                summary = self._apply_color(f"[{len(value)} items: ")
                 parts = []
 
                 # Format first few items
                 for i in range(sample_count):
                     item = value[i]
                     if self._is_custom_class(item):
-                        parts.append(f"<{item.__class__.__name__}>")
+                        parts.append(self._apply_color(f"<{item.__class__.__name__}>"))
                     else:
                         parts.append(
                             self._format_value(
@@ -217,10 +227,10 @@ class Betterlog:
                             )
                         )
 
-                summary += ", ".join(parts)
+                summary += self._apply_color(", ").join(parts)
                 if sample_count < len(value):
-                    summary += ", ..."
-                summary += "]"
+                    summary += self._apply_color(", ...")
+                summary += self._apply_color("]")
                 return summary
 
         if self._is_custom_class(value):
@@ -233,25 +243,29 @@ class Betterlog:
                         formatted_v = self._format_value(
                             attr_value, max_depth, current_depth + 1
                         )
-                        parts.append(f"{attr_name}: {formatted_v}")
-                    return f"{value.__class__.__name__}{{{', '.join(parts)}}}"
+                        parts.append(f"{self._apply_color(attr_name)}: {formatted_v}")
+                    return f"{self._apply_color(value.__class__.__name__)}{self._apply_color('{')}{self._apply_color(', ').join(parts)}{self._apply_color('}')}"
 
             # Default case or at max depth
-            return f"<{value.__class__.__name__} instance>"
+            return self._apply_color(f"<{value.__class__.__name__} instance>")
 
         if isinstance(value, dict):
             if not value:
-                return "{}"
+                return self._apply_color("{}")
 
             parts = []
             for k, v in value.items():
                 formatted_v = self._format_value(v, max_depth, current_depth + 1)
-                parts.append(f"{repr(k)}: {formatted_v}")
+                parts.append(f"{self._apply_color(repr(k))}: {formatted_v}")
 
-            return "{" + ", ".join(parts) + "}"
+            return (
+                self._apply_color("{")
+                + self._apply_color(", ").join(parts)
+                + self._apply_color("}")
+            )
 
         # Other types
-        return repr(value)
+        return self._apply_color(repr(value))
 
     def _get_object_attributes(self, obj: Any) -> Dict[str, Any]:
         """Get object attributes"""
@@ -359,15 +373,52 @@ class Betterlog:
             if len(col_widths) > 0:
                 col_widths[-1] += width_diff
 
-        # Create header row
+        # すべての枠線を色付けする
+        # ヘッダー行を色付け
+        colored_headers = []
+        for i, h in enumerate(headers):
+            colored_headers.append(self._apply_color(h.ljust(col_widths[i])))
+
         header_line = (
-            "│ "
-            + " │ ".join(h.ljust(col_widths[i]) for i, h in enumerate(headers))
-            + " │"
+            self._apply_color("│")
+            + " "
+            + self._apply_color(" │ ").join(colored_headers)
+            + " "
+            + self._apply_color("│")
         )
-        separator = "├─" + "─┼─".join("─" * w for w in col_widths) + "─┤"
-        top_border = "┌─" + "─┬─".join("─" * w for w in col_widths) + "─┐"
-        bottom_border = "└─" + "─┴─".join("─" * w for w in col_widths) + "─┘"
+
+        # 区切り線を色付け
+        separator_parts = []
+        for w in col_widths:
+            separator_parts.append(self._apply_color("─" * w))
+
+        separator = (
+            self._apply_color("├─")
+            + self._apply_color("─┼─").join(separator_parts)
+            + self._apply_color("─┤")
+        )
+
+        # 上枠を色付け
+        top_parts = []
+        for w in col_widths:
+            top_parts.append(self._apply_color("─" * w))
+
+        top_border = (
+            self._apply_color("┌─")
+            + self._apply_color("─┬─").join(top_parts)
+            + self._apply_color("─┐")
+        )
+
+        # 下枠を色付け
+        bottom_parts = []
+        for w in col_widths:
+            bottom_parts.append(self._apply_color("─" * w))
+
+        bottom_border = (
+            self._apply_color("└─")
+            + self._apply_color("─┴─").join(bottom_parts)
+            + self._apply_color("─┘")
+        )
 
         # Build the table
         table_lines = [top_border, header_line, separator]
@@ -404,38 +455,85 @@ class Betterlog:
 
             # Process each line in the row
             for line_idx in range(max_lines):
-                line_cells = []
+                colored_cells = []
 
                 for i, cell_lines in enumerate(wrapped_cells):
                     if line_idx < len(cell_lines):
                         # This cell has this line
-                        padding = col_widths[i] - len(cell_lines[line_idx])
-                        line_cells.append(cell_lines[line_idx] + " " * padding)
+                        cell_line = cell_lines[line_idx]
+                        # 色コードを考慮した表示幅の計算
+                        visible_length = len(cell_line)
+
+                        # 色付きテキストの場合の処理
+                        if self.use_colors and self.color_code in cell_line:
+                            # 色コードの文字数を除外して計算
+                            code_count = cell_line.count(self.color_code)
+                            reset_count = cell_line.count(self.reset_code)
+                            visible_length -= (
+                                len(self.color_code) * code_count
+                                + len(self.reset_code) * reset_count
+                            )
+
+                        padding = col_widths[i] - visible_length
+                        # セルの内容も色付け
+                        colored_cells.append(
+                            self._apply_color(cell_line + " " * padding)
+                        )
                     else:
                         # This cell doesn't have this line
-                        line_cells.append(" " * col_widths[i])
+                        colored_cells.append(self._apply_color(" " * col_widths[i]))
 
-                table_lines.append("│ " + " │ ".join(line_cells) + " │")
+                # 色付きの枠線と内容を使用
+                table_lines.append(
+                    self._apply_color("│")
+                    + " "
+                    + self._apply_color(" │ ").join(colored_cells)
+                    + " "
+                    + self._apply_color("│")
+                )
 
         table_lines.append(bottom_border)
         return "\n".join(table_lines)
 
     def _create_header(self, title: str, width: int) -> str:
-        """Create a header"""
+        """Create a header with color"""
         padding = max(0, (width - len(title) - 2)) // 2
-        return (
-            "┌"
-            + "─" * (width - 2)
-            + "┐\n"
-            + "│"
-            + " " * padding
-            + title
-            + " " * (width - len(title) - 2 - padding)
-            + "│\n"
-            + "└"
-            + "─" * (width - 2)
-            + "┘"
-        )
+
+        # 色付きヘッダー
+        if self.use_colors:
+            # タイトルも含めて全体を色付け
+            colored_title = self._apply_color(title)
+            colored_padding_left = self._apply_color(" " * padding)
+            colored_padding_right = self._apply_color(
+                " " * (width - len(title) - 2 - padding)
+            )
+
+            return (
+                self._apply_color("┌" + "─" * (width - 2) + "┐")
+                + "\n"
+                + self._apply_color("│")
+                + colored_padding_left
+                + colored_title
+                + colored_padding_right
+                + self._apply_color("│")
+                + "\n"
+                + self._apply_color("└" + "─" * (width - 2) + "┘")
+            )
+        else:
+            # 通常のヘッダー（色なし）
+            return (
+                "┌"
+                + "─" * (width - 2)
+                + "┐\n"
+                + "│"
+                + " " * padding
+                + title
+                + " " * (width - len(title) - 2 - padding)
+                + "│\n"
+                + "└"
+                + "─" * (width - 2)
+                + "┘"
+            )
 
     def inspect(
         self,
@@ -447,7 +545,10 @@ class Betterlog:
     ):
         """Inspect the internal structure of an object and display it"""
         if obj is None:
-            print("None")
+            if self.use_colors:
+                print(self._apply_color("None"))
+            else:
+                print("None")
             return
 
         # Get caller info early
@@ -473,10 +574,6 @@ class Betterlog:
             header_parts.append(f"{obj_index}/{total_objects}")
 
         header_title = " - ".join(header_parts)
-
-        # Log to standard logger only once
-        if obj_index is None or obj_index == 1:
-            self.logger.info(f"[Betterlog] {header_title}")
 
         # Handle collections specially - for lists of custom objects, consider expanding them
         if (
@@ -569,6 +666,12 @@ class Betterlog:
         final_output = f"{header}\n{table}"
         print(final_output)
 
+    def _get_timestamp(self):
+        """タイムスタンプを生成（loggingの代わりに）"""
+        import datetime
+
+        return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S,%f")[:-3]
+
     def log(self, *objects, max_depth=3, show_type_info=True):
         """Log objects with the simplified interface"""
         if not objects:
@@ -652,3 +755,10 @@ def set_project_root(root_path=None):
     else:
         _betterlog.set_project_root(root_path)
         return root_path
+
+
+# 色の使用を切り替える関数
+def set_use_colors(use_colors=True):
+    """Enable or disable colored output"""
+    _betterlog.use_colors = use_colors
+    return use_colors
