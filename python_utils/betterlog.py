@@ -4,12 +4,12 @@ from typing import Any, Dict, List, Optional
 
 
 class Betterlog:
-    """A simple utility to inspect and display internal structure of Python objects"""
+    """A simple utility to inspect and display internal structure of Python objects in a clean format"""
 
     def __init__(self, name=None, project_root=None, use_colors=True):
         """Initialize the inspector"""
         self.name = name or "betterlog"
-        self.max_width = 120  # Default table width
+        self.max_width = 120  # Default width
         self.project_root = project_root  # Store project root for relative paths
         self.use_colors = use_colors  # 色を使用するかどうかの設定
 
@@ -145,13 +145,18 @@ class Betterlog:
         except Exception:
             pass
 
-        # typing.Any だった場合や型が見つからなかった場合は実際の型情報を使用
-        if (annotation == "obj: typing.Any" or not annotation) and obj is not None:
+        # 型情報を取得する
+        if obj is not None:
             actual_type = type(obj).__name__
             module_name = type(obj).__module__
             if module_name != "builtins":
                 actual_type = f"{module_name}.{actual_type}"
-            return f"{actual_type}"  # "obj:" と "(inferred)" を削除
+
+            # 変数名と型情報の両方がある場合
+            if annotation and ":" not in annotation:  # 既に型情報が含まれていない場合
+                return f"{annotation}: {actual_type}"
+            elif not annotation:  # 変数名がない場合は型情報のみ
+                return actual_type
 
         return annotation
 
@@ -199,15 +204,15 @@ class Betterlog:
 
                 if isinstance(value, list):
                     return (
-                        self._apply_color("[\n  ")
-                        + self._apply_color(",\n  ").join(parts)
-                        + self._apply_color("\n]")
+                        self._apply_color("[")
+                        + self._apply_color(", ").join(parts)
+                        + self._apply_color("]")
                     )
                 else:
                     return (
-                        self._apply_color("(\n  ")
-                        + self._apply_color(",\n  ").join(parts)
-                        + self._apply_color("\n)")
+                        self._apply_color("(")
+                        + self._apply_color(", ").join(parts)
+                        + self._apply_color(")")
                     )
             else:
                 # For larger collections, summarize
@@ -332,362 +337,6 @@ class Betterlog:
 
         return type(obj).__name__
 
-    def _create_table(self, headers: List[str], rows: List[List[str]]) -> str:
-        """Create an ASCII table with consistent width"""
-        # Calculate the maximum width for each column
-        col_widths = [len(h) for h in headers]
-
-        # Initial pass to determine column widths based on content
-        for row in rows:
-            for i, cell in enumerate(row):
-                first_line = cell.split("\n")[0]
-                col_widths[i] = max(col_widths[i], len(first_line))
-
-        # Calculate total width needed
-        total_width_needed = sum(col_widths) + (3 * len(col_widths)) + 1
-
-        # If total width is less than max_width, adjust to use consistent width
-        target_width = self.max_width
-
-        # If the total width is greater than max_width, adjust columns
-        if total_width_needed > target_width:
-            # 現在のコードと同様の調整ロジック
-            available_width = target_width - (3 * len(col_widths)) - 1
-
-            if len(col_widths) == 2:
-                col_widths[0] = min(col_widths[0], available_width // 3)
-                col_widths[1] = available_width - col_widths[0]
-            elif len(col_widths) == 3:
-                col_widths[0] = min(col_widths[0], available_width // 5)
-                col_widths[1] = min(col_widths[1], available_width // 5)
-                col_widths[2] = available_width - col_widths[0] - col_widths[1]
-            else:
-                even_width = available_width // len(col_widths)
-                col_widths = [even_width] * len(col_widths)
-        else:
-            # 追加: 小さいテーブルでも一貫した幅にするための調整
-            # 現在の合計幅と目標幅の差分
-            width_diff = target_width - total_width_needed
-
-            # 最後の列に余分な幅を割り当てる（通常は値の列）
-            if len(col_widths) > 0:
-                col_widths[-1] += width_diff
-
-        # すべての枠線を色付けする
-        # ヘッダー行を色付け
-        colored_headers = []
-        for i, h in enumerate(headers):
-            colored_headers.append(self._apply_color(h.ljust(col_widths[i])))
-
-        header_line = (
-            self._apply_color("│")
-            + " "
-            + self._apply_color(" │ ").join(colored_headers)
-            + " "
-            + self._apply_color("│")
-        )
-
-        # 区切り線を色付け
-        separator_parts = []
-        for w in col_widths:
-            separator_parts.append(self._apply_color("─" * w))
-
-        separator = (
-            self._apply_color("├─")
-            + self._apply_color("─┼─").join(separator_parts)
-            + self._apply_color("─┤")
-        )
-
-        # 上枠を色付け
-        top_parts = []
-        for w in col_widths:
-            top_parts.append(self._apply_color("─" * w))
-
-        top_border = (
-            self._apply_color("┌─")
-            + self._apply_color("─┬─").join(top_parts)
-            + self._apply_color("─┐")
-        )
-
-        # 下枠を色付け
-        bottom_parts = []
-        for w in col_widths:
-            bottom_parts.append(self._apply_color("─" * w))
-
-        bottom_border = (
-            self._apply_color("└─")
-            + self._apply_color("─┴─").join(bottom_parts)
-            + self._apply_color("─┘")
-        )
-
-        # Build the table
-        table_lines = [top_border, header_line, separator]
-
-        for row in rows:
-            # Word-wrap content in cells
-            wrapped_cells = []
-            for i, cell_content in enumerate(row):
-                # Split cell content by existing newlines
-                cell_lines = cell_content.split("\n")
-                wrapped_lines = []
-
-                for line in cell_lines:
-                    # Word-wrap the line
-                    current_width = col_widths[i]
-
-                    while len(line) > current_width:
-                        # Find the last space within the width limit
-                        space_pos = line[:current_width].rfind(" ")
-
-                        if space_pos > 0:  # If there's a space to break at
-                            wrapped_lines.append(line[:space_pos])
-                            line = line[space_pos + 1 :]
-                        else:  # No space to break at, forced break
-                            wrapped_lines.append(line[:current_width])
-                            line = line[current_width:]
-
-                    wrapped_lines.append(line)  # Add the remainder
-
-                wrapped_cells.append(wrapped_lines)
-
-            # Find the maximum number of lines in any cell for this row
-            max_lines = max(len(cell_lines) for cell_lines in wrapped_cells)
-
-            # Process each line in the row
-            for line_idx in range(max_lines):
-                colored_cells = []
-
-                for i, cell_lines in enumerate(wrapped_cells):
-                    if line_idx < len(cell_lines):
-                        # This cell has this line
-                        cell_line = cell_lines[line_idx]
-                        # 色コードを考慮した表示幅の計算
-                        visible_length = len(cell_line)
-
-                        # 色付きテキストの場合の処理
-                        if self.use_colors and self.color_code in cell_line:
-                            # 色コードの文字数を除外して計算
-                            code_count = cell_line.count(self.color_code)
-                            reset_count = cell_line.count(self.reset_code)
-                            visible_length -= (
-                                len(self.color_code) * code_count
-                                + len(self.reset_code) * reset_count
-                            )
-
-                        padding = col_widths[i] - visible_length
-                        # セルの内容も色付け
-                        colored_cells.append(
-                            self._apply_color(cell_line + " " * padding)
-                        )
-                    else:
-                        # This cell doesn't have this line
-                        colored_cells.append(self._apply_color(" " * col_widths[i]))
-
-                # 色付きの枠線と内容を使用
-                table_lines.append(
-                    self._apply_color("│")
-                    + " "
-                    + self._apply_color(" │ ").join(colored_cells)
-                    + " "
-                    + self._apply_color("│")
-                )
-
-        table_lines.append(bottom_border)
-        return "\n".join(table_lines)
-
-    def _create_header(self, title: str, width: int) -> str:
-        """Create a header with color"""
-        padding = max(0, (width - len(title) - 2)) // 2
-
-        # 色付きヘッダー
-        if self.use_colors:
-            # タイトルも含めて全体を色付け
-            colored_title = self._apply_color(title)
-            colored_padding_left = self._apply_color(" " * padding)
-            colored_padding_right = self._apply_color(
-                " " * (width - len(title) - 2 - padding)
-            )
-
-            return (
-                self._apply_color("┌" + "─" * (width - 2) + "┐")
-                + "\n"
-                + self._apply_color("│")
-                + colored_padding_left
-                + colored_title
-                + colored_padding_right
-                + self._apply_color("│")
-                + "\n"
-                + self._apply_color("└" + "─" * (width - 2) + "┘")
-            )
-        else:
-            # 通常のヘッダー（色なし）
-            return (
-                "┌"
-                + "─" * (width - 2)
-                + "┐\n"
-                + "│"
-                + " " * padding
-                + title
-                + " " * (width - len(title) - 2 - padding)
-                + "│\n"
-                + "└"
-                + "─" * (width - 2)
-                + "┘"
-            )
-
-    def inspect(
-        self,
-        obj: Any,
-        max_depth=3,
-        obj_index=None,
-        total_objects=None,
-        show_type_info=True,
-    ):
-        """Inspect the internal structure of an object and display it"""
-        if obj is None:
-            if self.use_colors:
-                print(self._apply_color("None"))
-            else:
-                print("None")
-            return
-
-        # Get caller info early
-        caller_info = self.get_caller_info()
-
-        # Attempt to get type annotation or variable name
-        type_info = ""
-        if show_type_info:
-            type_info = self._get_type_annotation(obj)
-
-        # Get the type name of the object
-        type_name = self._get_object_type_name(obj)
-
-        # Create a combined header
-        header_parts = [caller_info]
-
-        # Add type info if available
-        if type_info:
-            header_parts.append(type_info)
-
-        # Add index information if we're displaying multiple objects
-        if obj_index is not None and total_objects is not None:
-            header_parts.append(f"{obj_index}/{total_objects}")
-
-        header_title = " - ".join(header_parts)
-
-        # Handle collections specially - for lists of custom objects, consider expanding them
-        if (
-            isinstance(obj, (list, tuple))
-            and len(obj) > 0
-            and len(obj) <= 10
-            and all(self._is_custom_class(item) for item in obj)
-        ):
-            # This is a list of custom objects, prepare to display all together
-            all_tables = []
-            table_width = self.max_width
-
-            # Process each item
-            for i, item in enumerate(obj):
-                item_title = f"{header_title}[{i}]"
-                attributes = self._get_object_attributes(item)
-
-                # Table headers
-                headers = ["Attribute", "Value"]
-
-                # Prepare table rows
-                rows = []
-                for attr_name, attr_value in attributes.items():
-                    attr_value_str = self._format_value(attr_value, max_depth)
-                    rows.append([attr_name, attr_value_str])
-
-                # Create table
-                item_table = self._create_table(headers, rows)
-
-                # Calculate width
-                this_table_width = max(len(line) for line in item_table.split("\n"))
-                table_width = max(table_width, this_table_width)
-
-                # Keep track of tables
-                all_tables.append((f"Item {i+1}/{len(obj)}", item_table))
-
-            # Create a combined output
-            combined_output = []
-
-            # Add a single header for all items
-            combined_header = self._create_header(header_title, table_width)
-            combined_output.append(combined_header)
-
-            # Add each table with a subheader
-            for title, table in all_tables:
-                # Add a simple item separator
-                combined_output.append(f"\n--- {title} ---\n")
-                combined_output.append(table)
-
-            # Print the combined output
-            print("\n".join(combined_output))
-
-            # We've handled all items together, return early
-            return
-
-        # Get attributes for custom class objects
-        elif self._is_custom_class(obj):
-            attributes = self._get_object_attributes(obj)
-
-            # Table headers
-            headers = ["Attribute", "Value"]
-
-            # Prepare table rows
-            rows = []
-            for attr_name, attr_value in attributes.items():
-                attr_value_str = self._format_value(attr_value, max_depth)
-                rows.append([attr_name, attr_value_str])
-
-            # Create table
-            table = self._create_table(headers, rows)
-
-        else:
-            # Simple display for basic types
-            # Table headers
-            headers = ["Value"]
-
-            # Prepare table rows
-            rows = [[self._format_value(obj, max_depth)]]
-
-            # Create table
-            table = self._create_table(headers, rows)
-
-        # Calculate width
-        table_width = max(len(line) for line in table.split("\n"))
-
-        # Add header with caller info
-        header = self._create_header(header_title, table_width)
-
-        # Final output
-        final_output = f"{header}\n{table}"
-        print(final_output)
-
-    def _get_timestamp(self):
-        """タイムスタンプを生成（loggingの代わりに）"""
-        import datetime
-
-        return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S,%f")[:-3]
-
-    def log(self, *objects, max_depth=3, show_type_info=True):
-        """Log objects with the simplified interface"""
-        if not objects:
-            print("No objects to log")
-            return
-
-        # Process each object
-        for i, obj in enumerate(objects):
-            self.inspect(
-                obj,
-                max_depth=max_depth,
-                obj_index=i + 1 if len(objects) > 1 else None,
-                total_objects=len(objects) if len(objects) > 1 else None,
-                show_type_info=show_type_info,
-            )
-
     def _detect_project_root(self) -> Optional[str]:
         """
         Attempt to auto-detect project root by looking for .git directory
@@ -730,6 +379,158 @@ class Betterlog:
         """Set the project root path for relative paths"""
         self.project_root = root_path
 
+    def _create_simple_output(
+        self, headers: List[str], rows: List[List[str]], type_name=None
+    ) -> str:
+        """Create a simple, colored, and easily copyable key-value format output"""
+        output_lines = []
+
+        # オブジェクト型情報を表示（存在する場合）
+        if type_name:
+            output_lines.append(self._apply_color(f"# Object Type: {type_name}"))
+
+        # ヘッダーをシンプルなコメントとして表示（色付き）
+        header_text = " | ".join(headers)
+        output_lines.append(self._apply_color(f"# {header_text}"))
+        output_lines.append(self._apply_color("# " + "-" * len(header_text)))
+
+        # 内容を処理（区切り文字なし、シンプルな形式、色付き）
+        for row in rows:
+            # 複数列の場合（通常はkey-value形式）
+            if len(row) >= 2:
+                key = row[0]
+                value = row[1]
+                # Key: Valueの形式（キーを色付け）
+                output_lines.append(f"{self._apply_color(key)}: {value}")
+            # 単一列の場合（単純な値）
+            elif len(row) == 1:
+                output_lines.append(f"{row[0]}")
+
+        return "\n".join(output_lines)
+
+    def inspect(
+        self,
+        obj: Any,
+        max_depth=3,
+        obj_index=None,
+        total_objects=None,
+        show_type_info=True,
+    ):
+        """Inspect the internal structure of an object and display it in a simple, colored format"""
+        if obj is None:
+            if self.use_colors:
+                print(self._apply_color("None"))
+            else:
+                print("None")
+            return
+
+        # 呼び出し情報を取得
+        caller_info = self.get_caller_info()
+
+        # オブジェクトの型名を取得
+        type_name = self._get_object_type_name(obj)
+
+        # ヘッダー情報の作成
+        header_parts = [caller_info]
+
+        # 複数オブジェクトの場合、インデックス情報を追加
+        if obj_index is not None and total_objects is not None:
+            header_parts.append(f"{obj_index}/{total_objects}")
+
+        header_title = " - ".join(header_parts)
+
+        # カスタムオブジェクトのリストの特別な処理
+        if (
+            isinstance(obj, (list, tuple))
+            and len(obj) > 0
+            and len(obj) <= 10
+            and all(self._is_custom_class(item) for item in obj)
+        ):
+            # すべての出力を蓄積
+            all_outputs = []
+
+            # ヘッダーを追加（色付き）
+            all_outputs.append(self._apply_color(f"# {header_title}"))
+            all_outputs.append(self._apply_color("# " + "=" * len(header_title)))
+
+            # 各アイテムを処理
+            for i, item in enumerate(obj):
+                item_title = f"Item {i+1}/{len(obj)} ({item.__class__.__name__})"
+                all_outputs.append("")
+                all_outputs.append(self._apply_color(f"# --- {item_title} ---"))
+
+                # アイテムの属性を取得
+                attributes = self._get_object_attributes(item)
+
+                # 行の準備
+                rows = []
+                for attr_name, attr_value in attributes.items():
+                    attr_value_str = self._format_value(attr_value, max_depth)
+                    rows.append([attr_name, attr_value_str])
+
+                # シンプルな出力形式を使用
+                item_output = self._create_simple_output(
+                    ["Attribute", "Value"], rows, item.__class__.__name__
+                )
+                all_outputs.append(item_output)
+
+            # 出力を表示
+            print("\n".join(all_outputs))
+            return
+
+        # カスタムクラスオブジェクトの場合
+        elif self._is_custom_class(obj):
+            attributes = self._get_object_attributes(obj)
+
+            # ヘッダー
+            headers = ["Attribute", "Value"]
+
+            # 行の準備
+            rows = []
+            for attr_name, attr_value in attributes.items():
+                attr_value_str = self._format_value(attr_value, max_depth)
+                rows.append([attr_name, attr_value_str])
+
+            # シンプル形式の出力を作成
+            output = self._create_simple_output(headers, rows, type_name)
+
+        # 基本型の場合
+        else:
+            # ヘッダー
+            headers = [f"Value ({type_name})"]
+
+            # 行の準備
+            rows = [[self._format_value(obj, max_depth)]]
+
+            # シンプル形式の出力を作成
+            output = self._create_simple_output(headers, rows)
+
+        # 呼び出し情報をヘッダーとして表示
+        final_output = [
+            self._apply_color(f"# {header_title}"),
+            self._apply_color("# " + "=" * len(header_title)),
+            output,
+        ]
+
+        # 出力を表示
+        print("\n".join(final_output))
+
+    def log(self, *objects, max_depth=3, show_type_info=True):
+        """Log objects with the simplified interface"""
+        if not objects:
+            print("No objects to log")
+            return
+
+        # 各オブジェクトを処理
+        for i, obj in enumerate(objects):
+            self.inspect(
+                obj,
+                max_depth=max_depth,
+                obj_index=i + 1 if len(objects) > 1 else None,
+                total_objects=len(objects) if len(objects) > 1 else None,
+                show_type_info=show_type_info,
+            )
+
 
 # Create singleton instance
 _betterlog = Betterlog()
@@ -739,26 +540,3 @@ _betterlog = Betterlog()
 def log(*objects, max_depth=3, show_type_info=True):
     """Log objects with the betterlog formatting"""
     _betterlog.log(*objects, max_depth=max_depth, show_type_info=show_type_info)
-
-
-# For setting project root if needed
-def set_project_root(root_path=None):
-    """
-    Set the project root path for relative paths
-    If root_path is None, attempts to auto-detect using .git directory
-    """
-    if root_path is None:
-        # Force re-detection
-        _betterlog.project_root = None
-        _betterlog.project_root = _betterlog._detect_project_root()
-        return _betterlog.project_root
-    else:
-        _betterlog.set_project_root(root_path)
-        return root_path
-
-
-# 色の使用を切り替える関数
-def set_use_colors(use_colors=True):
-    """Enable or disable colored output"""
-    _betterlog.use_colors = use_colors
-    return use_colors
