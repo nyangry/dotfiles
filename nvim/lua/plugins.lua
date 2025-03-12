@@ -78,38 +78,38 @@ return {
             },
           })
         end,
-        ["pylsp"] = function()
-          lspconfig.pylsp.setup({
-            capabilities = capabilities,
-            settings = {
-              pylsp = {
-                plugins = {
-                  rope_completion = { enabled = true },
-                  rope_autoimport = { enabled = true },
-                  rope_rename = { enabled = true },
-                  rope_refactor = { enabled = true },
-                  definition = { enabled = true },
-                  references = { enabled = true },
-                  signature = { enabled = true },
-                  symbols = { enabled = true },
-                  preload_imports = { enabled = true },
-                  pycodestyle = { enabled = false },
-                  mccabe = { enabled = false },
-                  pyflakes = { enabled = false },
-                  pylint = { enabled = false },
-                  yapf = { enabled = false },
-                  autopep8 = { enabled = false },
-                  flake8 = { enabled = false },
-                  jedi_completion = { enabled = false },
-                  jedi_hover = { enabled = false },
-                  jedi_references = { enabled = false },
-                  jedi_signature_help = { enabled = false },
-                  jedi_symbols = { enabled = false },
-                }
-              }
-            }
-          })
-        end,
+        -- ["pylsp"] = function()
+        --   lspconfig.pylsp.setup({
+        --     capabilities = capabilities,
+        --     settings = {
+        --       pylsp = {
+        --         plugins = {
+        --           rope_completion = { enabled = true },
+        --           rope_autoimport = { enabled = false },
+        --           rope_rename = { enabled = false },
+        --           rope_refactor = { enabled = false },
+        --           definition = { enabled = true },
+        --           references = { enabled = true },
+        --           signature = { enabled = true },
+        --           symbols = { enabled = true },
+        --           preload_imports = { enabled = true },
+        --           pycodestyle = { enabled = false },
+        --           mccabe = { enabled = false },
+        --           pyflakes = { enabled = false },
+        --           pylint = { enabled = false },
+        --           yapf = { enabled = false },
+        --           autopep8 = { enabled = false },
+        --           flake8 = { enabled = false },
+        --           jedi_completion = { enabled = false },
+        --           jedi_hover = { enabled = false },
+        --           jedi_references = { enabled = false },
+        --           jedi_signature_help = { enabled = false },
+        --           jedi_symbols = { enabled = false },
+        --         }
+        --       }
+        --     }
+        --   })
+        -- end,
       })
     end,
   },
