@@ -29,6 +29,7 @@ return {
 
       mason_lspconfig.setup({
         -- ensure_installed = {
+        --   "eslint-lsp", 
         --   "pyright",
         --   "pylsp",
         --   "yamlls",
