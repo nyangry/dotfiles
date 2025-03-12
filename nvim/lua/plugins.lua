@@ -475,8 +475,8 @@ return {
     lazy = true,
     cmd = { 'NvimTreeFindFile', 'NvimTreeToggle', 'NvimTreeOpen' }, 
     keys = {
-        { "tt", ":NvimTreeToggle<CR>", desc = "Toggle NvimTree" },
-        { "tf", ":NvimTreeFindFile<CR>", desc = "Find File in NvimTree" },
+      { "tt", ":NvimTreeToggle<CR>", desc = "Toggle NvimTree" },
+      { "tf", ":NvimTreeFindFile<CR>", desc = "Find File in NvimTree" },
     },
     config = function()
       local nvim_tree = require("nvim-tree")
