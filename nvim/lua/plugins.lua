@@ -1109,6 +1109,7 @@ return {
   -- Comment
   {
     'echasnovski/mini.comment',
+    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' }, 
     lazy = true,
     keys = { "--" },
     config = function ()
@@ -1116,7 +1117,9 @@ return {
         -- Options which control module behavior
         options = {
           -- Function to compute custom 'commentstring' (optional)
-          custom_commentstring = nil,
+          custom_commentstring = function()
+            return require('ts_context_commentstring').calculate_commentstring() or vim.bo.commentstring
+          end,
 
           -- Whether to ignore blank lines when commenting
           ignore_blank_line = false,
