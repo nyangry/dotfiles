@@ -219,120 +219,32 @@ return {
     end
   },
 
+  -- formatter
   {
-    -- 'jose-elias-alvarez/null-ls.nvim',
-    'nvimtools/none-ls.nvim',
+    'stevearc/conform.nvim',
     lazy = true,
-    event = { "BufReadPre", "BufNewFile" },
-    config = function ()
-      local null_ls = require("null-ls")
-      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    config = function()
+      local js_formatters = { "biome", "prettierd", "prettier", stop_after_first = true }
 
-      -- 仮想環境のパスを取得する関数
-      local function get_python_tool_path(tool)
-        local venv = vim.env.VIRTUAL_ENV
-        if venv then
-          return venv .. "/bin/" .. tool
-        end
-        return tool  -- 仮想環境が見つからない場合はツール名をそのまま返す
-      end
-
-      null_ls.setup({
-        sources = {
-          -- python
-          null_ls.builtins.diagnostics.pylint.with({
-            command = get_python_tool_path("pylint"),
-            prefer_local = true,
-          }),
-          null_ls.builtins.formatting.isort.with({
-            command = get_python_tool_path("isort"),
-            prefer_local = true,
-            extra_args = {"--profile", "black"}
-          }),
-          null_ls.builtins.formatting.black.with({
-            command = get_python_tool_path("black"),
-            prefer_local = true,
-          }),
-          -- markdown or txt
-          null_ls.builtins.diagnostics.textlint,
-          -- json/yaml
-          -- null_ls.builtins.diagnostics.vacuum,
-          -- null_ls.builtins.diagnostics.yamllint.with({
-          --   extra_args = {
-          --     "-d", "{extends: default, rules: {line-length: disable}}"
-          --   }
-          -- }),
-          -- code actions
-          null_ls.builtins.code_actions.refactoring,
-          -- code formatter
-          null_ls.builtins.formatting.prettier,
+      require("conform").setup({
+        formatters_by_ft = {
+          python = { "isort", "black" },
+          json = js_formatters,
+          javascript = js_formatters,
+          javascriptreact = js_formatters,
+          typescript = js_formatters,
+          typescriptreact = js_formatters,
         },
-        on_attach = function(client, bufnr)
-          if client.supports_method("textDocument/formatting") then
-            -- format on save
-            local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-            local event = "BufWritePre" -- or "BufWritePost"
-            local async = event == "BufWritePre"
-            vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-            vim.api.nvim_create_autocmd(event, {
-              buffer = bufnr,
-              group = group,
-              callback = function()
-                vim.lsp.buf.format({ bufnr = bufnr, async = async })
-              end,
-              desc = "[lsp] format on save",
-            })
-          end
-
-          if client.supports_method("textDocument/rangeFormatting") then
-            keymap("x", "<Leader>f", function()
-              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-            end, { buffer = bufnr, desc = "[lsp] format" })
-          end
-
-          -- diagnosticsの自動実行設定
-          local group = vim.api.nvim_create_augroup("lsp_diagnostics_refresh", { clear = false })
-
-          -- バッファ移動時
-          vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
-            buffer = bufnr,
-            group = group,
-            callback = function()
-              vim.diagnostic.show()
-            end,
-          })
-
-          local timer = vim.loop.new_timer()
-          timer:start(0, 5000, vim.schedule_wrap(function()
-            if vim.api.nvim_buf_is_valid(bufnr) then
-              vim.diagnostic.show()
-            end
-          end))
-        end,
-        vim.lsp.buf.format({ timeout_ms = 5000 })
+        format_on_save = {
+          -- These options will be passed to conform.format()
+          timeout_ms = 2000,
+          lsp_format = "fallback",
+        },
       })
     end
-  },
-
-  {
-    "jay-babu/mason-null-ls.nvim",
-    lazy = true,
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "nvimtools/none-ls.nvim",
-    },
-    config = function ()
-      require("mason-null-ls").setup({
-        -- to avoid ensure install pylint ... pylint should use of each project's bin, but using mason cause a problem that mason use own bin rather than project venv's bin.
-        -- ensure_installed = {
-        --   "isort",
-        --   "yamllint",
-        -- },
-        -- automatic_installation = true,
-      })
-    end
-  },
+  }, 
 
   -- It allows you to quickly select, yank, delete or replace language-specific ranges.
   {
