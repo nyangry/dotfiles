@@ -1368,4 +1368,53 @@ return {
       vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)', { silent = true })
     end,
   },
+
+  -- Python Docstring Generator
+  {
+    "danymat/neogen",
+    lazy = true,
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    ft = { "python" },  -- Pythonファイルでのみ有効
+    config = function()
+      local neogen = require("neogen")
+
+      neogen.setup({
+        enabled = true,
+        input_after_comment = true,  -- コメント挿入後にインサートモードに入る
+        languages = {
+          python = {
+            template = {
+              annotation_convention = "reST"  -- reST形式のdocstringを使用
+            }
+          }
+        }
+      })
+
+      -- Pythonファイルでdocstringを生成するためのキーマッピング
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "python",
+        callback = function()
+          -- 関数のdocstringを生成
+          vim.keymap.set("n", "<leader>pd", function()
+            neogen.generate({ type = "func" })
+          end, { buffer = true, desc = "Generate function docstring" })
+
+          -- クラスのdocstringを生成
+          vim.keymap.set("n", "<leader>pcd", function()
+            neogen.generate({ type = "class" })
+          end, { buffer = true, desc = "Generate class docstring" })
+
+          -- ファイル全体のdocstringを生成
+          vim.keymap.set("n", "<leader>pfd", function()
+            neogen.generate({ type = "file" })
+          end, { buffer = true, desc = "Generate file docstring" })
+
+          -- 現在のカーソル位置に基づいて適切なdocstringを生成（関数/クラス/ファイル）
+          vim.keymap.set("n", "<leader>pp", function()
+            neogen.generate()
+          end, { buffer = true, desc = "Generate appropriate docstring" })
+        end
+      })
+    end
+  }
 }
