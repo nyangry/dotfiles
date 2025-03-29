@@ -474,12 +474,10 @@ return {
     config = function()
       local configs = require("nvim-treesitter.configs")
       configs.setup({
-        -- ensure_installed = { 
-        --   "python", "kotlin", "ruby", "lua", "vim", 
-        --   "sql", "graphql", "json", "yaml", 
-        --   "javascript", "typescript", "html", 
-        --   "markdown", "markdown_inline"
-        -- },
+        ensure_installed = { 
+          "html", "javascript", "typescript", "tsx", "css", "lua", "vim", 
+          "json", "yaml", "python", "markdown", "markdown_inline"
+        },
         sync_install = false,
         auto_install = false, -- 自動インストールを無効化
         highlight = { 
@@ -563,6 +561,20 @@ return {
       }
     end
   }, 
+
+  -- support ts
+  {
+    "windwp/nvim-ts-autotag",
+    lazy = true,
+    event = "InsertEnter",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = function()
+      require('nvim-ts-autotag').setup({
+        filetypes = { "html", "xml", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+      })
+    end
+  },
+
 
   -- code outline window
   {
