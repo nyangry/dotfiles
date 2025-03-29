@@ -79,6 +79,48 @@ return {
             },
           })
         end,
+        ["ruff"] = function()
+          lspconfig.ruff.setup({
+            capabilities = capabilities,
+            settings = {
+              ruff = {
+                lint = {
+                  -- Ruffの設定オプション
+                  run = "onType", -- onSave または onType
+                },
+                organizeImports = true, -- インポートの整理を有効化
+                fixAll = true, -- すべての自動修正を有効化
+              }
+            },
+            -- 保存時に自動的にRuffを実行して修正する
+            on_attach = function(client, bufnr)
+              -- Ruffのコード整形機能を有効にする
+              if client.name == "ruff_lsp" then
+                -- formatコマンドをRuffに任せる
+                client.server_capabilities.documentFormattingProvider = true
+
+                -- コマンドの登録
+                vim.api.nvim_buf_create_user_command(bufnr, "RuffOrganizeImports", function()
+                  vim.lsp.buf.execute_command({
+                    command = "ruff.organizeImports",
+                    arguments = { vim.api.nvim_buf_get_name(bufnr) },
+                  })
+                end, { desc = "Organize Imports using Ruff" })
+
+                vim.api.nvim_buf_create_user_command(bufnr, "RuffFixAll", function()
+                  vim.lsp.buf.execute_command({
+                    command = "ruff.fixAll",
+                    arguments = { vim.api.nvim_buf_get_name(bufnr) },
+                  })
+                end, { desc = "Fix all issues using Ruff" })
+
+                -- キーマップの設定
+                vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ri", ":RuffOrganizeImports<CR>", { silent = true })
+                vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>rf", ":RuffFixAll<CR>", { silent = true })
+              end
+            end,
+          })
+        end, 
         ["pylsp"] = function()
           lspconfig.pylsp.setup({
             capabilities = capabilities,
