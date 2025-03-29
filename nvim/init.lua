@@ -211,3 +211,26 @@ local function lspkeys()
   vim.api.nvim_buf_set_keymap(0, "n", "gW",       "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>",{ silent = true })
 end
 vim.api.nvim_create_autocmd("FileType", { pattern = "python", callback = lspkeys })
+
+-- ファイルタイプの設定をinit.luaの末尾に追加
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+  pattern = "*.html.tsx,*.html.jsx",
+  callback = function()
+    vim.bo.filetype = "typescriptreact"
+  end
+})
+
+-- HTMLファイル内のJavaScriptのシンタックスハイライト改善
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+  pattern = "*.html",
+  callback = function()
+    -- HTMLファイル内のスクリプトタグ内でJavaScriptハイライトを有効化
+    vim.cmd([[
+      let b:tsx_ext_found = 0
+      let b:jsx_ext_found = 0
+      unlet! b:current_syntax
+      syn include @HTMLJavaScript syntax/javascript.vim
+      syn region htmlJavaScript start=+<script[^>]*>+ end=+</script>+ keepend contains=@HTMLJavaScript,htmlScriptTag,@htmlPreproc
+    ]])
+  end
+})
