@@ -247,6 +247,7 @@ return {
       -- keymap('n', 'gn', '<cmd>Lspsaga rename<CR>')                 -- 名前の変更
       keymap('n', 'ga', '<cmd>Lspsaga code_action<CR>')            -- コードアクション
       keymap('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')  -- 診断情報の表示
+      keymap('n', 'gb', '<cmd>Lspsaga show_buf_diagnostics<CR>')   -- 診断情報の表示
       keymap('n', 'g]', '<cmd>Lspsaga diagnostic_jump_next<CR>')   -- 次の診断へジャンプ
       keymap('n', 'g[', '<cmd>Lspsaga diagnostic_jump_prev<CR>')   -- 前の診断へジャンプ
       -- 追加の便利な機能
