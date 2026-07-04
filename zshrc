@@ -583,3 +583,4 @@ zplug load # --verbose
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/masuyama.daisuke/.cache/lm-studio/bin"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
