@@ -16,14 +16,14 @@ fi
 # nodenv
 if [ -d ${HOME}/.nodenv  ] ; then
   export PATH=$HOMEBREW_PREFIX/opt/nodenv/bin:$PATH
-  eval "$(nodenv init -)"
+  eval "$(nodenv init - --no-rehash)"
 fi
 
 # pyenv
 if [ -d ${HOME}/.pyenv  ] ; then
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH="$PYENV_ROOT/shims:$PATH"
-  if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+  if which pyenv > /dev/null; then eval "$(pyenv init - --no-rehash)"; fi
 fi
 
 # for auto_cd
@@ -51,7 +51,12 @@ source ~/.env_vars
 #=======================================================
 # completions
 fpath=(~/.zsh/completions $fpath)
-autoload -U compinit && compinit -C
+# compinit runs once, after zplug has put plugin completions on fpath.
+# Queue compdef (rake, npm) until that happens.
+typeset -a __compdef_queue
+compdef() {
+  __compdef_queue+=("${(j: :)${(q)@}}")
+}
 
 autoload colors && colors
 autoload -Uz vcs_info
@@ -205,7 +210,7 @@ function time_since_commit() {
         else
           COLOR="%{${fg[red]}%}"
         fi
-        local SINCE_LAST_COMMIT="${COLOR}$(minutes_since_last_commit)m%{${reset_color}%}"
+        local SINCE_LAST_COMMIT="${COLOR}${MINUTES_SINCE_LAST_COMMIT}m%{${reset_color}%}"
       fi
       echo $SINCE_LAST_COMMIT
   fi
@@ -551,7 +556,10 @@ fi
 # zplug
 #=======================================================
 export ZPLUG_HOME=$HOMEBREW_PREFIX/opt/zplug
+# Skip zplug's init-time `compinit -C` (plugin completions are not on fpath yet).
+_zplug() { : }
 source $ZPLUG_HOME/init.zsh
+unfunction _zplug
 
 zplug "zplug/zplug"
 zplug "zsh-users/zsh-autosuggestions"
@@ -559,15 +567,70 @@ zplug "zsh-users/zsh-completions"
 # zplug "zsh-users/zsh-history-substring-search"
 # zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-  printf "Install? [y/N]: "
-  if read -q; then
-    echo; zplug install
-  fi
+# Missing plugins must not block a new window. Do not install from startup.
+if ! zplug check; then
+  printf "zplug: plugins missing (run: zplug install)\n" >&2
 fi
 
+# `zplug load` calls `compinit` without -C after zsh-completions is on fpath.
+# Use -C. Rebuild the dump only when it is missing or cannot see the plugin.
+autoload -Uz +X compinit
+functions -c compinit __compinit_real
+__compinit_done=0
+compinit() {
+  (( __compinit_done )) && return 0
+  __compinit_done=1
+
+  local dump="${ZPLUG_HOME}/zcompdump"
+  local src="${ZPLUG_HOME}/repos/zsh-users/zsh-completions/src"
+  local probe="" candidate dir found src_real have
+  if [[ -d $src ]]; then
+    src_real="${src:A}"
+    have=0
+    for dir in "${fpath[@]}"; do
+      if [[ ${dir:A} == $src_real ]]; then
+        have=1
+        break
+      fi
+    done
+    # Plugin script adds this via ${0:A}; only prepend when it did not.
+    (( have )) || fpath=("$src" $fpath)
+    for candidate in "$src"/_*(N); do
+      found=0
+      for dir in "${fpath[@]}"; do
+        [[ ${dir:A} == $src_real ]] && continue
+        if [[ -e "$dir/${candidate:t}" ]]; then
+          found=1
+          break
+        fi
+      done
+      if (( ! found )); then
+        probe="${candidate:t}"
+        break
+      fi
+    done
+  fi
+
+  if [[ ! -s $dump ]] || { [[ -n $probe ]] && ! grep -Fq -- "$probe" "$dump"; }; then
+    __compinit_real -i -d "$dump"
+  else
+    __compinit_real -C -d "$dump"
+  fi
+
+  local spec
+  for spec in "${__compdef_queue[@]}"; do
+    eval "compdef $spec"
+  done
+  unset __compdef_queue
+}
+
 zplug load # --verbose
+
+if (( ! __compinit_done )); then
+  compinit
+fi
+unfunction __compinit_real
+unset __compinit_done
 
 #=======================================================
 # homebrew
