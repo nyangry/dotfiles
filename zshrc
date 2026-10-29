@@ -7,23 +7,42 @@ export NODE_PATH=/usr/local/share/npm/lib/node_modules:$NODE_PATH
 export PYTHONPATH=$PYTHONPATH:~/dotfiles/python_utils
 
 
-# rbenv
-if [ -d ${HOME}/.rbenv  ] ; then
-  # export PATH=${HOME}/.rbenv/bin:${HOME}/.rbenv/shims:${PATH}
-  eval "$(rbenv init - --no-rehash)"
+# rbenv / nodenv / pyenv
+# `init` forks a process (~0.08s each). Shims on PATH are enough for
+# ruby, node, python, npm, and so on. The shell function, which `shell`
+# and `rehash` need, is installed on the first call of the command itself.
+if [ -d ${HOME}/.rbenv ] ; then
+  export PATH="${HOME}/.rbenv/shims:${PATH}"
+  export RBENV_SHELL=zsh
+  rbenv() {
+    unset -f rbenv
+    eval "$(command rbenv init - --no-rehash)"
+    rbenv "$@"
+  }
 fi
 
-# nodenv
-if [ -d ${HOME}/.nodenv  ] ; then
-  export PATH=$HOMEBREW_PREFIX/opt/nodenv/bin:$PATH
-  eval "$(nodenv init - --no-rehash)"
+if [ -d ${HOME}/.nodenv ] ; then
+  export PATH="$HOMEBREW_PREFIX/opt/nodenv/bin:$PATH"
+  export PATH="${HOME}/.nodenv/shims:${PATH}"
+  export NODENV_SHELL=zsh
+  nodenv() {
+    unset -f nodenv
+    eval "$(command nodenv init - --no-rehash)"
+    nodenv "$@"
+  }
 fi
 
-# pyenv
-if [ -d ${HOME}/.pyenv  ] ; then
+if [ -d ${HOME}/.pyenv ] ; then
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH="$PYENV_ROOT/shims:$PATH"
-  if which pyenv > /dev/null; then eval "$(pyenv init - --no-rehash)"; fi
+  export PYENV_SHELL=zsh
+  if command -v pyenv > /dev/null; then
+    pyenv() {
+      unset -f pyenv
+      eval "$(command pyenv init - --no-rehash)"
+      pyenv "$@"
+    }
+  fi
 fi
 
 # for auto_cd
@@ -51,7 +70,7 @@ source ~/.env_vars
 #=======================================================
 # completions
 fpath=(~/.zsh/completions $fpath)
-# compinit runs once, after zplug has put plugin completions on fpath.
+# compinit runs once, after plugin completions are on fpath.
 # Queue compdef (rake, npm) until that happens.
 typeset -a __compdef_queue
 compdef() {
@@ -553,84 +572,31 @@ fi
 ###-end-npm-completion-###
 
 #=======================================================
-# zplug
+# plugins
+# zplug's own loader is ~0.18s, and deferring it only moves that wait
+# to the first keystroke. The two plugins themselves are a few milliseconds.
 #=======================================================
-export ZPLUG_HOME=$HOMEBREW_PREFIX/opt/zplug
-# Skip zplug's init-time `compinit -C` (plugin completions are not on fpath yet).
-_zplug() { : }
-source $ZPLUG_HOME/init.zsh
-unfunction _zplug
-
-zplug "zplug/zplug"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-completions"
-# zplug "zsh-users/zsh-history-substring-search"
-# zplug "zsh-users/zsh-syntax-highlighting", defer:2
-
-# Missing plugins must not block a new window. Do not install from startup.
-if ! zplug check; then
-  printf "zplug: plugins missing (run: zplug install)\n" >&2
-fi
-
-# `zplug load` calls `compinit` without -C after zsh-completions is on fpath.
-# Use -C. Rebuild the dump only when it is missing or cannot see the plugin.
-autoload -Uz +X compinit
-functions -c compinit __compinit_real
-__compinit_done=0
-compinit() {
-  (( __compinit_done )) && return 0
-  __compinit_done=1
-
-  local dump="${ZPLUG_HOME}/zcompdump"
-  local src="${ZPLUG_HOME}/repos/zsh-users/zsh-completions/src"
-  local probe="" candidate dir found src_real have
-  if [[ -d $src ]]; then
-    src_real="${src:A}"
-    have=0
-    for dir in "${fpath[@]}"; do
-      if [[ ${dir:A} == $src_real ]]; then
-        have=1
-        break
-      fi
-    done
-    # Plugin script adds this via ${0:A}; only prepend when it did not.
-    (( have )) || fpath=("$src" $fpath)
-    for candidate in "$src"/_*(N); do
-      found=0
-      for dir in "${fpath[@]}"; do
-        [[ ${dir:A} == $src_real ]] && continue
-        if [[ -e "$dir/${candidate:t}" ]]; then
-          found=1
-          break
-        fi
-      done
-      if (( ! found )); then
-        probe="${candidate:t}"
-        break
-      fi
-    done
-  fi
-
-  if [[ ! -s $dump ]] || { [[ -n $probe ]] && ! grep -Fq -- "$probe" "$dump"; }; then
-    __compinit_real -i -d "$dump"
+plugins_root=$HOMEBREW_PREFIX/opt/zplug/repos
+autosuggestions=$plugins_root/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
+completions_src=$plugins_root/zsh-users/zsh-completions/src
+if [[ -r $autosuggestions && -d $completions_src ]]; then
+  fpath=($completions_src $fpath)
+  source $autosuggestions
+  autoload -Uz compinit
+  zcompdump=$HOMEBREW_PREFIX/opt/zplug/zcompdump
+  if [[ -s $zcompdump ]]; then
+    compinit -C -d $zcompdump
   else
-    __compinit_real -C -d "$dump"
+    compinit -i -d $zcompdump
   fi
-
-  local spec
-  for spec in "${__compdef_queue[@]}"; do
-    eval "compdef $spec"
+  for __compdef_spec in "${__compdef_queue[@]}"; do
+    eval "compdef $__compdef_spec"
   done
-  unset __compdef_queue
-}
-
-zplug load # --verbose
-
-if (( ! __compinit_done )); then
-  compinit
+  unset __compdef_queue __compdef_spec
+else
+  printf "zsh plugins missing under %s\n" "$plugins_root" >&2
 fi
-unfunction __compinit_real
-unset __compinit_done
+unset plugins_root autosuggestions completions_src zcompdump
 
 #=======================================================
 # homebrew
