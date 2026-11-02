@@ -613,3 +613,4 @@ unset plugins_root autosuggestions completions_src zcompdump
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/masuyama.daisuke/.cache/lm-studio/bin"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export PATH="/Users/nyangry/.codeium/windsurf/bin:$PATH"
